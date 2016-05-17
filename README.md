@@ -2,6 +2,6 @@
 Network Security and Project - ITP291-03 Team 3
 
 ## Database Details
-Hostname:
+Hostname: masterbox
 
-Password:
+Password: MBoxAdmin4321
