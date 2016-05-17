@@ -50,13 +50,15 @@
                     <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-left">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                        <li><a runat="server" href="FileTransferInterface.aspx">File Interface</a></li>
-                        <li><a runat="server" href="~/SignIn">Sign Up/Login</a></li>
                     </ul>
+					<ul class="nav navbar-nav navbar-right">
+					    <li><a runat="server" href="~/FileTransferInterface">Files</a></li>
+                        <li><a runat="server" href="~/SignIn">Login / Sign Up</a></li>
+					</ul>
                 </div>
             </div>
         </div>
