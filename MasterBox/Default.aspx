@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <h1>MasterBox</h1>
         <p class="lead">Secure storage solutions for the discerning security professional.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        <p><a href="http://google.com.sg" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
 
     <div class="row">
