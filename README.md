@@ -1,4 +1,5 @@
 #MasterBox
+A secure file storage solution for the discerning security professional.
 
 ##Project Description
 - ITP291-03, Team 3
