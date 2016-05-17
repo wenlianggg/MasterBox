@@ -1,5 +1,7 @@
 # MasterBox
-Network Security and Project - ITP291-03 Team 3
+- ITP291-03 Team 3
+- Network Security and Project
+- School of Information Technology, Nanyang Polytechnic
 
 ## Database Details
 ```yml
