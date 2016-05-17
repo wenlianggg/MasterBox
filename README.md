@@ -2,8 +2,8 @@
 Network Security and Project - ITP291-03 Team 3
 
 ## Database Details
-```
-HOSTNAME:
+```yml
+Hostname:
 Admin ID: masterboxadmin
 Password: MBoxAdmi***** (Ask WL for full PW)
 ```
