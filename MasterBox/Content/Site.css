@@ -50,3 +50,11 @@ textarea {
 .navbar-custom a.navbar-brand {
     color: white;
 }
+
+.aboutHeadline{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #eee;
+}
