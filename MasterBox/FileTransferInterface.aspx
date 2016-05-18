@@ -9,10 +9,11 @@
         /*SideBarNavigation*/
         .SideMenuBar{
             margin:0;
-            display:block;
-            width:100%;
+            display:block;            
             height:100vh;
-            background-color:#555;
+            background-color:#363533;
+            float:left;
+            width:23%;
         }
         .SideMenuBar lh{
             color:white;
@@ -21,10 +22,10 @@
         }
         .SideMenuBar ul{
             list-style-type:none;
-            margin:0 auto;
+            margin-left:4%;
             padding:0;
-            width: 200px;
-            background-color: #f1f1f1;
+            width: 250px;
+            
         }
         .SideMenu ul li{
             list-style-type:none;
@@ -36,12 +37,13 @@
             display:block;        
             color: #000;
             padding: 8px 0 8px 16px;
+            font-size:0.9em;
             text-decoration: none;
             text-align:center;
             padding:10px 20px 10px 20px;
         }
         .SideMenuBar ul li a:hover {
-            background-color: #555;
+            font-style:italic;
             color: white;
         }
 
@@ -50,6 +52,7 @@
             color:white;
             text-align:center;
             padding-top:5%;
+           
         }
         .AdvertisementBar{
             color:white;
@@ -71,6 +74,7 @@
             padding-left: 15px;
             float:left;
             width:35%;
+            height:100vh;
         }
         .FileTreeContainer{
             position: relative;
@@ -78,9 +82,19 @@
             padding-right: 15px;
             padding-left: 15px;
             float:left;
-            width:65%;
+            width:64%;
+            height:100vh;
         }
-      
+          
+        table,th,td{    
+            border:1px solid black;
+            border-spacing:10px;
+            border-collapse: separate;
+        }
+        
+        .FileTable th{
+            padding:10px;
+        }
     </style>
     <title>Home - MasterBox</title>
 </head>
@@ -99,39 +113,50 @@
             </div>
         </div>
         <div class="row">
-        <div class="col-md-3" style="border:1px solid red;background:#555;">
-            <div class="SideMenuBar">
+        <div class="SideMenuBar" style="border:1px solid red;background:#555;">
+           
             <div class="LoginUser">
                 <p>placeHolder{UserName}</p>
             </div>
             <hr />
            
-            <lh>placeHolder{Title}</lh>
+            
             <ul>
-               <li><a>placeHolder{Navigation}</a></li> <!*Files*/>
-               <li><a>placeHolder{Navigation}</a></li> <!/*Shared*/>
-               <li><a>placeHolder{Navigation}</a></li> <!/*Settings*/>
-               <li><a>placeHolder{Navigation}</a></li> <!/*Contact Us*/>
-               <li><a>placeHolder{Navigation}</a></li> 
-               <li><a>placeHolder{Navigation}</a></li>
+                <lh style="font-size:1em;">placeHolder{Title}</lh>
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!*Files*/>
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Shared*/>
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Settings*/>
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Contact Us*/>
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> 
+               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li>
             </ul>
                 <hr />
                 <div class="AdvertisementBar">
              <p>placeHolder{Advertisement}</p>
                      <p>placeHolder{Advertisement-Image}</p>
             </div>
-            </div>
+            
         </div>
         <div class="MainContent">
             <div class="FileContainer" style="border:1px solid red;">
-               <p>placeHolder{Files}</p>
+               <p><h3>placeHolder{Files}</h3></p>
             </div>
             <div class="FileTreeContainer" style="border:1px solid red;">
-                <p>placeHolder{Files-Tree}</p>
-                 <p>placeHolder{Files-Tree}</p>
-                 <p>placeHolder{Files-Tree}</p>
-                 <p>placeHolder{Files-Tree}</p>
-                 <p>placeHolder{Files-Tree}</p>
+                <p><h2>placeHolder{Files-Tree}</h2></p>
+                <hr style="border:1px solid black"/>
+                <hr style="border:1px solid black"/>
+                
+                    <asp:Table ID="Table1" class="FileTable" runat="server" BorderStyle="Solid">
+                        <asp:TableRow>
+                            <asp:TableHeaderCell>Name:</asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Last Modified</asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Shared With</asp:TableHeaderCell>
+                        </asp:TableRow>
+
+
+
+                    </asp:Table>
+               
             </div>
           </div>
          
