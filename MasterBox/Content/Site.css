@@ -20,31 +20,11 @@ textarea {
 
 .carousel {
     width:100%;
-    max-height:40%;
 }
 
-.carousel-indicators {
-    height:10px;
+.carousel-inner {
+    height:10%;
 }
-.carousel-indicators li {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 1px;
-  text-indent: -999px;
-  cursor: pointer;
-  background-color: #000 \9;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #dddddd;
-  border-radius: 10px;
-}
-.carousel-indicators .active {
-  width: 12px;
-  height: 12px;
-  margin: 0;
-  background-color: #3e3a3a;
-}
-
 
 
 /* Responsive: Portrait tablets and up */
@@ -72,9 +52,54 @@ textarea {
 }
 
 .aboutHeadline{
-  padding-top: 30px;
-  padding-bottom: 30px;
+  height: 250px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   margin-bottom: 30px;
-  color: inherit;
-  background-color: #eee;
+  color: white;
+  background-color: #4C7DB4;
+  text-align: center;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.aboutHR{
+    margin-top:15px;
+    margin-bottom:15px;
+    margin-left:auto;
+    margin-right:auto;
+    width:50px;
+}
+
+.aboutHeadline h1{
+    font-size: 50px;
+}
+
+.aboutRow{
+    background-color:#eee;
+    padding-left: 5px;
+    border-radius:5px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.aboutRow h1{
+    font-size: 30px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.aboutInfo{
+    font-size: 21px;
+}
+
+.aboutList {
+    font-size: 21px;
+}
+
+.aboutList li{
+    list-style-image: url('../images/rsz_checksvg.png');
+}
+
+.aboutDesc{
+    font-size: 15px;
 }
