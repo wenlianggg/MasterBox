@@ -30,6 +30,13 @@ textarea {
 .carousel-inner{
     height:100%;
 }
+.carousel-indicators li {
+  border: 1px solid #282828;
+  border-radius: 3px;
+}
+.carousel-indicators .active {
+  background-color: #0098db;
+}
     
 /*Fixed the image slider*/
 img{
