@@ -160,6 +160,7 @@
     <Content Include="images\6815651-white-lamborghini-wallpaper.jpg" />
     <Content Include="images\6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" />
     <Content Include="images\MasterBox.png" />
+    <Content Include="images\MasterBoxSlider.png" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />

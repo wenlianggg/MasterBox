@@ -21,7 +21,7 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="images/MasterBox.png" alt="the best logo in the world"/>
+                <img src="images/MasterBoxSlider.png" alt="the best logo in the world"/>
             </div>
 
             <div class="item">
