@@ -155,12 +155,15 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="images\Check.svg.png" />
     <Content Include="images\2092d5c68fd434c6e861b5c33051ee17c7_large.jpeg" />
     <Content Include="images\3840x2400.jpg" />
     <Content Include="images\6815651-white-lamborghini-wallpaper.jpg" />
     <Content Include="images\6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" />
-    <Content Include="images\MasterBox.png" />
     <Content Include="images\MasterBoxSlider.png" />
+    <Content Include="images\MasterBoxSliderblue.png" />
+    <Content Include="images\MasterBoxSlidergreen.png" />
+    <Content Include="images\MasterBoxSlidergrey.png" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
