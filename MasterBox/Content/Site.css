@@ -19,17 +19,23 @@ textarea {
 }
 
 /* Image Slider Carousel */
-/*
+
 .carousel {
     width:100%;
+
 }
 .carousel-indicators {
     height: 1px;
 }
 .carousel-inner{
-    height:10%;
+    height:100%;
 }
-*/
+    
+/*Fixed the image slider*/
+img{
+    height:100%;
+    width:100%;
+}
 
 /*punchline title*/
 .punchlinetitle {
