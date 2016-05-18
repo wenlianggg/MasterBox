@@ -160,10 +160,12 @@
     <Content Include="images\3840x2400.jpg" />
     <Content Include="images\6815651-white-lamborghini-wallpaper.jpg" />
     <Content Include="images\6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" />
+    <Content Include="images\Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
     <Content Include="images\MasterBoxSlider.png" />
     <Content Include="images\MasterBoxSliderblue.png" />
     <Content Include="images\MasterBoxSlidergreen.png" />
     <Content Include="images\MasterBoxSlidergrey.png" />
+    <Content Include="images\shield_and_swords-512.png" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
