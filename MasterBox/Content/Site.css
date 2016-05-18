@@ -37,3 +37,15 @@ textarea {
         padding: 0;
     }
 }
+
+.navbar-custom {
+  background-color: #482d8d;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color: #eee;
+}
+
+.navbar-custom a.navbar-brand {
+    color:#fff;
+}
