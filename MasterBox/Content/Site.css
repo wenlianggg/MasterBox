@@ -21,12 +21,13 @@ textarea {
 /* Image Slider Carousel */
 .carousel {
     width:100%;
+    max-height:40%;
 }
+.carousel-indicators{
+    height:1px;
 
 .carousel-inner {
     height:10%;
-.carousel-indicators{
-    height:1px;
 }
 
 span.h2getstarted {
