@@ -60,13 +60,13 @@ textarea {
 
 /* Navigation colour changes */
 .navbar-custom {
-  background-color: #482d8d;
+  background-color: #161614;
 }
 
 .navbar-custom .navbar-nav > li > a {
-    color: #eee;
+    color: #e5e5e5;
 }
 
 .navbar-custom a.navbar-brand {
-    color:#fff;
+    color: white;
 }
