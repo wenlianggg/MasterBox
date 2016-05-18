@@ -11,7 +11,7 @@
             margin:0;
             display:block;
             width:100%;
-            height:100%;
+            height:100vh;
             background-color:#555;
         }
         .SideMenuBar lh{
@@ -59,7 +59,26 @@
 
         /*Main Content*/
         .MainContent{
-
+            border:1px solid black;
+            float:left;
+            width:75%;
+            height:100vh;
+        }
+        .FileContainer{
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            float:left;
+            width:35%;
+        }
+        .FileTreeContainer{
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+            float:left;
+            width:65%;
         }
       
     </style>
@@ -73,7 +92,9 @@
                 <div class="navbar-header">
               
                     <a class="navbar-brand" runat="server">placeHolder{Title}</a>
-                    <asp:Button ID="Button1" runat="server" Text="Button" />
+                    
+                   
+                      
                 </div>  
             </div>
         </div>
@@ -102,10 +123,10 @@
             </div>
         </div>
         <div class="MainContent">
-            <div class="col-md-3" style="border:1px solid red;">
+            <div class="FileContainer" style="border:1px solid red;">
                <p>placeHolder{Files}</p>
             </div>
-            <div class="col-md-6" style="border:1px solid red;">
+            <div class="FileTreeContainer" style="border:1px solid red;">
                 <p>placeHolder{Files-Tree}</p>
                  <p>placeHolder{Files-Tree}</p>
                  <p>placeHolder{Files-Tree}</p>
@@ -113,7 +134,7 @@
                  <p>placeHolder{Files-Tree}</p>
             </div>
           </div>
-         </div>
+         
 
     </div>
     </form>
