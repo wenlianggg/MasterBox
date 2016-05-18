@@ -18,6 +18,14 @@ textarea {
     max-width: 280px;
 }
 
+.carousel {
+    width:100%;
+}
+
+.carousel-inner {
+    height:10%;
+}
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

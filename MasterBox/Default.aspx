@@ -8,6 +8,51 @@
         <p><a href="http://google.com.sg" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
 
+    <!-- ********** Testing image slider ********** -->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="images/MasterBox.png" alt="the best logo in the world"/>
+            </div>
+
+            <div class="item">
+                <img src="images/2092d5c68fd434c6e861b5c33051ee17c7_large.jpeg" alt="orange lambo"/>
+            </div>
+
+            <div class="item">
+                <img src="images/3840x2400.jpg" alt="yellow lambo on teh road"/>
+            </div>
+
+            <div class="item">
+                <img src="images/6815651-white-lamborghini-wallpaper.jpg" alt="white lambo"/>
+            </div>
+
+            <div class="item">
+                <img src="images/6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" alt="red koenigsegg"/>
+            </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        </div>
+    <!-- ********** /Testing image slider ********** -->
+
     <div class="row">
         <div class="col-md-4">
             <h2>Get started</h2>
