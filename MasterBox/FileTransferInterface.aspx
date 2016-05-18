@@ -8,8 +8,7 @@
     <style>
         /*SideBarNavigation*/
         .SideMenuBar{
-            margin:0;
-            display:block;            
+            margin:0;          
             height:100vh;
             background-color:#363533;
             float:left;
@@ -52,19 +51,21 @@
             color:white;
             text-align:center;
             padding-top:5%;
+            border-bottom:1px solid white;
            
         }
         .AdvertisementBar{
             color:white;
             text-align:center;
+            border-top:1px solid white;
         }
         
 
         /*Main Content*/
         .MainContent{
-            border:1px solid black;
+            border:1px solid green;
             float:left;
-            width:75%;
+            width:77%;
             height:100vh;
         }
         .FileContainer{
@@ -82,7 +83,7 @@
             padding-right: 15px;
             padding-left: 15px;
             float:left;
-            width:64%;
+            width:65%;
             height:100vh;
         }
           
@@ -94,6 +95,10 @@
         
         .FileTable th{
             padding:10px;
+        }
+        .FileIcon{
+            width:20px;
+            height:20px;
         }
     </style>
     <title>Home - MasterBox</title>
@@ -112,39 +117,39 @@
                 </div>  
             </div>
         </div>
-        <div class="row">
-        <div class="SideMenuBar" style="border:1px solid red;background:#555;">
+        
+        <div class="SideMenuBar">
            
             <div class="LoginUser">
                 <p>placeHolder{UserName}</p>
+               
             </div>
-            <hr />
+           
            
             
             <ul>
                 <lh style="font-size:1em;">placeHolder{Title}</lh>
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!*Files*/>
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Shared*/>
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Settings*/>
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> <!/*Contact Us*/>
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li> 
-               <li><a><img src=""/align="left">placeHolder{Navigation}</a></li>
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!*Files*/>
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Shared*/>
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Settings*/>
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Contact Us*/>
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> 
+               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li>
             </ul>
-                <hr />
+                
                 <div class="AdvertisementBar">
-             <p>placeHolder{Advertisement}</p>
-                     <p>placeHolder{Advertisement-Image}</p>
+                 <p>placeHolder{Advertisement}</p>
+                 <p>placeHolder{Advertisement-Image}</p>
             </div>
             
         </div>
         <div class="MainContent">
-            <div class="FileContainer" style="border:1px solid red;">
+            <div class="FileContainer" style="border:1px solid blue;">
                <p><h3>placeHolder{Files}</h3></p>
             </div>
-            <div class="FileTreeContainer" style="border:1px solid red;">
+            <div class="FileTreeContainer" style="border:1px solid yellow;">
                 <p><h2>placeHolder{Files-Tree}</h2></p>
-                <hr style="border:1px solid black"/>
-                <hr style="border:1px solid black"/>
+                
                 
                     <asp:Table ID="Table1" class="FileTable" runat="server" BorderStyle="Solid">
                         <asp:TableRow>
@@ -158,7 +163,7 @@
                     </asp:Table>
                
             </div>
-          </div>
+          
          
 
     </div>
