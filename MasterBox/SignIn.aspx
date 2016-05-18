@@ -39,11 +39,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>                            
-                            <asp:RadioButtonList ID="ExistingUsrBool" runat="server">
-                                <asp:ListItem Selected="True">I am a returning user</asp:ListItem>
-                                <asp:ListItem>I want to sign up as a new user</asp:ListItem>
+                        <td><strong>I am a...</strong></td>
+                        <td>
+                            <asp:RadioButtonList ID="ExistingUsrBool" runat="server" RepeatLayout="Flow">
+                                <asp:ListItem Selected="True" onclick="">Returning user</asp:ListItem>
+                                <asp:ListItem>New user</asp:ListItem>
                             </asp:RadioButtonList>
                         </td>
                     </tr>
