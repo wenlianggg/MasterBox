@@ -2,11 +2,13 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+    <!--
     <div class="jumbotron">
         <h1>MasterBox</h1>
         <p class="lead">Secure storage solutions for the discerning security professional.</p>
         <p><a href="http://google.com.sg" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
+    -->
 
     <!-- ********** Testing image slider ********** -->
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -23,7 +25,16 @@
             <div class="item active">
                 <img src="images/MasterBoxSlider.png" alt="the best logo in the world"/>
             </div>
-
+            <div class="item">
+                <img src="images/MasterBoxSlidergrey.png" alt="the best logo in the world 2"/>
+            </div>
+            <div class="item">
+                <img src="images/MasterBoxSliderblue.png" alt="the best logo in the world 3"/>
+            </div>
+            <div class="item">
+                <img src="images/MasterBoxSlidergreen.png" alt="the best logo in the world 3"/>
+            </div>
+            <!--**************
             <div class="item">
                 <img src="images/2092d5c68fd434c6e861b5c33051ee17c7_large.jpeg" alt="orange lambo"/>
             </div>
@@ -39,8 +50,9 @@
             <div class="item">
                 <img src="images/6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" alt="red koenigsegg"/>
             </div>
+            ****************-->
             </div>
-
+            
             <!-- Left and right controls -->
             <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -55,7 +67,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <h2>Get started</h2>
+            <h2><span class="h2getstarted">Get started</span></h2>
             <p>
                 Register on our web service to gain access to our web storage service.
                 New account registrations get 1GB of free space.
@@ -65,7 +77,7 @@
             </p>
         </div>
         <div class="col-md-4">
-            <h2>Secure</h2>
+            <h2><span class="h2secure">Secure</span></h2>
             <p>
                Secure AES-256 and Blowfish-448 encryption standard used for file storage management, along
                 with secure two factor authentication and facial recognition features. 
@@ -75,7 +87,7 @@
             </p>
         </div>
         <div class="col-md-4">
-            <h2>Scalable</h2>
+            <h2><span class="h2scalable">Scalable</span></h2>
             <p>
                 Easily upgrade your storage space with our storage plans going up to 5GB in size, with our streamlined
                 checkout process with streamlined integration with PayPal, our payment processor.

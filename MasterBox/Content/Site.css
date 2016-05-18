@@ -18,14 +18,26 @@ textarea {
     max-width: 280px;
 }
 
+/* Image Slider Carousel */
 .carousel {
     width:100%;
 }
 
 .carousel-inner {
     height:10%;
+.carousel-indicators{
+    height:1px;
 }
 
+span.h2getstarted {
+    color:#1a9b4c;
+}
+span.h2secure {
+    color:#203b99;
+}
+span.h2scalable {
+    color:#a11d9c;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

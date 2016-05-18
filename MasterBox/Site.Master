@@ -67,7 +67,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03</p>
             </footer>
         </div>
 
