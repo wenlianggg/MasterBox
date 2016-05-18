@@ -107,6 +107,10 @@
             </div>
             <div class="col-md-6" style="border:1px solid red;">
                 <p>placeHolder{Files-Tree}</p>
+                 <p>placeHolder{Files-Tree}</p>
+                 <p>placeHolder{Files-Tree}</p>
+                 <p>placeHolder{Files-Tree}</p>
+                 <p>placeHolder{Files-Tree}</p>
             </div>
           </div>
          </div>
