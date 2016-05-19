@@ -19,9 +19,9 @@ textarea {
 }
 
 /* Image Slider Carousel */
+/*
 .carousel {
     width:100%;
-    max-height:40%;
 }
 .carousel-indicators {
     height: 1px;
@@ -29,16 +29,34 @@ textarea {
 .carousel-inner{
     height:10%;
 }
+*/
+
+/*punchline title*/
+.punchlinetitle {
+    margin-top:3%;
+    text-align:center;
+    margin-bottom:2%;
+
+}
 
 span.h2getstarted {
-    color:#1d1d1d;
+    color:#5e5e5e;
 }
 span.h2secure {
-    color:#3f3f3f;
+    color:#306d9f;
 }
 span.h2scalable {
     color:#5e5e5e;
 }
+.btn-default {
+  color: #000;
+  background-color: #fbfbfb;
+  border-color: #1d1d1d;
+}
+.btn-default:hover {
+  color: #000;
+  background-color: #fdfdfd;
+  border-color: #8b8b8b;
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
