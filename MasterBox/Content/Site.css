@@ -15,10 +15,7 @@ body {
 .body-wrapper {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2b94e5+0,9dc9dd+53,ffffff+100 */
 	background: #2b94e5; /* Old browsers */
-	background: -moz-linear-gradient(top, #2b94e5 0%, #9dc9dd 53%, #ffffff 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #2b94e5 0%,#9dc9dd 53%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #2b94e5 0%,#9dc9dd 53%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b94e5', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    background:linear-gradient(45deg, #517fa4 10%, #243949 90%);
 	display: block;
 	min-height: 100%;
 	min-width:100%;
@@ -35,7 +32,7 @@ body {
 	min-height: 100vh;
 	margin: 0 auto;
 	z-index: 10;
-	box-shadow: 3px 3px 3px rgb(59, 59, 59);
+	box-shadow:5px 0px 3px rgba(0,0,0,0.2), -5px 0px 3px rgba(0,0,0,0.2);
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -159,7 +156,10 @@ a.registerlink:visited {
 
 /* Navigation colour changes */
 .navbar-custom {
-  background-color: #161614;
+    background-color: #161614;
+    -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
 }
 
 .navbar-custom .navbar-nav > li > a {
