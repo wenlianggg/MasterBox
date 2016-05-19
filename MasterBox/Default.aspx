@@ -19,12 +19,17 @@
                 <li data-target="#myCarousel" data-slide-to="1"></li>
                 <li data-target="#myCarousel" data-slide-to="2"></li>
                 <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
 
                 <div class="item active">
+                    <img src="images/MasterBoxSliderGirlzlong.png" alt="teh lego"/>
+                </div>
+
+                <div class="item">
                     <img src="images/MasterBoxSlider.png" alt="the best logo in the world"/>
                 </div>
 
