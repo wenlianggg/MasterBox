@@ -15,6 +15,15 @@
     </div>
 
     <hr class="aboutRowHR"/>
+        <div class="aboutRow" id="row3">
+            <h1>Our Mission</h1>
+            <p class="aboutInfo">
+                Our mission is to provide a high quality service for users to store their personal files in a safe and secured environment. Also ensuring that none of the personal data leaks out and to ensure that none of the accounts are compromised.
+                We also hope to be the new standard of security for the current cloud based storage systems, to encourage a safer and brighter tomorrow.
+            </p>
+        </div>
+
+    <hr class="aboutRowHR"/>
 
     <div class="aboutRow" id="row2">
         <div class="aboutLeft" id ="left1">
@@ -50,7 +59,7 @@
             </ul>
         </div>
         <div class="aboutRight" id="right2">
-            <img src="images/shield_and_swords-512.png" />
+            <img class="shield" src="images/shield_and_swords-512.png" />
         </div>
     </div>
     <hr class="aboutRowHR"/>
