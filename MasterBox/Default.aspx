@@ -19,7 +19,6 @@
                 <li data-target="#myCarousel" data-slide-to="1"></li>
                 <li data-target="#myCarousel" data-slide-to="2"></li>
                 <li data-target="#myCarousel" data-slide-to="3"></li>
-                <li data-target="#myCarousel" data-slide-to="4"></li>
             </ol>
 
             <!-- Wrapper for slides -->
@@ -67,7 +66,7 @@
         <div class="col-md-4">
             <h2><span class="h2getstarted">Get started</span></h2>
             <p>
-                Register on our web service to gain access to our web storage service.
+                <a class="registerlink" href="#">Register</a> on our web service to gain access to our web storage service.
                 New account registrations get 1GB of free space.
             </p>
             <p>
@@ -81,7 +80,7 @@
                 with secure two factor authentication and facial recognition features. 
             </p>
             <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
+                <a class="btn btn-default-blue" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
             </p>
         </div>
         <div class="col-md-4">

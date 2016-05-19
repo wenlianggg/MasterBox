@@ -48,15 +48,63 @@ span.h2secure {
 span.h2scalable {
     color:#5e5e5e;
 }
+a.registerlink {
+    color: #000;
+}
+a.registerlink:hover {
+    color: #337ab7;
+    text-decoration: none;
+}
+a.registerlink:active {
+    color: #03355d;
+    text-decoration: none;
+}
+a.registerlink:visited {
+    color: #03355d;
+    text-decoration: none;
+}
+/*Buttons*/
 .btn-default {
   color: #000;
   background-color: #fbfbfb;
   border-color: #1d1d1d;
 }
+.btn-default-blue {
+  color: #306d9f;
+  background-color: #fbfbfb;
+  border-color: #306d9f;
+}
 .btn-default:hover {
-  color: #000;
+    color: #454545;
+    background-color: #fdfdfd;
+    border-color: #8b8b8b;
+    box-shadow: 0 0 0 1px;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s;  
+    transition: .3s;  
+}
+.btn-default-blue:hover {
+  color: #0098db;
   background-color: #fdfdfd;
-  border-color: #8b8b8b;
+  border-color: #0098db;
+  box-shadow: 0 0 0 1px;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;  
+  transition: .3s;  
+}
+.btn-default:active {
+  color: #000;
+  background-color: #444444;
+  border-color: #1d1d1d;
+}
+.btn-default-blue:active {
+  color: #306d9f;
+  background-color: #75c8e1;
+  border-color: #306d9f;
+}
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
