@@ -66,8 +66,9 @@ textarea {
     
 /*Fixed the image slider*/
 img{
-    height:100%;
-    width:100%;
+    height:292px;
+    /*width:79%;*/
+    width: 100%;
 }
 
 /*punchline title*/
@@ -83,6 +84,39 @@ span.h2getstarted {
 }
 span.h2secure {
     color:#306d9f;
+    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: secureAnimation;
+    /*animation-delay: 0s;*/
+    animation-duration: 4s;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes secureAnimation {
+    0%    {color: #306d9f;}
+    10%   {color: #2066a0;}
+    20%   {color: #2d7aba;}
+    30%   {color: #4788bf;}
+    40%   {color: #5e99cb;}
+    50%   {color: #7dacd3;}
+    60%   {color: #9fbdd5;}
+    70%   {color: #9faeba;}
+    80%   {color: #708aa0;}
+    90%   {color: #547c9e;}
+    100%  {color: #4b7fab;}
+}
+/* Standard syntax */
+@keyframes secureAnimation {
+    0%    {color: #306d9f;}
+    10%   {color: #2066a0;}
+    20%   {color: #2d7aba;}
+    30%   {color: #4788bf;}
+    40%   {color: #5e99cb;}
+    50%   {color: #7dacd3;}
+    60%   {color: #9fbdd5;}
+    70%   {color: #9faeba;}
+    80%   {color: #708aa0;}
+    90%   {color: #547c9e;}
+    100%  {color: #4b7fab;}
 }
 span.h2scalable {
     color:#5e5e5e;
@@ -143,6 +177,14 @@ a.registerlink:visited {
   background-color: #75c8e1;
   border-color: #306d9e;
 }
+.btn-default:visited {
+    color: #000;
+    border-color: #1d1d1d;
+}
+.btn-default-blue:visited {
+    color: #306d9f;
+    border-color: #306d9e;
+}
 
 
 /* Responsive: Portrait tablets and up */
@@ -151,15 +193,15 @@ a.registerlink:visited {
         margin-top: 20px;
     }
 	/*
-		.body-content {
-			padding: 0;
-		}
+    .body-content {
+        padding: 0;
+    }
 	*/
 }
 
 /* Navigation colour changes */
 .navbar-custom {
-    background-color: #161614;
+  background-color: #161614;
     -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
