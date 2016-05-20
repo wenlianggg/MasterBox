@@ -41,6 +41,7 @@ textarea {
 /*Fixed the image slider*/
 img{
     height:292px;
+    /*width:79%;*/
     width:100%;
 }
 
