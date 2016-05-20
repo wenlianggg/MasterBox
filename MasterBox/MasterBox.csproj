@@ -156,6 +156,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Internal.Master" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="images\Check.svg.png" />
     <Content Include="images\2092d5c68fd434c6e861b5c33051ee17c7_large.jpeg" />
@@ -223,6 +224,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal.Master.cs">
+      <DependentUpon>Internal.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Internal.Master.designer.cs">
+      <DependentUpon>Internal.Master</DependentUpon>
+    </Compile>
     <Compile Include="Pricing.aspx.cs">
       <DependentUpon>Pricing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

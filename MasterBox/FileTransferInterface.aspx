@@ -4,11 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-     <webopt:bundlereference runat="server" path="~/Content/css" />
+     <webopt:bundlereference runat="server" path="~/Content/bootstrap.css" />
     <style>
         /*SideBarNavigation*/
-        .SideMenuBar{
-            margin:0;          
+        .SideMenuBar{   
+            margin-top:3.5%;       
             height:100vh;
             background-color:#363533;
             float:left;
@@ -69,7 +69,7 @@
            
             display: block; 
             margin:0;  
-                       
+                    margin-top:3.5%;     
         }
         .FileContainer{
             border:1px solid blue;
