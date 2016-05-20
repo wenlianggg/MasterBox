@@ -4,11 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-     <webopt:bundlereference runat="server" path="~/Content/css" />
+     <webopt:bundlereference runat="server" path="~/Content/bootstrap.css" />
     <style>
         /*SideBarNavigation*/
-        .SideMenuBar{
-            margin:0;          
+        .SideMenuBar{   
+            margin-top:3.5%;       
             height:100vh;
             background-color:#363533;
             float:left;
@@ -62,13 +62,17 @@
         
 
         /*Main Content*/
-        .MainContent{
+        .MainContent{   
             border:1px solid green;
             float:left;
             width:77%;
-            height:100vh;
+           
+            display: block; 
+            margin:0;  
+                    margin-top:3.5%;     
         }
         .FileContainer{
+            border:1px solid blue;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
@@ -78,6 +82,7 @@
             height:100vh;
         }
         .FileTreeContainer{
+            border:1px solid yellow;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
@@ -119,15 +124,10 @@
             </div>
         </div>
         
-        <div class="SideMenuBar">
-           
+        <div class="SideMenuBar">        
             <div class="LoginUser">
-                <p>placeHolder{UserName}</p>
-               
-            </div>
-           
-           
-            
+                <p>placeHolder{UserName}</p>            
+            </div>   
             <ul>
                 <lh style="font-size:1em;">placeHolder{Title}</lh>
                <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!*Files*/>
@@ -138,18 +138,18 @@
                <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li>
             </ul>
                 
-                <div class="AdvertisementBar">
+            <div class="AdvertisementBar">
                  <p>placeHolder{Advertisement}</p>
                  <p>placeHolder{Advertisement-Image}</p>
             </div>
             
         </div>
         <div class="MainContent">
-            <div class="FileContainer" style="border:1px solid blue;">
-               <p><h3>placeHolder{Files}</h3></p>
+            <div class="FileContainer">
+               <h3>placeHolder{Files}</h3>
             </div>
-            <div class="FileTreeContainer" style="border:1px solid yellow;">
-                <p><h2>placeHolder{Files-Tree}</h2></p>
+            <div class="FileTreeContainer">
+                <h2>placeHolder{Files-Tree}</h2>
                 
                 
                     <asp:Table ID="Table1" class="FileTable" runat="server" BorderStyle="Solid">
@@ -173,7 +173,7 @@
             </div>
           
          
-
+        </div>
     </div>
     </form>
 </body>

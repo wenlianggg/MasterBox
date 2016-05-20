@@ -6,11 +6,13 @@ html {
 
 
 /* Move down content because we have a fixed navbar that is 50px tall */
+
 body {
 	min-height:100vh;
 	width:100%;
 	margin:0;
 }
+
 
 /* Wrapping element */
 .body-wrapper {
