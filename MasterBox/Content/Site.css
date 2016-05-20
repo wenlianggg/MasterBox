@@ -1,14 +1,39 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
+﻿/* To make use of full height of page*/
+html {
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+	min-height:100vh;
+	width:100%;
+	margin:0;
 }
 
 /* Wrapping element */
+.body-wrapper {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2b94e5+0,9dc9dd+53,ffffff+100 */
+	background: #2b94e5; /* Old browsers */
+    background:linear-gradient(45deg, #517fa4 10%, #243949 90%);
+	display: block;
+	min-height: 100%;
+	min-width:100%;
+	margin: 0 auto;
+	z-index: 0;
+}
+
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-top:  50px;
+    padding-left: 50px;
+    padding-right: 50px;
+	background-color:white;
+	min-height: 100vh;
+	margin: 0 auto;
+	z-index: 10;
+	box-shadow:5px 0px 3px rgba(0,0,0,0.2), -5px 0px 3px rgba(0,0,0,0.2);
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -22,7 +47,6 @@ textarea {
 
 .carousel {
     width:100%;
-
 }
 .carousel-indicators {
     height: 1px;
@@ -41,8 +65,7 @@ textarea {
 /*Fixed the image slider*/
 img{
     height:292px;
-    /*width:79%;*/
-    width:100%;
+    width:79%;
 }
 
 /*punchline title*/
@@ -125,15 +148,19 @@ a.registerlink:visited {
     .jumbotron {
         margin-top: 20px;
     }
-
+	/*
     .body-content {
         padding: 0;
     }
+	*/
 }
 
 /* Navigation colour changes */
 .navbar-custom {
   background-color: #161614;
+    -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
 }
 
 .navbar-custom .navbar-nav > li > a {

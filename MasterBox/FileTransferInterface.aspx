@@ -91,6 +91,7 @@
             border:1px solid black;
             border-spacing:10px;
             border-collapse: separate;
+            width:100vh;
         }
         
         .FileTable th{
@@ -154,14 +155,21 @@
                     <asp:Table ID="Table1" class="FileTable" runat="server" BorderStyle="Solid">
                         <asp:TableRow>
                             <asp:TableHeaderCell>Name:</asp:TableHeaderCell>
-                            <asp:TableHeaderCell>Last Modified</asp:TableHeaderCell>
-                            <asp:TableHeaderCell>Shared With</asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Last Modified:</asp:TableHeaderCell>
+                            <asp:TableHeaderCell>Shared With:</asp:TableHeaderCell>
                         </asp:TableRow>
-
-
-
                     </asp:Table>
-               
+                <div class="row" style="border:1px solid black;">
+                    <div class="col-md-4" style="border:1px solid black">
+                        <p>Name: </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Last Modified: </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Shared With:</p>
+                    </div>
+                </div>
             </div>
           
          
