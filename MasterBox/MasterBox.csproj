@@ -137,7 +137,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\MasterBoxSliderGirlzlong.png" />
+    <Content Include="images\MasterBoxSliderblueExtended.png" />
+    <Content Include="images\MasterBoxSliderExtended.png" />
+    <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
+    <Content Include="images\MasterBoxSlidergreenExtended.png" />
+    <Content Include="images\MasterBoxSlidergreyExtended.png" />
     <Content Include="Pricing.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
@@ -158,15 +162,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="images\Check.svg.png" />
-    <Content Include="images\2092d5c68fd434c6e861b5c33051ee17c7_large.jpeg" />
-    <Content Include="images\3840x2400.jpg" />
-    <Content Include="images\6815651-white-lamborghini-wallpaper.jpg" />
-    <Content Include="images\6ba2a666f025e46c77636e3ccdd1d005_large.jpeg" />
     <Content Include="images\Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
-    <Content Include="images\MasterBoxSlider.png" />
-    <Content Include="images\MasterBoxSliderblue.png" />
-    <Content Include="images\MasterBoxSlidergreen.png" />
-    <Content Include="images\MasterBoxSlidergrey.png" />
     <Content Include="images\shield_and_swords-512.png" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />

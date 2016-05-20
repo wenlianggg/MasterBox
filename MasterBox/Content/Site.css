@@ -49,17 +49,21 @@ textarea {
     width:100%;
 }
 .carousel-indicators {
-    height: 1px;
+    height: 0.3px;
 }
 .carousel-inner{
     height:100%;
 }
 .carousel-indicators li {
-  border: 1px solid #282828;
-  border-radius: 3px;
+    opacity:0.5;
+    border: 1px solid #282828;
+    border-radius: 3.5px;
 }
 .carousel-indicators .active {
-  background-color: #0098db;
+    opacity:1;
+    border: 1px solid #282828;
+    border-radius: 3px;
+    background-color: #0098db;
 }
     
 /*Fixed the image slider*/
@@ -71,9 +75,9 @@ img{
 
 /*punchline title*/
 .punchlinetitle {
-    margin-top:3%;
+    margin-top:5%;
     text-align:center;
-    margin-bottom:2%;
+    margin-bottom:4%;
 
 }
 
@@ -82,7 +86,7 @@ span.h2getstarted {
 }
 span.h2secure {
     color:#306d9f;
-    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-name: secureAnimation; /* Chrome, Safari, Opera */
     -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
     animation-name: secureAnimation;
     /*animation-delay: 0s;*/
@@ -154,6 +158,32 @@ a.registerlink:visited {
     -moz-transition: .3s;
     -o-transition: .3s;  
     transition: .3s;  
+
+    
+    -webkit-animation-name: btnDefaultAnimation; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: btnDefaultAnimation;
+    animation-duration: 5s;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes btnDefaultAnimation {
+    0%    {background-color: #fbfbfb;}
+    20%    {background-color: #efefef;}
+    40%    {background-color: #fbfbfb;}
+    60%    {background-color: #efefef;}
+    80%    {background-color: #fbfbfb;}
+    100%    {background-color: #efefef;}
+}
+/* Standard syntax */
+@keyframes btnDefaultAnimation {
+    0%    {background-color: #fbfbfb;}
+    20%    {background-color: #efefef;}
+    40%    {background-color: #fbfbfb;}
+    60%    {background-color: #efefef;}
+    80%    {background-color: #fbfbfb;}
+    100%    {background-color: #efefef;}
 }
 .btn-default-blue:hover {
   color: #0098db;
@@ -164,7 +194,33 @@ a.registerlink:visited {
   -moz-transition: .3s;
   -o-transition: .3s;  
   transition: .3s;  
+
+  -webkit-animation-name: btnDefaultBlueAnimation; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+  animation-name: btnDefaultBlueAnimation;
+  animation-duration: 5s;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
 }
+/* Chrome, Safari, Opera */
+@-webkit-keyframes btnDefaultBlueAnimation {
+    0%    {background-color: #f9fcff;}
+    20%    {background-color: #f2f9ff;}
+    40%    {background-color: #f9fcff;}
+    60%    {background-color: #f2f9ff;}
+    80%    {background-color: #f9fcff;}
+    100%    {background-color: #f2f9ff;}
+}
+/* Standard syntax */
+@keyframes btnDefaultBlueAnimation {
+    0%    {background-color: #f9fcff;}
+    20%    {background-color: #f2f9ff;}
+    40%    {background-color: #f9fcff;}
+    60%    {background-color: #f2f9ff;}
+    80%    {background-color: #f9fcff;}
+    100%    {background-color: #f2f9ff;}
+}
+
 .btn-default:active {
   color: #000;
   background-color: #444444;

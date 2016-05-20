@@ -26,23 +26,23 @@
             <div class="carousel-inner" role="listbox">
 
                 <div class="item active">
-                    <img src="images/MasterBoxSliderGirlzlong.png" alt="teh lego"/>
+                    <img src="images/MasterBoxSliderGirlzlongExtended.png" alt="teh lego"/>
                 </div>
 
                 <div class="item">
-                    <img src="images/MasterBoxSlider.png" alt="the best logo in the world"/>
+                    <img src="images/MasterBoxSliderExtended.png" alt="the best logo in the world"/>
                 </div>
 
                 <div class="item">
-                    <img src="images/MasterBoxSlidergrey.png" alt="the best logo in the world 2"/>
+                    <img src="images/MasterBoxSlidergreyExtended.png" alt="the best logo in the world 2"/>
                 </div>
 
                 <div class="item">
-                    <img src="images/MasterBoxSliderblue.png" alt="the best logo in the world 3"/>
+                    <img src="images/MasterBoxSliderblueExtended.png" alt="the best logo in the world 3"/>
                 </div>
 
                 <div class="item">
-                    <img src="images/MasterBoxSlidergreen.png" alt="the best logo in the world 3"/>
+                    <img src="images/MasterBoxSlidergreenExtended.png" alt="the best logo in the world 3"/>
                 </div>
 
             </div>
