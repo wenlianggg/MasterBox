@@ -40,7 +40,7 @@
                 </ul>
             </div>
         <div class="aboutRight" id="right1">
-            <img class="secureBox" src="images/Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
+            <img class="secureBox" src="images/encryption.png" />
         </div>
     </div>
 

@@ -137,6 +137,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\encryption.png" />
     <Content Include="images\MasterBoxSliderblueExtended.png" />
     <Content Include="images\MasterBoxSliderExtended.png" />
     <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
