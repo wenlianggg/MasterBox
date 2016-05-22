@@ -131,6 +131,7 @@
         .FileTreeContainerObtainedFiles{
 
         }
+
     </style>
     <script>
         function gotoMain() {
@@ -142,8 +143,7 @@
             document.getElementById('OthersDiv').style.display = "block";
         }
 
-       
-
+        
 </script>
     <title>Home - MasterBox</title>
 </head>
@@ -192,11 +192,13 @@
                 
                 <ul>
                     <li>placeHolder{Files}</li>
+                    
                         <ul>
                             <li>placeHolder{Files}</li>
                             <li>placeHolder{Files}</li>
                             <li>placeHolder{Files}</li>
                         </ul>
+                      
                     <li>placeHolder{Files}</li>
                     <li>placeHolder{Files}</li>
                     <li>placeHolder{Files}</li>
