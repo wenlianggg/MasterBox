@@ -139,6 +139,10 @@
   <ItemGroup>
     <Content Include="Content\nprogress.css" />
     <Content Include="images\encryption.png" />
+    <Content Include="images\Logged\contact.png" />
+    <Content Include="images\Logged\File.png" />
+    <Content Include="images\Logged\Settings.png" />
+    <Content Include="images\Logged\Shared.png" />
     <Content Include="images\MasterBoxSliderblueExtended.png" />
     <Content Include="images\MasterBoxSliderExtended.png" />
     <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />

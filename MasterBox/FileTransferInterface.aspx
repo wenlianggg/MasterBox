@@ -94,6 +94,7 @@
             -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
             -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
             box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+ 
 
         }
         .FileToolBar img{
@@ -105,6 +106,7 @@
         }
 
         .FileContainer{
+            background-color:#f2f2fc;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
@@ -138,6 +140,7 @@
         }
 
         .FileTreeContainer{
+            background-color:#fbfbfe;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
@@ -162,7 +165,7 @@
     <script>
         function gotoMain() {
             document.getElementById('MainDiv').style.display = "block";
-            document.getElementById('OtherDiv').style.display = "none";
+            document.getElementById('OthersDiv').style.display = "none";
         }
         function gotoOther() {
             document.getElementById('MainDiv').style.display = "none";
@@ -201,12 +204,11 @@
             </div>   
             <ul>
                <lh style="font-size:1em;">APPLICATIONS</lh>
-               <li><a onclick="gotoMain()"title="Files"data-toggle="tooltip" data-placement="right"><img src=""align="left"/>Files</a></li> <!*Files*/>
-               <li><a onclick="gotoOther()" ><img src=""align="left"/>Shared Files</a></li> <!/*Shared*/>
-               <li><a onclick="gotoSettings()"><img src=""align="left"/>Settings</a></li> <!/*Settings*/>
-               <li><a><img src=""align="left"/>Contact Us</a></li> <!/*Contact Us*/>
-               <li><a><img src=""align="left"/>placeHolder{Navigation}</a></li> 
-               <li><a><img src=""align="left"/>placeHolder{Navigation}</a></li>
+               <li><a onclick="gotoMain()" title="Files"data-toggle="tooltip" data-placement="right"><img src="images/Logged/File.png"align="left"/>Files</a></li> <!*Files*/>
+               <li><a onclick="gotoOther()" title="Shared"data-toggle="tooltip" data-placement="right"><img src="images/Logged/Shared.png" align="left"/>Shared Files</a></li> <!/*Shared*/>
+               <li><a onclick="gotoSettings()" title="Settings"data-toggle="tooltip" data-placement="right"><img src="images/Logged/Settings.png" align="left"/>Settings</a></li> <!/*Settings*/>
+               <li><a onclick="gotoContact()" title="Contact Us"data-toggle="tooltip" data-placement="right"><img src="images/Logged/contact.png" align="left"/>Contact Us</a></li> <!/*Contact Us*/>
+ 
             </ul>
                 
             <div class="AdvertisementBar">
@@ -219,7 +221,7 @@
             <div class="FileToolBar">
                 <div style="margin-right:2.5%;"> 
                 <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"/></a>
-                <a onclick=""><img class="FileIcon"src="" title="Share Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom"/></a>
                 <a onclick=""><img class="FileIcon"src="" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
                 <a onclick=""><img class="FileIcon"src="" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
                 </div>
