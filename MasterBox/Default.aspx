@@ -3,12 +3,14 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <!--
+
     <script>
         NProgress.start();
         NProgress.set(0.4);
         NProgress.inc();
         NProgress.done();
     </script>
+
     -->
 
     <!--
