@@ -90,7 +90,6 @@
             float:left;
             padding-top:2%;
             padding:1%;
-
             background-color: #4C7DB4;
             -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
             -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
@@ -202,12 +201,12 @@
             </div>   
             <ul>
                <lh style="font-size:1em;">APPLICATIONS</lh>
-               <li><a onclick="gotoMain()"title="Files"data-toggle="tooltip" data-placement="right"><img src="" align="left"/>Files</a></li> <!*Files*/>
-               <li><a onclick="gotoOther()" ><img src=""align="left">Shared Files</a></li> <!/*Shared*/>
-               <li><a onclick="gotoSettings()"><img src=""align="left">Settings</a></li> <!/*Settings*/>
-               <li><a><img src=""align="left">Contact Us</a></li> <!/*Contact Us*/>
-               <li><a><img src=""align="left">placeHolder{Navigation}</a></li> 
-               <li><a><img src=""align="left">placeHolder{Navigation}</a></li>
+               <li><a onclick="gotoMain()"title="Files"data-toggle="tooltip" data-placement="right"><img src=""align="left"/>Files</a></li> <!*Files*/>
+               <li><a onclick="gotoOther()" ><img src=""align="left"/>Shared Files</a></li> <!/*Shared*/>
+               <li><a onclick="gotoSettings()"><img src=""align="left"/>Settings</a></li> <!/*Settings*/>
+               <li><a><img src=""align="left"/>Contact Us</a></li> <!/*Contact Us*/>
+               <li><a><img src=""align="left"/>placeHolder{Navigation}</a></li> 
+               <li><a><img src=""align="left"/>placeHolder{Navigation}</a></li>
             </ul>
                 
             <div class="AdvertisementBar">
@@ -219,7 +218,7 @@
         <div class="MainContent" id="MainDiv">
             <div class="FileToolBar">
                 <div style="margin-right:2.5%;"> 
-                <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"></a>
+                <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"/></a>
                 <a onclick=""><img class="FileIcon"src="" title="Share Folder" data-toggle="tooltip" data-placement="bottom"/></a>
                 <a onclick=""><img class="FileIcon"src="" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
                 <a onclick=""><img class="FileIcon"src="" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
