@@ -3,6 +3,15 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <!--
+    <script>
+        NProgress.start();
+        NProgress.set(0.4);
+        NProgress.inc();
+        NProgress.done();
+    </script>
+    -->
+
+    <!--
     <div class="jumbotron">
         <h1>MasterBox</h1>
         <p class="lead">Secure storage solutions for the discerning security professional.</p>
