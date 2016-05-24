@@ -5,6 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
      <webopt:bundlereference runat="server" path="~/Content/bootstrap.css" />
+    <webopt:bundlereference runat="server" path="~/Content/Site.css" />
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style>
         /*SideBarNavigation*/
         .SideMenuBar{   
@@ -35,21 +39,23 @@
         }
         .SideMenuBar ul li a{
             display:block;        
-            color: #000;
+            color: ghostwhite;
             padding: 8px 0 8px 16px;
             font-size:0.9em;
             text-decoration: none;
-            text-align:center;
+            text-align:left;
             padding:10px 20px 10px 20px;
+            cursor:pointer;
         }
         .SideMenuBar ul li a:hover {
             font-style:italic;
             color: white;
         }
 
-        .FileIcon{
+        .SideMenuBar img{
             width:20px;
             height:20px;
+            margin-right:2%;
         }
         /*user information*/
         .LoginUser{
@@ -72,25 +78,46 @@
 
         /*Main Content*/
         .MainContent{   
-            border:1px solid green;
             float:left;
             width:77%;
             display: block; 
             margin-top:3.5%;     
             height:100vh;
         }
+
+        .FileToolBar{
+            width:100%;
+            float:left;
+            padding-top:2%;
+            padding:1%;
+
+            background-color: #4C7DB4;
+            -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+
+        }
+        .FileToolBar img{
+           float:right;
+           margin-right:2%;
+           cursor:pointer;
+           width:20px;
+           height:20px;
+        }
+
         .FileContainer{
-            border:1px solid blue;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
             padding-left: 15px;
             float:left;
             width:35%;
-            height:100vh;
+            height:93%;
+            overflow:auto;
+            border-right:1px solid black;
         }
-        .FileContainer h3{
-            padding-bottom:2.2%;
+        .FileContainer h2{
+            padding-bottom:3%;
             border-bottom:1px solid black;
         }
         .FileContainer ul{
@@ -112,17 +139,17 @@
         }
 
         .FileTreeContainer{
-            border:1px solid yellow;
             position: relative;
             min-height: 1px;
             padding-right: 15px;
             padding-left: 15px;
             float:left;
             width:65%;
-            height:100vh;
+            height:93%;
+            overflow:auto;
         }
         .FileTreeContainerTable{
-            width:33%;
+            width:49%;
             float:left;
             padding-top:10px;
             padding-left:2.2%;
@@ -150,15 +177,19 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
             <div class="container">
                 <div class="navbar-header">
-						<a class="navbar-brand" runat="server" href="~/">placeHolder{Title}</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" runat="server" style="cursor:default;" >MasterBox</a>
 					</div>
 					<div class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a runat="server" href="~/">Log out</a></li>
-						
+							<li><a class="navbar-brand" runat="server" href="~/">Log out</a></li>
 						</ul>
 					</div>
             </div>
@@ -167,17 +198,16 @@
         <div class="SideMenuBar">        
             <div class="LoginUser">
                 <p>placeHolder{UserName}</p>  
-              
-                   
+                 
             </div>   
             <ul>
-               <lh style="font-size:1em;">placeHolder{Title}</lh>
-               <li><a onclick="gotoMain()"><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!*Files*/>
-               <li><a onclick="gotoOther()"><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Shared*/>
-               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Settings*/>
-               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> <!/*Contact Us*/>
-               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li> 
-               <li><a><img class="FileIcon"src=""/align="left">placeHolder{Navigation}</a></li>
+               <lh style="font-size:1em;">APPLICATIONS</lh>
+               <li><a onclick="gotoMain()"title="Files"data-toggle="tooltip" data-placement="right"><img src="" align="left"/>Files</a></li> <!*Files*/>
+               <li><a onclick="gotoOther()" ><img src=""align="left">Shared Files</a></li> <!/*Shared*/>
+               <li><a onclick="gotoSettings()"><img src=""align="left">Settings</a></li> <!/*Settings*/>
+               <li><a><img src=""align="left">Contact Us</a></li> <!/*Contact Us*/>
+               <li><a><img src=""align="left">placeHolder{Navigation}</a></li> 
+               <li><a><img src=""align="left">placeHolder{Navigation}</a></li>
             </ul>
                 
             <div class="AdvertisementBar">
@@ -187,66 +217,54 @@
             
         </div>
         <div class="MainContent" id="MainDiv">
+            <div class="FileToolBar">
+                <div style="margin-right:2.5%;"> 
+                <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"></a>
+                <a onclick=""><img class="FileIcon"src="" title="Share Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
+                </div>
+           
+            
+            </div>
             <div class="FileContainer">
-               <h3 >placeHolder{Files}</h3>
-                
+               <h2 >placeHolder{Files}</h2>   
                 <ul>
                     <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
                     
-                        <ul>
-                            <li>placeHolder{Files}</li>
-                            <li>placeHolder{Files}</li>
-                            <li>placeHolder{Files}</li>
-                        </ul>
-                      
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
+
                 </ul>
 
 
 
             </div>
             <div class="FileTreeContainer">
-                <h2>placeHolder{Files-Tree}</h2> 
-                 <!--
-                    <asp:Table ID="Table1" class="FileTable" runat="server" BorderStyle="Solid">
-                        <asp:TableRow>
-                            <asp:TableHeaderCell>Name:</asp:TableHeaderCell>
-                            <asp:TableHeaderCell>Last Modified:</asp:TableHeaderCell>
-                            <asp:TableHeaderCell>Shared With:</asp:TableHeaderCell>
-                        </asp:TableRow>
-                    </asp:Table>
-                  -->
-                <div class="row" style="border-bottom:1px solid black;">
-                    <div class="FileTreeContainerTable" style="border:1px solid black">
+                <h3>placeHolder{Files-Tree}</h3>   
+                <div class="row" style="margin:0 auto; border-bottom:2px solid black;" >
+                    <div class="FileTreeContainerTable">
                         <p>Name: </p>
                     </div>
-                    <div class="FileTreeContainerTable" style="border:1px solid black">
+                    <div class="FileTreeContainerTable" >
                         <p>Last Modified: </p>
                     </div>
-                    <div class="FileTreeContainerTable" style="border:1px solid black">
-                        <p>Shared With:</p>
-                    </div>
+                    
                 </div>
                 <div class="FileTreeContainerObtainedFiles">
-
                     <div class="FileTreeContainerTable" >
                         <p>placeHolder{FileName} </p>
                     </div>
                     <div class="FileTreeContainerTable" >
                         <p>placeHolder{Last_Modified} </p>
                     </div>
-                    <div class="FileTreeContainerTable" >
-                        <p>placeHolder{Shared_With}</p>
-                    </div>
-                    
+                                 
                  </div>
                 
             </div>
           
-         
+        
         </div>
 
         <div class="MainContent" id="OthersDiv" style="display:none;">
@@ -256,5 +274,10 @@
 
     </div>
     </form>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+     </script>
 </body>
 </html>
