@@ -360,3 +360,21 @@ footer{
     height: 360px;
     float: right;
 }
+.tableData td{
+    font-family:sans-serif;
+    font-size:25px;
+    text-align:center;
+}
+
+.tableHeaders th{
+    text-align:center;
+    padding: 10px;
+    font-size: 50px;
+    font-family: sans-serif;
+    background-color: #4C7DB4;
+    color: white;
+}
+
+table, th, td {
+    border: 2px groove black;
+}
