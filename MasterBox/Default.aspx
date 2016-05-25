@@ -1,18 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="MasterBox._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    <!--
-
-    <script>
-        NProgress.start();
-        NProgress.set(0.4);
-        NProgress.inc();
-        NProgress.done();
-    </script>
-
-    -->
-
+    
     <!--
     <div class="jumbotron">
         <h1>MasterBox</h1>
@@ -110,5 +99,4 @@
             </p>
         </div>
     </div>
-
 </asp:Content>
