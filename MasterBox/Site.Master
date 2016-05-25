@@ -6,16 +6,16 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %></title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/Content/nprogress.css" rel="stylesheet" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src='/Scripts/nprogress.js'></script>
-    <link rel='stylesheet' href='nprogress.css'/>
 </head>
 <body>
     <div class="body-wrapper">
