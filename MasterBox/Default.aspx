@@ -2,16 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <!--
-
-    <script>
-        NProgress.start();
-        NProgress.set(0.4);
-        NProgress.inc();
-        NProgress.done();
-    </script>
-
-    -->
+<script>NProgress.start();</script>
 
     <!--
     <div class="jumbotron">
@@ -110,5 +101,6 @@
             </p>
         </div>
     </div>
+    <script>NProgress.done();</script>
 
 </asp:Content>
