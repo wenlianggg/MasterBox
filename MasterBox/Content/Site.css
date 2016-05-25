@@ -360,6 +360,64 @@ footer{
     height: 360px;
     float: right;
 }
+
+/*Scrollbar*/
+::-webkit-scrollbar /* 1 */             {
+    width: 4px;
+    height: 4px;
+    background-color: #000;
+}
+
+::-webkit-scrollbar-button /* 2 */      {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track /* 3 */       {
+    background: #000000;
+    border: 0px none #ffffff;
+    border-radius: 6px;
+}
+::-webkit-scrollbar-track:hover {
+    background: #070707;
+}
+::-webkit-scrollbar-track:active {
+    background: #111111;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+::-webkit-scrollbar-track-piece /* 4 */ {
+     background: #000000;
+    border: 0px none #ffffff;
+    border-radius: 6px;
+}
+::-webkit-scrollbar-track-piece:hover {
+    background: #070707;
+}
+::-webkit-scrollbar-track-piece:active {
+    background: #111111;
+}
+
+::-webkit-scrollbar-thumb /* 5 */       {
+    background: #fbfeff;
+    border: 0px none #ffffff;
+    border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #000000;
+}
+
+::-webkit-scrollbar-corner /* 6 */      {
+     background: #000000;
+}
+
+::-webkit-resizer /* 7 */               {
+}
 .tableData td{
     font-family:sans-serif;
     font-size:25px;
