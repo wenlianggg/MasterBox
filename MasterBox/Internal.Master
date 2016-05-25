@@ -20,8 +20,8 @@
             float: left;
             display: block;
             width: 23%;
+            margin-top:50px;
         }
-
             .SideMenuBar lh {
                 color: white;
                 padding: 10px;
@@ -86,8 +86,12 @@
             width: 77%;
             display: block;
             height: 100vh;
+            margin-top:50px;
         }
-
+        .MainContent h1{
+            border:1px solid black;
+           padding-left:1.5%;
+        }
         .FileToolBar {
             width: 100%;
             float: left;
@@ -164,40 +168,12 @@
         }
 
         .FileTreeContainerObtainedFiles {
+
         }
     </style>
-    <script>
-        function gotoFile() {
-            document.getElementById('MainDiv').style.display = "block";
-            document.getElementById('SharedDiv').style.display = "none";
-            document.getElementById('SettingDiv').style.display = "none";
-            document.getElementById('ContactDiv').style.display = "none";
-        }
-        function gotoShared() {
-            document.getElementById('MainDiv').style.display = "none";
-            document.getElementById('SharedDiv').style.display = "block";
-            document.getElementById('SettingDiv').style.display = "none";
-            document.getElementById('ContactDiv').style.display = "none";
-        }
-
-        function gotoSettings() {
-            document.getElementById('MainDiv').style.display = "none";
-            document.getElementById('SharedDiv').style.display = "none";
-            document.getElementById('SettingDiv').style.display = "block";
-            document.getElementById('ContactDiv').style.display = "none";
-        }
-        function gotoContact() {
-            document.getElementById('MainDiv').style.display = "none";
-            document.getElementById('SharedDiv').style.display = "none";
-            document.getElementById('SettingDiv').style.display = "none";
-            document.getElementById('ContactDiv').style.display = "block";
-        }
-
-    </script>
 </head>
 <body>
     <form id="form1" runat="server">
-
         <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
             <div class="container">
                 <div class="navbar-header">
@@ -222,21 +198,20 @@
             </div>
             <ul>
                 <lh style="font-size: 1em;">APPLICATIONS</lh>
-                <li><a onclick="gotoFile()" title="Files" data-toggle="tooltip" data-placement="right">
+                <li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
                     <img src="images/Logged/File.png" align="left" />Files</a></li>
-                <!*Files*/>
-               <li><a onclick="gotoShared()" title="Shared" data-toggle="tooltip" data-placement="right">
+               
+               <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
                    <img src="images/Logged/Shared.png" align="left" />Shared Files</a></li>
-                <!/*Shared*/>
-               <li><a onclick="gotoSettings()" title="Settings" data-toggle="tooltip" data-placement="right">
+                
+               <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
                    <img src="images/Logged/Settings.png" align="left" />Settings</a></li>
-                <!/*Settings*/>
+               
                <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
                    <img src="images/Logged/contact.png" align="left" />Contact Us</a></li>
-                <!/*Contact Us*/>
+                
  
             </ul>
-
             <div class="AdvertisementBar">
                 <p>placeHolder{Advertisement}</p>
                 <p>placeHolder{Advertisement-Image}</p>

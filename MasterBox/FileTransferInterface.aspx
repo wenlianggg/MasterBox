@@ -1,12 +1,11 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
-
-        <div class="MainContent" id="MainDiv">
+        <div class="MainContent">
             <div class="FileToolBar">
                 <div style="margin-right: 2.5%;">
                     <a onclick="">
-                        <img class="FileIcon" src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
+                        <img class="FileIcon" src="images/Logged/FileDelete.png" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
                         <img class="FileIcon" src="images/Logged/NewSharedFolder.png" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
@@ -45,59 +44,4 @@
                 </div>
             </div>
         </div>
-
-        <div class="MainContent" id="SharedDiv">
-
-            <div class="FileToolBar">
-                <div style="margin-right: 2.5%;">
-                    <a onclick="">
-                        <img class="FileIcon" src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                    <a onclick="">
-                        <img class="FileIcon" src="" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                    <a onclick="">
-                        <img class="FileIcon" src="" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                    <a onclick="">
-                        <img class="FileIcon" src="" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
-                </div>
-            </div>
-            <div class="FileContainer">
-                <h2>placeHolder{SharedFiles}</h2>
-                <ul>
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
-                    <li>placeHolder{Files}</li>
-                </ul>
-            </div>
-            <div class="FileTreeContainer">
-                <h3>placeHolder{SharedFiles-Tree}</h3>
-                <div class="row" style="margin: 0 auto; border-bottom: 2px solid black;">
-                    <div class="FileTreeContainerTable">
-                        <p>Name: </p>
-                    </div>
-                    <div class="FileTreeContainerTable">
-                        <p>Last Modified: </p>
-                    </div>
-
-                </div>
-                <div class="FileTreeContainerObtainedFiles">
-                    <div class="FileTreeContainerTable">
-                        <p>placeHolder{FileName} </p>
-                    </div>
-                    <div class="FileTreeContainerTable">
-                        <p>placeHolder{Last_Modified}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="MainContent" id="SettingDiv" style="display: none;">
-            <h1>Settings</h1>
-
-        </div>
-        <div class="MainContent" id="ContactDiv" style="display: none;">
-            <h1>Contact</h1>
-
-        </div>
-    </div>
 </asp:Content>

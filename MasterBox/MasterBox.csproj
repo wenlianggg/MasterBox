@@ -139,9 +139,11 @@
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
+    <Content Include="FileSettingInterface.aspx" />
     <Content Include="images\encryption.png" />
     <Content Include="images\Logged\contact.png" />
     <Content Include="images\Logged\File.png" />
+    <Content Include="images\Logged\FileDelete.png" />
     <Content Include="images\Logged\NewFolder.png" />
     <Content Include="images\Logged\NewSharedFolder.png" />
     <Content Include="images\Logged\Settings.png" />
@@ -231,6 +233,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSettingInterface.aspx.cs">
+      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileSettingInterface.aspx.designer.cs">
+      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Internal.Master.cs">
       <DependentUpon>Internal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
