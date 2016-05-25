@@ -137,7 +137,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\nprogress.css" />
     <Content Include="images\encryption.png" />
     <Content Include="images\Logged\contact.png" />
     <Content Include="images\Logged\File.png" />
