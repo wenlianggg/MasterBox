@@ -11,8 +11,7 @@
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style>
         /*SideBarNavigation*/
-        .SideMenuBar{   
-            margin-top:3.5%;       
+        .SideMenuBar{        
             height:100vh;
             background-color:#252523;
             float:left;
@@ -80,8 +79,7 @@
         .MainContent{   
             float:left;
             width:77%;
-            display: block; 
-            margin-top:3.5%;     
+            display: block;    
             height:100vh;
         }
 
@@ -163,23 +161,39 @@
 
     </style>
     <script>
-        function gotoMain() {
+        function gotoFile() {
             document.getElementById('MainDiv').style.display = "block";
-            document.getElementById('OthersDiv').style.display = "none";
+            document.getElementById('SharedDiv').style.display = "none";
+            document.getElementById('SettingDiv').style.display = "none";
+            document.getElementById('ContactDiv').style.display = "none";
         }
-        function gotoOther() {
+        function gotoShared() {
             document.getElementById('MainDiv').style.display = "none";
-            document.getElementById('OthersDiv').style.display = "block";
+            document.getElementById('SharedDiv').style.display = "block";
+            document.getElementById('SettingDiv').style.display = "none";
+            document.getElementById('ContactDiv').style.display = "none";
         }
 
+        function gotoSettings() {
+            document.getElementById('MainDiv').style.display = "none";
+            document.getElementById('SharedDiv').style.display = "none";
+            document.getElementById('SettingDiv').style.display = "block";
+            document.getElementById('ContactDiv').style.display = "none";
+        }
+        function gotoContact() {
+            document.getElementById('MainDiv').style.display = "none";
+            document.getElementById('SharedDiv').style.display = "none";
+            document.getElementById('SettingDiv').style.display = "none";
+            document.getElementById('ContactDiv').style.display = "block";
+        }
         
 </script>
     <title>Home - MasterBox</title>
 </head>
-<body>
+<body >
     <form id="form1" runat="server">
-    <div>
-        <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+   
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-custom" >
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -196,16 +210,15 @@
 					</div>
             </div>
         </div>
-        
+        <div class="BodyContent" style="display:block; clear:both;min-height:100vh; z-index:0; margin-top:50px;"> 
         <div class="SideMenuBar">        
             <div class="LoginUser">
-                <p>placeHolder{UserName}</p>  
-                 
+                <p>placeHolder{UserName}</p>    
             </div>   
             <ul>
                <lh style="font-size:1em;">APPLICATIONS</lh>
-               <li><a onclick="gotoMain()" title="Files"data-toggle="tooltip" data-placement="right"><img src="images/Logged/File.png"align="left"/>Files</a></li> <!*Files*/>
-               <li><a onclick="gotoOther()" title="Shared"data-toggle="tooltip" data-placement="right"><img src="images/Logged/Shared.png" align="left"/>Shared Files</a></li> <!/*Shared*/>
+               <li><a onclick="gotoFile()" title="Files"data-toggle="tooltip" data-placement="right"><img src="images/Logged/File.png"align="left"/>Files</a></li> <!*Files*/>
+               <li><a onclick="gotoShared()" title="Shared"data-toggle="tooltip" data-placement="right"><img src="images/Logged/Shared.png" align="left"/>Shared Files</a></li> <!/*Shared*/>
                <li><a onclick="gotoSettings()" title="Settings"data-toggle="tooltip" data-placement="right"><img src="images/Logged/Settings.png" align="left"/>Settings</a></li> <!/*Settings*/>
                <li><a onclick="gotoContact()" title="Contact Us"data-toggle="tooltip" data-placement="right"><img src="images/Logged/contact.png" align="left"/>Contact Us</a></li> <!/*Contact Us*/>
  
@@ -221,12 +234,10 @@
             <div class="FileToolBar">
                 <div style="margin-right:2.5%;"> 
                 <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"/></a>
-                <a onclick=""><img class="FileIcon"src="" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom"/></a>
-                <a onclick=""><img class="FileIcon"src="" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
-                <a onclick=""><img class="FileIcon"src="" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
-                </div>
-           
-            
+                <a onclick=""><img class="FileIcon"src="images/Logged/NewSharedFolder.png" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="images/Logged/NewFolder.png" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="images/Logged/Upload.png" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
+                </div> 
             </div>
             <div class="FileContainer">
                <h2 >placeHolder{Files}</h2>   
@@ -235,12 +246,7 @@
                     <li>placeHolder{Files}</li>
                     <li>placeHolder{Files}</li>
                     <li>placeHolder{Files}</li>
-                    
-
                 </ul>
-
-
-
             </div>
             <div class="FileTreeContainer">
                 <h3>placeHolder{Files-Tree}</h3>   
@@ -259,21 +265,62 @@
                     </div>
                     <div class="FileTreeContainerTable" >
                         <p>placeHolder{Last_Modified} </p>
-                    </div>
-                                 
-                 </div>
-                
+                    </div>                                
+                 </div>                
+            </div>       
+        </div>
+
+        <div class="MainContent" id="SharedDiv">
+         
+            <div class="FileToolBar">
+                <div style="margin-right:2.5%;"> 
+                <a onclick=""><img class="FileIcon"src="" title="Delete Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="New Folder" data-toggle="tooltip" data-placement="bottom"/></a>
+                <a onclick=""><img class="FileIcon"src="" title="Upload" data-toggle="tooltip" data-placement="bottom"/></a>
+                </div>
             </div>
-          
-        
+            <div class="FileContainer">
+               <h2 >placeHolder{SharedFiles}</h2>   
+                <ul>
+                    <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
+                    <li>placeHolder{Files}</li>
+                </ul>
+            </div>
+            <div class="FileTreeContainer">
+                <h3>placeHolder{SharedFiles-Tree}</h3>   
+                <div class="row" style="margin:0 auto; border-bottom:2px solid black;" >
+                    <div class="FileTreeContainerTable">
+                        <p>Name: </p>
+                    </div>
+                    <div class="FileTreeContainerTable" >
+                        <p>Last Modified: </p>
+                    </div>
+                    
+                </div>
+                <div class="FileTreeContainerObtainedFiles">
+                    <div class="FileTreeContainerTable" >
+                        <p>placeHolder{FileName} </p>
+                    </div>
+                    <div class="FileTreeContainerTable" >
+                        <p>placeHolder{Last_Modified}</p>
+                    </div>                                
+                 </div>                
+            </div>       
         </div>
-
-        <div class="MainContent" id="OthersDiv" style="display:none;">
-            <h1>Hello</h1>
-            <h1>Hello</h1>
+       
+        <div class="MainContent" id="SettingDiv" style="display:none;">
+            <h1>Settings</h1>
+            
         </div>
-
-    </div>
+        <div class="MainContent" id="ContactDiv" style="display:none;">
+            <h1>Contact</h1>
+            
+        </div>
+        </div>
+    
     </form>
     <script>
         $(document).ready(function(){
