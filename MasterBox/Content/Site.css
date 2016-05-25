@@ -434,5 +434,9 @@ footer{
 }
 
 table, th, td {
-    border: 2px groove black;
+    border: 2px solid white;
+}
+
+.fiveMbButton{
+    align-self:center;
 }
