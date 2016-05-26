@@ -14,7 +14,7 @@ namespace MasterBox
 
         }
 
-        protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
+        protected void authenticate(object sender, AuthenticateEventArgs e)
         {
 
         }

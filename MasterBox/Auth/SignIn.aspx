@@ -7,7 +7,7 @@
     <h2><%: Title %></h2>
     <h3>Welcome to MasterBox</h3>
     <p>
-        <asp:Login ID="LoginForm" runat="server" OnAuthenticate="Login1_Authenticate" CssClass="loginForm">
+        <asp:Login ID="LoginForm" runat="server" OnAuthenticate="authenticate" CssClass="loginForm">
             <LayoutTemplate>
                 <p>Please login or register to access our features.</p>
                 <table>
