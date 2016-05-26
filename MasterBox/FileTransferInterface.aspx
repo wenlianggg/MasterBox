@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="FileContainer">
-                <h2>placeHolder{Files}</h2>
+                <h2>Files</h2>
                 <ul>
                     <li>placeHolder{Files}</li>
                     <li>placeHolder{Files}</li>

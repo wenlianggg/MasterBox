@@ -1,4 +1,5 @@
 ﻿/*SideBarNavigation*/
+/*Maybe able to use bootstrap to overide instead of using new div*/
 .SideMenuBar {
     height: 100vh;
     background-color: #252523;
@@ -75,11 +76,7 @@
     margin-top: 50px;
 }
 
-    .MainContent h1 {
-        border: 1px solid black;
-        padding-left: 1.5%;
-    }
-
+/*Main File Transfer Interface*/
 .FileToolBar {
     width: 100%;
     float: left;
@@ -106,8 +103,8 @@
     padding-right: 15px;
     padding-left: 15px;
     float: left;
-    width: 35%;
-    height: 93%;
+    width: 30%;
+    height:93.5%;
     overflow: auto;
     border-right: 1px solid black;
 }
@@ -143,7 +140,7 @@
     padding-right: 15px;
     padding-left: 15px;
     float: left;
-    width: 65%;
+    width: 70%;
     height: 93%;
     overflow: auto;
 }
@@ -155,5 +152,37 @@
     padding-left: 2.2%;
 }
 
-.FileTreeContainerObtainedFiles {
+/*Setting Pane*/
+.SettingsPanel{
+    width:30%;
+    height:100vh;
+    float:left;
+    border:1px solid red;
+}
+.SettingsPanel h3{
+    border-bottom:1px solid #3c6490;
+    margin:0;
+    text-align:center;
+    padding:5% 2% 4% 2%;
+     background-color: #4C7DB4;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+}
+.SettingsPanel ul{
+    border:1px solid blue;
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+.SettingsPanel ul li{
+    border:1px solid blue;
+    margin:0 auto;
+    text-align:center;
+}
+.SettingSelectionPanel{
+    width:70%;
+    height:100vh;
+    float:left;
+    border:1px solid red;
 }
