@@ -15,6 +15,7 @@
 	<webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <meta name="description" content="The description of my page" />
 </head>
 <body>
 	<div class="body-wrapper">

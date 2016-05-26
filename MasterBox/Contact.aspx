@@ -6,7 +6,7 @@
         <hr class="aboutHR" />
         <p class="lead">Talk to us about your needs!</p>
     </div>
-
+    
     <div class="col-md-4">
         <h2>Help Corner</h2><br />
         <address>
@@ -37,7 +37,7 @@
     <div class="col-md-5">
         <h2>For any other enquiries</h2><br />
         Please submit the following form and a MasterBox representative will get in touch with you<br /><br />
-        <form class="form-horizontal">
+        <div class="form-horizontal">
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
@@ -61,6 +61,6 @@
                     <button type="submit" class="btn btn-default">Send Message</button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </asp:Content>
