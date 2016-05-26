@@ -1,33 +1,23 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="MasterBox.WebForm1" %>
+﻿<%@ Page Title="Login Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SignIn.aspx.cs" Inherits="MasterBox.WebForm1" %>
+
+<asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
+    <link href="~/Auth/LoginStyle.css" rel="stylesheet" type="text/css" />
+</asp:Content>
 <asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-        .loginForm table tr > td {
-            padding: 5px;
-        }
-
-        .loginForm ol ,loginForm li {
-            margin: 0;
-            padding: 0.2em;
-        }
-
-        .loginForm .loginBtn {
-            float: right;
-        }
-    </style>
     <h2><%: Title %></h2>
     <h3>Welcome to MasterBox</h3>
     <p>
-        <asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate" CssClass="loginForm">
+        <asp:Login ID="LoginForm" runat="server" OnAuthenticate="Login1_Authenticate" CssClass="loginForm">
             <LayoutTemplate>
                 <p>Please login or register to access our features.</p>
-                    <table>
+                <table>
                     <tr>
                         <td>
                             <strong>Username</strong>
 
                         </td>
                         <td>
-                            <asp:TextBox ID="Username" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="UserName" class="usrfield" runat="server"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -35,21 +25,33 @@
                             <strong>Password</strong>
                         </td>
                         <td>
-                            <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
+                            <asp:TextBox ID="Password" class="pwdfield" runat="server" TextMode="Password"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td><strong>I am a...</strong></td>
                         <td>
-                            <asp:RadioButtonList ID="ExistingUsrBool" runat="server" RepeatLayout="Flow">
-                                <asp:ListItem Selected="True" onclick="">Returning user</asp:ListItem>
-                                <asp:ListItem>New user</asp:ListItem>
-                            </asp:RadioButtonList>
+                            <input type="radio" name="userExists" onclick="registerMode(false)" id="existingUser" checked>
+                            <label for="existingUser">Returning user</label><br />
+                            <input type="radio" name="userExists" onclick="registerMode(true)" id="newUser">
+                            <label for="newUser">New user</label>
                         </td>
                     </tr>
                 </table>
-                <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" CssClass="loginBtn"/>
+                <asp:Button ID="LoginButton" class="btn btn-default-blue loginBtn" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" />
             </LayoutTemplate>
         </asp:Login>
     </p>
+    <script>
+        function registerMode(bool) {
+            $(".pwdfield").attr('readonly', bool);
+            $(".pwdfield").attr('disabled', bool);
+            if (bool === true) {
+                $(".loginBtn").prop('value', "Register");
+            } else {
+                $(".loginBtn").prop('value', "Sign In");
+            }
+        }
+        pwdFieldActive(false);
+    </script>
 </asp:Content>

@@ -13,12 +13,12 @@ namespace MasterBox {
     public partial class WebForm1 {
         
         /// <summary>
-        /// Login1 control.
+        /// LoginForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login Login1;
+        protected global::System.Web.UI.WebControls.Login LoginForm;
     }
 }
