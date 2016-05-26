@@ -15,7 +15,8 @@ A secure file storage solution for the discerning security professional.
 ## Database Details
 ```yml
 Instance Name: mbox-db
-Hostname: mbox-db.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com:3306
+Hostname: mbox-db.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com
+DB Port: 3306
 Admin ID: masterboxadmin
 Password: MasterBoxAdmi***** (Ask WL for full PW)
 ```
