@@ -66,7 +66,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a runat="server" href="~/FileTransferInterface">Files</a></li>
-                            <li><a runat="server" href="~/SignIn">Login / Sign Up</a></li>
+                            <li><a runat="server" href="~/Auth/SignIn">Login / Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
