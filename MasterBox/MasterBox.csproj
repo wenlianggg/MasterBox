@@ -137,12 +137,19 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
+    <Content Include="CSS\Styling.css" />
+    <Content Include="FileSettingInterface.aspx" />
     <Content Include="images\encryption.png" />
     <Content Include="images\Logged\contact.png" />
     <Content Include="images\Logged\File.png" />
+    <Content Include="images\Logged\FileDelete.png" />
+    <Content Include="images\Logged\NewFolder.png" />
+    <Content Include="images\Logged\NewSharedFolder.png" />
     <Content Include="images\Logged\Settings.png" />
     <Content Include="images\Logged\Shared.png" />
+    <Content Include="images\Logged\Upload.png" />
     <Content Include="images\MasterBoxSliderblueExtended.png" />
     <Content Include="images\MasterBoxSliderExtended.png" />
     <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
@@ -155,7 +162,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="CSS\Site.css" />
     <Content Include="FileTransferInterface.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -227,6 +234,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSettingInterface.aspx.cs">
+      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileSettingInterface.aspx.designer.cs">
+      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Internal.Master.cs">
       <DependentUpon>Internal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

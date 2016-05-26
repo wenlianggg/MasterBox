@@ -7,7 +7,7 @@
     div.id = "mq-test-1";
     div.style.cssText = "position:absolute;top:-100em";
     fakeBody.style.background = "none";
-    fakeBody.appendChild(div);
+    fakeBody.appen  dChild(div);
     return function(q) {
       div.innerHTML = '&shy;<style media="' + q + '"> #mq-test-1 { width: 42px; }</style>';
       docElem.insertBefore(fakeBody, refNode);
