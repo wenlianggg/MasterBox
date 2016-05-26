@@ -22,7 +22,7 @@
             width: 23%;
             margin-top:50px;
         }
-            .SideMenuBar lh {
+         .SideMenuBar lh {
                 color: white;
                 padding: 10px;
                 display: block;
