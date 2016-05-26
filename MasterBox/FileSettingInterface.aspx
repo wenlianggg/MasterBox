@@ -5,16 +5,16 @@
         <div class="SettingsPanel"> 
             <h3>Application Settings</h3>
             <ul>
-                <li>Profile</li>
-                <li>General</li>
-                <li>Security</li>
-                <li>Upgrade</li>
+                <li><a runat="server" href="">Profile</a></li>
+                <li><a>General</a></li>
+                <li><a>Security</a></li>
+                <li><a>Upgrade</a></li>
             </ul>
 
 
         </div>
         <div class="SettingSelectionPanel"> 
-            <h1>Testing</h1>
+             
         </div>
 
 
