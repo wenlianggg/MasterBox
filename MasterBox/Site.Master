@@ -21,6 +21,8 @@
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
 	<!--- Favicon --->
     <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <div class="body-wrapper">

@@ -137,6 +137,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Auth\LoginStyle.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
