@@ -2,11 +2,19 @@
 
 <asp:Content ID="Testing" ContentPlaceHolderID="InternalContent" runat="server">
     <div class="MainContent">
-        <div class="SettingsPanel" style="border:1px solid red; width:30%;float:left;"> 
+        <div class="SettingsPanel"> 
+            <h3>Application Settings</h3>
+            <ul>
+                <li>Profile</li>
+                <li>General</li>
+                <li>Security</li>
+                <li>Upgrade</li>
+            </ul>
+
 
         </div>
-        <div > 
-
+        <div class="SettingSelectionPanel"> 
+            <h1>Testing</h1>
         </div>
 
 
