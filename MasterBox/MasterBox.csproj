@@ -138,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />
+    <Content Include="Auth\Logon.aspx" />
+    <Content Include="Auth\Default.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -239,6 +241,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\Logon.aspx.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Auth\Logon.aspx.designer.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Auth\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Auth\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FileSettingInterface.aspx.cs">
       <DependentUpon>FileSettingInterface.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
