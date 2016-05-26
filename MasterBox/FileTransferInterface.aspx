@@ -1,6 +1,15 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+    
+     <ul class='custom-menu'>
+          <li data-action="upload">Upload</li>
+          <li data-action="file">New Folder</li>
+          <li data-action="sharefile">New Shared Folder</li>
+         <li data-action="delete">Delete</li>
+     </ul>
+
+
         <div class="MainContent">
             <div class="FileToolBar">
                 <div style="margin-right: 2.5%;">

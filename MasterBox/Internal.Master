@@ -12,6 +12,11 @@
     <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
     <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+    <script src="Scripts/Internal.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<!--- CSS Libraries --->
     <webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
@@ -20,12 +25,19 @@
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
     <link href='~/CSS/Internal.css' rel="stylesheet" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<!--- Favicon --->
     <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
+
+
+    
+    
+
 </head>
 <body>
+     
     <form id="form1" runat="server">
         <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
             <div class="container">
@@ -74,12 +86,16 @@
         <div>
             <asp:ContentPlaceHolder ID="InternalContent" runat="server">
             </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="SettingContent" runat="server">
+            </asp:ContentPlaceHolder>
         </div>
-    </form>
-    <script>
+        <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    </form>
+    
+    
 </body>
 </html>

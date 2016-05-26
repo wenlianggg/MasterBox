@@ -1,4 +1,29 @@
-﻿/*SideBarNavigation*/
+﻿/*Custom Context Menu*/
+.custom-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    font-family: sans-serif;
+    background: #FFF;
+    color: #333;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.custom-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style-type: none;
+    transition: all .3s ease;
+}
+
+.custom-menu li:hover {
+    background-color: #DEF;
+}
+/*SideBarNavigation*/
 /*Maybe able to use bootstrap to overide instead of using new div*/
 .SideMenuBar {
     height: 100vh;
@@ -163,7 +188,9 @@
     margin:0;
     text-align:center;
     padding:5% 2% 4% 2%;
-     background-color: #4C7DB4;
+    color:white;
+    background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
+    background-color: #4C7DB4;
     -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
@@ -174,7 +201,7 @@
     margin:0;
 }
 .SettingsPanel ul li{
-    border-bottom:1px solid blue;
+    border-bottom:1px solid white;
     margin:0 auto;
     text-align:center;
     padding:5%;
@@ -187,7 +214,6 @@
     color:black;
     font-weight:500;
 }
-
 
 
 .SettingSelectionPanel{

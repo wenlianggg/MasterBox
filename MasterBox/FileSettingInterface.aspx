@@ -5,7 +5,7 @@
         <div class="SettingsPanel"> 
             <h3>Application Settings</h3>
             <ul>
-                <li><a runat="server" href="">Profile</a></li>
+                <li><a runat="server" href="" class="active">Profile</a></li>
                 <li><a>General</a></li>
                 <li><a>Security</a></li>
                 <li><a>Upgrade</a></li>
@@ -14,9 +14,13 @@
 
         </div>
         <div class="SettingSelectionPanel"> 
-             
+             <div id="SettingProfile">
+                 <h1>Profile</h1>
+             </div>
         </div>
 
 
     </div>
 </asp:Content>
+
+
