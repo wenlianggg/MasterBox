@@ -21,7 +21,7 @@
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
     <link href='~/CSS/Internal.css' rel="stylesheet" />
 	<!--- Favicon --->
-    <link href='~/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
     <form id="form1" runat="server">
