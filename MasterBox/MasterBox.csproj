@@ -139,6 +139,7 @@
   <ItemGroup>
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
+    <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
     <Content Include="FileSettingInterface.aspx" />
     <Content Include="images\encryption.png" />
