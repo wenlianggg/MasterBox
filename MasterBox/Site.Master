@@ -20,7 +20,7 @@
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
 	<!--- Favicon --->
-    <link href='~/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
     <div class="body-wrapper">
@@ -66,7 +66,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a runat="server" href="~/FileTransferInterface">Files</a></li>
-                            <li><a runat="server" href="~/SignIn">Login / Sign Up</a></li>
+                            <li><a runat="server" href="~/Auth/SignIn">Login / Sign Up</a></li>
                         </ul>
                     </div>
                 </div>

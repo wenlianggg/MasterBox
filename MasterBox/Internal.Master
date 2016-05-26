@@ -4,173 +4,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
-    <webopt:BundleReference runat="server" Path="~/Content/bootstrap.css" />
-    <webopt:BundleReference runat="server" Path="~/Content/Site.css" />
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <style>
-        /*SideBarNavigation*/
-        .SideMenuBar {
-            height: 100vh;
-            background-color: #252523;
-            float: left;
-            display: block;
-            width: 23%;
-            margin-top:50px;
-        }
-         .SideMenuBar lh {
-                color: white;
-                padding: 10px;
-                display: block;
-            }
-
-            .SideMenuBar ul {
-                list-style-type: none;
-                margin-left: 4%;
-                padding: 0;
-                width: 250px;
-            }
-
-        .SideMenu ul li {
-            list-style-type: none;
-            border: 1px;
-            border-style: solid;
-        }
-
-        .SideMenuBar ul li a {
-            display: block;
-            color: ghostwhite;
-            padding: 8px 0 8px 16px;
-            font-size: 0.9em;
-            text-decoration: none;
-            text-align: left;
-            padding: 10px 20px 10px 20px;
-            cursor: pointer;
-        }
-
-            .SideMenuBar ul li a:hover {
-                font-style: italic;
-                color: white;
-            }
-
-        .SideMenuBar img {
-            width: 20px;
-            height: 20px;
-            margin-right: 2%;
-        }
-        /*user information*/
-        .LoginUser {
-            color: white;
-            text-align: center;
-            padding-top: 6%;
-            padding-bottom: 2%;
-            border-bottom: 1px solid white;
-        }
-
-        .AdvertisementBar {
-            color: white;
-            text-align: center;
-            padding-top: 6%;
-            padding-bottom: 2%;
-            border-top: 1px solid white;
-        }
-
-
-        /*Main Content*/
-        .MainContent {
-            float: left;
-            width: 77%;
-            display: block;
-            height: 100vh;
-            margin-top:50px;
-        }
-        .MainContent h1{
-            border:1px solid black;
-           padding-left:1.5%;
-        }
-        .FileToolBar {
-            width: 100%;
-            float: left;
-            padding-top: 2%;
-            padding: 1%;
-            background-color: #4C7DB4;
-            -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-        }
-
-            .FileToolBar img {
-                float: right;
-                margin-right: 2%;
-                cursor: pointer;
-                width: 20px;
-                height: 20px;
-            }
-
-        .FileContainer {
-            background-color: #f2f2fc;
-            position: relative;
-            min-height: 1px;
-            padding-right: 15px;
-            padding-left: 15px;
-            float: left;
-            width: 35%;
-            height: 93%;
-            overflow: auto;
-            border-right: 1px solid black;
-        }
-
-            .FileContainer h2 {
-                padding-bottom: 3%;
-                border-bottom: 1px solid black;
-            }
-
-            .FileContainer ul {
-                margin: 0.75em 0;
-                padding: 0 1em;
-                list-style: none;
-            }
-
-                .FileContainer ul li:before {
-                    content: "";
-                    border-color: transparent #111;
-                    border-style: solid;
-                    border-width: 0.35em 0 0.35em 0.45em;
-                    display: block;
-                    height: 0;
-                    width: 0;
-                    left: -1em;
-                    top: 1.1em;
-                    position: relative;
-                }
-
-        .FileTreeContainer {
-            background-color: #fbfbfe;
-            position: relative;
-            min-height: 1px;
-            padding-right: 15px;
-            padding-left: 15px;
-            float: left;
-            width: 65%;
-            height: 93%;
-            overflow: auto;
-        }
-
-        .FileTreeContainerTable {
-            width: 49%;
-            float: left;
-            padding-top: 10px;
-            padding-left: 2.2%;
-        }
-
-        .FileTreeContainerObtainedFiles {
-
-        }
-    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %></title>
+	<!-- JS Scripts -->
+	<asp:PlaceHolder runat="server">
+    <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
+	<!--- CSS Libraries --->
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
+	<link href='~/Content/nprogress.css' rel="stylesheet" />
+	<!--- CSS Customisations --->   
+	<link href='~/CSS/Site.css' rel="stylesheet" />
+	<link href='~/CSS/Styling.css' rel="stylesheet" />
+    <link href='~/CSS/Internal.css' rel="stylesheet" />
+	<!--- Favicon --->
+    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -200,17 +51,17 @@
                 <lh style="font-size: 1em;">APPLICATIONS</lh>
                 <li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
                     <img src="images/Logged/File.png" align="left" />Files</a></li>
-               
-               <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
-                   <img src="images/Logged/Shared.png" align="left" />Shared Files</a></li>
-                
-               <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
-                   <img src="images/Logged/Settings.png" align="left" />Settings</a></li>
-               
-               <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
-                   <img src="images/Logged/contact.png" align="left" />Contact Us</a></li>
-                
- 
+
+                <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
+                    <img src="images/Logged/Shared.png" align="left" />Shared Files</a></li>
+
+                <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
+                    <img src="images/Logged/Settings.png" align="left" />Settings</a></li>
+
+                <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
+                    <img src="images/Logged/contact.png" align="left" />Contact Us</a></li>
+
+
             </ul>
             <div class="AdvertisementBar">
                 <p>placeHolder{Advertisement}</p>

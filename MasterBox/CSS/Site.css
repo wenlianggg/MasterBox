@@ -36,6 +36,13 @@ body {
 	box-shadow:5px 0px 3px rgba(0,0,0,0.2), -5px 0px 3px rgba(0,0,0,0.2);
 }
 
+@media (max-width: 900px) {
+    .body-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
