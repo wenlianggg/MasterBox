@@ -1,7 +1,6 @@
 ﻿
 
 /* Image Slider Carousel */
-
 .carousel {
     width:100%;
 }
@@ -13,6 +12,11 @@
 }
 .carousel-indicators li {
     opacity:0.5;
+    border: 1px solid #282828;
+    border-radius: 3.5px;
+}
+.carousel-indicators li:hover {
+    opacity:1;
     border: 1px solid #282828;
     border-radius: 3.5px;
 }
