@@ -10,15 +10,15 @@
 namespace MasterBox {
     
     
-    public partial class Pricing {
+    public partial class WebForm1 {
         
         /// <summary>
-        /// PayPalBtn control.
+        /// LoginForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn;
+        protected global::System.Web.UI.WebControls.Login LoginForm;
     }
 }

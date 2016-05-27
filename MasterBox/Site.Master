@@ -7,15 +7,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %></title>
-
-    <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/bundles/modernizr") %>
+	<!-- JS Scripts -->
+	<asp:PlaceHolder runat="server">
+    <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-
+    <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
+	<!--- CSS Libraries --->
     <webopt:BundleReference runat="server" Path="~/Content/css" />
-    <link href="~/Content/nprogress.css" rel="stylesheet" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <script src='/Scripts/nprogress.js'></script>
+	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
+	<link href='~/Content/nprogress.css' rel="stylesheet" />
+	<!--- CSS Customisations --->
+	<link href='~/CSS/Site.css' rel="stylesheet" />
+	<link href='~/CSS/Styling.css' rel="stylesheet" />
+	<!--- Favicon --->
+    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <div class="body-wrapper">
@@ -61,7 +68,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a runat="server" href="~/FileTransferInterface">Files</a></li>
-                            <li><a runat="server" href="~/SignIn">Login / Sign Up</a></li>
+                            <li><a runat="server" href="~/Auth/SignIn.aspx">Login / Sign Up</a></li>
                         </ul>
                     </div>
                 </div>

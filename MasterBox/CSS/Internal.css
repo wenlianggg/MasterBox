@@ -1,0 +1,224 @@
+﻿/*Custom Context Menu*/
+.custom-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    font-family: sans-serif;
+    background: #FFF;
+    color: #333;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.custom-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style-type: none;
+    transition: all .3s ease;
+}
+
+.custom-menu li:hover {
+    background-color: #DEF;
+}
+/*SideBarNavigation*/
+/*Maybe able to use bootstrap to overide instead of using new div*/
+.SideMenuBar {
+    height: 100vh;
+    background-color: #252523;
+    float: left;
+    display: block;
+    width: 23%;
+    margin-top: 50px;
+}
+
+    .SideMenuBar lh {
+        color: white;
+        padding: 10px;
+        display: block;
+    }
+
+    .SideMenuBar ul {
+        list-style-type: none;
+        margin-left: 4%;
+        padding: 0;
+        width: 250px;
+    }
+
+    .SideMenu ul li {
+        list-style-type: none;
+        border: 1px;
+        border-style: solid;
+    }
+
+.SideMenuBar ul li a {
+    display: block;
+    color: ghostwhite;
+    padding: 8px 0 8px 16px;
+    font-size: 1.2em;
+    text-decoration: none;
+    text-align: left;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+}
+
+    .SideMenuBar ul li a:hover {
+        font-style: italic;
+        color: white;
+    }
+
+.SideMenuBar img {
+    width: 20px;
+    height: 20px;
+    margin-right: 2%;
+}
+/*user information*/
+.LoginUser {
+    color: white;
+    text-align: center;
+    padding-top: 6%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid white;
+}
+
+.AdvertisementBar {
+    color: white;
+    text-align: center;
+    padding-top: 6%;
+    padding-bottom: 2%;
+    border-top: 1px solid white;
+}
+
+
+/*Main Content*/
+.MainContent {
+    float: left;
+    width: 77%;
+    display: block;
+    height: 100vh;
+    margin-top: 50px;
+}
+
+/*Main File Transfer Interface*/
+.FileToolBar {
+    width: 100%;
+    float: left;
+    padding-top: 2%;
+    padding: 1%;
+    background-color: #4C7DB4;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+}
+
+    .FileToolBar img {
+        float: right;
+        margin-right: 2%;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+    }
+
+.FileContainer {
+    background-color: #f2f2fc;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 30%;
+    height:93.5%;
+    overflow: auto;
+    border-right: 1px solid black;
+}
+
+    .FileContainer h2 {
+        padding-bottom: 3%;
+        border-bottom: 1px solid black;
+    }
+
+    .FileContainer ul {
+        margin: 0.75em 0;
+        padding: 0 1em;
+        list-style: none;
+    }
+
+        .FileContainer ul li:before {
+            content: "";
+            border-color: transparent #111;
+            border-style: solid;
+            border-width: 0.35em 0 0.35em 0.45em;
+            display: block;
+            height: 0;
+            width: 0;
+            left: -1em;
+            top: 1.1em;
+            position: relative;
+        }
+
+.FileTreeContainer {
+    background-color: #fbfbfe;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 70%;
+    height: 93%;
+    overflow: auto;
+}
+
+.FileTreeContainerTable {
+    width: 49%;
+    float: left;
+    padding-top: 10px;
+    padding-left: 2.2%;
+}
+
+/*Setting Pane*/
+.SettingsPanel{
+    width:30%;
+    height:100vh;
+    float:left;
+}
+.SettingsPanel h3{
+    border-bottom:1px solid #3c6490;
+    margin:0;
+    text-align:center;
+    padding:5% 2% 4% 2%;
+    color:white;
+    background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
+    background-color: #4C7DB4;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+}
+.SettingsPanel ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+.SettingsPanel ul li{
+    border-bottom:1px solid white;
+    margin:0 auto;
+    text-align:center;
+    padding:5%;
+    background-color:#e2d8ff;
+}
+.SettingsPanel ul li a{
+    font-size:1.2em;
+    cursor:pointer;
+    text-decoration:none;
+    color:black;
+    font-weight:500;
+}
+
+
+.SettingSelectionPanel{
+    width:70%;
+    height:100vh;
+    float:left;
+    border:1px solid blue;
+}
