@@ -16,6 +16,7 @@
         <div class="SettingSelectionPanel"> 
              <div id="SettingProfile">
                  <h1>Profile</h1>
+
              </div>
         </div>
 

@@ -11,6 +11,8 @@
 
 
         <div class="MainContent">
+            <div id="light" class="white_content">This is the lightbox content. <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a></div>
+    <div id="fade" class="black_overlay"></div>
             <div class="FileToolBar">
                 <div style="margin-right: 2.5%;">
                     <a onclick="">
@@ -19,7 +21,7 @@
                         <img class="FileIcon" src="images/Logged/NewSharedFolder.png" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
                         <img class="FileIcon" src="images/Logged/NewFolder.png" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                    <a onclick="">
+                    <a onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
                         <img class="FileIcon" src="images/Logged/Upload.png" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
                 </div>
             </div>
