@@ -1,6 +1,4 @@
-﻿
-
-/* Image Slider Carousel */
+﻿/* Image Slider Carousel */
 .carousel {
     width:100%;
 }
@@ -26,7 +24,7 @@
     border-radius: 3px;
     background-color: #0098db;
 }
-    
+
 /*Fixed the image slider*/
 img{
     height:292px;

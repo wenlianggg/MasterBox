@@ -1,6 +1,12 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="MasterBox._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+    </script>
+
 
     <!--
     <div class="jumbotron">
@@ -58,6 +64,22 @@
             </a>
         </div>
     <!-- ********** /Testing image slider ********** -->
+
+    <!--tester hover-->
+   
+    <div>
+        <a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">Hover</a>
+        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Hover</a>
+        <a href="#" data-toggle="tooltip" data-placement="left" title="Hooray!">Hover</a>
+        <a href="#" data-toggle="tooltip" data-placement="right" title="Hooray!">Hover</a>
+    </div>
+    <div>
+        <a href="#">
+            <img src="images/Check.svg.png" style="height:100px;width:100px;" data-toggle="tooltip" title="hi"/>
+        </a>
+    </div>
+
+    <!--/tester hover-->
 
     <div class="punchlinetitle">
         <h2>Rest assured, it's <span class="h2secure">secured</span>.</h2>
