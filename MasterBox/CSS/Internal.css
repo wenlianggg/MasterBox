@@ -13,16 +13,17 @@
     padding: 0;
 }
 
-.custom-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-    list-style-type: none;
-    transition: all .3s ease;
-}
+    .custom-menu li {
+        padding: 8px 12px;
+        cursor: pointer;
+        list-style-type: none;
+        transition: all .3s ease;
+    }
 
-.custom-menu li:hover {
-    background-color: #DEF;
-}
+        .custom-menu li:hover {
+            background-color: #DEF;
+        }
+
 /*SideBarNavigation*/
 /*Maybe able to use bootstrap to overide instead of using new div*/
 .SideMenuBar {
@@ -47,11 +48,11 @@
         width: 250px;
     }
 
-    .SideMenu ul li {
-        list-style-type: none;
-        border: 1px;
-        border-style: solid;
-    }
+.SideMenu ul li {
+    list-style-type: none;
+    border: 1px;
+    border-style: solid;
+}
 
 .SideMenuBar ul li a {
     display: block;
@@ -64,9 +65,10 @@
     cursor: pointer;
 }
 
-.SideMenuBar ul li a span{
-    padding:3.5%;
-}
+    .SideMenuBar ul li a span {
+        padding: 3.5%;
+    }
+
     .SideMenuBar ul li a:hover {
         font-style: italic;
         color: white;
@@ -106,38 +108,40 @@
 
 /*Main File Transfer Interface*/
 
- .black_overlay{
-        display: none;
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        z-index:1001;
-        -moz-opacity: 0.8;
-        opacity:.80;
-        filter: alpha(opacity=80);
-    }
-    .white_content {
-        display: none;
-        position: absolute;
-        top: 25%;
-        left: 25%;
-        width: 50%;
-        height: 50%;
-        padding-left:10px;
-        border: 2px solid black;
-        background-color: white;
-        z-index:1002;
-        overflow: auto;
-    }
+.black_overlay {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.8;
+    opacity: .80;
+    filter: alpha(opacity=80);
+}
+
+.white_content {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    padding-left: 10px;
+    border: 2px solid black;
+    background-color: white;
+    z-index: 1002;
+    overflow: auto;
+}
+
 .FileToolBar {
     width: 100%;
     float: left;
     padding-top: 2%;
     padding: 1%;
-    color:white;
+    color: white;
     background-color: #4C7DB4;
     -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
@@ -160,7 +164,7 @@
     padding-left: 15px;
     float: left;
     width: 30%;
-    height:93.5%;
+    height: 93.5%;
     overflow: auto;
     border-right: 1px solid black;
 }
@@ -209,52 +213,58 @@
 }
 
 /*Setting Pane*/
-.SettingsPanel{
-    width:30%;
-    height:100vh;
-    float:left;
+.SettingsPanel {
+    width: 30%;
+    height: 100%;
+    float: left;
     background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
     background-color: #4C7DB4;
-    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-}
-.SettingsPanel h3{
-    border-bottom:1px solid #3c6490;
-    margin:0;
-    text-align:center;
-    padding:5% 2% 4% 2%;
-    color:white;
-    background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
-    background-color: #4C7DB4;
-    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-}
-.SettingsPanel ul{
-    list-style:none;
-    padding:0;
-    margin:0;
-}
-.SettingsPanel ul li{
-    border-bottom:1px solid white;
-    margin:0 auto;
-    text-align:center;
-    padding:5%;
-    background-color:#e2d8ff;
-}
-.SettingsPanel ul li a{
-    font-size:1.2em;
-    cursor:pointer;
-    text-decoration:none;
-    color:black;
-    font-weight:500;
 }
 
+    .SettingsPanel h3 {
+        border-bottom: 1px solid #3c6490;
+        margin: 0;
+        text-align: center;
+        padding: 5% 2% 4% 2%;
+        color: white;
+        background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
+        background-color: #4C7DB4;
+        -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    }
 
-.SettingSelectionPanel{
-    width:70%;
-    height:100vh;
-    float:left;
-    border:1px solid blue;
+    .SettingsPanel ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .SettingsPanel ul li {
+            border-bottom: 1px solid white;
+            margin: 0 auto;
+            text-align: center;
+            padding: 5%;
+            background-color: #e2d8ff;
+        }
+
+            .SettingsPanel ul li a {
+                font-size: 1.2em;
+                cursor: pointer;
+                text-decoration: none;
+                color: black;
+                font-weight: 500;
+            }
+
+.SettingSelectionPanel {
+    height: 100%;
+    width: 70%;
+    float: left;
+     background-color: #e2d8ff;
+}
+
+.Setting_Profile{
+    border:1px solid black;
+    height:100%;
+    padding:0 2% 1% 2%;
 }
