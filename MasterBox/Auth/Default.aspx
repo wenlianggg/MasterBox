@@ -12,7 +12,7 @@
 
 	void Signout_Click(object sender, EventArgs e) {
 		FormsAuthentication.SignOut();
-		Response.Redirect("Logon.aspx");
+		Response.Redirect("SignIn.aspx");
 	}
 </script>
 

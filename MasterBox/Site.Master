@@ -4,6 +4,11 @@
 
 <html lang="en">
 <head runat="server">
+	<script runat="server">
+	void Page_Load(object sender, EventArgs e) {
+		LoggedInUser.Text = Context.User.Identity.Name;
+	}
+	</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %></title>
@@ -82,7 +87,8 @@
                 </script>
                 <hr />
                 <footer>
-                    <p>&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03</p>
+                    <p>&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03
+					<br>Logged in as: <asp:Label ID="LoggedInUser" runat="server" /></p>
                 </footer>
             </div>
         </form>
