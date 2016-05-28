@@ -40,6 +40,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label WelcomeBack;
         
         /// <summary>
+        /// SignOutLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SignOutLink;
+        
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>
