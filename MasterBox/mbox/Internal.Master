@@ -51,7 +51,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="navbar-brand" href="~/auth/logout" runat="server">Sign Out</a></li>
+                        <li><a class="navbar-brand" href="~/auth/signout" runat="server">Sign Out</a></li>
                     </ul>
                 </div>
             </div>

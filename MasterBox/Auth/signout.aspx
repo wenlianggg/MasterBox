@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>Forms Authentication - Default Page</title>
+	<title>Signing Out...</title>
 </head>
 
 <script runat="server">

@@ -250,7 +250,11 @@ a.registerlink:visited {
 }
 
 .aboutHeadline h1{
-    font-size: 6vmin;
+    font-size: 5vmin;
+}
+
+p.lead {
+	font-size: 2.5vmin;
 }
 
 .aboutRow{

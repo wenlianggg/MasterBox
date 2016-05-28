@@ -9,6 +9,7 @@
 			SignInLink.HRef = "~/mbox/FileTransferInterface.aspx";
 		} else {
 			WelcomeBack.Text = "Sign Up / Login";
+			SignOutLink.Visible = false;
 		}
 	}
 </script>
@@ -77,7 +78,8 @@
                             <li><a runat="server" href="~/Pricing">Pricing</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a runat="server" id="SignInLink" href="~/auth/SignIn.aspx"><asp:Label ID="WelcomeBack" runat="server" /></a></li>
+                            <li><a runat="server" id="SignInLink" href="~/auth/signin"><asp:Label ID="WelcomeBack" runat="server" /></a></li>
+							<li runat="server" ID="SignOutLink" ><a href="~/auth/signout">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
