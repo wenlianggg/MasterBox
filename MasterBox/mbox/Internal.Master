@@ -6,6 +6,11 @@
 			FormsAuthentication.SignOut();
 			Response.Redirect("~/Auth/signin.aspx");
 		}
+        void Page_Load(object sender, EventArgs e) {
+		if (Context.User.Identity.IsAuthenticated) {
+			LoggedIn.Text = Context.User.Identity.Name;	
+		}
+	}
 	</script>
 <html lang="en">
 <head runat="server">
@@ -18,7 +23,7 @@
     </asp:PlaceHolder>
     <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
-    <script src="Scripts/Internal.js"></script>
+    <script src='<%= ResolveUrl("~/Scripts/Internal.js") %>'></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -26,6 +31,7 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
 	<link href='~/Content/nprogress.css' rel="stylesheet" />
+
 	<!-- CSS Customisations -->   
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
@@ -59,7 +65,7 @@
 
         <div class="SideMenuBar">
             <div class="LoginUser">
-                <p>placeHolder{UserName}</p>
+               <p> <asp:Label ID="LoggedIn" runat="server" /></a></p>
             </div>
             <ul>
                 <lh style="font-size: 1em;">APPLICATIONS</lh>

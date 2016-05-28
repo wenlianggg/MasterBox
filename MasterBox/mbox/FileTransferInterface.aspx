@@ -1,12 +1,12 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
-<asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
-    
+<asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">  
+      
      <ul class='custom-menu'>
           <li data-action="upload">Upload</li>
           <li data-action="file">New Folder</li>
           <li data-action="sharefile">New Shared Folder</li>
-         <li data-action="delete">Delete</li>
+          <li data-action="delete">Delete</li>
      </ul>
 
 
@@ -32,7 +32,7 @@
                         <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
                         <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                    <a onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+                    <a onclick="document.getElementById('Upload').style.display='block';document.getElementById('fade').style.display='block'">
                         <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
                 </div>
             </div>
