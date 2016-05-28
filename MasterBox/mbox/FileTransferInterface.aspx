@@ -11,8 +11,19 @@
 
 
         <div class="MainContent">
-            <div id="light" class="white_content">This is the lightbox content. <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a></div>
-    <div id="fade" class="black_overlay"></div>
+            <div id="Upload" class="white_content">
+                <h3>Upload</h3>
+                <a href = "javascript:void(0)" onclick = "document.getElementById('Upload').style.display='none';document.getElementById('fade').style.display='none'">
+                    Close</a>
+
+            </div>
+            <div id="NewFolder" class="white_content">
+                This is the lightbox content.
+                <a href = "javascript:void(0)" onclick = "document.getElementById('NewFolder').style.display='none';document.getElementById('fade').style.display='none'">
+                    Close</a>
+
+            </div>
+            <div id="fade" class="black_overlay"></div>
             <div class="FileToolBar">
                 <div style="margin-right: 2.5%;">
                     <a onclick="">

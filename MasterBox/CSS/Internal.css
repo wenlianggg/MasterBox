@@ -123,8 +123,8 @@
         left: 25%;
         width: 50%;
         height: 50%;
-        padding: 16px;
-        border: 16px solid black;
+        padding-left:10px;
+        border: 2px solid black;
         background-color: white;
         z-index:1002;
         overflow: auto;
