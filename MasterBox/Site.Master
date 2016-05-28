@@ -79,7 +79,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a runat="server" id="SignInLink" href="~/auth/signin"><asp:Label ID="WelcomeBack" runat="server" /></a></li>
-							<li runat="server" ID="SignOutLink" ><a href="~/auth/signout">Sign Out</a></li>
+							<li runat="server" ID="SignOutLink" ><a runat="server" href="~/auth/signout">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
