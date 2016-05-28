@@ -47,7 +47,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" style="cursor: default;">MasterBox</a>
+                    <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -63,7 +63,6 @@
             </div>
             <ul>
                 <lh style="font-size: 1em;">APPLICATIONS</lh>
-                <!-- Roy why not use font awesome? -->
 				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
                     <img src="<%= Page.ResolveUrl("~/images/Logged/File.png") %>" />Files</a></li>
 
