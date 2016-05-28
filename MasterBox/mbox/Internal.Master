@@ -68,18 +68,18 @@
                <p> <asp:Label ID="LoggedIn" runat="server" /></a></p>
             </div>
             <ul>
-                <lh style="font-size: 1em;">APPLICATIONS</lh>
+                <h4 style="color:white;">APPLICATIONS</h4>
 				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
-                    <img src="<%= Page.ResolveUrl("~/images/Logged/File.png") %>" />Files</a></li>
+                     <span class="glyphicon glyphicon-folder-open"></span>Files</a></li>
 
                 <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
-                    <img src="<%= Page.ResolveUrl("~/images/Logged/Shared.png") %>" />Shared Files</a></li>
+                    <span class="glyphicon glyphicon-share"></span>Shared Files</a></li>
 
                 <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
-                    <img src="<%= Page.ResolveUrl("~/images/Logged/Settings.png") %>" />Settings</a></li>
+                    <span class="glyphicon glyphicon-cog"></span>Settings</a></li>
 
                 <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
-                    <img src="<%= Page.ResolveUrl("~/images/Logged/Contact.png") %>" />Contact Us</a></li>
+                    <span class="glyphicon glyphicon-envelope"></span>Contact Us</a></li>
 
 
             </ul>
