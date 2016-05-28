@@ -138,7 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="auth\LoginStyle.css" />
-    <Content Include="auth\Default.aspx" />
+    <Content Include="auth\logout.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -240,12 +240,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="auth\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="auth\logout.aspx.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="auth\logout.aspx.designer.cs">
+      <DependentUpon>logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\FileSettingInterface.aspx.cs">
       <DependentUpon>FileSettingInterface.aspx</DependentUpon>
