@@ -63,17 +63,18 @@
             </div>
             <ul>
                 <lh style="font-size: 1em;">APPLICATIONS</lh>
-                <li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/File.png" align="left" />Files</a></li>
+                <!-- Roy why not use font awesome? -->
+				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
+                    <img src="<%= Page.ResolveUrl("~/images/Logged/File.png") %>" />Files</a></li>
 
                 <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/Shared.png" align="left" />Shared Files</a></li>
+                    <img src="<%= Page.ResolveUrl("~/images/Logged/Shared.png") %>" />Shared Files</a></li>
 
                 <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/Settings.png" align="left" />Settings</a></li>
+                    <img src="<%= Page.ResolveUrl("~/images/Logged/Settings.png") %>" />Settings</a></li>
 
                 <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/contact.png" align="left" />Contact Us</a></li>
+                    <img src="<%= Page.ResolveUrl("~/images/Logged/Contact.png") %>" />Contact Us</a></li>
 
 
             </ul>
