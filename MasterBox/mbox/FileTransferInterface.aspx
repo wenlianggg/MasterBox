@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
+﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
     
@@ -16,13 +16,13 @@
             <div class="FileToolBar">
                 <div style="margin-right: 2.5%;">
                     <a onclick="">
-                        <img class="FileIcon" src="images/Logged/FileDelete.png" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
+                        <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
-                        <img class="FileIcon" src="images/Logged/NewSharedFolder.png" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
+                        <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="">
-                        <img class="FileIcon" src="images/Logged/NewFolder.png" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
+                        <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                     <a onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
-                        <img class="FileIcon" src="images/Logged/Upload.png" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
+                        <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
                 </div>
             </div>
             <div class="FileContainer">
