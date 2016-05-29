@@ -139,6 +139,7 @@
   <ItemGroup>
     <Content Include="auth\LoginStyle.css" />
     <Content Include="auth\signout.aspx" />
+    <Content Include="auth\registration.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -227,7 +228,9 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <Content Include="Site.Mobile.Master" />
@@ -246,6 +249,13 @@
     </Compile>
     <Compile Include="auth\signout.aspx.designer.cs">
       <DependentUpon>signout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="auth\registration.aspx.cs">
+      <DependentUpon>registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="auth\registration.aspx.designer.cs">
+      <DependentUpon>registration.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\FileSettingInterface.aspx.cs">
       <DependentUpon>FileSettingInterface.aspx</DependentUpon>

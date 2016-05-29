@@ -2,15 +2,16 @@
 
 <!DOCTYPE html>
 	<script runat="server">
+		void Page_Load(object sender, EventArgs e) {
+			if (Context.User.Identity.IsAuthenticated) {
+				LoggedIn.Text = Context.User.Identity.Name;	
+			}
+		}
+
 		void Logout_Click(object sender, EventArgs e) {
 			FormsAuthentication.SignOut();
 			Response.Redirect("~/Auth/signin.aspx");
 		}
-        void Page_Load(object sender, EventArgs e) {
-		if (Context.User.Identity.IsAuthenticated) {
-			LoggedIn.Text = Context.User.Identity.Name;	
-		}
-	}
 	</script>
 <html lang="en">
 <head runat="server">
@@ -65,10 +66,10 @@
 
         <div class="SideMenuBar">
             <div class="LoginUser">
-               <p> <asp:Label ID="LoggedIn" runat="server" /></a></p>
+               <p><asp:Label runat="server" ID="LoggedIn"/></p>
             </div>
+			<span style="color:white;">APPLICATIONS</span>
             <ul>
-                <h4 style="color:white;">APPLICATIONS</h4>
 				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
                      <span class="glyphicon glyphicon-folder-open"></span>Files</a></li>
 

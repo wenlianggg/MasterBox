@@ -9,7 +9,7 @@
 	<p>Please login or register to access our features.</p>
 	<table>
 		<tr>
-			<td>E-mail address:</td>
+			<td><strong>E-mail address:</strong></td>
 			<td>
 				<asp:TextBox ID="UserEmail" runat="server" /></td>
 			<td>
@@ -18,9 +18,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Password:</td>
+			<td><strong>Password:</strong></td>
 			<td>
-				<asp:TextBox ID="UserPass" TextMode="Password" runat="server" />
+				<asp:TextBox ID="UserPass" CssClass="pwdfield" TextMode="Password" runat="server" />
 			</td>
 			<td>
 				<asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="UserPass"
@@ -28,21 +28,21 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Remember me?</td>
+			<td><strong>Remember me?</strong></td>
 			<td>
 				<asp:CheckBox ID="Persist" runat="server" /></td>
 		</tr>
 		<tr>
 			<td><strong>I am a...</strong></td>
 			<td>
-				<input type="radio" name="userExists" onclick="registerMode(false)" id="existingUser" checked>
-				<label for="existingUser">Returning user</label><br />
-				<input type="radio" name="userExists" onclick="registerMode(true)" id="newUser">
-				<label for="newUser">New user</label>
+				<asp:RadioButtonList runat="server">
+					<asp:ListItem  />
+					<asp:ListItem  />
+				</asp:RadioButtonList>
 			</td>
 		</tr>
 	</table>
-	<asp:Button ID="LoginButton" Text="Sign In" CssClass="btn btn-default-blue loginBtn" OnClick="Logon_Click" runat="server" />
+	<asp:Button ID="LoginButton" Text="Sign In" CssClass="btn btn-default-blue loginBtn" OnClick="logonClick" runat="server" />
 	<p>
 		<asp:Label ID="Msg" ForeColor="red" runat="server" /></p>
 	<script>

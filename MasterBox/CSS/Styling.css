@@ -40,12 +40,14 @@ img{
 
 }
 
-span.h2getstarted {
+.h2getstarted {
     color:#5e5e5e;
 }
-span.h2secure {
+.h2secure {
     color:#306d9f;
+	-moz-animation-name: secureAnimation;
     -webkit-animation-name: secureAnimation; /* Chrome, Safari, Opera */
+	-moz-animation-duration: 4s;
     -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
     animation-name: secureAnimation;
     /*animation-delay: 0s;*/
@@ -79,7 +81,7 @@ span.h2secure {
     90%   {color: #547c9e;}
     100%  {color: #4b7fab;}
 }
-span.h2scalable {
+h2scalable {
     color:#5e5e5e;
 }
 a.registerlink {
@@ -118,7 +120,9 @@ a.registerlink:visited {
     -o-transition: .3s;  
     transition: .3s;  
 
+	-moz-animation-name: btnDefaultAnimation;
     -webkit-animation-name: btnDefaultAnimation; /* Chrome, Safari, Opera */
+	-moz-animation-duration: 4s;
     -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
     animation-name: btnDefaultAnimation;
     animation-duration: 5s;
@@ -153,7 +157,9 @@ a.registerlink:visited {
   -o-transition: .3s;  
   transition: .3s;  
 
+  -moz-animation-name: btnDefaultBlueAnimation;
   -webkit-animation-name: btnDefaultBlueAnimation; /* Chrome, Safari, Opera */
+  -moz-animation-duration: 4s;
   -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
   animation-name: btnDefaultBlueAnimation;
   animation-duration: 5s;
@@ -214,16 +220,16 @@ a.registerlink:visited {
 /* Navigation colour changes */
 .navbar-custom {
 	background-color: #161614;
-    -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 2px 7px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 2px 7px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 2px 7px 0 rgba(0,0,0,0.75);
 }
 
 .navbar-custom .navbar-nav > li > a {
     color: #e5e5e5;
 }
 
-.navbar-custom a.navbar-brand {
+.navbar-custom .navbar-brand {
     color: white;
 }
 
@@ -242,10 +248,7 @@ a.registerlink:visited {
 }
 
 .aboutHR{
-    margin-top:20px;
-    margin-bottom:15px;
-    margin-left:auto;
-    margin-right:auto;
+	margin: 20px auto 15px auto; 
     width:50px;
 }
 
@@ -253,7 +256,7 @@ a.registerlink:visited {
     font-size: 5vmin;
 }
 
-p.lead {
+.lead {
 	font-size: 2.5vmin;
 }
 
@@ -335,7 +338,7 @@ footer{
 
 ::-webkit-scrollbar-track /* 3 */ {
     background: #000000;
-    border: 0px none #ffffff;
+    border: 0 none #ffffff;
     border-radius: 6px;
 }
 ::-webkit-scrollbar-track:hover {
@@ -350,7 +353,7 @@ footer{
 
 ::-webkit-scrollbar-track-piece /* 4 */ {
      background: #000000;
-    border: 0px none #ffffff;
+    border: 0 none #ffffff;
     border-radius: 6px;
 }
 ::-webkit-scrollbar-track-piece:hover {
@@ -362,7 +365,7 @@ footer{
 
 ::-webkit-scrollbar-thumb /* 5 */       {
     background: #fbfeff;
-    border: 0px none #ffffff;
+    border: 0 none #ffffff;
     border-radius: 12px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -377,6 +380,8 @@ footer{
 }
 
 ::-webkit-resizer /* 7 */ {
+	/* do nothing */
+	width:inherit;
 }
 
 
