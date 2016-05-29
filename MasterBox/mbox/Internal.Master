@@ -1,7 +1,17 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Internal.master.cs" Inherits="MasterBox.Internal" %>
 
 <!DOCTYPE html>
-
+	<script runat="server">
+		void Logout_Click(object sender, EventArgs e) {
+			FormsAuthentication.SignOut();
+			Response.Redirect("~/Auth/signin.aspx");
+		}
+        void Page_Load(object sender, EventArgs e) {
+		if (Context.User.Identity.IsAuthenticated) {
+			LoggedIn.Text = Context.User.Identity.Name;	
+		}
+	}
+	</script>
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
@@ -13,28 +23,24 @@
     </asp:PlaceHolder>
     <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
-    <script src="Scripts/Internal.js"></script>
+    <script src='<%= ResolveUrl("~/Scripts/Internal.js") %>'></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<!--- CSS Libraries --->
+	<!-- CSS Libraries -->
     <webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
 	<link href='~/Content/nprogress.css' rel="stylesheet" />
-	<!--- CSS Customisations --->   
+
+	<!-- CSS Customisations -->   
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
     <link href='~/CSS/Internal.css' rel="stylesheet" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!--- Favicon --->
+	<!-- Favicon -->
     <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
-
-
-    
-    
-
 </head>
 <body>
      
@@ -47,11 +53,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" style="cursor: default;">MasterBox</a>
+                    <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="navbar-brand" runat="server" href="~/">Log out</a></li>
+                        <li><a class="navbar-brand" href="~/auth/signout" runat="server">Sign Out</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,21 +65,21 @@
 
         <div class="SideMenuBar">
             <div class="LoginUser">
-                <p>placeHolder{UserName}</p>
+               <p> <asp:Label ID="LoggedIn" runat="server" /></a></p>
             </div>
             <ul>
-                <lh style="font-size: 1em;">APPLICATIONS</lh>
-                <li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/File.png" align="left" />Files</a></li>
+                <h4 style="color:white;">APPLICATIONS</h4>
+				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
+                     <span class="glyphicon glyphicon-folder-open"></span>Files</a></li>
 
                 <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/Shared.png" align="left" />Shared Files</a></li>
+                    <span class="glyphicon glyphicon-share"></span>Shared Files</a></li>
 
                 <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/Settings.png" align="left" />Settings</a></li>
+                    <span class="glyphicon glyphicon-cog"></span>Settings</a></li>
 
                 <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
-                    <img src="images/Logged/contact.png" align="left" />Contact Us</a></li>
+                    <span class="glyphicon glyphicon-envelope"></span>Contact Us</a></li>
 
 
             </ul>

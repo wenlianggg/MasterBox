@@ -213,7 +213,7 @@ a.registerlink:visited {
 
 /* Navigation colour changes */
 .navbar-custom {
-  background-color: #161614;
+	background-color: #161614;
     -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
@@ -230,7 +230,6 @@ a.registerlink:visited {
 /* About page */
 .aboutHeadline{
   height: 260px;
-  margin-top: -10px;
   padding-top: 50px;
   padding-bottom: 50px;
   margin-bottom: 30px;
@@ -251,7 +250,11 @@ a.registerlink:visited {
 }
 
 .aboutHeadline h1{
-    font-size: 6vmin;
+    font-size: 5vmin;
+}
+
+p.lead {
+	font-size: 2.5vmin;
 }
 
 .aboutRow{

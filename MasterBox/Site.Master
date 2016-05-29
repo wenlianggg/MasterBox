@@ -1,93 +1,124 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="MasterBox.SiteMaster" %>
 
+<%@ Import Namespace="System.Web.Security" %>
 <!DOCTYPE html>
+<script runat="server">
+	void Page_Load(object sender, EventArgs e) {
+		if (Context.User.Identity.IsAuthenticated) {
+			WelcomeBack.Text = "Welcome Back, " + Context.User.Identity.Name;
+			LoggedInUser.Text = "Logged in as: " + Context.User.Identity.Name;
+			IPAddr.Text = "Connected from: " + GetIPAddress();
+			SignInLink.HRef = "~/mbox/FileTransferInterface.aspx";
+		} else {
+			WelcomeBack.Text = "Sign Up / Login";
+			SignOutLink.Visible = false;
+		}
+	}
 
+	protected string GetIPAddress() {
+		string IPAddr = Context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+		if (!string.IsNullOrEmpty(IPAddr)) {
+			string[] addresses = IPAddr.Split(',');
+			if (addresses.Length != 0) {
+				return addresses[0];
+			}
+		}
+		return Context.Request.ServerVariables["REMOTE_ADDR"];
+	}
+</script>
 <html lang="en">
 <head runat="server">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %></title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title><%: Page.Title %></title>
 	<!-- JS Scripts -->
 	<asp:PlaceHolder runat="server">
-    <%: Scripts.Render("~/bundles/modernizr") %>
-    </asp:PlaceHolder>
-    <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
+		<%: Scripts.Render("~/bundles/modernizr") %>
+	</asp:PlaceHolder>
+	<script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
 	<!--- CSS Libraries --->
-    <webopt:BundleReference runat="server" Path="~/Content/css" />
+	<webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
 	<link href='~/Content/nprogress.css' rel="stylesheet" />
 	<!--- CSS Customisations --->
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
 	<!--- Favicon --->
-    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
-    </asp:ContentPlaceHolder>
+	<link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+	<asp:ContentPlaceHolder ID="HeadContent" runat="server">
+	</asp:ContentPlaceHolder>
 </head>
 <body>
-    <div class="body-wrapper">
+	<div class="body-wrapper">
 
-        <form runat="server">
-            <asp:ScriptManager runat="server">
-                <Scripts>
-                    <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                    <%--Framework Scripts--%>
-                    <asp:ScriptReference Name="MsAjaxBundle" />
-                    <asp:ScriptReference Name="jquery" />
-                    <asp:ScriptReference Name="bootstrap" />
-                    <asp:ScriptReference Name="respond" />
-                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
-                    <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                    <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
-                    <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
-                    <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
-                    <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
-                    <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
-                    <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
-                    <asp:ScriptReference Name="WebFormsBundle" />
-                    <%--Site Scripts--%>
-                </Scripts>
-            </asp:ScriptManager>
-            <script>NProgress.inc();</script>
-            <div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li><a runat="server" href="~/">Home</a></li>
-                            <li><a runat="server" href="~/About">About</a></li>
-                            <li><a runat="server" href="~/Contact">Contact</a></li>
-                            <li><a runat="server" href="~/Pricing">Pricing</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a runat="server" href="~/FileTransferInterface">Files</a></li>
-                            <li><a runat="server" href="~/Auth/SignIn.aspx">Login / Sign Up</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <script>NProgress.inc();
-            </script>
-            <div class="container body-content">
-                <asp:ContentPlaceHolder ID="MainContent" runat="server">
-                </asp:ContentPlaceHolder>
-                <script>NProgress.inc(40);
-                </script>
-                <hr />
-                <footer>
-                    <p>&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03</p>
-                </footer>
-            </div>
-        </form>
-    </div>
-    <script>NProgress.done();
-    </script>
+		<form runat="server">
+			<asp:ScriptManager runat="server">
+				<Scripts>
+					<%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+					<%--Framework Scripts--%>
+					<asp:ScriptReference Name="MsAjaxBundle" />
+					<asp:ScriptReference Name="jquery" />
+					<asp:ScriptReference Name="bootstrap" />
+					<asp:ScriptReference Name="respond" />
+					<asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+					<asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+					<asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+					<asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+					<asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+					<asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+					<asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+					<asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+					<asp:ScriptReference Name="WebFormsBundle" />
+					<%--Site Scripts--%>
+				</Scripts>
+			</asp:ScriptManager>
+			<script>NProgress.inc();</script>
+			<div class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" runat="server" href="~/">MasterBox</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-left">
+							<li><a runat="server" href="~/">Home</a></li>
+							<li><a runat="server" href="~/About">About</a></li>
+							<li><a runat="server" href="~/Contact">Contact</a></li>
+							<li><a runat="server" href="~/Pricing">Pricing</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a runat="server" id="SignInLink" href="~/auth/signin">
+								<asp:Label ID="WelcomeBack" runat="server" /></a></li>
+							<li runat="server" id="SignOutLink"><a runat="server" href="~/auth/signout">Sign Out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<script>NProgress.inc();
+			</script>
+			<div class="container body-content">
+				<asp:ContentPlaceHolder ID="MainContent" runat="server">
+				</asp:ContentPlaceHolder>
+				<script>NProgress.inc(40);
+				</script>
+				<hr />
+				<footer>
+					<p>
+						&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03
+					<br>
+						<asp:Label ID="LoggedInUser" runat="server" />
+						<br>
+						<asp:Label ID="IPAddr" runat="server" />
+					</p>
+				</footer>
+			</div>
+		</form>
+	</div>
+	<script>NProgress.done();
+	</script>
 </body>
 </html>
