@@ -1,0 +1,18 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/mbox/Internal.Master" AutoEventWireup="true" CodeBehind="FileSetting.master.cs" Inherits="MasterBox.mbox.FileSetting" %>
+
+<asp:Content ID="Setting" ContentPlaceHolderID="InternalContent" runat="server">
+    <div class="MainContent">
+        <div class="SettingsPanel">
+            <h3>Application Settings</h3>
+            <ul>
+                <li><a runat="server" href="FileSetting_Profile.aspx">Profile</a></li>
+                <li><a runat="server" href="FileSetting_General.aspx">General</a></li>
+                <li><a runat="server">Security</a></li>
+                <li><a runat="server">Upgrade</a></li>
+            </ul>
+        </div>
+        <div class="SettingSelectionPanel">
+            <asp:ContentPlaceHolder ID="Child_Profile" runat="server" />
+        </div>
+    </div>
+</asp:Content>

@@ -144,7 +144,8 @@
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
-    <Content Include="mbox\FileSettingInterface.aspx" />
+    <Content Include="mbox\FileSetting_General.aspx" />
+    <Content Include="mbox\FileSetting_Profile.aspx" />
     <Content Include="images\encryption.png" />
     <Content Include="images\Logged\contact.png" />
     <Content Include="images\Logged\File.png" />
@@ -178,6 +179,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="mbox\Internal.Master" />
+    <Content Include="mbox\FileSetting.master" />
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -250,19 +252,26 @@
     <Compile Include="auth\signout.aspx.designer.cs">
       <DependentUpon>signout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="auth\registration.aspx.cs">
-      <DependentUpon>registration.aspx</DependentUpon>
+    <Compile Include="mbox\FileSetting.master.cs">
+      <DependentUpon>FileSetting.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\registration.aspx.designer.cs">
-      <DependentUpon>registration.aspx</DependentUpon>
+    <Compile Include="mbox\FileSetting.master.designer.cs">
+      <DependentUpon>FileSetting.master</DependentUpon>
     </Compile>
-    <Compile Include="mbox\FileSettingInterface.aspx.cs">
-      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+    <Compile Include="mbox\FileSetting_General.aspx.cs">
+      <DependentUpon>FileSetting_General.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileSettingInterface.aspx.designer.cs">
-      <DependentUpon>FileSettingInterface.aspx</DependentUpon>
+    <Compile Include="mbox\FileSetting_General.aspx.designer.cs">
+      <DependentUpon>FileSetting_General.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mbox\FileSetting_Profile.aspx.cs">
+      <DependentUpon>FileSetting_Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mbox\FileSetting_Profile.aspx.designer.cs">
+      <DependentUpon>FileSetting_Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\Internal.Master.cs">
       <DependentUpon>Internal.Master</DependentUpon>

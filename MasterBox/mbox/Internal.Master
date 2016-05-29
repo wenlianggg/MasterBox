@@ -66,7 +66,7 @@
 
         <div class="SideMenuBar">
             <div class="LoginUser">
-               <p><asp:Label runat="server" ID="LoggedIn"/></p>
+               <p> <asp:Label ID="LoggedIn" runat="server" Font-Size="Medium" /></a></p>
             </div>
 			<span style="color:white;">APPLICATIONS</span>
             <ul>
@@ -76,7 +76,7 @@
                 <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
                     <span class="glyphicon glyphicon-share"></span>Shared Files</a></li>
 
-                <li><a runat="server" href="FileSettingInterface.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
+                <li><a runat="server" href="FileSetting_Profile.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
                     <span class="glyphicon glyphicon-cog"></span>Settings</a></li>
 
                 <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
