@@ -1,12 +1,22 @@
-﻿.loginForm table tr > td {
-    padding: 5px;
+﻿.loginTable {
+	background-color:#ffffff;
+	margin-bottom: 25px;
+	width: 650px;
 }
 
-.loginForm ol, loginForm li {
-    margin: 0;
-    padding: 0.2em;
+.loginTable input[type="text"],
+.loginTable input[type="password"] {
+	width:240px;
 }
 
-.loginForm .loginBtn {
-    float: right;
+.loginTable input[type="radio"] {
+	margin: 0;
+}
+
+.loginTable td:nth-child(3) {
+	width:200px;
+}
+
+.loginTable tr, .loginTable td {
+	padding: 0 5px 10px 0;
 }
