@@ -47,8 +47,8 @@ img{
     color:#306d9f;
 	-moz-animation-name: secureAnimation;
     -webkit-animation-name: secureAnimation; /* Chrome, Safari, Opera */
-	-moz-animation-duration: 4s;
-    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+	-moz-animation-duration: 10s;
+    -webkit-animation-duration: 10s; /* Chrome, Safari, Opera */
     animation-name: secureAnimation;
     /*animation-delay: 0s;*/
     animation-duration: 4s;
@@ -245,6 +245,19 @@ a.registerlink:visited {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.seizure{
+    animation: seizures 0.4s infinite;
+}
+
+@keyframes seizures{
+    0%    {color: red;}
+    20%   {color: orange;}
+    40%   {color: yellow;}
+    60%   {color: blue;}
+    80%   {color: indigo;}
+    100%  {color: violet;}
 }
 
 .aboutHR{

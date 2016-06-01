@@ -76,7 +76,7 @@
                 New account registrations get 1GB of free space.
             </p>
             <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
+                <a class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now! &raquo;</a>
             </p>
         </div>
         <div class="col-md-4">
@@ -86,7 +86,7 @@
                 with secure two factor authentication and facial recognition features. 
             </p>
             <p>
-                <a class="btn btn-default-blue" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
+                <a class="btn btn-default" runat="server" href="~/About">Learn more &raquo;</a>
             </p>
         </div>
         <div class="col-md-4">
@@ -96,7 +96,7 @@
                 checkout process with streamlined integration with PayPal, our payment processor.
             </p>
             <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
+                <a class="btn btn-default" runat="server" href="~/Pricing">See Pricings &raquo;</a>
             </p>
         </div>
     </div>

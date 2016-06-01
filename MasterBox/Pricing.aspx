@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="aboutHeadline">
-        <h1>Pricing Plans</h1>
+        <h1 class="seizure">Pricing Plans</h1>
         <hr class="aboutHR" />
         <p class="lead">Roses are red, Violets are blue, I need more storage space, and so do you.</p>
     </div>
