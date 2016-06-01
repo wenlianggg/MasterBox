@@ -36,8 +36,8 @@
 			<td><strong>I am a...</strong></td>
 			<td>
 				<asp:RadioButtonList runat="server">
-					<asp:ListItem  />
-					<asp:ListItem  />
+					<asp:ListItem Text=" Returning User" value="false" Selected="True"/>
+					<asp:ListItem Text=" New User" value="true" />
 				</asp:RadioButtonList>
 			</td>
 		</tr>
@@ -46,15 +46,27 @@
 	<p>
 		<asp:Label ID="Msg" ForeColor="red" runat="server" /></p>
 	<script>
-		function registerMode(bool) {
-			$(".pwdfield").attr('readonly', bool);
-			$(".pwdfield").attr('disabled', bool);
-			if (bool === true) {
+		function registerMode(val) {
+			if (val == 'true') {
 				$(".loginBtn").prop('value', "Register");
+				$(".pwdfield").attr('readonly', "readonly");
+				$(".pwdfield").attr('disabled', "disabled");
 			} else {
 				$(".loginBtn").prop('value', "Sign In");
+				$(".pwdfield").removeAttr('readonly');
+				$(".pwdfield").removeAttr('disabled');
 			}
+			console.log("CHANGED: " + bool);
 		}
-		pwdFieldActive(false);
+
+		$(function () {
+			$("input[type='radio']").on('click', function (e) {
+				getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
+			});
+		});
+
+		function getCheckedRadio(group, item, value) {
+			registerMode(item);
+		}
 	</script>
 </asp:Content>
