@@ -245,6 +245,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="auth\Registration.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
