@@ -91,9 +91,9 @@
 							<li><a runat="server" href="~/Pricing">Pricing</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a runat="server" id="SignInLink" href="~/auth/signin">
+							<li><a runat="server" id="SignInLink" href="~/Auth/signin.aspx">
 								<asp:Label ID="WelcomeBack" runat="server" /></a></li>
-							<li runat="server" id="SignOutLink"><a runat="server" href="~/auth/signout">Sign Out</a></li>
+							<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
 						</ul>
 					</div>
 				</div>
