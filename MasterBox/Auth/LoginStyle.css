@@ -20,3 +20,7 @@
 .loginTable tr, .loginTable td {
 	padding: 0 5px 10px 0;
 }
+
+.regBtn {
+	display:none;
+}

@@ -10,10 +10,15 @@
 		<tr>
 			<td><strong>E-mail address:</strong></td>
 			<td>
-				<asp:TextBox ID="UserEmail" runat="server" CssClass="form-control" /></td>
+				<asp:TextBox ID="UserName" runat="server" CssClass="form-control" /></td>
 			<td>
-				<asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="UserEmail"
-					Display="Dynamic" ErrorMessage="Cannot be empty." runat="server" />
+				<asp:RequiredFieldValidator 
+					ID="RequiredFieldValidator1" 
+					ControlToValidate="UserName"
+					Display="Dynamic" 
+					ErrorMessage="Cannot be empty." 					
+					ValidationGroup="valGroup1"
+					runat="server" />
 			</td>
 		</tr>
 		<tr>
@@ -22,8 +27,11 @@
 				<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
 			</td>
 			<td>
-				<asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="UserPass"
-					ErrorMessage="Cannot be empty." runat="server" />
+				<asp:RequiredFieldValidator 
+					ID="RequiredFieldValidator2"
+					ControlToValidate="UserPass"
+					ErrorMessage="Cannot be empty."
+					runat="server" />
 			</td>
 		</tr>
 		<tr>
@@ -44,24 +52,38 @@
 			</td>
 		</tr>
 	</table>
-	<asp:Button ID="LoginButton" Text="Sign In" CssClass="btn btn-default-blue loginBtn" OnClick="logonClick" runat="server" />
+	<asp:Button ID="LoginButton" 
+				Text="Sign In" 
+				CssClass="btn btn-default-blue loginBtn" 
+				OnClick="logonClick" 
+				runat="server" />
+	<asp:Button ID="RegisterButton" 
+				Text="Sign Up"
+				validationGroup="valGroup1"
+				CssClass="btn btn-default regBtn" 
+				OnClick="registrationStart"
+				runat="server" />
+
 	<p>
 		<asp:Label ID="Msg" ForeColor="red" runat="server" />
 	</p>
 	<script>
 		function registerMode(val) {
 			if (val == 'true') {
+				$(".loginBtn").hide();
+				$(".regBtn").show();
 				$(".loginBtn").prop('value', "Register");
 				$(".pwdfield").attr('readonly', "readonly");
 				$(".pwdfield").attr('disabled', "disabled");
 			} else {
+				$(".regBtn").hide();
+				$(".loginBtn").show();
 				$(".loginBtn").prop('value', "Sign In");
 				$(".pwdfield").removeAttr('readonly');
 				$(".pwdfield").removeAttr('disabled');
 			}
-			console.log("CHANGED: " + bool);
+			console.log("Register Mode: " + bool);
 		}
-
 		$(function () {
 			$("input[type='radio']").on('click', function (e) {
 				getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
