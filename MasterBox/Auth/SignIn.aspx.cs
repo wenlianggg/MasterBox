@@ -28,8 +28,8 @@ namespace MasterBox {
 		}
 
 		protected void registrationStart(object sender, EventArgs e) {
-			Debug.WriteLine(ResolveUrl("~/auth/registration") + "?username=" + UserName.Text);
-			Response.Redirect("~/auth/registration.aspx" + "?username=" + UserName.Text);
+			Debug.WriteLine(ResolveUrl("~/auth/signup") + "?username=" + UserName.Text);
+			Response.Redirect("~/auth/signup.aspx" + "?username=" + UserName.Text);
 		}
 	}
 
