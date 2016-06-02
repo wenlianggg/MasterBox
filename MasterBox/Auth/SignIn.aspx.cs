@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Diagnostics;
 
 namespace MasterBox {
-	public partial class SignIn : System.Web.UI.Page {
+	public partial class SignIn : Page {
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (User.Identity.IsAuthenticated) {

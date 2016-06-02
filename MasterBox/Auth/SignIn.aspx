@@ -8,7 +8,7 @@
 	<p>Please login or register to access our features.</p>
 	<table runat="server" class="loginTable">
 		<tr>
-			<td><strong>E-mail address:</strong></td>
+			<td><strong>Username:</strong></td>
 			<td>
 				<asp:TextBox ID="UserName" runat="server" CssClass="form-control" /></td>
 			<td>

@@ -1,4 +1,6 @@
-﻿.loginTable {
+﻿/* Styling for login page*/
+
+.loginTable {
 	background-color:#ffffff;
 	margin-bottom: 25px;
 	width: 650px;
@@ -23,4 +25,24 @@
 
 .regBtn {
 	display:none;
+}
+
+/* Styling for sign up page*/
+
+.regTable {
+	background-color:#ffffff;
+	width: 650px;
+}
+
+.regTable input[type="text"],
+.regTable input[type="password"] {
+	width:240px;
+}
+
+.regTable td:nth-child(3) {
+	width:200px;
+}
+
+.regTable tr, .regTable td {
+	padding: 0 5px 10px 0;
 }
