@@ -83,7 +83,7 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -137,9 +137,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="auth\LoginStyle.css" />
-    <Content Include="auth\signout.aspx" />
-    <Content Include="auth\registration.aspx" />
+    <Content Include="App_Start\auth\LoginStyle.css" />
+    <Content Include="App_Start\auth\signout.aspx" />
+    <Content Include="App_Start\auth\registration.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -196,7 +196,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="auth\signin.aspx" />
+    <Content Include="App_Start\auth\signin.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -234,7 +234,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Bundle.config" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Site.Mobile.Master" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Web.Debug.config">
@@ -245,11 +247,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="auth\signout.aspx.cs">
+    <Compile Include="App_Start\auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signout.aspx.designer.cs">
+    <Compile Include="App_Start\auth\signout.aspx.designer.cs">
       <DependentUpon>signout.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\FileSetting.master.cs">
@@ -342,11 +344,11 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="auth\signin.aspx.cs">
+    <Compile Include="App_Start\auth\signin.aspx.cs">
       <DependentUpon>signin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signin.aspx.designer.cs">
+    <Compile Include="App_Start\auth\signin.aspx.designer.cs">
       <DependentUpon>signin.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
