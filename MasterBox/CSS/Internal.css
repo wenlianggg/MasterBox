@@ -269,3 +269,10 @@
     padding:0 2% 1% 2%;
 }
 
+.prof_icon {
+    border:1px solid red;
+    width:90%;
+    padding:2%;
+    text-align:center;
+    height:180px;
+}
