@@ -140,6 +140,7 @@
     <Content Include="auth\LoginStyle.css" />
     <Content Include="auth\signout.aspx" />
     <Content Include="auth\signup.aspx" />
+    <Content Include="auth\signup2.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -258,6 +259,13 @@
     </Compile>
     <Compile Include="auth\signup.aspx.designer.cs">
       <DependentUpon>signup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="auth\signup2.aspx.cs">
+      <DependentUpon>signup2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="auth\signup2.aspx.designer.cs">
+      <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\FileSetting.master.cs">
       <DependentUpon>FileSetting.master</DependentUpon>

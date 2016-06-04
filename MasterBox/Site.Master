@@ -2,9 +2,6 @@
 
 <%@ Import Namespace="System.Web.Security" %>
 <!DOCTYPE html>
-<script runat="server">
-
-</script>
 <html lang="en">
 <head runat="server">
 	<meta charset="utf-8" />
@@ -87,11 +84,9 @@
 				<hr />
 				<footer>
 					<p>
-						&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03
-					<br>
-						<asp:Label ID="LoggedInUser" runat="server" />
-						<br>
-						<asp:Label ID="IPAddr" runat="server" />
+					&copy; <%: DateTime.Now.Year %> - MasterBox Solutions, NSPJ ITP192-03-03
+					<br /><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a> | <asp:Label ID="IPAddr" runat="server" />
+					<br /><asp:Label ID="LoggedInUser" runat="server" /> 
 					</p>
 				</footer>
 			</div>

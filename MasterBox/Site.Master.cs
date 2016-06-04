@@ -5,12 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox
-{
-    public partial class SiteMaster : MasterPage
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+namespace MasterBox {
+	public partial class SiteMaster : MasterPage {
+		protected void Page_Load(object sender, EventArgs e) {
+			IPAddr.Text = "Connected from: " + GetIPAddress();
 			if (Context.User.Identity.IsAuthenticated) {
 				WelcomeBack.Text = "Welcome Back, " + Context.User.Identity.Name;
 				LoggedInUser.Text = "Logged in as: " + Context.User.Identity.Name;
