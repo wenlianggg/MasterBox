@@ -16,7 +16,7 @@ A secure file storage solution for the discerning security professional.
 ```yml
 Database Engine: Microsoft SQL Server Express
 Instance Name: mbox-mssql
-Hostname: mbox-sql.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com
+Hostname: mbox-mssql.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com:1433
 DB Port: 1433
 Admin ID: masterboxadmin
 Password: N0tadata***** (Ask WL for full PW)
