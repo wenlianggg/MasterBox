@@ -276,3 +276,10 @@
     text-align:center;
     height:180px;
 }
+.table_pref{
+    border:none;
+}
+/*Overiding CSS - May cause problems*/
+.row{
+    padding:2%;
+}
