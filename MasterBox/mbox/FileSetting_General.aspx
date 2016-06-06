@@ -365,10 +365,39 @@
                         </label>
                     </td>
                 </tr>
+                <tr>
+                    <td>Date Format</td>
+                    <td>
+                        <select>
+                            <option>DD/MM/YYYY</option>
+                            <option>MM/DD/YYYY</option>
+                            <option>YYYY/MM/DD</option>
 
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <h4>Connections</h4>
+            <table>
+                <tr>
+                    <td>G-mail: </td>
+                    <td><input type="email" /></td>
+                </tr>
+                <tr>
+                    <td>Yahoo mail: </td>
+                    <td><input type="email" /></td>
+                </tr>
+                <tr>
+                    <td>Facebook: </td>
+                    <td><button>Sync</button></td>
+                </tr>
+                <tr>
+                    <td>Twitter: </td>
+                    <td><button>Sync</button></td>
+                </tr>
             </table>
         </div>
-
+        <button type="submit">Save</button>
     </div>
 </asp:Content>
 
