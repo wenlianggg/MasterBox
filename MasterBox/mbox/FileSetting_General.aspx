@@ -2,9 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="Child_Profile" runat="server">
     <div class="Setting_Profile">
-        <h1>General</h1>
+        <h1>General Information</h1>
+        <hr class="aboutRowHR"/>
         <div class="row">
-            <h4>Storage Space</h4>
+            <div class="SettingsRow">
+            <h4 class="SettingHr">Storage Space</h4>
             <div class="progress">
                 <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width: 20%">
@@ -12,7 +14,10 @@
                 </div>
             </div>
             <button onclick="">Upgrade</button>
-            <h4>Miscellaneous</h4>
+                </div>
+            <hr class="aboutRowHR" />
+            <div class="SettingsRow">
+            <h4 class="SettingHr">Miscellaneous</h4>
             <table>
                 <tr>
                     <td>
@@ -377,7 +382,10 @@
                     </td>
                 </tr>
             </table>
-            <h4>Connections</h4>
+                </div>
+            <hr class="aboutRowHR" />
+            <div class="SettingsRow">
+            <h4 class="SettingHr">Connections</h4>
             <table>
                 <tr>
                     <td>G-mail: </td>
@@ -396,6 +404,7 @@
                     <td><button>Sync</button></td>
                 </tr>
             </table>
+        </div>
         </div>
         <button type="submit">Save</button>
     </div>

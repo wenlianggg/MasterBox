@@ -283,3 +283,14 @@
 .row{
     padding:2%;
 }
+.SettingHr{
+    font-size:170%;
+}
+.SettingsRow{
+    background-color:#ECECEC;
+    width:auto;
+    padding: inherit;
+    border-radius: 5px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
