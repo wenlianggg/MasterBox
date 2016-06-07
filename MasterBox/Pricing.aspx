@@ -30,9 +30,25 @@
                                 OnClick="PayPalBtn_Click" />
 
                         </td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!</td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!</td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!</td>
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                          <asp:ImageButton
+                                ID="ImageButton1"
+                                runat="server"
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                OnClick="PayPalBtn_Click" /></td>
+                        
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                          <asp:ImageButton
+                                ID="ImageButton2"
+                                runat="server"
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                OnClick="PayPalBtn_Click" /></td></td>
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                          <asp:ImageButton
+                                ID="ImageButton3"
+                                runat="server"
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                OnClick="PayPalBtn_Click" /></td></td>
                     </tr>
                 </table>
             </div>
