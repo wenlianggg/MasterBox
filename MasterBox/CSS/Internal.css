@@ -267,6 +267,7 @@
     border:1px solid black;
     height:100%;
     padding:0 2% 1% 2%;
+    overflow:scroll;
 }
 
 .prof_icon {
@@ -279,10 +280,6 @@
 .table_pref{
     border:none;
 }
-/*Overiding CSS - May cause problems*/
-.row{
-    padding:2%;
-}
 .SettingHr{
     font-size:170%;
 }
@@ -293,4 +290,8 @@
     border-radius: 5px;
     margin-top: 2%;
     margin-bottom: 2%;
+}
+/*Overiding CSS - May cause problems*/
+.row{
+    padding:2%;
 }

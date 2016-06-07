@@ -3,6 +3,7 @@
 <asp:Content ID="Testing" ContentPlaceHolderID="Child_Profile" runat="server">
     <div class="Setting_Profile">
         <h1>Profile</h1>
+        <hr class="aboutRowHR"/>
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-8">
                 <div class="row" style="padding: 2%;">
