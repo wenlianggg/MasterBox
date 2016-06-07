@@ -28,7 +28,7 @@
 /*Maybe able to use bootstrap to overide instead of using new div*/
 .SideMenuBar {
     height: 100vh;
-    background-color: #252523;
+    background-color: #343434;
     float: left;
     display: block;
     width: 23%;
@@ -241,11 +241,11 @@
     }
 
         .SettingsPanel ul li {
-            border-bottom: 1px solid white;
+            border-bottom: 1px solid black;
             margin: 0 auto;
             text-align: center;
             padding: 5%;
-            background-color: #e2d8ff;
+            background-color: #fdfbfb;
         }
 
             .SettingsPanel ul li a {
@@ -260,7 +260,7 @@
     height: 100%;
     width: 70%;
     float: left;
-     background-color: #e2d8ff;
+    background-color: #fdfbfb;
 }
 
 .Setting_Profile{
