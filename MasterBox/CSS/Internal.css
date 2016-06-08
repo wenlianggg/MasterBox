@@ -263,35 +263,38 @@
     background-color: #fdfbfb;
 }
 
-.Setting_Profile{
-    border:1px solid black;
-    height:100%;
-    padding:0 2% 1% 2%;
-    overflow:scroll;
+.Setting_Profile {
+    border: 1px solid black;
+    height: 100%;
+    padding: 0 2% 1% 2%;
+    overflow: scroll;
 }
 
 .prof_icon {
-    border:1px solid red;
-    width:90%;
-    padding:2%;
-    text-align:center;
-    height:180px;
+    border: 1px solid red;
+    width: 90%;
+    padding: 2%;
+    text-align: center;
+    height: 180px;
 }
-.table_pref{
-    border:none;
+
+.table_pref {
+    border: none;
 }
-.SettingHr{
-    font-size:170%;
+
+.SettingHr {
+    font-size: 170%;
 }
-.SettingsRow{
-    background-color:#ECECEC;
-    width:auto;
+
+.SettingsRow {
+    background-color: #ECECEC;
+    width: auto;
     padding: inherit;
     border-radius: 5px;
     margin-top: 2%;
     margin-bottom: 2%;
 }
 /*Overiding CSS - May cause problems*/
-.row{
-    padding:2%;
+.row {
+    padding: 2%;
 }
