@@ -97,6 +97,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -137,10 +138,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="auth\LoginStyle.css" />
-    <Content Include="auth\signout.aspx" />
-    <Content Include="auth\signup.aspx" />
-    <Content Include="auth\signup2.aspx" />
+    <Content Include="Auth\LoginStyle.css" />
+    <Content Include="Auth\signout.aspx" />
+    <Content Include="Auth\signup.aspx" />
+    <Content Include="Auth\signup2.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -181,6 +182,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="mbox\Internal.Master" />
     <Content Include="mbox\FileSetting.master" />
+    <Content Include="Auth\AuthDBControl.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>AuthDBControl.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -197,7 +203,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="auth\signin.aspx" />
+    <Content Include="Auth\signin.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -246,25 +252,31 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="auth\signout.aspx.cs">
+    <Compile Include="Auth\AuthDBControl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuthDBControl.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Auth\User.cs" />
+    <Compile Include="Auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signout.aspx.designer.cs">
+    <Compile Include="Auth\signout.aspx.designer.cs">
       <DependentUpon>signout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="auth\signup.aspx.cs">
+    <Compile Include="Auth\signup.aspx.cs">
       <DependentUpon>signup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signup.aspx.designer.cs">
+    <Compile Include="Auth\signup.aspx.designer.cs">
       <DependentUpon>signup.aspx</DependentUpon>
     </Compile>
-    <Compile Include="auth\signup2.aspx.cs">
+    <Compile Include="Auth\signup2.aspx.cs">
       <DependentUpon>signup2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signup2.aspx.designer.cs">
+    <Compile Include="Auth\signup2.aspx.designer.cs">
       <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
     <Compile Include="mbox\FileSetting.master.cs">
@@ -357,15 +369,22 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="auth\signin.aspx.cs">
+    <Compile Include="Auth\signin.aspx.cs">
       <DependentUpon>signin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="auth\signin.aspx.designer.cs">
+    <Compile Include="Auth\signin.aspx.designer.cs">
       <DependentUpon>signin.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Auth\AuthDBControl.dbml.layout">
+      <DependentUpon>AuthDBControl.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
