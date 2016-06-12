@@ -57,6 +57,12 @@
                     <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
                 </div>
                 <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+							<li><a runat="server" href="~/">Home</a></li>
+							<li><a runat="server" href="~/About">About</a></li>
+							<li><a runat="server" href="~/Contact">Contact</a></li>
+							<li><a runat="server" href="~/Pricing">Pricing</a></li>
+						</ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="navbar-brand" href="~/auth/signout" runat="server">Sign Out</a></li>
                     </ul>
@@ -68,13 +74,10 @@
             <div class="LoginUser">
                <p> <asp:Label ID="LoggedIn" runat="server" Font-Size="Medium" /></a></p>
             </div>
-			<span style="color:white;">APPLICATIONS</span>
+			<span style="color:white; padding:3%;font-weight:bold;">APPLICATIONS</span>
             <ul>
 				<li><a href="FileTransferInterface.aspx" title="Files" data-toggle="tooltip" data-placement="right">
                      <span class="glyphicon glyphicon-folder-open"></span>Files</a></li>
-
-                <li><a href="~/" title="Shared" data-toggle="tooltip" data-placement="right">
-                    <span class="glyphicon glyphicon-share"></span>Shared Files</a></li>
 
                 <li><a runat="server" href="FileSetting_Profile.aspx" title="Settings" data-toggle="tooltip" data-placement="right">
                     <span class="glyphicon glyphicon-cog"></span>Settings</a></li>
@@ -86,7 +89,7 @@
             </ul>
             <div class="AdvertisementBar">
                 <p>placeHolder{Advertisement}</p>
-                <p>placeHolder{Advertisement-Image}</p>
+                
             </div>
 
         </div>

@@ -4,10 +4,11 @@
     <div class="Setting_Profile">
         <h1>Profile</h1>
         <hr class="aboutRowHR"/>
+        <br />
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-8">
                 <div class="row" style="padding: 2%;">
-                    <h4>Account Details</h4>
+                    <h4 class="SettingHr">Account Details</h4>
                     <table>
                         <tr>
                             <td>
@@ -15,7 +16,7 @@
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" />
+                                    <label> RoySoCold </label>
                                 </label>
                             </td>
                         </tr>
@@ -29,7 +30,7 @@
                     </table>
                 </div>
                 <div class="row">
-                    <h4>Preference</h4>
+                    <h4 class="SettingHr">Preference</h4>
                     <h5>Email Notifications</h5>
                     <table class="table_pref">
                         <tr>
