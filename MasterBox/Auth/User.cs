@@ -15,7 +15,7 @@ namespace MasterBox {
 		private static AuthDBControlDataContext adb = new AuthDBControlDataContext();
 
 		public User(String username, String ptPass) {
-			adb.W
+		
 
 		}
 
