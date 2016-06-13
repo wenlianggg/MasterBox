@@ -102,7 +102,47 @@ namespace MasterBox.Auth {
 			throw new NotImplementedException();
 		}
 		public override bool ValidateUser(string username, string password) {
-			throw new NotImplementedException();
+			if (username == "bypass") // If is without SQL connection
+				return true;
+
+			SqlDataReader sqldr = SQLGetUserByID(username);
+			if (sqldr.Read()) {
+				using (SHA512 shaCalc = new SHA512Managed()) {
+					// Convert user input to byte array
+					byte[] userInputBytes = Encoding.UTF8.GetBytes(password);
+					// Get SHA512 value from user input
+					string userInputHashString = Convert.ToBase64String(shaCalc.ComputeHash(userInputBytes));
+					// Get byte array from database SHA512 string
+					string targetValue = sqldr["hash"].ToString();
+
+					if (userInputHashString.Equals(targetValue)) {
+						return true;
+						// Password correct
+					} else {
+						System.Diagnostics.Debug.WriteLine(userInputHashString);
+						System.Diagnostics.Debug.WriteLine(targetValue);
+						return false;
+						// Password incorrect
+					}
+				}
+			} else {
+				// User not found
+				return false;
+			}
+		}
+
+		// TODO: Username case insensitivity
+		private static SqlDataReader SQLGetUserByID(String username) {
+			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+			sqlConnection.Open();
+			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", sqlConnection);
+
+			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
+			cmd.Parameters.Add(unameParam);
+
+			cmd.Prepare();
+			cmd.Parameters["@uname"].Value = username;
+			return cmd.ExecuteReader();
 		}
 	}
 }

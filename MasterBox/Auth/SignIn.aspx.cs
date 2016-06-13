@@ -6,9 +6,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Diagnostics;
+using MasterBox.Auth;
 
 namespace MasterBox {
 	public partial class SignIn : Page {
+		private static MBProvider mbrsprov = new MBProvider();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (User.Identity.IsAuthenticated) {
@@ -16,11 +18,7 @@ namespace MasterBox {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if ((UserName.Text == "Dominic") && (UserPass.Text == "123") ||
-				(UserName.Text == "James") && (UserPass.Text == "123") ||
-				(UserName.Text == "Roy") && (UserPass.Text == "123") ||
-				(UserName.Text == "Wilfred") && (UserPass.Text == "123") ||
-				(UserName.Text == "Wuggle") && (UserPass.Text == "123")) {
+			if (mbrsprov.ValidateUser(UserName.Text, UserPass.Text)) {
 				FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
 			} else {
 				Msg.Text = "Invalid credentials. Please try again.";
