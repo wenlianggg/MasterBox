@@ -105,7 +105,7 @@ namespace MasterBox.Auth {
 			if (username == "bypass") // If is without SQL connection
 				return true;
 
-			SqlDataReader sqldr = sqlGetUserByID(username);
+			SqlDataReader sqldr = SQLGetUserByID(username);
 			if (sqldr.Read()) {
 				using (SHA512 shaCalc = new SHA512Managed()) {
 					// Convert user input to byte array
@@ -132,7 +132,7 @@ namespace MasterBox.Auth {
 		}
 
 		// TODO: Username case insensitivity
-		public static SqlDataReader sqlGetUserByID(String username) {
+		private static SqlDataReader SQLGetUserByID(String username) {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
 			sqlConnection.Open();
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", sqlConnection);
