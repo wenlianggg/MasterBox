@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
-namespace MasterBox {
-	public class User {
+namespace MasterBox.Auth {
+	public class User : MembershipUser {
 		String username;
 		Boolean isTOTPEnabled;
 		String TOTPToken;

@@ -257,6 +257,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AuthDBControl.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Auth\MBProvider.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>
