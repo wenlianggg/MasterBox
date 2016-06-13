@@ -19,7 +19,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Upload a file</h4>
+                        <h4 class="modal-title">New Shared Folder</h4>
                     </div>
                     <div class="modal-body">
                         <label>Choose a file to upload:</label>
@@ -54,11 +54,32 @@
             
             </div>
         </div>
+        <!--Shared Folder Modal -->
+        <div id="sharefolderModel" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Folder</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Choose a file to upload:</label>
+                        <input type="file" class="file-loading" />
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            
+            </div>
+        </div>
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
                 <a onclick="">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                <a onclick="">
+                <a data-toggle="modal" data-target="#sharefolderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                 <a data-toggle="modal" data-target="#folderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
