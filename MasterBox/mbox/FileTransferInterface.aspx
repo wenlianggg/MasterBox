@@ -91,7 +91,8 @@
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
-                <asp:Label ID="Label1" runat="server" Text="Hello"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                <asp:Button ID="testButton" runat="server" Text="Button" />
             </ul>
         </div>
         <div class="FileTreeContainer">
