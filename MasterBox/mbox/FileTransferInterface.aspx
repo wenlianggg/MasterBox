@@ -91,7 +91,7 @@
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
-                
+                <asp:Label ID="Label1" runat="server" Text="Hello"></asp:Label>
             </ul>
         </div>
         <div class="FileTreeContainer">
@@ -99,6 +99,7 @@
             <div class="row" style="margin: 0 auto; border-bottom: 2px solid black;">
                 <div class="FileTreeContainerTable">
                     <p>Name: </p>
+                    
                 </div>
                 <div class="FileTreeContainerTable">
                     <p>Last Modified: </p>

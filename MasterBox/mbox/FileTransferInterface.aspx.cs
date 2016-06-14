@@ -22,15 +22,18 @@ namespace MasterBox
             if (FileUpload.HasFile)
             {
                 try
-                {
+                {   
+                    // Get File Name
                     string filename = Path.GetFileName(FileUpload.FileName);
                     Stream strm = FileUpload.PostedFile.InputStream;
+                    // Get File size 
                     BinaryReader br = new BinaryReader(strm);
                     Byte[] filesize = br.ReadBytes((int)strm.Length);
+                    // Get File Type
                     string filetype = FileUpload.PostedFile.ContentType;
-                    SqlConnection con = new SqlConnection("Data source=.;Initial Catalog=uploadFiles;Integrated Security=true");
+                    SqlConnection con = new SqlConnection("Data Source=mbox-mssql.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com;Initial Catalog=MasterBox;Persist Security Info=True;User ID=masterboxadmin;Password=N0tadatabase!");                    
                     SqlCommand cmd = new SqlCommand();
-                    cmd.CommandText = "insert into tablename(Name,type,data)values(@Name,@Type,@data)";
+                    cmd.CommandText = "INSERT into dbo.mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
@@ -38,20 +41,20 @@ namespace MasterBox
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    UploadStatus.ForeColor = System.Drawing.Color.Green;
-                    UploadStatus.Text = "Success";
+                    Label1.ForeColor = System.Drawing.Color.Green;
+                    Label1.Text = "Success";
                 }
                 catch
                 {
-                    UploadStatus.ForeColor = System.Drawing.Color.Red;
-                    UploadStatus.Text = "Fail";
+                    Label1.ForeColor = System.Drawing.Color.Red;
+                    Label1.Text = "Fail";
                 }
               
             }
             else
             {
-                UploadStatus.ForeColor = System.Drawing.Color.Red;
-                UploadStatus.Text = "Please Select a file";
+                Label1.ForeColor = System.Drawing.Color.Red;
+                Label1.Text = "Please Select a file";
             }
         }
     }
