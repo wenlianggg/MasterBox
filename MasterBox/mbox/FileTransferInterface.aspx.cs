@@ -39,14 +39,16 @@ namespace MasterBox
             }
         }
         // Trying to do download button
-        protected void DownloadFile(object sender,EventArgs e)
+        protected void DownloadFile(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-
-           // int id = int.Parse(FileTableView.DataKeys[gr.RowIndex].Value.ToString());
-            Download(1);
+            // this is for the auto method...however got error atm 
+           // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
+           // int id = int.Parse(stringID);
+            Download(3);
         }
+
         private void Download(int id)
         {
             DataTable dt = new DataTable();
