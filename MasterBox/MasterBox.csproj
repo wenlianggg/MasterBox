@@ -280,6 +280,7 @@
     <Compile Include="Auth\signup2.aspx.designer.cs">
       <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="mbox\File.cs" />
     <Compile Include="mbox\FileSetting.master.cs">
       <DependentUpon>FileSetting.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
