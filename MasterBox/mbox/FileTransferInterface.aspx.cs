@@ -38,12 +38,14 @@ namespace MasterBox
                 FileTableView.DataBind();
             }
         }
+        // Trying to do download button
         protected void DownloadFile(object sender,EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
 
-            int id = int.Parse(FileTableView.DataKeys[gr.RowIndex].Value.ToString());
+           // int id = int.Parse(FileTableView.DataKeys[gr.RowIndex].Value.ToString());
+            Download(1);
         }
         private void Download(int id)
         {
@@ -51,11 +53,22 @@ namespace MasterBox
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_testfolder where fileindex=@ID", con);
+                cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
                 cmd.Prepare();
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);
             }
+            string name = dt.Rows[0]["filename"].ToString();
+            byte[] documentBytes = (byte[])dt.Rows[0]["filesize"];
+            Response.ClearContent();
+            Response.ContentType = "application/octestream";
+            Response.AddHeader("Content-Disposition",string.Format("attachment;filename=(0)",name));
+            Response.AddHeader("Content-Length", documentBytes.Length.ToString());
+
+            Response.BinaryWrite(documentBytes);
+            Response.Flush();
+            Response.Close();
         }
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {           
@@ -73,9 +86,11 @@ namespace MasterBox
                     string filetype = FileUpload.PostedFile.ContentType;
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
                     SqlCommand cmd = new SqlCommand();
-                    
+
+                    // Upload to database
+                    // Tempo for the id, must manual key in
                     cmd.CommandText = "INSERT INTO mb_testfolder(fileindex,filename,filetype,filesize)values(@Index,@Name,@Type,@data)";
-                    cmd.Parameters.AddWithValue("@Index", 1);
+                    cmd.Parameters.AddWithValue("@Index", 2);
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
@@ -83,8 +98,12 @@ namespace MasterBox
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
+
+                    // Update text to show status
                     UploadStatus.ForeColor = System.Drawing.Color.Green;
                     UploadStatus.Text = "Success";
+                    // Update the file table
+                    FillData();
                 }
                 catch
                 {
