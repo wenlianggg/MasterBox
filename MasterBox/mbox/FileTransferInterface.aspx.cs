@@ -16,10 +16,62 @@ namespace MasterBox
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+                FillData();
+            }
+        }
+        private void FillData()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString)){
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
+               
+                cmd.Prepare();
+                SqlDataReader reader = cmd.ExecuteReader();                
+                dt.Load(reader);
+            }
+            if (dt.Rows.Count > 0)
+            {
+                FileTableView.DataSource = dt;
+                FileTableView.DataBind();
+            }
+        }
+        // Trying to do download button
+        protected void DownloadFile(object sender, EventArgs e)
+        {
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
+            // this is for the auto method...however got error atm 
+           // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
+           // int id = int.Parse(stringID);
+            Download(3);
         }
 
+        private void Download(int id)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_testfolder where fileindex=@ID", con);
+                cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+                cmd.Prepare();
+                SqlDataReader reader = cmd.ExecuteReader();
+                dt.Load(reader);
+            }
+            string name = dt.Rows[0]["filename"].ToString();
+            byte[] documentBytes = (byte[])dt.Rows[0]["filesize"];
+            Response.ClearContent();
+            Response.ContentType = "application/octestream";
+            Response.AddHeader("Content-Disposition",string.Format("attachment;filename=(0)",name));
+            Response.AddHeader("Content-Length", documentBytes.Length.ToString());
 
+            Response.BinaryWrite(documentBytes);
+            Response.Flush();
+            Response.Close();
+        }
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {           
             if (FileUpload.HasFile)
@@ -36,8 +88,11 @@ namespace MasterBox
                     string filetype = FileUpload.PostedFile.ContentType;
                     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
                     SqlCommand cmd = new SqlCommand();
-                    
-                    cmd.CommandText = "INSERT INTO mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
+
+                    // Upload to database
+                    // Tempo for the id, must manual key in
+                    cmd.CommandText = "INSERT INTO mb_testfolder(fileindex,filename,filetype,filesize)values(@Index,@Name,@Type,@data)";
+                    cmd.Parameters.AddWithValue("@Index", 2);
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
@@ -45,8 +100,12 @@ namespace MasterBox
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
+
+                    // Update text to show status
                     UploadStatus.ForeColor = System.Drawing.Color.Green;
                     UploadStatus.Text = "Success";
+                    // Update the file table
+                    FillData();
                 }
                 catch
                 {

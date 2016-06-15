@@ -15,7 +15,7 @@
         <!--Upload Modal -->
         <div id="uploadModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                
+
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -24,14 +24,14 @@
                     </div>
                     <div class="modal-body">
                         <span>Choose a file to upload:</span>
-                        <asp:FileUpload ID="FileUpload" runat="server" />
+                        <asp:FileUpload ID="FileUpload" runat="server"  />
                     </div>
                     <div class="modal-footer">
-                       
+
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
                         <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" />
-                    </div>        
-               </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
         <!--Folder Modal -->
         <div id="folderModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                
+
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -47,20 +47,31 @@
                         <h4 class="modal-title">New Folder</h4>
                     </div>
                     <div class="modal-body">
-                        <span>Choose a file to upload:</span>
-                        <input type="file" class="file-loading" />
+                        <span>New Folder Name:</span>
+                        <input type="text" />
+                        <br />
+                        <span>Personal Encryption: </span>
+                        <asp:RadioButtonList ID="encryptionOption" runat="server">
+                            <asp:ListItem Text="Yes" Value="yes" />
+                            <asp:ListItem Text="No" Value="no" />
+                        </asp:RadioButtonList>
+                        
+                        <span>Password: </span>
+                        <input type="password" />
+                        <span>Confirm-Password: </span>
+                        <input type="password" />
                     </div>
                     <div class="modal-footer">
-                        
+                        <a >Create</a>
                     </div>
                 </div>
-            
+
             </div>
         </div>
         <!--Shared Folder Modal -->
         <div id="sharefolderModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                
+
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -72,10 +83,9 @@
                         <input type="file" class="file-loading" />
                     </div>
                     <div class="modal-footer">
-                        
                     </div>
                 </div>
-            
+
             </div>
         </div>
         <div class="FileToolBar">
@@ -93,7 +103,15 @@
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
-                
+                <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename" OnRowCommand="DownloadFile">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Document">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
             </ul>
         </div>
         <div class="FileTreeContainer">
@@ -101,7 +119,7 @@
             <div class="row" style="margin: 0 auto; border-bottom: 2px solid black;">
                 <div class="FileTreeContainerTable">
                     <p>Name: </p>
-                    
+
                 </div>
                 <div class="FileTreeContainerTable">
                     <p>Last Modified: </p>
