@@ -10,7 +10,7 @@ using MasterBox.Auth;
 
 namespace MasterBox {
 	public partial class SignIn : Page {
-		private static MBProvider mbrsprov = new MBProvider();
+		private static MBProvider mbprovider = new MBProvider();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (User.Identity.IsAuthenticated) {
@@ -18,7 +18,7 @@ namespace MasterBox {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if (mbrsprov.ValidateUser(UserName.Text, UserPass.Text)) {
+			if (mbprovider.ValidateUser(UserName.Text, UserPass.Text)) {
 				FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
 			} else {
 				Msg.Text = "Invalid credentials. Please try again.";

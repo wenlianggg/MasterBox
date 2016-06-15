@@ -56,9 +56,6 @@ namespace MasterBox.Auth {
 				throw new NotImplementedException();
 			}
 		} // Yes
-		public override bool ChangePassword(string username, string oldPassword, string newPassword) {
-			throw new NotImplementedException();
-		}
 		public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer) {
 			throw new NotImplementedException();
 		}
@@ -107,23 +104,43 @@ namespace MasterBox.Auth {
 
 			SqlDataReader sqldr = SQLGetUserByID(username);
 			if (sqldr.Read()) {
-				using (SHA512 shaCalc = new SHA512Managed()) {
-					// Convert user input to byte array
-					byte[] userInputBytes = Encoding.UTF8.GetBytes(password);
-					// Get SHA512 value from user input
-					string userInputHashString = Convert.ToBase64String(shaCalc.ComputeHash(userInputBytes));
-					// Get byte array from database SHA512 string
-					string targetValue = sqldr["hash"].ToString();
+				// Get byte array from database SHA512 string
+				string storedHash = sqldr["hash"].ToString();
 
-					if (userInputHashString.Equals(targetValue)) {
-						return true;
-						// Password correct
-					} else {
-						System.Diagnostics.Debug.WriteLine(userInputHashString);
-						System.Diagnostics.Debug.WriteLine(targetValue);
-						return false;
-						// Password incorrect
-					}
+				// Add padding to password to make Base64 Compatible
+				int len = password.Length % 4;
+				if (len > 0)
+					password = password.PadRight(password.Length + (4 - len), '=');
+				// Convert padded user input to byte array
+				byte[] userInputBytes = Convert.FromBase64String(password);
+				byte[] saltBytes = Convert.FromBase64String(sqldr["salt"].ToString());
+				byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
+				userInputBytes.CopyTo(combinedBytes, 0);
+				saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
+				// Get SHA512 value from user input
+				string userHash;
+				using (SHA512 shaCalc = new SHA512Managed()) {
+					userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+				}
+				if (userHash.Equals(storedHash)) {
+					// Empty out strings and sensitive data arrays
+					Array.Clear(userInputBytes, 0, userInputBytes.Length);
+					Array.Clear(combinedBytes, 0, combinedBytes.Length);
+					password = string.Empty;
+					userHash = string.Empty;
+					// Password correct
+					return true;
+				} else {
+					// Debug information
+					System.Diagnostics.Debug.WriteLine(userHash);
+					System.Diagnostics.Debug.WriteLine(storedHash);
+					// Empty out strings and sensitive data arrays
+					Array.Clear(userInputBytes, 0, userInputBytes.Length);
+					Array.Clear(combinedBytes, 0, combinedBytes.Length);
+					password = string.Empty;
+					userHash = string.Empty;
+					// Password incorrect
+					return false;
 				}
 			} else {
 				// User not found
@@ -131,11 +148,62 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		// TODO: Username case insensitivity
+		public override bool ChangePassword(string username, string oldPassword, string newPassword) {
+			// Validate user password entered first
+			if (ValidateUser(username, oldPassword)) {
+				// Get user from SQL
+				SqlDataReader sqldr = SQLGetUserByID(username);
+				// New salt generation
+				byte[] newSaltB = new byte[16];
+				using (RNGCryptoServiceProvider rngcsp = new RNGCryptoServiceProvider()) {
+					rngcsp.GetBytes(newSaltB);
+				}
+				// Do necessary padding work
+				int len = newPassword.Length % 4;
+				if (len > 0)
+					newPassword = newPassword.PadRight(newPassword.Length + (4 - len), '=');
+				// Convert new password to byte array
+				byte[] newPwBytes = Convert.FromBase64String(newPassword);
+				// Join two arrays
+				byte[] combinedBytes = new byte[newPwBytes.Length + newSaltB.Length];
+				newPwBytes.CopyTo(combinedBytes, 0);
+				newSaltB.CopyTo(combinedBytes, newPwBytes.Length);
+				// Convert salt to string
+				string newSalt = Convert.ToBase64String(newSaltB);
+				// Hash combined arrays
+				string userHash;
+				using (SHA512 shaCalc = new SHA512Managed()) {
+					userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+				}
+				// Update database values
+				SqlCommand cmd = new SqlCommand(
+					"UPDATE mb_auth SET hash = @newHash , salt = @newSalt WHERE username = @uname",
+					SQLGetMBoxConnection());
+				cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
+				cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+				cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+				cmd.Prepare();
+				cmd.Parameters["@newHash"].Value = userHash;
+				cmd.Parameters["@newSalt"].Value = newSalt;
+				cmd.Parameters["@uname"].Value = username;
+				cmd.ExecuteNonQuery();
+				System.Diagnostics.Debug.WriteLine(newSalt);
+				// Clean up all sensitive information
+				oldPassword = string.Empty;
+				newPassword = string.Empty;
+				Array.Clear(combinedBytes, 0, combinedBytes.Length);
+				Array.Clear(newPwBytes, 0, newPwBytes.Length);
+				return true;
+			} else {
+				// Existing password is wrong
+				return false;
+			}
+		}
+
 		private static SqlDataReader SQLGetUserByID(String username) {
-			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-			sqlConnection.Open();
-			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", sqlConnection);
+			SqlCommand cmd = new SqlCommand(
+				"SELECT * FROM mb_auth WHERE username = @uname",
+				SQLGetMBoxConnection());
 
 			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
 			cmd.Parameters.Add(unameParam);
@@ -143,6 +211,12 @@ namespace MasterBox.Auth {
 			cmd.Prepare();
 			cmd.Parameters["@uname"].Value = username;
 			return cmd.ExecuteReader();
+		}
+
+		private static SqlConnection SQLGetMBoxConnection() {
+			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+			sqlConnection.Open();
+			return sqlConnection;
 		}
 	}
 }

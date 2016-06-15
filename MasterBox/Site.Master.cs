@@ -10,12 +10,17 @@ namespace MasterBox {
 		protected void Page_Load(object sender, EventArgs e) {
 			IPAddr.Text = "Connected from: " + GetIPAddress();
 			if (Context.User.Identity.IsAuthenticated) {
-				WelcomeBack.Text = "Welcome Back, " + Context.User.Identity.Name;
-				LoggedInUser.Text = "Logged in as: " + Context.User.Identity.Name;
-				IPAddr.Text = "Connected from: " + GetIPAddress();
+				UnameDropdown.Text = Context.User.Identity.Name;
+				SignInText.Text = "File Browser";
 				SignInLink.HRef = "~/mbox/FileTransferInterface.aspx";
+				IPAddr.Text = "Connected from: " + GetIPAddress();
 			} else {
-				WelcomeBack.Text = "Login / Register";
+				SignInText.Text = "Login / Register";
+				UserLogs.Visible = false;
+				OTPConf.Visible = false;
+				KeyManagement.Visible = false;
+				Options.Visible = false;
+				UserSettings.Visible = false;
 				SignOutLink.Visible = false;
 			}
 		}

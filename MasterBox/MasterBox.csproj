@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />
+    <Content Include="Auth\changepw.aspx" />
     <Content Include="Auth\signout.aspx" />
     <Content Include="Auth\signup.aspx" />
     <Content Include="Auth\signup2.aspx" />
@@ -258,6 +259,13 @@
       <DependentUpon>AuthDBControl.dbml</DependentUpon>
     </Compile>
     <Compile Include="Auth\MBProvider.cs" />
+    <Compile Include="Auth\changepw.aspx.cs">
+      <DependentUpon>changepw.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Auth\changepw.aspx.designer.cs">
+      <DependentUpon>changepw.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Auth\User.cs" />
     <Compile Include="Auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>
