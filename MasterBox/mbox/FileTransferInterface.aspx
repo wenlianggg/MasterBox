@@ -23,17 +23,19 @@
                         <h4 class="modal-title">Upload a File</h4>
                     </div>
                     <div class="modal-body">
-                        <label>Choose a file to upload:</label>
+                        <span>Choose a file to upload:</span>
                         <asp:FileUpload ID="FileUpload" runat="server" />
                     </div>
                     <div class="modal-footer">
+                       
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" />
-                    </div>
-                </div>
-           
+                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" />
+                    </div>        
+               </div>
             </div>
         </div>
+
+
         <!--Folder Modal -->
         <div id="folderModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -45,7 +47,7 @@
                         <h4 class="modal-title">New Folder</h4>
                     </div>
                     <div class="modal-body">
-                        <label>Choose a file to upload:</label>
+                        <span>Choose a file to upload:</span>
                         <input type="file" class="file-loading" />
                     </div>
                     <div class="modal-footer">
@@ -66,7 +68,7 @@
                         <h4 class="modal-title">New Folder</h4>
                     </div>
                     <div class="modal-body">
-                        <label>Choose a file to upload:</label>
+                        <span>Choose a file to upload:</span>
                         <input type="file" class="file-loading" />
                     </div>
                     <div class="modal-footer">
@@ -91,8 +93,7 @@
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
-                <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                <asp:Button ID="testButton" runat="server" Text="Button" />
+                
             </ul>
         </div>
         <div class="FileTreeContainer">

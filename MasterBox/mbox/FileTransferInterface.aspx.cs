@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Configuration;
+
 namespace MasterBox
 {
     public partial class FileTransferInterface : System.Web.UI.Page
@@ -14,12 +16,9 @@ namespace MasterBox
         
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            
         }
-        protected void testButton_Click(object sender,EventArgs e)
-        {
-            Label1.Text = "Success";
-        }
+
 
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {           
@@ -35,36 +34,34 @@ namespace MasterBox
                     Byte[] filesize = br.ReadBytes((int)strm.Length);
                     // Get File Type
                     string filetype = FileUpload.PostedFile.ContentType;
-                    SqlConnection con = new SqlConnection("Data Source=mbox-mssql.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com;Initial Catalog=MasterBox;Persist Security Info=True;User ID=masterboxadmin;Password=N0tadatabase!");
+                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
                     SqlCommand cmd = new SqlCommand();
                     
-                    cmd.CommandText = "INSERT into dbo.mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
+                    cmd.CommandText = "INSERT INTO mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
                     cmd.Connection = con;
                     con.Open();
-                    if (con.State != ConnectionState.Open)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Test");
-                    }
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    Label1.ForeColor = System.Drawing.Color.Green;
-                    Label1.Text = "Success";
+                    UploadStatus.ForeColor = System.Drawing.Color.Green;
+                    UploadStatus.Text = "Success";
                 }
                 catch
                 {
-                    Label1.ForeColor = System.Drawing.Color.Red;
-                    Label1.Text = "Fail";
+                    UploadStatus.ForeColor = System.Drawing.Color.Red;
+                    UploadStatus.Text = "Fail";
                 }
               
             }
             else
             {
-                Label1.ForeColor = System.Drawing.Color.Red;
-                Label1.Text = "Please Select a file";
+                UploadStatus.ForeColor = System.Drawing.Color.Red;
+                UploadStatus.Text = "Please Select a file";
             }
         }
+
+    
     }
 }
