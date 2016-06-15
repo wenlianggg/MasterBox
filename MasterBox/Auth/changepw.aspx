@@ -1,4 +1,4 @@
-﻿<%@ Page Title="User Control Panel" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="changepw.aspx.cs" Inherits="MasterBox.ChangePw" %>
+﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="changepw.aspx.cs" Inherits="MasterBox.ChangePw" %>
 
 <asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
 	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
@@ -10,7 +10,8 @@
 	</div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
-		<li class="active">Edit User Security Settings</li>
+		<li>User Settings</li>
+		<li class="active">User Password</li>
 	</ol>
 	<br />
 	<div class="panel panel-default">

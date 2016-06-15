@@ -21,10 +21,22 @@ namespace MasterBox {
 
 		protected void ChangePassClick(object sender, EventArgs e) {
 			// TODO: Check if the passwords match
-			if (mbprovider.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
-				Msg.Text = "Successfully changed password";
+			if (NewUserPass.Text.Equals(NewUserPassCfm.Text)) {
+				try {
+					if (mbprovider.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
+						Msg.ForeColor = System.Drawing.Color.LimeGreen;
+						Msg.Text = "Successfully changed password";
+					} else {
+						Msg.ForeColor = System.Drawing.Color.Red;
+						Msg.Text = "Password unchanged due to validation error.";
+					}
+				} catch (UserNotFoundException) {
+					Msg.ForeColor = System.Drawing.Color.Red;
+					Msg.Text = "An unexpected error has occured: USER_NOT_FOUND";
+				}
 			} else {
-				Msg.Text = "Password unchanged due to validation error.";
+				Msg.ForeColor = System.Drawing.Color.Red;
+				Msg.Text = "Password fields do not match";
 			}
 		}
 	}

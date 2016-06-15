@@ -143,8 +143,7 @@ namespace MasterBox.Auth {
 					return false;
 				}
 			} else {
-				// User not found
-				return false;
+				throw new UserNotFoundException();
 			}
 		}
 
