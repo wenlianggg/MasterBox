@@ -93,7 +93,15 @@
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
-                
+                <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Document">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" runat="server" Onclick="DownloadFile" Text='<%# Eval("filename") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
             </ul>
         </div>
         <div class="FileTreeContainer">
