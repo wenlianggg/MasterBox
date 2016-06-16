@@ -28,7 +28,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>       
                         <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" />
                     </div>
                 </div>
@@ -48,7 +48,8 @@
                     </div>
                     <div class="modal-body">
                         <span>Folder Name:</span>
-                        <input type="text" />
+                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" autocomplete="off"/>
+
                         <br />
                         <span>Personal Encryption: </span>
                         <asp:RadioButtonList ID="encryptionOption" runat="server">
@@ -57,12 +58,16 @@
                         </asp:RadioButtonList>
                         
                         <span>Password: </span>
-                        <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
+                        <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control" 
+                            TextMode="Password" runat="server"  autocomplete="off"/>
                         <span>Confirm-Password: </span>
-                        <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
+                        <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control" 
+                            TextMode="Password" runat="server" autocomplete="off"/>
+                        
+
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="CreateNewFolder" runat="server" Text="Create"  />
+                        
                     </div>
                 </div>
 
@@ -76,11 +81,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New Folder</h4>
+                        <h4 class="modal-title">New Shared Folder</h4>
                     </div>
                     <div class="modal-body">
-                        <span>Choose a file to upload:</span>
-                        <input type="file" class="file-loading" />
+                        
                     </div>
                     <div class="modal-footer">
                     </div>
@@ -96,8 +100,8 @@
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                 <a data-toggle="modal" data-target="#folderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                <a data-toggle="modal" data-target="#uploadModel">
-                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" /></a>
+                <a data-toggle="modal" data-target="#uploadModel" data-backdrop="static">
+                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static"/></a>
             </div>
         </div>
         <div class="FileContainer">

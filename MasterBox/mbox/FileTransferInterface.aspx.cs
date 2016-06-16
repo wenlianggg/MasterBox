@@ -92,7 +92,7 @@ namespace MasterBox
                     // Upload to database
                     // Tempo for the id, must manual key in
                     cmd.CommandText = "INSERT INTO mb_testfolder(fileindex,filename,filetype,filesize)values(@Index,@Name,@Type,@data)";
-                    cmd.Parameters.AddWithValue("@Index", 2);
+                    cmd.Parameters.AddWithValue("@Index", 3);
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
@@ -121,6 +121,21 @@ namespace MasterBox
             }
         }
 
-    
+        protected void CreateNewFolder_Click(object sender, EventArgs e)
+        {
+            // This is to check if encryption is needed
+            if (encryptionOption.DataTextField !="no")
+            {
+                // Check if the password and cfm password is correct or not
+                if (encryptionPass.Text!=null && encryptionPassCfm.Text!=null)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+        }
     }
 }

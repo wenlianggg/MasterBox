@@ -40,6 +40,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button NewUploadFile;
         
         /// <summary>
+        /// FolderName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FolderName;
+        
+        /// <summary>
         /// encryptionOption control.
         /// </summary>
         /// <remarks>
@@ -65,15 +74,6 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox encryptionPassCfm;
-        
-        /// <summary>
-        /// CreateNewFolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateNewFolder;
         
         /// <summary>
         /// FileTableView control.
