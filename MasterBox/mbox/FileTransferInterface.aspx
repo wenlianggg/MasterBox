@@ -47,22 +47,22 @@
                         <h4 class="modal-title">New Folder</h4>
                     </div>
                     <div class="modal-body">
-                        <span>New Folder Name:</span>
+                        <span>Folder Name:</span>
                         <input type="text" />
                         <br />
                         <span>Personal Encryption: </span>
                         <asp:RadioButtonList ID="encryptionOption" runat="server">
-                            <asp:ListItem Text="Yes" Value="yes" />
+                            <asp:ListItem Text="Yes" Value="yes" selected="true"/>
                             <asp:ListItem Text="No" Value="no" />
                         </asp:RadioButtonList>
                         
                         <span>Password: </span>
-                        <input type="password" />
+                        <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
                         <span>Confirm-Password: </span>
-                        <input type="password" />
+                        <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
                     </div>
                     <div class="modal-footer">
-                        <a >Create</a>
+                        <asp:Button ID="CreateNewFolder" runat="server" Text="Create"  />
                     </div>
                 </div>
 
@@ -136,4 +136,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            $("input[type='radio']").on('click', function (e) {
+                getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
+            });
+        });
+        function getCheckedRadio(group, item, value) {
+            registerMode(item);
+        }
+        function registerMode(val) {
+            if (val == 'no') {
+                $(".pwdfield").attr('readonly', "readonly");
+                $(".pwdfield").attr('disabled', "disabled");
+            } else {
+                $(".pwdfield").removeAttr('readonly');
+                $(".pwdfield").removeAttr('disabled');
+            }
+           
+        }
+	</script>
 </asp:Content>
