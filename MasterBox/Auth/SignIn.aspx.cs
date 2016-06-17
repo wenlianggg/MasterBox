@@ -18,10 +18,14 @@ namespace MasterBox {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if (mbprovider.ValidateUser(UserName.Text, UserPass.Text)) {
-				FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
-			} else {
-				Msg.Text = "Invalid credentials. Please try again.";
+			try {
+				if (mbprovider.ValidateUser(UserName.Text, UserPass.Text)) {
+					FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
+				} else {
+					Msg.Text = "Invalid credentials. Please try again, please check your username casing!";
+				}
+			} catch (UserNotFoundException) {
+				Msg.Text = "Invalid credentials. Please try again, please check your username casing!";
 			}
 		}
 
