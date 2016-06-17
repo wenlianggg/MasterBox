@@ -63,9 +63,10 @@
                         <br />
                         <span>Personal Encryption: </span>
                         <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Yes" Value="yes" selected="True"/>
+                            <asp:ListItem Text="Yes" Value="yes"/>
                             <asp:ListItem Text="No" Value="no" />
                         </asp:RadioButtonList>
+
                         <asp:RequiredFieldValidator ID="EncryptionOptionValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="encryptionOption"
@@ -75,14 +76,24 @@
                         <br />
                         <span>Password: </span>
                         <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" autocomplete="off" />                              
-                        <asp:CustomValidator ID="PassValidator" runat="server"
+                            TextMode="Password" runat="server" />    
+                          <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
+                            ValidationGroup="NewFolder"
+                            ControlToValidate="encryptionPass"
+                            ErrorMessage="Password Please"
+                            ForeColor="Red" Enabled="true">
+                        </asp:RequiredFieldValidator>
+                       <!--                      
+                       <asp:CustomValidator ID="PassValidator" runat="server"
                             ValidationGroup="NewFolder" 
-                            ControlToValidate="encryptionPass" 
-                            ClientValidationFunction="Chking"
-                            OnServerValidate="PasswordValidator_ServerValidate" 
-                            ErrorMessage="Please Enter a password" >
+                            ControlToValidate="encryptionPass"
+                            OnServerValidate="PasswordValidator_ServerValidate"
+                            Display="Dynamic" EnableClientScript="false" 
+                            ErrorMessage="Please Enter a password" 
+                            ForeColor="Red" Enabled="true">
                         </asp:CustomValidator>
+                        -->  
+                        
                         <br />
                         <span>Confirm-Password: </span>
                         <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
@@ -169,9 +180,11 @@
 			if (val == "no") {
 				$(".pwdfield").attr('readonly', "readonly");
 				$(".pwdfield").attr('disabled', "disabled");
+                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false);
 			} else {
 				$(".pwdfield").removeAttr('readonly');
 				$(".pwdfield").removeAttr('disabled');
+                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
 			}
 			
 		}

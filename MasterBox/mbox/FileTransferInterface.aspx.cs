@@ -16,6 +16,7 @@ namespace MasterBox
         
         protected void Page_Load(object sender, EventArgs e)
         {
+
             // fill up file data on the display
             if (!IsPostBack)
             {
@@ -46,7 +47,9 @@ namespace MasterBox
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-            // this is for the auto method...however got error atm 
+           // this is for the auto method...however got error atm 
+           // May not use this method cause its by ID.
+           // May use another attribute for this.
            // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
            // int id = int.Parse(stringID);
             Download(3);
@@ -121,20 +124,18 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-            // reset the form fields
+            // Reset the form fields
             Response.Redirect(Request.Url.AbsoluteUri);
         }
-
+        // May no use this method
         protected void PasswordValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (encryptionOption.Text == "no")
             {
                 PassValidator.Enabled = false;
-            }else
-            {
-                PassValidator.Enabled = true;
             }
         }
 
+      
     }
 }
