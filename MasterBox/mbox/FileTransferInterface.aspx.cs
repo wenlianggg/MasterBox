@@ -124,17 +124,12 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-            // Reset the form fields
-            Response.Redirect(Request.Url.AbsoluteUri);
+                // Reset the form fields
+                Response.Redirect(Request.Url.AbsoluteUri);
+ 
+           
         }
-        // May no use this method
-        protected void PasswordValidator_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (encryptionOption.Text == "no")
-            {
-                PassValidator.Enabled = false;
-            }
-        }
+
 
       
     }

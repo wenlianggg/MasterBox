@@ -63,7 +63,7 @@
                         <br />
                         <span>Personal Encryption: </span>
                         <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Yes" Value="yes"/>
+                            <asp:ListItem Text="Yes" Value="yes" Selected="True"/>
                             <asp:ListItem Text="No" Value="no" />
                         </asp:RadioButtonList>
 
@@ -76,28 +76,23 @@
                         <br />
                         <span>Password: </span>
                         <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" />    
+                            TextMode="Password" runat="server"/>    
                           <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="encryptionPass"
-                            ErrorMessage="Password Please"
+                            ErrorMessage="Please Enter a password"
                             ForeColor="Red" Enabled="true">
-                        </asp:RequiredFieldValidator>
-                       <!--                      
-                       <asp:CustomValidator ID="PassValidator" runat="server"
-                            ValidationGroup="NewFolder" 
-                            ControlToValidate="encryptionPass"
-                            OnServerValidate="PasswordValidator_ServerValidate"
-                            Display="Dynamic" EnableClientScript="false" 
-                            ErrorMessage="Please Enter a password" 
-                            ForeColor="Red" Enabled="true">
-                        </asp:CustomValidator>
-                        -->  
-                        
+                        </asp:RequiredFieldValidator>                       
                         <br />
                         <span>Confirm-Password: </span>
                         <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" autocomplete="off" />
+                            TextMode="Password" runat="server" onchange="validateCfmPassword(this)"/>
+                        <asp:RequiredFieldValidator ID="CfmPasswordValidator" runat="server"
+                            ValidationGroup="NewFolder"
+                            ControlToValidate="encryptionPassCfm"
+                            ErrorMessage="Password does not match"
+                            ForeColor="Red" Enabled="false">
+                        </asp:RequiredFieldValidator>    
 
                     </div>
                     <div class="modal-footer">
@@ -184,7 +179,8 @@
 			} else {
 				$(".pwdfield").removeAttr('readonly');
 				$(".pwdfield").removeAttr('disabled');
-                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
+				ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
+			    
 			}
 			
 		}
@@ -197,6 +193,14 @@
 		function getCheckedRadio(group, item, value) {
 			encryptionChk(item);
 		}
-	
+		function getPassword() {
+		    return document.getElementById('encryptionPass').value;
+		}
+		function validateCfmPassword(txt) {
+
+		    if (document.getElementById('encryptionPass').value != txt.value) {
+		        alert("Wrong Password");
+		    }
+		}
 	</script>
 </asp:Content>
