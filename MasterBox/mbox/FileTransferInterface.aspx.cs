@@ -110,31 +110,44 @@ namespace MasterBox
                 catch
                 {
                     UploadStatus.ForeColor = System.Drawing.Color.Red;
-                    UploadStatus.Text = "Fail";
+                    UploadStatus.Text = "Upload was not succesful, please try again.";
                 }
               
-            }
-            else
-            {
-                UploadStatus.ForeColor = System.Drawing.Color.Red;
-                UploadStatus.Text = "Please Select a file";
             }
         }
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-            // This is to check if encryption is needed
-            if (encryptionOption.DataTextField !="no")
+           
+        }
+
+        protected void PasswordValidator(object source, ServerValidateEventArgs args)
+        {
+            if (encryptionOption.Text != "yes")
             {
-                // Check if the password and cfm password is correct or not
-                if (encryptionPass.Text!=null && encryptionPassCfm.Text!=null)
-                {
+                PassValidator.Enabled = false;
+            }
+            else
+            {
+                PassValidator.Enabled = true;
+            }
+        }
 
-                }
-                else
-                {
-
-                }
+        protected void encryptionOption_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (encryptionOption.Text == "no")
+            {
+                
+                encryptionPass.Enabled = false;
+                encryptionPassCfm.Enabled = false;
+                encryptionPass.ReadOnly = false;
+                encryptionPassCfm.ReadOnly = false;
+            }else
+            {
+                encryptionPass.Enabled = true;
+                encryptionPassCfm.Enabled = true;
+                encryptionPass.ReadOnly = true;
+                encryptionPassCfm.ReadOnly = true;
             }
         }
     }

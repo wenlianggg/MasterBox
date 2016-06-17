@@ -22,6 +22,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.FileUpload FileUpload;
         
         /// <summary>
+        /// FildUploadValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FildUploadValidator;
+        
+        /// <summary>
         /// UploadStatus control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox FolderName;
         
         /// <summary>
+        /// RequiredFieldValidator2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        
+        /// <summary>
         /// encryptionOption control.
         /// </summary>
         /// <remarks>
@@ -67,6 +85,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox encryptionPass;
         
         /// <summary>
+        /// PassValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator PassValidator;
+        
+        /// <summary>
         /// encryptionPassCfm control.
         /// </summary>
         /// <remarks>
@@ -76,6 +103,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox encryptionPassCfm;
         
         /// <summary>
+        /// NewFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NewFolder;
+        
+        /// <summary>
         /// FileTableView control.
         /// </summary>
         /// <remarks>
@@ -83,5 +119,14 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView FileTableView;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }
