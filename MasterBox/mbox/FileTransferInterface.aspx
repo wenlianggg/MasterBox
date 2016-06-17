@@ -26,6 +26,7 @@
                         <asp:FileUpload ID="FileUpload" runat="server" />
                         <asp:RequiredFieldValidator ID="FildUploadValidator" runat="server"
                             ValidationGroup="UploadFileValidation"
+                            ValidateEmptyText=true
                             ControlToValidate="FileUpload"
                             ErrorMessage="Please select a file"
                             ForeColor="Red">
@@ -52,8 +53,8 @@
                     </div>
                     <div class="modal-body">
                         <span>Folder Name:</span>
-                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" autocomplete="off" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
+                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control"  />
+                        <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="FolderName"
                             ErrorMessage="Please Enter A Folder Name"
@@ -61,20 +62,28 @@
                         </asp:RequiredFieldValidator>
                         <br />
                         <span>Personal Encryption: </span>
-                        <asp:RadioButtonList ID="encryptionOption" runat="server" >
-                            <asp:ListItem Text="Yes" Value="yes" Selected="true" />
+                        <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
+                            <asp:ListItem Text="Yes" Value="yes" selected="True"/>
                             <asp:ListItem Text="No" Value="no" />
                         </asp:RadioButtonList>
-
+                        <asp:RequiredFieldValidator ID="EncryptionOptionValidator" runat="server"
+                            ValidationGroup="NewFolder"
+                            ControlToValidate="encryptionOption"
+                            ErrorMessage="Please select encryption option"
+                            ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                        <br />
                         <span>Password: </span>
                         <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" autocomplete="off" />
-                        
+                            TextMode="Password" runat="server" autocomplete="off" />                              
                         <asp:CustomValidator ID="PassValidator" runat="server"
                             ValidationGroup="NewFolder" 
                             ControlToValidate="encryptionPass" 
-                            OnServerValidate="PasswordValidator" 
-                            ErrorMessage="Please Enter a password"/>
+                            ClientValidationFunction="Chking"
+                            OnServerValidate="PasswordValidator_ServerValidate" 
+                            ErrorMessage="Please Enter a password" >
+                        </asp:CustomValidator>
+                        <br />
                         <span>Confirm-Password: </span>
                         <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
                             TextMode="Password" runat="server" autocomplete="off" />
@@ -155,4 +164,26 @@
         </div>
     </div>
 
+    <script>
+        function encryptionChk(val) {
+			if (val == "no") {
+				$(".pwdfield").attr('readonly', "readonly");
+				$(".pwdfield").attr('disabled', "disabled");
+			} else {
+				$(".pwdfield").removeAttr('readonly');
+				$(".pwdfield").removeAttr('disabled');
+			}
+			
+		}
+		$(function () {
+			$("input[type='radio']").on('click', function (e) {
+				getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
+			});
+		});
+
+		function getCheckedRadio(group, item, value) {
+			encryptionChk(item);
+		}
+	
+	</script>
 </asp:Content>

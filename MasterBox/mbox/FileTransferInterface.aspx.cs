@@ -16,6 +16,7 @@ namespace MasterBox
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            // fill up file data on the display
             if (!IsPostBack)
             {
                 FillData();
@@ -23,6 +24,7 @@ namespace MasterBox
         }
         private void FillData()
         {
+            
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString)){
                 con.Open();
@@ -38,6 +40,7 @@ namespace MasterBox
                 FileTableView.DataBind();
             }
         }
+
         // Trying to do download button
         protected void DownloadFile(object sender, EventArgs e)
         {
@@ -118,37 +121,20 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-           
+            // reset the form fields
+            Response.Redirect(Request.Url.AbsoluteUri);
         }
 
-        protected void PasswordValidator(object source, ServerValidateEventArgs args)
+        protected void PasswordValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (encryptionOption.Text != "yes")
+            if (encryptionOption.Text == "no")
             {
                 PassValidator.Enabled = false;
-            }
-            else
+            }else
             {
                 PassValidator.Enabled = true;
             }
         }
 
-        protected void encryptionOption_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (encryptionOption.Text == "no")
-            {
-                
-                encryptionPass.Enabled = false;
-                encryptionPassCfm.Enabled = false;
-                encryptionPass.ReadOnly = false;
-                encryptionPassCfm.ReadOnly = false;
-            }else
-            {
-                encryptionPass.Enabled = true;
-                encryptionPassCfm.Enabled = true;
-                encryptionPass.ReadOnly = true;
-                encryptionPassCfm.ReadOnly = true;
-            }
-        }
     }
 }

@@ -58,13 +58,13 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox FolderName;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// FolderNameValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FolderNameValidator;
         
         /// <summary>
         /// encryptionOption control.
@@ -74,6 +74,15 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList encryptionOption;
+        
+        /// <summary>
+        /// EncryptionOptionValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EncryptionOptionValidator;
         
         /// <summary>
         /// encryptionPass control.
