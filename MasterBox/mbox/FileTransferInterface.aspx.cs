@@ -124,8 +124,9 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-                // Reset the form fields
-                Response.Redirect(Request.Url.AbsoluteUri);
+
+            // Reset the form fields
+       Response.Redirect(Request.Url.AbsoluteUri);
  
            
         }

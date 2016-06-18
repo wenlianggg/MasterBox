@@ -193,14 +193,19 @@
 		function getCheckedRadio(group, item, value) {
 			encryptionChk(item);
 		}
-		function getPassword() {
-		    return document.getElementById('encryptionPass').value;
-		}
-		function validateCfmPassword(txt) {
-
-		    if (document.getElementById('encryptionPass').value != txt.value) {
-		        alert("Wrong Password");
-		    }
-		}
+        // To validate Confirm Password
+        $(document).ready(function () {
+            $('#<%=NewFolder.ClientID %>').click(function (event) {
+                var pass = document.getElementById('<%=encryptionPass.ClientID%>').value;
+                var passcfm=  document.getElementById('<%=encryptionPassCfm.ClientID%>').value
+                if (pass != passcfm) {
+                    alert("Please confirm password again");
+                    return false;
+                } else {
+                    return true;
+                }
+                
+            });
+        });
 	</script>
 </asp:Content>
