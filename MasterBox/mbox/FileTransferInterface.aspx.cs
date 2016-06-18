@@ -8,12 +8,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
+using MasterBox.mbox;
 
 namespace MasterBox
 {
     public partial class FileTransferInterface : System.Web.UI.Page
     {
-        
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -91,7 +92,7 @@ namespace MasterBox
                     Byte[] filesize = br.ReadBytes((int)strm.Length);
                     // Get File Type
                     string filetype = FileUpload.PostedFile.ContentType;
-                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+                   
                     SqlCommand cmd = new SqlCommand();
 
                     // Upload to database
@@ -121,11 +122,31 @@ namespace MasterBox
             }
         }
 
+        private static Folder mbfile = new Folder();
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
+
             if (encryptionOption.Text == "yes")
-            {
-              
+            {                       
+                try
+                {
+                    string username = Context.User.Identity.Name;
+                    string foldername = FolderName.Text;
+                    bool encryption = true;
+                    string hashPassword = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text);    
+                    SqlCommand cmd = new SqlCommand("INSERT into  mb_Folder(userid,foldername,folderencryption,folderpass)values(@Index,@Name,@encryption,@pass)", con);
+                    cmd.Parameters.AddWithValue("@Index", username);
+                    cmd.Parameters.AddWithValue("@Name", foldername);
+                    cmd.Parameters.AddWithValue("@encryption", encryption);
+                    cmd.Parameters.AddWithValue("@pass", hashPassword);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                catch
+                {
+
+                }
             }
             // Reset the form fields
             Response.Redirect(Request.Url.AbsoluteUri);

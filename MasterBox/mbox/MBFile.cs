@@ -10,17 +10,23 @@ using System.Web;
 
 namespace MasterBox.mbox
 {
-    public class File
+    public class MBFile
     {
         public string fileName { get; set; }
         public string fileType { get; set; }
         public byte fileSize { get; set; }
 
     }
-    public class Folder :File
+    public class Folder : MBFile
     {
-        // Using SHA 512 for password
-        protected string StorePasswordForFolder(String username,String password)
+        // Storing Hash&Salt Password into database
+        protected void StoreHashPassword(String hashPassword)
+        {
+
+        }
+
+        // Generating a SHA 512 password
+        public string GenerateHashPassword(String username, String password)
         {
             SqlDataReader sqldr = GetSaltFunction(username);
             // Add padding to make it 64bit
@@ -43,10 +49,12 @@ namespace MasterBox.mbox
             }
             return passwordHash;
         }
-       private SqlDataReader GetSaltFunction(String username)
+
+        // Get Salt value from Database
+        private SqlDataReader GetSaltFunction(String username)
         {
             SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-            SqlCommand cmd = new SqlCommand("SELECT salt FROM mb_auth WHERE username = @uname",sqlConnection);
+            SqlCommand cmd = new SqlCommand("SELECT salt FROM mb_auth WHERE username = @uname", sqlConnection);
             SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
             cmd.Parameters.Add(unameParam);
             cmd.Prepare();
@@ -54,14 +62,7 @@ namespace MasterBox.mbox
             return cmd.ExecuteReader();
         }
     }
-    class Program
-    {
-        static void Main()
-        {
-           
-        }
-        
 
 
-    }
+}
 }

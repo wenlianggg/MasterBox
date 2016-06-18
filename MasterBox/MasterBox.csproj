@@ -289,7 +289,7 @@
       <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Exceptions.cs" />
-    <Compile Include="mbox\File.cs" />
+    <Compile Include="mbox\MBFile.cs" />
     <Compile Include="mbox\FileSetting.master.cs">
       <DependentUpon>FileSetting.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
