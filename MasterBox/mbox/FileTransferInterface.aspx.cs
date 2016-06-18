@@ -29,8 +29,7 @@ namespace MasterBox
             DataTable dt = new DataTable();
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString)){
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
-               
+                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);              
                 cmd.Prepare();
                 SqlDataReader reader = cmd.ExecuteReader();                
                 dt.Load(reader);
@@ -124,9 +123,12 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-
+            if (encryptionOption.Text == "yes")
+            {
+              
+            }
             // Reset the form fields
-       Response.Redirect(Request.Url.AbsoluteUri);
+            Response.Redirect(Request.Url.AbsoluteUri);
  
            
         }

@@ -171,6 +171,7 @@
     </div>
 
     <script>
+        // Toggle for encryption option
         function encryptionChk(val) {
 			if (val == "no") {
 				$(".pwdfield").attr('readonly', "readonly");
@@ -189,10 +190,10 @@
 				getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
 			});
 		});
-
 		function getCheckedRadio(group, item, value) {
 			encryptionChk(item);
 		}
+
         // To validate Confirm Password
         $(document).ready(function () {
             $('#<%=NewFolder.ClientID %>').click(function (event) {
