@@ -97,8 +97,7 @@ namespace MasterBox
 
                     // Upload to database
                     // Tempo for the id, must manual key in
-                    cmd.CommandText = "INSERT INTO mb_testfolder(fileindex,filename,filetype,filesize)values(@Index,@Name,@Type,@data)";
-                    cmd.Parameters.AddWithValue("@Index", 3);
+                    cmd.CommandText = "INSERT INTO mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
                     cmd.Parameters.AddWithValue("@Name", filename);
                     cmd.Parameters.AddWithValue("@Type", filetype);
                     cmd.Parameters.AddWithValue("@data", filesize);
@@ -134,7 +133,7 @@ namespace MasterBox
                     string foldername = FolderName.Text;
                     bool encryption = true;
                     string hashPassword = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text);    
-                    SqlCommand cmd = new SqlCommand("INSERT into  mb_Folder(userid,foldername,folderencryption,folderpass)values(@Index,@Name,@encryption,@pass)", con);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO mb_Folder(userid,foldername,folderencryption,folderpass) VALUES(@Index,@Name,@encryption,@pass)", con);
                     cmd.Parameters.AddWithValue("@Index", username);
                     cmd.Parameters.AddWithValue("@Name", foldername);
                     cmd.Parameters.AddWithValue("@encryption", encryption);
