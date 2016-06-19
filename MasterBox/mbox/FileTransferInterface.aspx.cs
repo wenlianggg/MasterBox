@@ -127,28 +127,28 @@ namespace MasterBox
 
             if (encryptionOption.Text == "yes")
             {                       
-                try
+                    Folder folder = new Folder();
+                    folder.folderName = FolderName.Text;
+                    folder.userName= Context.User.Identity.Name;
+                    folder.saltfunction = mbfile.GenerateSaltFunction();
+                    folder.folderencryption = 1;
+                    folder.folderPass= mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text,folder.saltfunction);
+                    bool folderCreation=mbfile.CreateNewFolder(folder);
+                if(folderCreation == true)
                 {
-                    string username = Context.User.Identity.Name;
-                    string foldername = FolderName.Text;
-                    bool encryption = true;
-                    string hashPassword = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text);    
-                    SqlCommand cmd = new SqlCommand("INSERT INTO mb_Folder(userid,foldername,folderencryption,folderpass) VALUES(@Index,@Name,@encryption,@pass)", con);
-                    cmd.Parameters.AddWithValue("@Index", username);
-                    cmd.Parameters.AddWithValue("@Name", foldername);
-                    cmd.Parameters.AddWithValue("@encryption", encryption);
-                    cmd.Parameters.AddWithValue("@pass", hashPassword);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    Label1.Text = "Successs";
+                }else
+                {
+                    Label1.Text = "fail";
                 }
-                catch
-                {
 
-                }
+            }
+            else
+            {
+
             }
             // Reset the form fields
-            Response.Redirect(Request.Url.AbsoluteUri);
+           // Response.Redirect(Request.Url.AbsoluteUri);
  
            
         }
