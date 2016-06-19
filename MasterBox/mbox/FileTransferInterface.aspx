@@ -31,6 +31,9 @@
                             ErrorMessage="Please select a file"
                             ForeColor="Red">
                         </asp:RequiredFieldValidator>
+
+                        <span>Choose Location: </span>                       
+                        <asp:ListBox ID="FileLocation" runat="server"></asp:ListBox>
                     </div>
                     <div class="modal-footer">
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>

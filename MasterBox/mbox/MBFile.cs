@@ -1,5 +1,6 @@
 ﻿using MasterBox.Auth;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -25,6 +26,17 @@ namespace MasterBox.mbox
         public byte[] saltfunction { get; set; }
         public string folderPass { get; set; }
 
+        public void GenerateFolderLocation(String username) {
+            SqlCommand cmd = new SqlCommand("SELECT DISTINT foldername FROM mb_folder WHERE userid=?");
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            ArrayList locationList = new ArrayList();
+            while (sqldr.Read())
+            {
+                locationList.Add(sqldr["foldername"].ToString());
+            }
+
+        }
+
         public bool CreateNewFolder(Folder folder)
         {
             // Get User ID
@@ -47,9 +59,6 @@ namespace MasterBox.mbox
                 return false;
             }
         }
-
-
-
 
         // Storing Hash&Salt Password into database
         public bool CreateNewFolderWithPassword(Folder folder)
@@ -110,12 +119,10 @@ namespace MasterBox.mbox
             return newSalt;
         }
 
-        // Get Salt value from Database
+        // Get User value from Database
         private SqlDataReader GetUserInformation(String username)
         {
-            SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-            sqlConnection.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", sqlConnection);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
             cmd.Parameters.Add(unameParam);
             cmd.Parameters["@uname"].Value = username;
