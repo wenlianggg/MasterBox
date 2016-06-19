@@ -26,13 +26,14 @@ namespace MasterBox
         }
         private void FillData()
         {
-            
+
             DataTable dt = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString)){
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
+            {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);              
+                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
                 cmd.Prepare();
-                SqlDataReader reader = cmd.ExecuteReader();                
+                SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);
             }
             if (dt.Rows.Count > 0)
@@ -47,11 +48,11 @@ namespace MasterBox
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-           // this is for the auto method...however got error atm 
-           // May not use this method cause its by ID.
-           // May use another attribute for this.
-           // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
-           // int id = int.Parse(stringID);
+            // this is for the auto method...however got error atm 
+            // May not use this method cause its by ID.
+            // May use another attribute for this.
+            // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
+            // int id = int.Parse(stringID);
             Download(3);
         }
 
@@ -71,7 +72,7 @@ namespace MasterBox
             byte[] documentBytes = (byte[])dt.Rows[0]["filesize"];
             Response.ClearContent();
             Response.ContentType = "application/octestream";
-            Response.AddHeader("Content-Disposition",string.Format("attachment;filename=(0)",name));
+            Response.AddHeader("Content-Disposition", string.Format("attachment;filename=(0)", name));
             Response.AddHeader("Content-Length", documentBytes.Length.ToString());
 
             Response.BinaryWrite(documentBytes);
@@ -79,11 +80,11 @@ namespace MasterBox
             Response.Close();
         }
         protected void NewUploadFile_Click(object sender, EventArgs e)
-        {           
+        {
             if (FileUpload.HasFile)
             {
                 try
-                {   
+                {
                     // Get File Name
                     string filename = Path.GetFileName(FileUpload.FileName);
                     Stream strm = FileUpload.PostedFile.InputStream;
@@ -92,7 +93,7 @@ namespace MasterBox
                     Byte[] filesize = br.ReadBytes((int)strm.Length);
                     // Get File Type
                     string filetype = FileUpload.PostedFile.ContentType;
-                   
+
                     SqlCommand cmd = new SqlCommand();
 
                     // Upload to database
@@ -117,31 +118,23 @@ namespace MasterBox
                     UploadStatus.ForeColor = System.Drawing.Color.Red;
                     UploadStatus.Text = "Upload was not succesful, please try again.";
                 }
-              
+
             }
         }
 
         private static Folder mbfile = new Folder();
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
-
+            bool folderCreation;
             if (encryptionOption.Text == "yes")
-            {                       
-                    Folder folder = new Folder();
-                    folder.folderName = FolderName.Text;
-                    folder.userName= Context.User.Identity.Name;
-                    folder.saltfunction = mbfile.GenerateSaltFunction();
-                    folder.folderencryption = 1;
-                    folder.folderPass= mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text,folder.saltfunction);
-                    bool folderCreation=mbfile.CreateNewFolderWithPassword(folder);
-                if(folderCreation == true)
-                {
-                    Label1.Text = "Successs";
-                }else
-                {
-                    Label1.Text = "fail";
-                }
-
+            {
+                Folder folder = new Folder();
+                folder.folderName = FolderName.Text;
+                folder.userName = Context.User.Identity.Name;
+                folder.saltfunction = mbfile.GenerateSaltFunction();
+                folder.folderencryption = 1;
+                folder.folderPass = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
+                folderCreation = mbfile.CreateNewFolderWithPassword(folder);
             }
             else
             {
@@ -150,25 +143,26 @@ namespace MasterBox
                 folder.userName = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folder.saltfunction = null;
-                folder.folderPass= null;
-                bool folderCreation = mbfile.CreateNewFolder(folder);
-                if (folderCreation == true)
-                {
-                    Label1.Text = "Successs";
-                }
-                else
-                {
-                    Label1.Text = "fail";
-                }
-            }
+                folder.folderPass = null;
+                folderCreation = mbfile.CreateNewFolder(folder);
 
-           // Reset the form fields
-           // Response.Redirect(Request.Url.AbsoluteUri);
- 
-           
+            }
+            if (folderCreation == true)
+            {
+                Label1.Text = "Successs";
+            }
+            else
+            {
+                Label1.Text = "fail";
+            }
+            // Reset the form fields
+            FolderName.Text = "";
+            encryptionOption.SelectedValue = "yes";
+            encryptionPass.Text = "";
+            encryptionPassCfm.Text = "";
         }
 
 
-      
+
     }
 }
