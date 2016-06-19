@@ -21,25 +21,54 @@ namespace MasterBox.mbox
     {
         public string folderName { get; set; }
         public string userName { get; set; }
-        public byte[] saltfunction { get; set; }
         public int folderencryption { get; set; }
+        public byte[] saltfunction { get; set; }
         public string folderPass { get; set; }
 
-        // Storing Hash&Salt Password into database
         public bool CreateNewFolder(Folder folder)
         {
+            // Get User ID
             SqlDataReader sqldr = GetUserInformation(folder.userName);
-         //   int userid =(int) sqldr["userid"];
+            sqldr.Read();
+            int userid = int.Parse(sqldr["userid"].ToString());
+
+            // Create Folder
+            try
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption) VALUES(@user,@name,@encryption)", SQLGetMBoxConnection());
+                cmd.Parameters.AddWithValue("@user", userid);
+                cmd.Parameters.AddWithValue("@name", folder.folderName);
+                cmd.Parameters.AddWithValue("@encryption", folder.folderencryption);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+
+        // Storing Hash&Salt Password into database
+        public bool CreateNewFolderWithPassword(Folder folder)
+        {
+            // Get User ID
+            SqlDataReader sqldr = GetUserInformation(folder.userName);
+            sqldr.Read();
+            int userid = int.Parse(sqldr["userid"].ToString());
+            
+           // Create Folder
             try
             {
                 SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword) VALUES(@user,@name,@encryption,@salt,@pass)", SQLGetMBoxConnection());
-                cmd.Parameters.AddWithValue("@user", 1);
+                cmd.Parameters.AddWithValue("@user", userid);
                 cmd.Parameters.AddWithValue("@name", folder.folderName);
                 cmd.Parameters.AddWithValue("@encryption", folder.folderencryption);
                 cmd.Parameters.AddWithValue("@salt", folder.saltfunction);
                 cmd.Parameters.AddWithValue("@pass", folder.folderPass);
-                cmd.ExecuteNonQuery();
-                
+                cmd.ExecuteNonQuery();          
                 return true;
             }
             catch

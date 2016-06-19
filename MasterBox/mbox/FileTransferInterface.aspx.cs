@@ -133,7 +133,7 @@ namespace MasterBox
                     folder.saltfunction = mbfile.GenerateSaltFunction();
                     folder.folderencryption = 1;
                     folder.folderPass= mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text,folder.saltfunction);
-                    bool folderCreation=mbfile.CreateNewFolder(folder);
+                    bool folderCreation=mbfile.CreateNewFolderWithPassword(folder);
                 if(folderCreation == true)
                 {
                     Label1.Text = "Successs";
@@ -145,9 +145,24 @@ namespace MasterBox
             }
             else
             {
-
+                Folder folder = new Folder();
+                folder.folderName = FolderName.Text;
+                folder.userName = Context.User.Identity.Name;
+                folder.folderencryption = 0;
+                folder.saltfunction = null;
+                folder.folderPass= null;
+                bool folderCreation = mbfile.CreateNewFolder(folder);
+                if (folderCreation == true)
+                {
+                    Label1.Text = "Successs";
+                }
+                else
+                {
+                    Label1.Text = "fail";
+                }
             }
-            // Reset the form fields
+
+           // Reset the form fields
            // Response.Redirect(Request.Url.AbsoluteUri);
  
            
