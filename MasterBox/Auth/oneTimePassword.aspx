@@ -19,8 +19,8 @@
 			<h3 class="panel-title">One Time Password</h3>
 		</div>
         <div class="panel-body">
-           <table class="otpTable">
-               <tr class="otpRow">
+           <table runat="server" class="otpTable">
+               <tr>
                    <td>OTP:</td>
                    <td>
                        <asp:TextBox ID="OTPValue" runat="server" CssClass="form control"></asp:TextBox>
