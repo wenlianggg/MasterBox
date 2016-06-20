@@ -160,7 +160,7 @@ namespace MasterBox
                 Label1.Text = "fail";
             }
             // Reset the form fields
-           // Response.Redirect(Request.RawUrl);
+            Response.Redirect(Request.RawUrl);
             /*
             FolderName.Text = "";
             encryptionOption.SelectedValue = "yes";

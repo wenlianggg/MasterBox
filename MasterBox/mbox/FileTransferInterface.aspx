@@ -38,7 +38,7 @@
                     </div>
                     <div class="modal-footer">
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true"/>
+                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation"/>
                     </div>
                 </div>
             </div>
