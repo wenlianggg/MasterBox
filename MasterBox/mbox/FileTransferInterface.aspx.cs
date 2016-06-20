@@ -30,8 +30,8 @@ namespace MasterBox
             ArrayList locationList = Folder.GenerateFolderLocation(Context.User.Identity.Name);
             locationList.Add("==Master Folder==");
             locationList.Sort();
-            Location.DataSource = locationList;
-            Location.DataBind();
+            UploadLocation.DataSource = locationList;
+            UploadLocation.DataBind();
         }
         private void FillData()
         {
@@ -84,8 +84,8 @@ namespace MasterBox
         }
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
-            if (FileUpload.HasFile)
-            {
+                if (FileUpload.HasFile)
+                {
                     try
                     {
                         MBFile file = new MBFile();
@@ -100,30 +100,26 @@ namespace MasterBox
 
                         if (uploadStatus == true)
                         {
-                            // Update text to show status
-                            UploadStatus.ForeColor = System.Drawing.Color.Green;
-                            UploadStatus.Text = "Success";
+                           Label1.Text = "Success";
 
                             // Update the file table
                             FillData();
                         }
                         else
                         {
-                            // Update text to show status
-                            UploadStatus.ForeColor = System.Drawing.Color.Red;
-                            UploadStatus.Text = "Fail";
-
+                            Label1.Text = "Fail";
                             // Update the file table
                             FillData();
                         }
                     }
                     catch
                     {
-                        UploadStatus.ForeColor = System.Drawing.Color.Red;
-                        UploadStatus.Text = "Upload was not succesful, please try again.";
+                        Label1.ForeColor = System.Drawing.Color.Red;
+                        Label1.Text = "Upload was not succesful, please try again.";
                     }
 
-            }
+                }
+            
         }
 
         private static Folder mbfile = new Folder();

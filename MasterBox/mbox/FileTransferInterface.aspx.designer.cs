@@ -31,22 +31,13 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator FildUploadValidator;
         
         /// <summary>
-        /// Location control.
+        /// UploadLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList Location;
-        
-        /// <summary>
-        /// UploadStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label UploadStatus;
+        protected global::System.Web.UI.WebControls.DropDownList UploadLocation;
         
         /// <summary>
         /// NewUploadFile control.

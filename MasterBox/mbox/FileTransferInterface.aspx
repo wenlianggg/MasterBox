@@ -33,12 +33,11 @@
                         </asp:RequiredFieldValidator>
                         <br />
                         <span>Choose Location: </span>
-                        <asp:DropDownList ID="Location" runat="server">
+                        <asp:DropDownList ID="UploadLocation" runat="server">
                         </asp:DropDownList>
                     </div>
                     <div class="modal-footer">
-                        <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation"/>
+                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation"  AutoPostBack="true"/>
                     </div>
                 </div>
             </div>
@@ -100,12 +99,13 @@
 
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="NewFolder" runat="server" Text="Upload" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
+                        <asp:Button ID="NewFolder" runat="server" Text="Create" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
                     </div>
                 </div>
 
             </div>
         </div>
+
         <!--Shared Folder Modal -->
         <div id="sharefolderModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -124,6 +124,7 @@
 
             </div>
         </div>
+
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
                 <a onclick="">
@@ -136,6 +137,7 @@
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static" /></a>
             </div>
         </div>
+
         <div class="FileContainer">
             <h2>Files</h2>
             <ul>
