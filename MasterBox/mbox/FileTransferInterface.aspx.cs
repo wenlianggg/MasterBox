@@ -85,33 +85,33 @@ namespace MasterBox
             {
                 try
                 {
-                    // Get File Name
-                    string filename = Path.GetFileName(FileUpload.FileName);
+                    MBFile file = new MBFile();
+                    file.fileusername = Context.User.Identity.Name;
+                    file.fileName = Path.GetFileName(FileUpload.FileName);
+                    file.fileType = FileUpload.PostedFile.ContentType;
                     Stream strm = FileUpload.PostedFile.InputStream;
-                    // Get File size 
                     BinaryReader br = new BinaryReader(strm);
-                    Byte[] filesize = br.ReadBytes((int)strm.Length);
-                    // Get File Type
-                    string filetype = FileUpload.PostedFile.ContentType;
+                    file.fileSize = br.ReadBytes((int)strm.Length);
+                    bool uploadStatus = file.UploadNewFile(file);
 
-                    SqlCommand cmd = new SqlCommand();
+                    if (uploadStatus == true)
+                    {
+                        // Update text to show status
+                        UploadStatus.ForeColor = System.Drawing.Color.Green;
+                        UploadStatus.Text = "Success";
 
-                    // Upload to database
-                    // Tempo for the id, must manual key in
-                    cmd.CommandText = "INSERT INTO mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
-                    cmd.Parameters.AddWithValue("@Name", filename);
-                    cmd.Parameters.AddWithValue("@Type", filetype);
-                    cmd.Parameters.AddWithValue("@data", filesize);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                        // Update the file table
+                        FillData();
+                    }
+                    else
+                    {
+                        // Update text to show status
+                        UploadStatus.ForeColor = System.Drawing.Color.Red;
+                        UploadStatus.Text = "Fail";
 
-                    // Update text to show status
-                    UploadStatus.ForeColor = System.Drawing.Color.Green;
-                    UploadStatus.Text = "Success";
-                    // Update the file table
-                    FillData();
+                        // Update the file table
+                        FillData();
+                    }
                 }
                 catch
                 {
@@ -130,7 +130,7 @@ namespace MasterBox
             {
                 Folder folder = new Folder();
                 folder.folderName = FolderName.Text;
-                folder.userName = Context.User.Identity.Name;
+                folder.folderuserName = Context.User.Identity.Name;
                 folder.saltfunction = mbfile.GenerateSaltFunction();
                 folder.folderencryption = 1;
                 folder.folderPass = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
@@ -140,7 +140,7 @@ namespace MasterBox
             {
                 Folder folder = new Folder();
                 folder.folderName = FolderName.Text;
-                folder.userName = Context.User.Identity.Name;
+                folder.folderuserName = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folder.saltfunction = null;
                 folder.folderPass = null;

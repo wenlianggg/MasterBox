@@ -33,7 +33,13 @@
                         </asp:RequiredFieldValidator>
 
                         <span>Choose Location: </span>                       
-                        <asp:ListBox ID="FileLocation" runat="server"></asp:ListBox>
+                       <asp:DropDownList ID="Location" runat="server">
+                          <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
+                          <asp:ListItem Value="Silver"> Silver </asp:ListItem>
+                          <asp:ListItem Value="DarkGray"> Dark Gray </asp:ListItem>
+                          <asp:ListItem Value="Khaki"> Khaki </asp:ListItem>
+                          <asp:ListItem Value="DarkKhaki"> Dark Khaki </asp:ListItem>
+                       </asp:DropDownList>
                     </div>
                     <div class="modal-footer">
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
