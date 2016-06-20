@@ -1,6 +1,6 @@
 ﻿/* Styling for login page*/
 
-.loginTable {
+.loginTable{
 	background-color:#ffffff;
 	margin-bottom: 25px;
 	width: 650px;
@@ -45,4 +45,10 @@
 
 .regTable tr, .regTable td {
 	padding: 0 5px 10px 0;
+}
+
+/* Styling for OTP page */
+
+.otpTable td {
+	padding:10px;
 }
