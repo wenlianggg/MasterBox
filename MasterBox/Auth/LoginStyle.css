@@ -49,3 +49,6 @@
 
 /* Styling for OTP page */
 
+.otpTable td {
+	padding:10px;
+}

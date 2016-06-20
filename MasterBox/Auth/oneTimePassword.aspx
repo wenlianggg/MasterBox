@@ -21,30 +21,21 @@
         <div class="panel-body">
            <table runat="server" class="otpTable">
                <tr>
-                   <td>OTP:</td>
+                   <td><strong>OTP:</strong></td>
                    <td>
-                       <asp:TextBox ID="OTPValue" runat="server" CssClass="form control"></asp:TextBox>
-                       <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server"
-                          ControlToValidate="OTPValue"
-                          ValidatorGroup="valGroup1"
-                          ErrorMessage="Please Enter Your OTP to Continue."
-                          ForeColor="Red">
-                        </asp:RequiredFieldValidator>
-                   </td>
-               </tr>
-               <tr>
-                   <td>
-                       <asp:Button class="otpLogin" ID="OTPLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="ConfirmOTP"/>
-                          <asp:RequiredFieldValidator id="RequiredFieldValidator2" runat="server"
-                          ControlToValidate="OTPValue"
-                          ValidatorGroup="valGroup1">
-                        </asp:RequiredFieldValidator>
-                   </td>
-                   <td>
-                       <asp:Button class="otpCancel" ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" OnClick="CancelOTP" CausesValidation="false"/>
+                       <asp:TextBox ID="OTPValue" runat="server" CssClass="form-control"></asp:TextBox>
                    </td>
                </tr>
            </table>
+		<asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server"
+			ControlToValidate="OTPValue"
+			ValidatorGroup="valGroup1"
+			ErrorMessage="Please Enter Your OTP to Continue."
+			ForeColor="Red">
+		</asp:RequiredFieldValidator>
+			<br />
+		<asp:Button class="otpLogin" ID="OTPLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="ConfirmOTP"/>
+		<asp:Button class="otpCancel" ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" OnClick="CancelOTP" CausesValidation="false"/>
     </div>
     </div>
 </asp:Content>
