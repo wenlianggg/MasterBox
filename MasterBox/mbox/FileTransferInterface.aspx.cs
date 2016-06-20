@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
+using System.Collections;
 
 namespace MasterBox
 {
@@ -17,28 +18,30 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+           
 
-            // fill up file data on the display
+            // Fill up file data on the display
             if (!IsPostBack)
             {
                 FillData();
             }
+
+            // Fill up folder location for upload
+            ArrayList locationList = Folder.GenerateFolderLocation(Context.User.Identity.Name);
+            locationList.Add("==Master Folder==");
+            locationList.Sort();
+            Location.DataSource = locationList;
+            Location.DataBind();
         }
         private void FillData()
         {
+            DataTable dtFile = new DataTable();
+            SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
+            dtFile.Load(reader);
 
-            DataTable dt = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
+            if (dtFile.Rows.Count > 0)
             {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
-                cmd.Prepare();
-                SqlDataReader reader = cmd.ExecuteReader();
-                dt.Load(reader);
-            }
-            if (dt.Rows.Count > 0)
-            {
-                FileTableView.DataSource = dt;
+                FileTableView.DataSource = dtFile;
                 FileTableView.DataBind();
             }
         }
@@ -83,41 +86,42 @@ namespace MasterBox
         {
             if (FileUpload.HasFile)
             {
-                try
-                {
-                    MBFile file = new MBFile();
-                    file.fileusername = Context.User.Identity.Name;
-                    file.fileName = Path.GetFileName(FileUpload.FileName);
-                    file.fileType = FileUpload.PostedFile.ContentType;
-                    Stream strm = FileUpload.PostedFile.InputStream;
-                    BinaryReader br = new BinaryReader(strm);
-                    file.fileSize = br.ReadBytes((int)strm.Length);
-                    bool uploadStatus = file.UploadNewFile(file);
-
-                    if (uploadStatus == true)
+                    try
                     {
-                        // Update text to show status
-                        UploadStatus.ForeColor = System.Drawing.Color.Green;
-                        UploadStatus.Text = "Success";
+                        MBFile file = new MBFile();
+                        file.fileusername = Context.User.Identity.Name;
+                        file.fileName = Path.GetFileName(FileUpload.FileName);
+                        file.fileType = FileUpload.PostedFile.ContentType;
+                        Stream strm = FileUpload.PostedFile.InputStream;
+                        BinaryReader br = new BinaryReader(strm);
+                        file.filecontent = br.ReadBytes((int)strm.Length);
+                        file.fileSize = FileUpload.PostedFile.ContentLength;
+                        bool uploadStatus = file.UploadNewFile(file);
 
-                        // Update the file table
-                        FillData();
+                        if (uploadStatus == true)
+                        {
+                            // Update text to show status
+                            UploadStatus.ForeColor = System.Drawing.Color.Green;
+                            UploadStatus.Text = "Success";
+
+                            // Update the file table
+                            FillData();
+                        }
+                        else
+                        {
+                            // Update text to show status
+                            UploadStatus.ForeColor = System.Drawing.Color.Red;
+                            UploadStatus.Text = "Fail";
+
+                            // Update the file table
+                            FillData();
+                        }
                     }
-                    else
+                    catch
                     {
-                        // Update text to show status
                         UploadStatus.ForeColor = System.Drawing.Color.Red;
-                        UploadStatus.Text = "Fail";
-
-                        // Update the file table
-                        FillData();
+                        UploadStatus.Text = "Upload was not succesful, please try again.";
                     }
-                }
-                catch
-                {
-                    UploadStatus.ForeColor = System.Drawing.Color.Red;
-                    UploadStatus.Text = "Upload was not succesful, please try again.";
-                }
 
             }
         }
@@ -156,13 +160,14 @@ namespace MasterBox
                 Label1.Text = "fail";
             }
             // Reset the form fields
+           // Response.Redirect(Request.RawUrl);
+            /*
             FolderName.Text = "";
             encryptionOption.SelectedValue = "yes";
             encryptionPass.Text = "";
             encryptionPassCfm.Text = "";
+            */
         }
-
-
 
     }
 }

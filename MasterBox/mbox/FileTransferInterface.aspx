@@ -26,24 +26,19 @@
                         <asp:FileUpload ID="FileUpload" runat="server" />
                         <asp:RequiredFieldValidator ID="FildUploadValidator" runat="server"
                             ValidationGroup="UploadFileValidation"
-                            ValidateEmptyText=true
+                            ValidateEmptyText="true"
                             ControlToValidate="FileUpload"
                             ErrorMessage="Please select a file"
                             ForeColor="Red">
                         </asp:RequiredFieldValidator>
-
-                        <span>Choose Location: </span>                       
-                       <asp:DropDownList ID="Location" runat="server">
-                          <asp:ListItem Selected="True" Value="White"> White </asp:ListItem>
-                          <asp:ListItem Value="Silver"> Silver </asp:ListItem>
-                          <asp:ListItem Value="DarkGray"> Dark Gray </asp:ListItem>
-                          <asp:ListItem Value="Khaki"> Khaki </asp:ListItem>
-                          <asp:ListItem Value="DarkKhaki"> Dark Khaki </asp:ListItem>
-                       </asp:DropDownList>
+                        <br />
+                        <span>Choose Location: </span>
+                        <asp:DropDownList ID="Location" runat="server">
+                        </asp:DropDownList>
                     </div>
                     <div class="modal-footer">
                         <asp:Label ID="UploadStatus" runat="server" Text=""></asp:Label>
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click"  ValidationGroup="UploadFileValidation"/>
+                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true"/>
                     </div>
                 </div>
             </div>
@@ -62,7 +57,7 @@
                     </div>
                     <div class="modal-body">
                         <span>Folder Name:</span>
-                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control"  />
+                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" />
                         <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="FolderName"
@@ -72,7 +67,7 @@
                         <br />
                         <span>Personal Encryption: </span>
                         <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Yes" Value="yes" Selected="True"/>
+                            <asp:ListItem Text="Yes" Value="yes" Selected="True" />
                             <asp:ListItem Text="No" Value="no" />
                         </asp:RadioButtonList>
 
@@ -85,27 +80,27 @@
                         <br />
                         <span>Password: </span>
                         <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server"/>    
-                          <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
+                            TextMode="Password" runat="server" />
+                        <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="encryptionPass"
                             ErrorMessage="Please Enter a password"
                             ForeColor="Red" Enabled="true">
-                        </asp:RequiredFieldValidator>                       
+                        </asp:RequiredFieldValidator>
                         <br />
                         <span>Confirm-Password: </span>
                         <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" onchange="validateCfmPassword(this)"/>
+                            TextMode="Password" runat="server" onchange="validateCfmPassword(this)" />
                         <asp:RequiredFieldValidator ID="CfmPasswordValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="encryptionPassCfm"
                             ErrorMessage="Password does not match"
                             ForeColor="Red" Enabled="false">
-                        </asp:RequiredFieldValidator>    
+                        </asp:RequiredFieldValidator>
 
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="NewFolder" runat="server" Text="Upload" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" />
+                        <asp:Button ID="NewFolder" runat="server" Text="Upload" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
                     </div>
                 </div>
 
@@ -182,40 +177,40 @@
     <script>
         // Toggle for encryption option
         function encryptionChk(val) {
-			if (val == "no") {
-				$(".pwdfield").attr('readonly', "readonly");
-				$(".pwdfield").attr('disabled', "disabled");
+            if (val == "no") {
+                $(".pwdfield").attr('readonly', "readonly");
+                $(".pwdfield").attr('disabled', "disabled");
                 ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false);
-			} else {
-				$(".pwdfield").removeAttr('readonly');
-				$(".pwdfield").removeAttr('disabled');
-				ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
-			    
-			}
-			
-		}
-		$(function () {
-			$("input[type='radio']").on('click', function (e) {
-				getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
-			});
-		});
-		function getCheckedRadio(group, item, value) {
-			encryptionChk(item);
-		}
+            } else {
+                $(".pwdfield").removeAttr('readonly');
+                $(".pwdfield").removeAttr('disabled');
+                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
+
+            }
+
+        }
+        $(function () {
+            $("input[type='radio']").on('click', function (e) {
+                getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
+            });
+        });
+        function getCheckedRadio(group, item, value) {
+            encryptionChk(item);
+        }
 
         // To validate Confirm Password
         $(document).ready(function () {
             $('#<%=NewFolder.ClientID %>').click(function (event) {
                 var pass = document.getElementById('<%=encryptionPass.ClientID%>').value;
-                var passcfm=  document.getElementById('<%=encryptionPassCfm.ClientID%>').value
+                var passcfm = document.getElementById('<%=encryptionPassCfm.ClientID%>').value
                 if (pass != passcfm) {
                     alert("Please confirm password again");
                     return false;
                 } else {
                     return true;
                 }
-                
+
             });
         });
-	</script>
+    </script>
 </asp:Content>

@@ -16,8 +16,10 @@ namespace MasterBox.mbox
         public string fileusername { get; set; }
         public string fileName { get; set; }
         public string fileType { get; set; }
-        public byte[] fileSize { get; set; }
+        public int fileSize { get; set; }
+        public byte[] filecontent { get; set; }
 
+        // Upload of file
         public bool UploadNewFile(MBFile file)
         {
             try
@@ -26,12 +28,13 @@ namespace MasterBox.mbox
                 SqlDataReader sqlUserID = GetUserInformation(file.fileusername);
                 sqlUserID.Read();
                 int userid = int.Parse(sqlUserID["userid"].ToString());
-
-                SqlCommand cmd = new SqlCommand("INSERT INTO mb_testfolder(userid,filename,filetype,filesize)values(@userid,@Name,@Type,@data)", SQLGetMBoxConnection());
+                // Storing of File
+                SqlCommand cmd = new SqlCommand("INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent)values(@userid,@Name,@type,@size,@data)", SQLGetMBoxConnection());
                 cmd.Parameters.AddWithValue("@userid", userid);
                 cmd.Parameters.AddWithValue("@Name", file.fileName);
-                cmd.Parameters.AddWithValue("@Type", file.fileType);
-                cmd.Parameters.AddWithValue("@data", file.fileSize);
+                cmd.Parameters.AddWithValue("@type", file.fileType);
+                cmd.Parameters.AddWithValue("@size", file.fileSize);
+                cmd.Parameters.AddWithValue("@data", file.filecontent);
                 cmd.ExecuteNonQuery();
                 return true;
             }
@@ -41,8 +44,26 @@ namespace MasterBox.mbox
             }
         }
 
+        // Retrieve to display file
+        public static SqlDataReader GetFileToDisplay(string username)
+        {
+            // Get User ID
+            SqlDataReader sqlUserID = GetUserInformation(username);
+            sqlUserID.Read();
+            int userid = int.Parse(sqlUserID["userid"].ToString());
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid", SQLGetMBoxConnection());
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 30);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters["@userid"].Value = userid;
+            cmd.Prepare();
+
+            return cmd.ExecuteReader();
+        }
+
+
         // Get User Information from Database
-        private SqlDataReader GetUserInformation(String username)
+        private static SqlDataReader GetUserInformation(String username)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
@@ -68,16 +89,15 @@ namespace MasterBox.mbox
         public byte[] saltfunction { get; set; }
         public string folderPass { get; set; }
 
-        public ArrayList GenerateFolderLocation(String username)
+        public static ArrayList GenerateFolderLocation(String username)
         {
             // Get User ID
             SqlDataReader sqlUserID = GetUserInformation(username);
             sqlUserID.Read();
             int userid = int.Parse(sqlUserID["userid"].ToString());
 
-            SqlCommand cmd = new SqlCommand("SELECT DISTINT foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
             cmd.Parameters.AddWithValue("@userid", userid);
-            cmd.Prepare();
             SqlDataReader sqldr = cmd.ExecuteReader();
             ArrayList locationList = new ArrayList();
             while (sqldr.Read())
@@ -172,7 +192,7 @@ namespace MasterBox.mbox
         }
 
         // Get User Information from Database
-        private SqlDataReader GetUserInformation(String username)
+        private static SqlDataReader GetUserInformation(String username)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
