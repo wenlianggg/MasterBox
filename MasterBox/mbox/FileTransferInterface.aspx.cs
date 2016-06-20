@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
+using System.Collections;
 
 namespace MasterBox
 {
@@ -17,28 +18,30 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+           
 
-            // fill up file data on the display
+            // Fill up file data on the display
             if (!IsPostBack)
             {
                 FillData();
             }
+
+            // Fill up folder location for upload
+            ArrayList locationList = Folder.GenerateFolderLocation(Context.User.Identity.Name);
+            locationList.Add("==Master Folder==");
+            locationList.Sort();
+            UploadLocation.DataSource = locationList;
+            UploadLocation.DataBind();
         }
         private void FillData()
         {
+            DataTable dtFile = new DataTable();
+            SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
+            dtFile.Load(reader);
 
-            DataTable dt = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
+            if (dtFile.Rows.Count > 0)
             {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT filename FROM mb_testfolder", con);
-                cmd.Prepare();
-                SqlDataReader reader = cmd.ExecuteReader();
-                dt.Load(reader);
-            }
-            if (dt.Rows.Count > 0)
-            {
-                FileTableView.DataSource = dt;
+                FileTableView.DataSource = dtFile;
                 FileTableView.DataBind();
             }
         }
@@ -81,45 +84,42 @@ namespace MasterBox
         }
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
-            if (FileUpload.HasFile)
-            {
-                try
+                if (FileUpload.HasFile)
                 {
-                    // Get File Name
-                    string filename = Path.GetFileName(FileUpload.FileName);
-                    Stream strm = FileUpload.PostedFile.InputStream;
-                    // Get File size 
-                    BinaryReader br = new BinaryReader(strm);
-                    Byte[] filesize = br.ReadBytes((int)strm.Length);
-                    // Get File Type
-                    string filetype = FileUpload.PostedFile.ContentType;
+                    try
+                    {
+                        MBFile file = new MBFile();
+                        file.fileusername = Context.User.Identity.Name;
+                        file.fileName = Path.GetFileName(FileUpload.FileName);
+                        file.fileType = FileUpload.PostedFile.ContentType;
+                        Stream strm = FileUpload.PostedFile.InputStream;
+                        BinaryReader br = new BinaryReader(strm);
+                        file.filecontent = br.ReadBytes((int)strm.Length);
+                        file.fileSize = FileUpload.PostedFile.ContentLength;
+                        bool uploadStatus = file.UploadNewFile(file);
 
-                    SqlCommand cmd = new SqlCommand();
+                        if (uploadStatus == true)
+                        {
+                           Label1.Text = "Success";
 
-                    // Upload to database
-                    // Tempo for the id, must manual key in
-                    cmd.CommandText = "INSERT INTO mb_testfolder(filename,filetype,filesize)values(@Name,@Type,@data)";
-                    cmd.Parameters.AddWithValue("@Name", filename);
-                    cmd.Parameters.AddWithValue("@Type", filetype);
-                    cmd.Parameters.AddWithValue("@data", filesize);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                            // Update the file table
+                            FillData();
+                        }
+                        else
+                        {
+                            Label1.Text = "Fail";
+                            // Update the file table
+                            FillData();
+                        }
+                    }
+                    catch
+                    {
+                        Label1.ForeColor = System.Drawing.Color.Red;
+                        Label1.Text = "Upload was not succesful, please try again.";
+                    }
 
-                    // Update text to show status
-                    UploadStatus.ForeColor = System.Drawing.Color.Green;
-                    UploadStatus.Text = "Success";
-                    // Update the file table
-                    FillData();
                 }
-                catch
-                {
-                    UploadStatus.ForeColor = System.Drawing.Color.Red;
-                    UploadStatus.Text = "Upload was not succesful, please try again.";
-                }
-
-            }
+            
         }
 
         private static Folder mbfile = new Folder();
@@ -130,7 +130,7 @@ namespace MasterBox
             {
                 Folder folder = new Folder();
                 folder.folderName = FolderName.Text;
-                folder.userName = Context.User.Identity.Name;
+                folder.folderuserName = Context.User.Identity.Name;
                 folder.saltfunction = mbfile.GenerateSaltFunction();
                 folder.folderencryption = 1;
                 folder.folderPass = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
@@ -140,7 +140,7 @@ namespace MasterBox
             {
                 Folder folder = new Folder();
                 folder.folderName = FolderName.Text;
-                folder.userName = Context.User.Identity.Name;
+                folder.folderuserName = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folder.saltfunction = null;
                 folder.folderPass = null;
@@ -156,13 +156,14 @@ namespace MasterBox
                 Label1.Text = "fail";
             }
             // Reset the form fields
+            Response.Redirect(Request.RawUrl);
+            /*
             FolderName.Text = "";
             encryptionOption.SelectedValue = "yes";
             encryptionPass.Text = "";
             encryptionPassCfm.Text = "";
+            */
         }
-
-
 
     }
 }

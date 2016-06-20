@@ -72,7 +72,7 @@
 
         <div class="SideMenuBar">
             <div class="LoginUser">
-               <p> <asp:Label ID="LoggedIn" runat="server" Font-Size="Medium" /></a></p>
+               <p><asp:Label ID="LoggedIn" runat="server" Font-Size="Large" /></p>
             </div>
 			<span style="color:white; padding:3%;font-weight:bold;">APPLICATIONS</span>
             <ul>
