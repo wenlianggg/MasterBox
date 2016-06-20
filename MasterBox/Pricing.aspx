@@ -18,37 +18,35 @@
                         <th>20MB</th>
                     </tr>
                     <tr class="tableData">
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?! Priced at the cheap cheap price of $100SGD
-
-                    <br />
-                            <br />
-
-                            <asp:ImageButton
-                                ID="PayPalBtn"
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                        <a ID="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                        <asp:ImageButton
+                                ID="PayPalBtn5MB"  
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" />
-
+                                OnClick="PayPalBtn5MB_Click" />
                         </td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                        <a id="ThisLogin" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                           <asp:ImageButton
-                                ID="ImageButton1"
+                                ID="PayPalBtn10MB"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td>
-                        
+                                OnClick="PayPalBtn10MB_Click" /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                        <a ID="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                           <asp:ImageButton
-                                ID="ImageButton2"
+                                ID="PayPalBtn15MB"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td></td>
+                                OnClick="PayPalBtn15MB_Click" /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                          <a ID="LoginLink3" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                           <asp:ImageButton
-                                ID="ImageButton3"
+                                ID="PayPalBtn20MB"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td></td>
+                                OnClick="PayPalBtn20MB_Click" /></td>
                     </tr>
                 </table>
             </div>

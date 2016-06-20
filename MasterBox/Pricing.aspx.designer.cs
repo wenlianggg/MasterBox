@@ -13,39 +13,75 @@ namespace MasterBox {
     public partial class Pricing {
         
         /// <summary>
-        /// PayPalBtn control.
+        /// LoginLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginLink;
         
         /// <summary>
-        /// ImageButton1 control.
+        /// PayPalBtn5MB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
+        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn5MB;
         
         /// <summary>
-        /// ImageButton2 control.
+        /// ThisLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ThisLogin;
         
         /// <summary>
-        /// ImageButton3 control.
+        /// PayPalBtn10MB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
+        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn10MB;
+        
+        /// <summary>
+        /// LoginLink2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginLink2;
+        
+        /// <summary>
+        /// PayPalBtn15MB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn15MB;
+        
+        /// <summary>
+        /// LoginLink3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginLink3;
+        
+        /// <summary>
+        /// PayPalBtn20MB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn20MB;
     }
 }
