@@ -1,4 +1,4 @@
-﻿<%@ Page Title="OTP Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="oneTimePassword.aspx.cs" Inherits="MasterBox.Auth.oneTimePassword" %>
+﻿<%@ Page Title="OTP Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="otpverify.aspx.cs" Inherits="MasterBox.Auth.otpverify" %>
 <asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
 	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
 </asp:Content>

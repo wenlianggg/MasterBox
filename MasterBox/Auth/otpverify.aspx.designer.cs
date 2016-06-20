@@ -10,7 +10,7 @@
 namespace MasterBox.Auth {
     
     
-    public partial class oneTimePassword {
+    public partial class otpverify {
         
         /// <summary>
         /// OTPValue control.

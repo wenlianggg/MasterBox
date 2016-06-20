@@ -136,11 +136,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Auth\TOTP\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />
     <Content Include="Auth\changepw.aspx" />
-    <Content Include="Auth\oneTimePassword.aspx" />
+    <Content Include="Auth\otpverify.aspx" />
     <Content Include="Auth\signout.aspx" />
     <Content Include="Auth\signup.aspx" />
     <Content Include="Auth\signup2.aspx" />
@@ -267,12 +268,12 @@
     <Compile Include="Auth\changepw.aspx.designer.cs">
       <DependentUpon>changepw.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Auth\oneTimePassword.aspx.cs">
-      <DependentUpon>oneTimePassword.aspx</DependentUpon>
+    <Compile Include="Auth\otpverify.aspx.cs">
+      <DependentUpon>otpverify.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auth\oneTimePassword.aspx.designer.cs">
-      <DependentUpon>oneTimePassword.aspx</DependentUpon>
+    <Compile Include="Auth\otpverify.aspx.designer.cs">
+      <DependentUpon>otpverify.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\User.cs" />
     <Compile Include="Auth\signout.aspx.cs">

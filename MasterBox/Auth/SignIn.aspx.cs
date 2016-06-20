@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Diagnostics;
 using MasterBox.Auth;
 
-namespace MasterBox {
+namespace MasterBox.Auth {
 	public partial class SignIn : Page {
 		private static MBProvider mbprovider = new MBProvider();
 
