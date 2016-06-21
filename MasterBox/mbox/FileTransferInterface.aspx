@@ -33,7 +33,8 @@
                         </asp:RequiredFieldValidator>
                         <br />
                         <span>Choose Location: </span>
-                        <asp:DropDownList ID="UploadLocation" runat="server">
+                        <asp:DropDownList ID="UploadLocation" runat="server" 
+                            AutoEventWireup="true" EnableViewState="true">
                         </asp:DropDownList>
                     </div>
                     <div class="modal-footer">
@@ -140,17 +141,25 @@
 
         <div class="FileContainer">
             <h2>Files</h2>
-            <ul>
                 <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename" OnRowCommand="DownloadFile">
                     <Columns>
-                        <asp:TemplateField HeaderText="Document">
+                        <asp:TemplateField HeaderText="File">
                             <ItemTemplate>
                                 <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-            </ul>
+                <br />
+                <asp:GridView ID="FolderTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername" >
+                    <Columns>
+                        <asp:TemplateField HeaderText="Folder">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton2" runat="server" OnClick="DownloadFile" Text='<%# Eval("foldername") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
         </div>
         <div class="FileTreeContainer">
             <h3>placeHolder{Files-Tree}</h3>

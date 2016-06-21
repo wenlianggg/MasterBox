@@ -18,20 +18,16 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-
             // Fill up file data on the display
             if (!IsPostBack)
             {
                 FillData();
+                FillDataFolder();
+                // Fill up folder location for upload
+                UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
+                UploadLocation.DataBind();
             }
 
-            // Fill up folder location for upload
-            ArrayList locationList = Folder.GenerateFolderLocation(Context.User.Identity.Name);
-            locationList.Add("==Master Folder==");
-            locationList.Sort();
-            UploadLocation.DataSource = locationList;
-            UploadLocation.DataBind();
         }
         private void FillData()
         {
@@ -39,10 +35,23 @@ namespace MasterBox
             SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
             dtFile.Load(reader);
 
+
             if (dtFile.Rows.Count > 0)
             {
                 FileTableView.DataSource = dtFile;
                 FileTableView.DataBind();
+            }
+        }
+        private void FillDataFolder()
+        {
+            DataTable dtFile = new DataTable();
+            SqlDataReader reader = MBFolder.GetFolderToDisplay(Context.User.Identity.Name);
+            dtFile.Load(reader);
+
+            if (dtFile.Rows.Count > 0)
+            {
+                FolderTableView.DataSource = dtFile;
+                FolderTableView.DataBind();
             }
         }
 
@@ -84,7 +93,9 @@ namespace MasterBox
         }
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
-                if (FileUpload.HasFile)
+            if (FileUpload.HasFile)
+            {
+                if (UploadLocation.SelectedValue == "==Master Folder==")
                 {
                     try
                     {
@@ -96,18 +107,10 @@ namespace MasterBox
                         BinaryReader br = new BinaryReader(strm);
                         file.filecontent = br.ReadBytes((int)strm.Length);
                         file.fileSize = FileUpload.PostedFile.ContentLength;
-                        bool uploadStatus = file.UploadNewFile(file);
+                        bool uploadStatus = MBFile.UploadNewFile(file);
 
                         if (uploadStatus == true)
                         {
-                           Label1.Text = "Success";
-
-                            // Update the file table
-                            FillData();
-                        }
-                        else
-                        {
-                            Label1.Text = "Fail";
                             // Update the file table
                             FillData();
                         }
@@ -117,34 +120,59 @@ namespace MasterBox
                         Label1.ForeColor = System.Drawing.Color.Red;
                         Label1.Text = "Upload was not succesful, please try again.";
                     }
-
                 }
-            
+                else
+                {
+                    try
+                    {
+                        string foldername = UploadLocation.SelectedValue;
+                        MBFile file = new MBFile();
+                        file.fileusername = Context.User.Identity.Name;
+                        file.fileName = Path.GetFileName(FileUpload.FileName);
+                        file.fileType = FileUpload.PostedFile.ContentType;
+                        Stream strm = FileUpload.PostedFile.InputStream;
+                        BinaryReader br = new BinaryReader(strm);
+                        file.filecontent = br.ReadBytes((int)strm.Length);
+                        file.fileSize = FileUpload.PostedFile.ContentLength;
+                        bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(foldername, file);
+                        if (uploadfiletofolderstatus == true)
+                        {
+                            FillData();
+                        }
+                    }
+                    catch
+                    {
+                        Label1.ForeColor = System.Drawing.Color.Red;
+                        Label1.Text = "Upload was not succesful, please try again.";
+                    }
+                }
+            }
+
+
         }
 
-        private static Folder mbfile = new Folder();
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
             bool folderCreation;
             if (encryptionOption.Text == "yes")
             {
-                Folder folder = new Folder();
+                MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
                 folder.folderuserName = Context.User.Identity.Name;
-                folder.saltfunction = mbfile.GenerateSaltFunction();
+                folder.saltfunction = MBFolder.GenerateSaltFunction();
                 folder.folderencryption = 1;
-                folder.folderPass = mbfile.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
-                folderCreation = mbfile.CreateNewFolderWithPassword(folder);
+                folder.folderPass = MBFolder.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
+                folderCreation = MBFolder.CreateNewFolderWithPassword(folder);
             }
             else
             {
-                Folder folder = new Folder();
+                MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
                 folder.folderuserName = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folder.saltfunction = null;
                 folder.folderPass = null;
-                folderCreation = mbfile.CreateNewFolder(folder);
+                folderCreation = MBFolder.CreateNewFolder(folder);
 
             }
             if (folderCreation == true)
