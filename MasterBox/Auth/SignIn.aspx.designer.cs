@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox {
+namespace MasterBox.Auth {
     
     
     public partial class SignIn {
