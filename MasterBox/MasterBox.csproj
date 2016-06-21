@@ -136,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Auth\TOTP\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />
@@ -275,6 +274,8 @@
     <Compile Include="Auth\otpverify.aspx.designer.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Auth\TOTP\Base32.cs" />
+    <Compile Include="Auth\TOTP\OTPGenerator.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>

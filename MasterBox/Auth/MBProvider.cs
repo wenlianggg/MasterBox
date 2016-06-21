@@ -199,6 +199,19 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		public bool ValidateTOTP(string username, string otp) {
+			SqlDataReader sqldr = SQLGetUserByID(username);
+			string totpsecret = sqldr["totpsecret"].ToString();
+			TOTP.OTPGenerator otpgen = new TOTP.OTPGenerator();
+
+			otpgen.Secret = new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF };
+			totpsecret = otpgen.SecretBase32;
+
+			otpgen.SecretBase32 = totpsecret;
+			otpgen.OneTimePassword = otpgen.OneTimePassword;
+			return false;
+		}
+
 		private static SqlDataReader SQLGetUserByID(String username) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT * FROM mb_auth WHERE username = @uname",
