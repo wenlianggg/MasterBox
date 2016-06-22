@@ -140,6 +140,7 @@
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />
     <Content Include="Auth\changepw.aspx" />
+    <Content Include="Auth\otpsetup.aspx" />
     <Content Include="Auth\otpverify.aspx" />
     <Content Include="Auth\signout.aspx" />
     <Content Include="Auth\signup.aspx" />
@@ -148,6 +149,7 @@
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
+    <Content Include="images\work_in_progress.jpg" />
     <Content Include="mbox\FileSetting_General.aspx" />
     <Content Include="mbox\FileSetting_Profile.aspx" />
     <Content Include="images\encryption.png" />
@@ -266,6 +268,13 @@
     </Compile>
     <Compile Include="Auth\changepw.aspx.designer.cs">
       <DependentUpon>changepw.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Auth\otpsetup.aspx.cs">
+      <DependentUpon>otpsetup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Auth\otpsetup.aspx.designer.cs">
+      <DependentUpon>otpsetup.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\otpverify.aspx.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>
