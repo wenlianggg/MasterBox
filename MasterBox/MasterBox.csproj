@@ -166,6 +166,7 @@
     <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
     <Content Include="images\MasterBoxSlidergreenExtended.png" />
     <Content Include="images\MasterBoxSlidergreyExtended.png" />
+    <Content Include="mbox\FileSetting_Security.aspx" />
     <Content Include="Pricing.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
@@ -308,6 +309,13 @@
       <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Exceptions.cs" />
+    <Compile Include="mbox\FileSetting_Security.aspx.cs">
+      <DependentUpon>FileSetting_Security.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mbox\FileSetting_Security.aspx.designer.cs">
+      <DependentUpon>FileSetting_Security.aspx</DependentUpon>
+    </Compile>
     <Compile Include="mbox\MBFile.cs" />
     <Compile Include="mbox\FileSetting.master.cs">
       <DependentUpon>FileSetting.master</DependentUpon>

@@ -21,6 +21,7 @@ namespace MasterBox
             // Fill up file data on the display
             if (!IsPostBack)
             {
+
                 FillData();
                 FillDataFolder();
                 // Fill up folder location for upload
@@ -75,14 +76,14 @@ namespace MasterBox
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_testfolder where fileindex=@ID", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file where fileid=@ID", con);
                 cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
                 cmd.Prepare();
                 SqlDataReader reader = cmd.ExecuteReader();
                 dt.Load(reader);
             }
             string name = dt.Rows[0]["filename"].ToString();
-            byte[] documentBytes = (byte[])dt.Rows[0]["filesize"];
+            byte[] documentBytes = (byte[])dt.Rows[0]["filecontent"];
             Response.ClearContent();
             Response.ContentType = "application/octestream";
             Response.AddHeader("Content-Disposition", string.Format("attachment;filename=(0)", name));

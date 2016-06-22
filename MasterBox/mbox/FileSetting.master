@@ -7,7 +7,7 @@
             <ul>
                 <li><a runat="server" href="FileSetting_Profile.aspx">Profile</a></li>
                 <li><a runat="server" href="FileSetting_General.aspx">General</a></li>
-                <li><a runat="server">Security</a></li>
+                <li><a runat="server" href="FileSetting_Security.aspx">Security</a></li>
                 <li><a runat="server">Upgrade</a></li>
             </ul>
         </div>
