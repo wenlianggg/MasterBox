@@ -9,26 +9,24 @@ using System.ComponentModel;
 using System.Timers;
 
 namespace MasterBox.Auth.TOTP {
-	public partial class OTPGenerator {
-		//public Library() {
-		//	var timer = new Timer();
-		//	timer.Interval = TimeSpan.FromMilliseconds(500);
-		//	timer.Tick += (s, e) => SecondsToGo = 30 - Convert.ToInt32(GetUnixTimestamp() % 30);
-		//	timer.IsEnabled = true;
-		//	Secret = new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF };
-		//	Identity = "user@host.com";
-		//}
-
+	public class OTPGenerator {
 		private int _secondsToGo;
+		private string _identity;
+		private byte[] _secret;
+		private Int64 _timestamp;
+		private byte[] _hmac;
+		private int _offset;
 
 		public int SecondsToGo {
-			get { return _secondsToGo; }
-			private set { _secondsToGo = value;
-				if (SecondsToGo == 30) CalculateOneTimePassword(); }
+			get {
+				return _secondsToGo;
+			}
+			private set {
+				_secondsToGo = value;
+				if (SecondsToGo == 30) CalculateOneTimePassword();
+			}
 		}
 
-
-		private string _identity;
 
 		public string Identity {
 			get {
@@ -39,6 +37,7 @@ namespace MasterBox.Auth.TOTP {
 				CalculateOneTimePassword();
 			}
 		}
+
 
 		public string SecretBase32 {
 			get {
@@ -51,7 +50,6 @@ namespace MasterBox.Auth.TOTP {
 				}
 		}
 
-		private byte[] _secret;
 
 		public byte[] Secret {
 			get {
@@ -64,19 +62,21 @@ namespace MasterBox.Auth.TOTP {
 		}
 
 		public string QRCodeUrl {
-			get { return GetQRCodeUrl(); }
+			get {
+				return GetQRCodeUrl();
+			}
 		}
 
-		private Int64 _timestamp;
 
 		public Int64 Timestamp {
-			get { return _timestamp; }
+			get {
+				return _timestamp;
+			}
 			private set {
 				_timestamp = value;
 			}
 		}
 
-		private byte[] _hmac;
 
 		public byte[] Hmac {
 			get {
@@ -86,6 +86,7 @@ namespace MasterBox.Auth.TOTP {
 				_hmac = value;
 			}
 		}
+
 
 		public byte[] HmacPart1 {
 			get {
@@ -105,7 +106,6 @@ namespace MasterBox.Auth.TOTP {
 			}
 		}
 
-		private int _offset;
 
 		public int Offset {
 			get {
@@ -119,13 +119,26 @@ namespace MasterBox.Auth.TOTP {
 		private int _oneTimePassword;
 
 		public int OneTimePassword {
-			get { return _oneTimePassword; }
-			set { _oneTimePassword = value; }
+			get {
+				CalculateOneTimePassword();
+				return _oneTimePassword;
+			}
+			set {
+				_oneTimePassword = value;
+			}
+		}
+
+		public string generateSecret() {
+			using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
+				cryptrng.GetBytes(Secret);
+			}
+			return SecretBase32;
 		}
 
 		private string GetQRCodeUrl() {
-			// https://code.google.com/p/google-authenticator/wiki/KeyUriFormat
-			return String.Format("https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/{0}%3Fsecret%3D{1}", Identity, SecretBase32);
+			return String.Format("https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/{0}%3Fsecret%3D{1}",
+								Identity,
+								SecretBase32);
 		}
 
 		private void CalculateOneTimePassword() {
@@ -138,7 +151,8 @@ namespace MasterBox.Auth.TOTP {
 				((Hmac[Offset + 0] & 0x7f) << 24) |
 				((Hmac[Offset + 1] & 0xff) << 16) |
 				((Hmac[Offset + 2] & 0xff) << 8) |
-				(Hmac[Offset + 3] & 0xff)) % 1000000;
+				(Hmac[Offset + 3] & 0xff)
+				) % 1000000;
 		}
 
 		private static Int64 GetUnixTimestamp() {
