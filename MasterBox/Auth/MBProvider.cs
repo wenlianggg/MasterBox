@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Security;
+using MasterBox.Auth.TOTP;
 
 namespace MasterBox.Auth {
 	public class MBProvider : MembershipProvider {
@@ -200,15 +201,28 @@ namespace MasterBox.Auth {
 		}
 
 		public bool ValidateTOTP(string username, string otp) {
+			int otpEntered;
+			OTPTool otptool = new OTPTool();
 			SqlDataReader sqldr = SQLGetUserByID(username);
-			string totpsecret = sqldr["totpsecret"].ToString();
-			TOTP.OTPGenerator otpgen = new TOTP.OTPGenerator();
+			if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
+				string totpsecret = sqldr["totpsecret"].ToString();
+				otptool.SecretBase32 = totpsecret;
+				System.Diagnostics.Debug.WriteLine(string.Join(" ", otptool.OneTimePasswordRange));
+				foreach (int SingleOTP in otptool.OneTimePasswordRange) {
+					if (SingleOTP == otpEntered) {
+						// Success
+						System.Diagnostics.Debug.WriteLine(true);
+						return true;
+					}
+				}
+				// Failure
+				return false;
+			} else {
+				return false;
+			}
+		}
 
-			otpgen.Secret = new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF };
-			totpsecret = otpgen.SecretBase32;
-
-			otpgen.SecretBase32 = totpsecret;
-			otpgen.OneTimePassword = otpgen.OneTimePassword;
+		public bool ValidateBackupTOTP(string username, string backupcode) {
 			return false;
 		}
 
