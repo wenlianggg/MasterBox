@@ -1,4 +1,5 @@
-﻿using MasterBox.mbox;
+﻿using MasterBox.Auth;
+using MasterBox.mbox;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,12 +18,12 @@ namespace MasterBox
         {
             username.Text = Context.User.Identity.Name;
 
-        }
-        private string GetEmailInformation(string username)
-        {
+            SqlDataReader reader=MBProvider.SQLGetUserByUN(Context.User.Identity.Name);
+            reader.Read();
+            email.Text = reader["email"].ToString();
             
-            return null;
         }
+
 
     }
 }
