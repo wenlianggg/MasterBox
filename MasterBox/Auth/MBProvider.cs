@@ -103,7 +103,7 @@ namespace MasterBox.Auth {
 			if (username == "bypass") // If is without SQL connection
 				return true;
 
-			SqlDataReader sqldr = SQLGetUserByID(username);
+			SqlDataReader sqldr = SQLGetAuthByUN(username);
 			if (sqldr.Read()) {
 				// Get byte array from database SHA512 string
 				string storedHash = sqldr["hash"].ToString();
@@ -152,7 +152,7 @@ namespace MasterBox.Auth {
 			// Validate user password entered first
 			if (ValidateUser(username, oldPassword)) {
 				// Get user from SQL
-				SqlDataReader sqldr = SQLGetUserByID(username);
+				SqlDataReader sqldr = SQLGetAuthByUN(username);
 				// New salt generation
 				byte[] newSaltB = new byte[16];
 				using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
@@ -203,7 +203,7 @@ namespace MasterBox.Auth {
 		public bool ValidateTOTP(string username, string otp) {
 			int otpEntered;
 			OTPTool otptool = new OTPTool();
-			SqlDataReader sqldr = SQLGetUserByID(username);
+			SqlDataReader sqldr = SQLGetAuthByUN(username);
 			if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
 				string totpsecret = sqldr["totpsecret"].ToString();
 				otptool.SecretBase32 = totpsecret;
@@ -226,9 +226,24 @@ namespace MasterBox.Auth {
 			return false;
 		}
 
-		private static SqlDataReader SQLGetUserByID(String username) {
+		private static SqlDataReader SQLGetAuthByUN(String username) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT * FROM mb_auth WHERE username = @uname",
+				"SELECT DISTINCT * FROM mb_auth WHERE username = @uname",
+				SQLGetMBoxConnection());
+
+			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
+			cmd.Parameters.Add(unameParam);
+
+			cmd.Prepare();
+			cmd.Parameters["@uname"].Value = username;
+			return cmd.ExecuteReader();
+		}
+
+		public static SqlDataReader SQLGetUserByUN(String username) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu" + 
+				"JOIN mb_auth ma ON mu.userid = ma.userid" +
+				"WHERE ma.username = @uname", 
 				SQLGetMBoxConnection());
 
 			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
