@@ -154,8 +154,8 @@ namespace MasterBox.Auth {
 				SqlDataReader sqldr = SQLGetUserByID(username);
 				// New salt generation
 				byte[] newSaltB = new byte[16];
-				using (RNGCryptoServiceProvider rngcsp = new RNGCryptoServiceProvider()) {
-					rngcsp.GetBytes(newSaltB);
+				using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
+					cryptrng.GetBytes(newSaltB);
 				}
 				// Do necessary padding work
 				int len = newPassword.Length % 4;
