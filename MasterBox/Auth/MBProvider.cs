@@ -241,8 +241,8 @@ namespace MasterBox.Auth {
 
 		public static SqlDataReader SQLGetUserByUN(String username) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu" + 
-				"JOIN mb_auth ma ON mu.userid = ma.userid" +
+				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu " + 
+				"JOIN mb_auth ma ON mu.userid = ma.userid " +
 				"WHERE ma.username = @uname", 
 				SQLGetMBoxConnection());
 
