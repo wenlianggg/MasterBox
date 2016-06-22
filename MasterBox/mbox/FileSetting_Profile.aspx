@@ -1,9 +1,9 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/FileSetting.Master" AutoEventWireup="true" CodeBehind="FileSetting_Profile.aspx.cs" Inherits="MasterBox.FileSettingInterface" %>
 
-<asp:Content ID="Testing" ContentPlaceHolderID="Child_Profile" runat="server">
+<asp:Content ID="SetProfile" ContentPlaceHolderID="Child_Profile" runat="server">
     <div class="Setting_Profile">
         <h1>Profile</h1>
-        <hr class="aboutRowHR"/>
+        <hr class="aboutRowHR" />
         <br />
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-8">
@@ -15,7 +15,7 @@
                                 <label>Username: </label>
                             </td>
                             <td>
-                                <asp:Label ID="username" runat="server"></asp:Label>
+                                <asp:Label ID="username" runat="server" Font-Size="Large"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -23,7 +23,8 @@
                                 <label>E-mail: </label>
                             </td>
                             <td>
-                                <input type="email" /></td>
+                                <asp:Label ID="email" runat="server" Font-Size="Large"></asp:Label>
+                            </td>
                         </tr>
                     </table>
                 </div>

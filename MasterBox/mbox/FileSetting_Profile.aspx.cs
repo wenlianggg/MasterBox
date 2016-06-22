@@ -1,5 +1,9 @@
-﻿using System;
+﻿using MasterBox.mbox;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,7 +15,14 @@ namespace MasterBox
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            username.Text= Context.User.Identity.Name;
+            username.Text = Context.User.Identity.Name;
+
         }
+        private string GetEmailInformation(string username)
+        {
+            
+            return null;
+        }
+
     }
 }
