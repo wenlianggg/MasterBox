@@ -11,7 +11,11 @@ namespace MasterBox.mbox
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                FolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                FolderPasswordOption.DataBind();
+            }
         }
     }
 }

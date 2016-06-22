@@ -104,7 +104,7 @@ namespace MasterBox.mbox
 
             return cmd.ExecuteReader();
         }
-
+        // Get list of folder names
         public static ArrayList GenerateFolderLocation(String username)
         {
             // Get User ID
@@ -123,6 +123,27 @@ namespace MasterBox.mbox
             }
             locationList.Sort();
             return locationList;
+        }
+
+        // Get list of folder names with password
+        public static ArrayList GenerateEncryptedFolderLocation(String username)
+        {
+            // Get User ID
+            SqlDataReader sqlUserID = GetUserInformation(username);
+            sqlUserID.Read();
+            int userid = int.Parse(sqlUserID["userid"].ToString());
+
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
+            cmd.Parameters.AddWithValue("@userid", userid);
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            ArrayList passwordlocationList = new ArrayList();
+            passwordlocationList.Add("==Choose a Folder==");
+            while (sqldr.Read())
+            {
+                passwordlocationList.Add(sqldr["foldername"].ToString());
+            }
+            passwordlocationList.Sort();
+            return passwordlocationList;
         }
 
         public static bool UploadFileToFolder(string foldername,MBFile file)

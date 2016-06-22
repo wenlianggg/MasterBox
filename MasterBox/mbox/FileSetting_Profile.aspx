@@ -15,7 +15,7 @@
                                 <label>Username: </label>
                             </td>
                             <td>
-                                <asp:Label ID="username" runat="server" Font-Size="Large"></asp:Label>
+                                <asp:Label ID="username" runat="server" Font-Size="Medium"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -23,7 +23,7 @@
                                 <label>E-mail: </label>
                             </td>
                             <td>
-                                <asp:Label ID="email" runat="server" Font-Size="Large"></asp:Label>
+                                <asp:Label ID="email" runat="server" Font-Size="Medium"></asp:Label>
                             </td>
                         </tr>
                     </table>
