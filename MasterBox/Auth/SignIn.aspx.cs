@@ -19,6 +19,7 @@ namespace MasterBox.Auth {
 		}
 		protected void logonClick(object sender, EventArgs e) {
 			try {
+				mbprovider.ValidateTOTP(UserName.Text, "123456");
 				if (mbprovider.ValidateUser(UserName.Text, UserPass.Text)) {
 					FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
 				} else {

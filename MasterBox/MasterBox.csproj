@@ -285,7 +285,7 @@
       <DependentUpon>otpverify.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\TOTP\Base32.cs" />
-    <Compile Include="Auth\TOTP\OTPGenerator.cs" />
+    <Compile Include="Auth\TOTP\OTPTool.cs" />
     <Compile Include="Auth\User.cs" />
     <Compile Include="Auth\signout.aspx.cs">
       <DependentUpon>signout.aspx</DependentUpon>

@@ -9,13 +9,16 @@ using System.ComponentModel;
 using System.Timers;
 
 namespace MasterBox.Auth.TOTP {
-	public class OTPGenerator {
+	public class OTPTool {
 		private int _secondsToGo;
 		private string _identity;
 		private byte[] _secret;
 		private Int64 _timestamp;
 		private byte[] _hmac;
 		private int _offset;
+		private int _OTPNow;
+		private int[] _OTPRange = new int[5];
+
 
 		public int SecondsToGo {
 			get {
@@ -23,7 +26,7 @@ namespace MasterBox.Auth.TOTP {
 			}
 			private set {
 				_secondsToGo = value;
-				if (SecondsToGo == 30) CalculateOneTimePassword();
+				if (SecondsToGo == 30) CalculateCurrentOTP();
 			}
 		}
 
@@ -34,7 +37,7 @@ namespace MasterBox.Auth.TOTP {
 			}
 			set {
 				_identity = value;
-				CalculateOneTimePassword();
+				CalculateCurrentOTP();
 			}
 		}
 
@@ -52,26 +55,20 @@ namespace MasterBox.Auth.TOTP {
 
 
 		public byte[] Secret {
-			get {
-				return _secret;
-			}
+			get { return _secret; }
 			set {
 				_secret = value;
-				CalculateOneTimePassword();
+				CalculateCurrentOTP();
 			}
 		}
 
 		public string QRCodeUrl {
-			get {
-				return GetQRCodeUrl();
-			}
+			get { return GetQRCodeUrl(); }
 		}
 
 
 		public Int64 Timestamp {
-			get {
-				return _timestamp;
-			}
+			get { return _timestamp; }
 			private set {
 				_timestamp = value;
 			}
@@ -79,52 +76,41 @@ namespace MasterBox.Auth.TOTP {
 
 
 		public byte[] Hmac {
-			get {
-				return _hmac;
-			}
-			private set {
-				_hmac = value;
-			}
+			get { return _hmac;}
+			private set { _hmac = value; }
 		}
 
 
 		public byte[] HmacPart1 {
-			get {
-				return _hmac.Take(Offset).ToArray();
-			}
+			get { return _hmac.Take(Offset).ToArray(); }
 		}
 
 		public byte[] HmacPart2 {
-			get {
-				return _hmac.Skip(Offset).Take(4).ToArray();
-			}
+			get { return _hmac.Skip(Offset).Take(4).ToArray(); }
 		}
 
 		public byte[] HmacPart3 {
-			get {
-				return _hmac.Skip(Offset + 4).ToArray();
-			}
+			get { return _hmac.Skip(Offset + 4).ToArray();}
 		}
 
 
 		public int Offset {
-			get {
-				return _offset;
-			}
-			private set {
-				_offset = value;
-			}
+			get { return _offset; }
+			private set { _offset = value; }
 		}
 
-		private int _oneTimePassword;
 
 		public int OneTimePassword {
 			get {
-				CalculateOneTimePassword();
-				return _oneTimePassword;
+				CalculateCurrentOTP();
+				return _OTPNow;
 			}
-			set {
-				_oneTimePassword = value;
+		}
+
+		public int[] OneTimePasswordRange {
+			get {
+				LenientCalculateOTP();
+				return _OTPRange;
 			}
 		}
 
@@ -141,13 +127,32 @@ namespace MasterBox.Auth.TOTP {
 								SecretBase32);
 		}
 
-		private void CalculateOneTimePassword() {
+
+		// ONE MINUTE BEFORE AND ONE MINUTE AFTER
+		private void LenientCalculateOTP() {
+			// https://tools.ietf.org/html/rfc4226
+			Array.Clear(_OTPRange, 0, _OTPRange.Length);
+			Timestamp = Convert.ToInt64(GetUnixTimestamp() / 30) - 2;
+			for (int i = 0; i < 5; i++) {
+				var data = BitConverter.GetBytes(Timestamp + i).Reverse().ToArray();
+				Hmac = new HMACSHA1(Secret).ComputeHash(data);
+				Offset = Hmac.Last() & 0x0F;
+				_OTPRange[i] = (
+					((Hmac[Offset + 0] & 0x7f) << 24) |
+					((Hmac[Offset + 1] & 0xff) << 16) |
+					((Hmac[Offset + 2] & 0xff) << 8) |
+					(Hmac[Offset + 3] & 0xff)
+					) % 1000000;
+			}
+		}
+
+		private void CalculateCurrentOTP() {
 			// https://tools.ietf.org/html/rfc4226
 			Timestamp = Convert.ToInt64(GetUnixTimestamp() / 30);
 			var data = BitConverter.GetBytes(Timestamp).Reverse().ToArray();
 			Hmac = new HMACSHA1(Secret).ComputeHash(data);
 			Offset = Hmac.Last() & 0x0F;
-			OneTimePassword = (
+			_OTPNow = (
 				((Hmac[Offset + 0] & 0x7f) << 24) |
 				((Hmac[Offset + 1] & 0xff) << 16) |
 				((Hmac[Offset + 2] & 0xff) << 8) |

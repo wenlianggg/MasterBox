@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Security;
+using MasterBox.Auth.TOTP;
 
 namespace MasterBox.Auth {
 	public class MBProvider : MembershipProvider {
@@ -102,7 +103,7 @@ namespace MasterBox.Auth {
 			if (username == "bypass") // If is without SQL connection
 				return true;
 
-			SqlDataReader sqldr = SQLGetUserByID(username);
+			SqlDataReader sqldr = SQLGetAuthByUN(username);
 			if (sqldr.Read()) {
 				// Get byte array from database SHA512 string
 				string storedHash = sqldr["hash"].ToString();
@@ -151,7 +152,7 @@ namespace MasterBox.Auth {
 			// Validate user password entered first
 			if (ValidateUser(username, oldPassword)) {
 				// Get user from SQL
-				SqlDataReader sqldr = SQLGetUserByID(username);
+				SqlDataReader sqldr = SQLGetAuthByUN(username);
 				// New salt generation
 				byte[] newSaltB = new byte[16];
 				using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
@@ -200,21 +201,49 @@ namespace MasterBox.Auth {
 		}
 
 		public bool ValidateTOTP(string username, string otp) {
-			SqlDataReader sqldr = SQLGetUserByID(username);
-			string totpsecret = sqldr["totpsecret"].ToString();
-			TOTP.OTPGenerator otpgen = new TOTP.OTPGenerator();
+			int otpEntered;
+			OTPTool otptool = new OTPTool();
+			SqlDataReader sqldr = SQLGetAuthByUN(username);
+			if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
+				string totpsecret = sqldr["totpsecret"].ToString();
+				otptool.SecretBase32 = totpsecret;
+				System.Diagnostics.Debug.WriteLine(string.Join(" ", otptool.OneTimePasswordRange));
+				foreach (int SingleOTP in otptool.OneTimePasswordRange) {
+					if (SingleOTP == otpEntered) {
+						// Success
+						System.Diagnostics.Debug.WriteLine(true);
+						return true;
+					}
+				}
+				// Failure
+				return false;
+			} else {
+				return false;
+			}
+		}
 
-			otpgen.Secret = new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x21, 0xDE, 0xAD, 0xBE, 0xEF };
-			totpsecret = otpgen.SecretBase32;
-
-			otpgen.SecretBase32 = totpsecret;
-			otpgen.OneTimePassword = otpgen.OneTimePassword;
+		public bool ValidateBackupTOTP(string username, string backupcode) {
 			return false;
 		}
 
-		private static SqlDataReader SQLGetUserByID(String username) {
+		private static SqlDataReader SQLGetAuthByUN(String username) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT * FROM mb_auth WHERE username = @uname",
+				"SELECT DISTINCT * FROM mb_auth WHERE username = @uname",
+				SQLGetMBoxConnection());
+
+			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
+			cmd.Parameters.Add(unameParam);
+
+			cmd.Prepare();
+			cmd.Parameters["@uname"].Value = username;
+			return cmd.ExecuteReader();
+		}
+
+		public static SqlDataReader SQLGetUserByUN(String username) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu" + 
+				"JOIN mb_auth ma ON mu.userid = ma.userid" +
+				"WHERE ma.username = @uname", 
 				SQLGetMBoxConnection());
 
 			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
