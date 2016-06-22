@@ -68,6 +68,7 @@ namespace MasterBox
             Download(3);
         }
 
+
         private void Download(int id)
         {
             DataTable dt = new DataTable();
@@ -192,6 +193,5 @@ namespace MasterBox
             encryptionPassCfm.Text = "";
             */
         }
-
     }
 }

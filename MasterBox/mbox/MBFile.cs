@@ -57,7 +57,6 @@ namespace MasterBox.mbox
             cmd.Parameters.Add(unameParam);
             cmd.Parameters["@userid"].Value = userid;
             cmd.Prepare();
-
             return cmd.ExecuteReader();
         }
 
