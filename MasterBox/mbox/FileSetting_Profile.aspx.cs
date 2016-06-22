@@ -11,7 +11,7 @@ namespace MasterBox
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            username.Text= Context.User.Identity.Name;
         }
     }
 }

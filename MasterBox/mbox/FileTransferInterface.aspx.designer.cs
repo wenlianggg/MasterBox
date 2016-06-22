@@ -139,6 +139,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.GridView FileTableView;
         
         /// <summary>
+        /// FolderTableView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView FolderTableView;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>

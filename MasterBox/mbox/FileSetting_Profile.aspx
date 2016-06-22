@@ -15,9 +15,7 @@
                                 <label>Username: </label>
                             </td>
                             <td>
-                                <label>
-                                    <label> RoySoCold </label>
-                                </label>
+                                <asp:Label ID="username" runat="server"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -68,8 +66,9 @@
             <div class="col-xs-6 col-md-4">
                 <div class="prof_icon">
                     Profile Icon
-                     <input type="file" />
+                     
                 </div>
+                <input type="file" />
 
             </div>
         </div>
