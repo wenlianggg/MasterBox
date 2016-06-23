@@ -262,6 +262,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AuthDBControl.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Auth\State\CookieList.cs" />
     <Compile Include="Auth\MBProvider.cs" />
     <Compile Include="Auth\changepw.aspx.cs">
       <DependentUpon>changepw.aspx</DependentUpon>
@@ -284,6 +285,7 @@
     <Compile Include="Auth\otpverify.aspx.designer.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Auth\State\CookieValue.cs" />
     <Compile Include="Auth\TOTP\Base32.cs" />
     <Compile Include="Auth\TOTP\OTPTool.cs" />
     <Compile Include="Auth\User.cs" />

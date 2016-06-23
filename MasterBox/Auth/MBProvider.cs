@@ -14,7 +14,24 @@ using System.Web.Security;
 using MasterBox.Auth.TOTP;
 
 namespace MasterBox.Auth {
-	public class MBProvider : MembershipProvider {
+	public sealed class MBProvider : MembershipProvider {
+
+		private static volatile MBProvider _instance;
+		private static object syncRoot = new Object();
+
+		private MBProvider() { }
+
+		public static MBProvider Instance {
+			get {
+				if (_instance == null) {
+					lock (syncRoot)
+						if (_instance == null)
+							_instance = new MBProvider();
+				}
+				return _instance;
+			}
+		}
+
 		public override string ApplicationName {
 			get { return "MasterBox"; }
 			set { return; }
@@ -224,6 +241,15 @@ namespace MasterBox.Auth {
 
 		public bool ValidateBackupTOTP(string username, string backupcode) {
 			return false;
+		}
+
+		public string GetCorrectCasingUN(string username) {
+			SqlDataReader sqldr = SQLGetAuthByUN(username);
+			if (sqldr.Read()) {
+				return sqldr["username"].ToString();
+			} else {
+				return null;
+			}
 		}
 
 		private static SqlDataReader SQLGetAuthByUN(String username) {

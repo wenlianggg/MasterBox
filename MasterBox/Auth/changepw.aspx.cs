@@ -9,7 +9,6 @@ using System.Web.UI.WebControls;
 
 namespace MasterBox {
 	public partial class ChangePw : System.Web.UI.Page {
-		private static MBProvider mbprovider = new MBProvider();
 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (Context.User.Identity.IsAuthenticated) {
@@ -23,7 +22,7 @@ namespace MasterBox {
 			// TODO: Check if the passwords match
 			if (NewUserPass.Text.Equals(NewUserPassCfm.Text)) {
 				try {
-					if (mbprovider.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
+					if (MBProvider.Instance.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
 						Msg.ForeColor = System.Drawing.Color.LimeGreen;
 						Msg.Text = "Successfully changed password";
 					} else {

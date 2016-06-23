@@ -19,6 +19,9 @@
 			<h3 class="panel-title">One Time Password</h3>
 		</div>
         <div class="panel-body">
+			<asp:Label ID="UID" ForeColor="blue" runat="server" />
+			<asp:Label ID="Persist" ForeColor="blue" runat="server" />
+			<br />
            <table runat="server" class="otpTable">
                <tr>
                    <td><strong>OTP:</strong></td>
@@ -33,7 +36,7 @@
 			ErrorMessage="Please Enter Your OTP to Continue."
 			ForeColor="Red">
 		</asp:RequiredFieldValidator>
-			<br />
+		<asp:Label ID="Msg" ForeColor="red" runat="server" /><br />
 		<asp:Button class="otpLogin" ID="OTPLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="ConfirmOTP"/>
 		<asp:Button class="otpCancel" ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" OnClick="CancelOTP" CausesValidation="false"/>
     </div>
