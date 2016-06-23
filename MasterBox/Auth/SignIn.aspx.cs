@@ -18,8 +18,8 @@ namespace MasterBox.Auth {
 		protected void logonClick(object sender, EventArgs e) {
 			MBProvider mbp = MBProvider.Instance;
 			try {
-				mbp.ValidateTOTP(UserName.Text, "123456");
 				if (mbp.ValidateUser(UserName.Text, UserPass.Text)) {
+					System.Diagnostics.Debug.WriteLine("correk");
 					Session["Username"] = mbp.GetCorrectCasingUN(UserName.Text);
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;

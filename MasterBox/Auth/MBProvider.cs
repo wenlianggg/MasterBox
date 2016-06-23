@@ -252,7 +252,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		private static SqlDataReader SQLGetAuthByUN(String username) {
+		private SqlDataReader SQLGetAuthByUN(String username) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT DISTINCT * FROM mb_auth WHERE username = @uname",
 				SQLGetMBoxConnection());
@@ -265,7 +265,7 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
-		public static SqlDataReader SQLGetUserByUN(String username) {
+		public SqlDataReader SQLGetUserByUN(String username) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu " + 
 				"JOIN mb_auth ma ON mu.userid = ma.userid " +
