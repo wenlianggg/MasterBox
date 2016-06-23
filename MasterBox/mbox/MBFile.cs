@@ -228,6 +228,123 @@ namespace MasterBox.mbox
             }
         }
 
+        // Validate Folder Password
+        public static bool ValidateFolderPassword(string foldername, string folderpassword)
+        {
+                SqlDataReader sqlFoldername = GetFolderInformation(foldername);
+                if (sqlFoldername.Read())
+                {
+                    string folderHash= sqlFoldername["folderpassword"].ToString();
+
+                    // Add padding to password to make Base64 Compatible
+                    int len = folderpassword.Length % 4;
+                    if (len > 0)
+                        folderpassword = folderpassword.PadRight(folderpassword.Length + (4 - len), '=');
+
+                    // Convert padded user input to byte array
+                    byte[] userInputBytes = Convert.FromBase64String(folderpassword);
+                    byte[] saltBytes = Convert.FromBase64String(sqlFoldername["foldersaltfunction"].ToString());
+                    byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
+                    userInputBytes.CopyTo(combinedBytes, 0);
+                    saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
+
+                    // Get SHA512 value from user input
+                    string userHash;
+                    using (SHA512 shaCalc = new SHA512Managed())
+                    {
+                        userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+                    }
+
+                    if (userHash.Equals(folderHash))
+                    {
+                        // Empty out strings and sensitive data arrays
+                        Array.Clear(userInputBytes, 0, userInputBytes.Length);
+                        Array.Clear(combinedBytes, 0, combinedBytes.Length);
+                        folderpassword = string.Empty;
+                        userHash = string.Empty;
+                        // Password correct
+                        return true;
+                    }
+                    else
+                    {
+                        // Debug information
+                        System.Diagnostics.Debug.WriteLine(userHash);
+                        System.Diagnostics.Debug.WriteLine(folderHash);
+                        // Empty out strings and sensitive data arrays
+                        Array.Clear(userInputBytes, 0, userInputBytes.Length);
+                        Array.Clear(combinedBytes, 0, combinedBytes.Length);
+                        folderpassword = string.Empty;
+                        userHash = string.Empty;
+                        // Password incorrect
+                        return false;
+                    }
+            }
+            else
+            {
+                return false;
+            }
+
+       
+        }
+
+        public static bool ChangeFolderPassword(string foldername, string oldfolderpassword, string newfolderpassword)
+        {
+            if (ValidateFolderPassword(foldername, oldfolderpassword) == true)
+            {
+                // Generate New salt function
+                byte[] newFolderSalt = GenerateSaltFunction();
+
+                // Password Padding
+                int len = newfolderpassword.Length % 4;
+                if (len > 0)
+                    newfolderpassword = newfolderpassword.PadRight(newfolderpassword.Length + (4 - len), '=');
+
+                // Convert new password to byte array
+                byte[] newPwBytes = Convert.FromBase64String(newfolderpassword);
+
+                // Join two arrays
+                byte[] combinedBytes = new byte[newPwBytes.Length + newFolderSalt.Length];
+                newPwBytes.CopyTo(combinedBytes, 0);
+                newFolderSalt.CopyTo(combinedBytes, newPwBytes.Length);
+
+                // Convert salt to string
+                string newSalt = Convert.ToBase64String(newFolderSalt);
+
+                // New Hash combined arrays
+                string folderpassword;
+                using (SHA512 shaCalc = new SHA512Managed())
+                {
+                    folderpassword = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+                }
+
+                // Update database password and salt
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE mb_folder SET folderpassword = @newfolderpass , foldersaltfunction = @newSalt WHERE foldername = @foldername",
+                    SQLGetMBoxConnection());
+                cmd.Parameters.Add(new SqlParameter("@newfolderpass", SqlDbType.VarChar, 88));
+                cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+                cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
+                cmd.Prepare();
+                cmd.Parameters["@newfolderpass"].Value = folderpassword;
+                cmd.Parameters["@newSalt"].Value = newSalt;
+                cmd.Parameters["@foldername"].Value = foldername;
+                cmd.ExecuteNonQuery();
+
+                // Clean up all sensitive information
+                oldfolderpassword = string.Empty;
+                newfolderpassword = string.Empty;
+                Array.Clear(combinedBytes, 0, combinedBytes.Length);
+                Array.Clear(newPwBytes, 0, newPwBytes.Length);
+
+                return true;
+            }else
+            {
+                return false;
+            }
+
+            
+        }
+
         // Generating a SHA 512 password
         public static string GenerateHashPassword(String username, String password, byte[] saltFunction)
         {
