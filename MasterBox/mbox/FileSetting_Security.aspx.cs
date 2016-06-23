@@ -17,5 +17,19 @@ namespace MasterBox.mbox
                 FolderPasswordOption.DataBind();
             }
         }
+
+        protected void ChangeFolderPassword_Click(object sender, EventArgs e)
+        {
+            string foldername = FolderPasswordOption.SelectedValue;
+            string oldpassword = FolderCurrectPassword.Text;
+            string newpassword = FolderNewPassword.Text;
+            if(MBFolder.ChangeFolderPassword(foldername, oldpassword, newpassword)==true)
+            {
+                testing.Text = "Can";
+            }else
+            {
+                testing.Text = "Cannot";
+            }
+        }
     }
 }

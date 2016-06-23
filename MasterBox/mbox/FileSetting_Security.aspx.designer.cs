@@ -49,13 +49,13 @@ namespace MasterBox.mbox {
         protected global::System.Web.UI.WebControls.TextBox CurrentPassword;
         
         /// <summary>
-        /// CurrentPassValid control.
+        /// CurrentPasswordValid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CurrentPassValid;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CurrentPasswordValid;
         
         /// <summary>
         /// FolderNewPassword control.
@@ -110,5 +110,23 @@ namespace MasterBox.mbox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator CfmPassValid;
+        
+        /// <summary>
+        /// ChangeFolderPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ChangeFolderPassword;
+        
+        /// <summary>
+        /// testing control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label testing;
     }
 }

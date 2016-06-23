@@ -15,23 +15,39 @@
                     <asp:DropDownList ID="FolderPasswordOption" runat="server">
                     </asp:DropDownList>
                     <br />
+                    <br />
                     <asp:Label ID="FolderCurrectPassword" runat="server" Text="Current Password: "></asp:Label>
-                    <asp:TextBox ID="CurrentPassword" TextMode="Password" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="CurrentPassValid" runat="server" 
-                        ControlToValidate="CurrentPassword"
-                        ErrorMessage="Please Fill in this"
-                        ></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="CurrentPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="CurrentPasswordValid" runat="server"
+                            ValidationGroup="FolderPasswordChangeValidation"
+                            ValidateEmptyText="true"
+                            ControlToValidate="CurrentPassword"
+                            ErrorMessage="Cannot be empty"
+                            ForeColor="Red">
+                        </asp:RequiredFieldValidator>
                     <br />
                     <asp:Label ID="FolderNewPassword" runat="server" Text="New Password: "></asp:Label>
-                    <asp:TextBox ID="NewPassword" TextMode="Password" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="NewPassValid" runat="server" ControlToValidate="NewPassword"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="NewPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="NewPassValid" runat="server" 
+                        ValidationGroup="FolderPasswordChangeValidation"
+                        ValidateEmptyText="true"
+                        ControlToValidate="NewPassword"
+                        ErrorMessage="Cannot be empty"
+                        ForeColor="Red">
+                    </asp:RequiredFieldValidator>
                     <br />
                     <asp:Label ID="FolderCfmPassword" runat="server" Text="Confirm Password: "></asp:Label>                    
-                    <asp:TextBox ID="CfmPassword" TextMode="Password" runat="server" ></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="CfmPassValid" runat="server" ControlToValidate="CfmPassword"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="CfmPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="CfmPassValid" runat="server"
+                        ValidationGroup="FolderPasswordChangeValidation"
+                        ValidateEmptyText="true"
+                        ControlToValidate="CfmPassword"
+                        ErrorMessage="Cannot be empty"
+                        ForeColor="Red" >
+                    </asp:RequiredFieldValidator>
                 </div>
                 <div class="modal-footer">
-                 
+                 <asp:Button ID="ChangeFolderPassword" runat="server" ValidationGroup="FolderPasswordChangeValidation" Text="Change Password" OnClick="ChangeFolderPassword_Click"/>
                 </div>
             </div>
         </div>
@@ -48,6 +64,7 @@
             <div class="SettingsRow">
                 <h4 class="SettingHr">Folder Password Settings</h4>
                 <a data-toggle="modal" data-target="#FolderChangePsss" data-backdrop="static">Change Password</a>
+            <asp:Label ID="testing" runat="server"></asp:Label>
             </div>
         </div>
 
