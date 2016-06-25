@@ -22,13 +22,13 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.TextBox UserName;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// UserNameValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserNameValidator;
         
         /// <summary>
         /// UserPass control.
@@ -40,13 +40,13 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.TextBox UserPass;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// UserPassValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserPassValidator;
         
         /// <summary>
         /// Persist control.

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="User Registration" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signup.aspx.cs" Inherits="MasterBox.Auth.SignUp" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signup.aspx.cs" Inherits="MasterBox.Auth.SignUp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
@@ -7,7 +7,7 @@
 <asp:Content ID="Register" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="jumbotron">
 		<h1><%: Title %></h1>
-		<p>Please login or register to access our features.</p>
+		<p>Welcome to MasterBox, please login or register to access our features.</p>
 	</div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
@@ -24,7 +24,7 @@
 				<tr>
 					<td><strong>Username: </strong></td>
 					<td>
-						<asp:TextBox ID="UserName" runat="server" CssClass="form-control" /></td>
+						<asp:TextBox ID="UserName" runat="server" CssClass="form-control" placeholder="cookiemonster123" /></td>
 					<td>
 						<asp:RequiredFieldValidator
 							ID="RequiredFieldValidator1"
@@ -36,7 +36,7 @@
 				<tr>
 					<td><strong>Password:</strong></td>
 					<td>
-						<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
+						<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder="••••••••••"/>
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
@@ -49,11 +49,11 @@
 				<tr>
 					<td><strong>Confirm Password:</strong></td>
 					<td>
-						<asp:TextBox ID="UserPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
+						<asp:TextBox ID="UserPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder="••••••••••"/>
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
-							ID="RequiredFieldValidator3"
+							ID="UserPassCfmValidator"
 							ControlToValidate="UserPassCfm"
 							ErrorMessage="Cannot be empty."
 							runat="server" />
@@ -62,11 +62,11 @@
 				<tr>
 					<td><strong>First Name:</strong></td>
 					<td>
-						<asp:TextBox ID="FirstName" CssClass="form-control" runat="server" />
+						<asp:TextBox ID="FirstName" CssClass="form-control" runat="server" placeholder="Cookie" />
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
-							ID="RequiredFieldValidator5"
+							ID="FirstNameValidator"
 							ControlToValidate="FirstName"
 							ErrorMessage="Cannot be empty."
 							runat="server" />
@@ -75,7 +75,7 @@
 				<tr>
 					<td><strong>Last Name:</strong></td>
 					<td>
-						<asp:TextBox ID="LastName" CssClass="form-control" runat="server" />
+						<asp:TextBox ID="LastName" CssClass="form-control" runat="server" placeholder="Monster" />
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
@@ -88,18 +88,31 @@
 				<tr>
 					<td><strong>E-mail Address:</strong></td>
 					<td>
-						<asp:TextBox ID="UserEmail" CssClass="form-control" runat="server" />
+						<asp:TextBox ID="UserEmail" CssClass="form-control" runat="server" placeholder="cookie@monsters.com" />
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
-							ID="RequiredFieldValidator4"
+							ID="UserEmailValidator"
 							ControlToValidate="UserEmail"
 							ErrorMessage="Cannot be empty."
 							runat="server" />
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Human Verification:</strong></td>
+					<td><strong>Confirm E-Mail:</strong></td>
+					<td>
+						<asp:TextBox ID="UserEmailCfm" CssClass="form-control" runat="server" placeholder="cookie@monsters.com" />
+					</td>
+					<td>
+						<asp:RequiredFieldValidator
+							ID="UserEmailCfmValidator"
+							ControlToValidate="UserEmail"
+							ErrorMessage="Cannot be empty."
+							runat="server" />
+					</td>
+				</tr>
+				<tr>
+					<td><strong>Captcha:</strong></td>
 					<td>
 						<div class="g-recaptcha" data-sitekey="6Ld6kiETAAAAAMplec1OuKhJ3VKCBOhZmOcAkZsg"></div>
 					</td>

@@ -124,17 +124,14 @@ namespace MasterBox.Auth {
 			if (sqldr.Read()) {
 				// Get byte array from database SHA512 string
 				string storedHash = sqldr["hash"].ToString();
-
-				// Add padding to password to make Base64 Compatible
-				int len = password.Length % 4;
-				if (len > 0)
-					password = password.PadRight(password.Length + (4 - len), '=');
-				// Convert padded user input to byte array
-				byte[] userInputBytes = Convert.FromBase64String(password);
 				byte[] saltBytes = Convert.FromBase64String(sqldr["salt"].ToString());
+				byte[] userInputBytes = Encoding.UTF8.GetBytes(password);
+
+				// Get both byte arrays and combine them together
 				byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
 				userInputBytes.CopyTo(combinedBytes, 0);
 				saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
+
 				// Get SHA512 value from user input
 				string userHash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
@@ -150,7 +147,8 @@ namespace MasterBox.Auth {
 					return true;
 				} else {
 					// Debug information
-					System.Diagnostics.Debug.WriteLine(userHash);
+					System.Diagnostics.Debug.WriteLine("Salt Value:" + sqldr["salt"].ToString());
+					System.Diagnostics.Debug.WriteLine("Input Hash:" + userHash);
 					System.Diagnostics.Debug.WriteLine(storedHash);
 					// Empty out strings and sensitive data arrays
 					Array.Clear(userInputBytes, 0, userInputBytes.Length);
@@ -170,28 +168,28 @@ namespace MasterBox.Auth {
 			if (ValidateUser(username, oldPassword)) {
 				// Get user from SQL
 				SqlDataReader sqldr = SQLGetAuthByUN(username);
+
 				// New salt generation
 				byte[] newSaltB = new byte[16];
 				using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
 					cryptrng.GetBytes(newSaltB);
 				}
-				// Do necessary padding work
-				int len = newPassword.Length % 4;
-				if (len > 0)
-					newPassword = newPassword.PadRight(newPassword.Length + (4 - len), '=');
-				// Convert new password to byte array
-				byte[] newPwBytes = Convert.FromBase64String(newPassword);
-				// Join two arrays
-				byte[] combinedBytes = new byte[newPwBytes.Length + newSaltB.Length];
-				newPwBytes.CopyTo(combinedBytes, 0);
-				newSaltB.CopyTo(combinedBytes, newPwBytes.Length);
 				// Convert salt to string
 				string newSalt = Convert.ToBase64String(newSaltB);
+
+				// Convert new password to byte array
+				var newPasswordBytes = Encoding.UTF8.GetBytes(newPassword);
+				// Join two arrays
+				byte[] combinedBytes = new byte[newPasswordBytes.Length + newSaltB.Length];
+				newPasswordBytes.CopyTo(combinedBytes, 0);
+				newSaltB.CopyTo(combinedBytes, newPasswordBytes.Length);
 				// Hash combined arrays
 				string userHash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
 					userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
 				}
+
+
 				// Update database values
 				SqlCommand cmd = new SqlCommand(
 					"UPDATE mb_auth SET hash = @newHash , salt = @newSalt WHERE username = @uname",
@@ -205,11 +203,13 @@ namespace MasterBox.Auth {
 				cmd.Parameters["@uname"].Value = username;
 				cmd.ExecuteNonQuery();
 				System.Diagnostics.Debug.WriteLine(newSalt);
+
+
 				// Clean up all sensitive information
 				oldPassword = string.Empty;
 				newPassword = string.Empty;
 				Array.Clear(combinedBytes, 0, combinedBytes.Length);
-				Array.Clear(newPwBytes, 0, newPwBytes.Length);
+				Array.Clear(newPasswordBytes, 0, newPasswordBytes.Length);
 				return true;
 			} else {
 				// Existing password is wrong

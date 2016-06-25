@@ -32,12 +32,15 @@ img{
     width: 100%;
 }
 
+.jumbotron p {
+	font-weight:300;
+}
+
 /*punchline title*/
 .punchlinetitle {
     margin-top:5%;
     text-align:center;
     margin-bottom:4%;
-
 }
 
 .h2getstarted {

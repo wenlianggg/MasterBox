@@ -58,13 +58,13 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.TextBox UserPassCfm;
         
         /// <summary>
-        /// RequiredFieldValidator3 control.
+        /// UserPassCfmValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserPassCfmValidator;
         
         /// <summary>
         /// FirstName control.
@@ -76,13 +76,13 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.TextBox FirstName;
         
         /// <summary>
-        /// RequiredFieldValidator5 control.
+        /// FirstNameValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FirstNameValidator;
         
         /// <summary>
         /// LastName control.
@@ -112,13 +112,31 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.TextBox UserEmail;
         
         /// <summary>
-        /// RequiredFieldValidator4 control.
+        /// UserEmailValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserEmailValidator;
+        
+        /// <summary>
+        /// UserEmailCfm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox UserEmailCfm;
+        
+        /// <summary>
+        /// UserEmailCfmValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserEmailCfmValidator;
         
         /// <summary>
         /// RegisterButton control.

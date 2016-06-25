@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Login Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signin.aspx.cs" Inherits="MasterBox.Auth.SignIn" %>
+﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signin.aspx.cs" Inherits="MasterBox.Auth.SignIn" %>
 
 <asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
 	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
@@ -6,7 +6,7 @@
 <asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="jumbotron">
 		<h1><%: Title %></h1>
-		<p>Please login or register to access our features.</p>
+		<p>Welcome to MasterBox, please login or register to access our features.</p>
 	</div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
@@ -25,7 +25,7 @@
 						<asp:TextBox ID="UserName" runat="server" CssClass="form-control" /></td>
 					<td>
 						<asp:RequiredFieldValidator
-							ID="RequiredFieldValidator1"
+							ID="UserNameValidator"
 							ControlToValidate="UserName"
 							Display="Dynamic"
 							ErrorMessage="Cannot be empty."
@@ -40,7 +40,7 @@
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
-							ID="RequiredFieldValidator2"
+							ID="UserPassValidator"
 							ControlToValidate="UserPass"
 							ErrorMessage="Cannot be empty."
 							runat="server" />
