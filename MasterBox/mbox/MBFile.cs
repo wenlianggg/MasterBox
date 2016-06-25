@@ -146,8 +146,9 @@ namespace MasterBox.mbox
             return passwordlocationList;
         }
 
-        public static bool UploadFileToFolder(string foldername,MBFile file)
-        {try
+        public static bool UploadFileToFolder(string foldername, MBFile file)
+        {
+            try
             {
                 // Get User ID
                 SqlDataReader sqlFolderID = GetFolderInformation(foldername);
@@ -174,7 +175,7 @@ namespace MasterBox.mbox
             {
                 return false;
             }
-            
+
         }
 
         public static bool CreateNewFolder(MBFolder folder)
@@ -211,13 +212,15 @@ namespace MasterBox.mbox
                 sqldr.Read();
                 int userid = int.Parse(sqldr["userid"].ToString());
 
+                //Convert salt to string
+                string salt = Convert.ToBase64String(folder.saltfunction);
                 // Create Folder
 
                 SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword) VALUES(@user,@name,@encryption,@salt,@pass)", SQLGetMBoxConnection());
                 cmd.Parameters.AddWithValue("@user", userid);
                 cmd.Parameters.AddWithValue("@name", folder.folderName);
                 cmd.Parameters.AddWithValue("@encryption", folder.folderencryption);
-                cmd.Parameters.AddWithValue("@salt", folder.saltfunction);
+                cmd.Parameters.AddWithValue("@salt", salt);
                 cmd.Parameters.AddWithValue("@pass", folder.folderPass);
                 cmd.ExecuteNonQuery();
                 return true;
@@ -231,60 +234,61 @@ namespace MasterBox.mbox
         // Validate Folder Password
         public static bool ValidateFolderPassword(string foldername, string folderpassword)
         {
-                SqlDataReader sqlFoldername = GetFolderInformation(foldername);
-                if (sqlFoldername.Read())
+            SqlDataReader sqlFoldername = GetFolderInformation(foldername);
+            if (sqlFoldername.Read())
+            {
+                string folderHash = sqlFoldername["folderpassword"].ToString();
+
+                // Add padding to password to make Base64 Compatible
+                int len = folderpassword.Length % 4;
+                if (len > 0)
                 {
-                    string folderHash= sqlFoldername["folderpassword"].ToString();
+                    folderpassword = folderpassword.PadRight(folderpassword.Length + (4 - len), '=');
+                }
+                // Convert padded user input to byte array
+                byte[] userInputBytes = Convert.FromBase64String(folderpassword);
+                byte[] saltBytes = Convert.FromBase64String(sqlFoldername["foldersaltfunction"].ToString());
+                byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
+                userInputBytes.CopyTo(combinedBytes, 0);
+                saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
 
-                    // Add padding to password to make Base64 Compatible
-                    int len = folderpassword.Length % 4;
-                    if (len > 0)
-                        folderpassword = folderpassword.PadRight(folderpassword.Length + (4 - len), '=');
+                // Get SHA512 value from user input
+                string userHash;
+                using (SHA512 shaCalc = new SHA512Managed())
+                {
+                    userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+                }
 
-                    // Convert padded user input to byte array
-                    byte[] userInputBytes = Convert.FromBase64String(folderpassword);
-                    byte[] saltBytes = Convert.FromBase64String(sqlFoldername["foldersaltfunction"].ToString());
-                    byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
-                    userInputBytes.CopyTo(combinedBytes, 0);
-                    saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
-
-                    // Get SHA512 value from user input
-                    string userHash;
-                    using (SHA512 shaCalc = new SHA512Managed())
-                    {
-                        userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
-                    }
-
-                    if (userHash.Equals(folderHash))
-                    {
-                        // Empty out strings and sensitive data arrays
-                        Array.Clear(userInputBytes, 0, userInputBytes.Length);
-                        Array.Clear(combinedBytes, 0, combinedBytes.Length);
-                        folderpassword = string.Empty;
-                        userHash = string.Empty;
-                        // Password correct
-                        return true;
-                    }
-                    else
-                    {
-                        // Debug information
-                        System.Diagnostics.Debug.WriteLine(userHash);
-                        System.Diagnostics.Debug.WriteLine(folderHash);
-                        // Empty out strings and sensitive data arrays
-                        Array.Clear(userInputBytes, 0, userInputBytes.Length);
-                        Array.Clear(combinedBytes, 0, combinedBytes.Length);
-                        folderpassword = string.Empty;
-                        userHash = string.Empty;
-                        // Password incorrect
-                        return false;
-                    }
+                if (userHash.Equals(folderHash))
+                {
+                    // Empty out strings and sensitive data arrays
+                    Array.Clear(userInputBytes, 0, userInputBytes.Length);
+                    Array.Clear(combinedBytes, 0, combinedBytes.Length);
+                    folderpassword = string.Empty;
+                    userHash = string.Empty;
+                    // Password correct
+                    return true;
+                }
+                else
+                {
+                    // Debug information
+                    System.Diagnostics.Debug.WriteLine(userHash);
+                    System.Diagnostics.Debug.WriteLine(folderHash);
+                    // Empty out strings and sensitive data arrays
+                    Array.Clear(userInputBytes, 0, userInputBytes.Length);
+                    Array.Clear(combinedBytes, 0, combinedBytes.Length);
+                    folderpassword = string.Empty;
+                    userHash = string.Empty;
+                    // Password incorrect
+                    return false;
+                }
             }
             else
             {
                 return false;
             }
 
-       
+
         }
 
         public static bool ChangeFolderPassword(string foldername, string oldfolderpassword, string newfolderpassword)
@@ -337,12 +341,13 @@ namespace MasterBox.mbox
                 Array.Clear(newPwBytes, 0, newPwBytes.Length);
 
                 return true;
-            }else
+            }
+            else
             {
                 return false;
             }
 
-            
+
         }
 
         // Generating a SHA 512 password
@@ -375,6 +380,7 @@ namespace MasterBox.mbox
             {
                 rngcsp.GetBytes(newSalt);
             }
+            
             return newSalt;
         }
 
@@ -393,7 +399,7 @@ namespace MasterBox.mbox
         private static SqlDataReader GetFolderInformation(String foldername)
         {
             SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE foldername = @foldername", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@foldername", SqlDbType.VarChar, 30);
+            SqlParameter unameParam = new SqlParameter("@foldername", SqlDbType.VarChar, 50);
             cmd.Parameters.Add(unameParam);
             cmd.Parameters["@foldername"].Value = foldername;
             cmd.Prepare();
