@@ -245,6 +245,7 @@ namespace MasterBox.mbox
                 {
                     folderpassword = folderpassword.PadRight(folderpassword.Length + (4 - len), '=');
                 }
+
                 // Convert padded user input to byte array
                 byte[] userInputBytes = Convert.FromBase64String(folderpassword);
                 byte[] saltBytes = Convert.FromBase64String(sqlFoldername["foldersaltfunction"].ToString());
@@ -325,6 +326,10 @@ namespace MasterBox.mbox
                 SqlCommand cmd = new SqlCommand(
                     "UPDATE mb_folder SET folderpassword = @newfolderpass , foldersaltfunction = @newSalt WHERE foldername = @foldername",
                     SQLGetMBoxConnection());
+                cmd.Parameters.AddWithValue("@newfolderpass", folderpassword);
+                cmd.Parameters.AddWithValue("@newsalt", newSalt);
+                cmd.Parameters.AddWithValue("@foldername", foldername);
+                /*
                 cmd.Parameters.Add(new SqlParameter("@newfolderpass", SqlDbType.VarChar, 88));
                 cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
                 cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
@@ -332,6 +337,7 @@ namespace MasterBox.mbox
                 cmd.Parameters["@newfolderpass"].Value = folderpassword;
                 cmd.Parameters["@newSalt"].Value = newSalt;
                 cmd.Parameters["@foldername"].Value = foldername;
+                */
                 cmd.ExecuteNonQuery();
 
                 // Clean up all sensitive information

@@ -26,8 +26,11 @@ namespace MasterBox.mbox
 
             if (MBFolder.ChangeFolderPassword(foldername, oldpassword,newpassword))
             {
-                testing.Text = "Can";
-            }else
+                testing.Text = "can";
+                CurrentPassword.Text = "";
+                NewPassValid.Text="";
+            }
+            else
             {
                 testing.Text = "cannot";
             }
