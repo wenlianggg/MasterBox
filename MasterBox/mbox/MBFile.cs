@@ -267,6 +267,7 @@ namespace MasterBox.mbox
                     folderpassword = string.Empty;
                     userHash = string.Empty;
                     // Password correct
+                    System.Diagnostics.Debug.WriteLine("Correct");
                     return true;
                 }
                 else
@@ -277,6 +278,7 @@ namespace MasterBox.mbox
                     folderpassword = string.Empty;
                     userHash = string.Empty;
                     // Password wrong
+                    System.Diagnostics.Debug.WriteLine("Wrong");
                     return false;
                 }
             }
@@ -295,7 +297,7 @@ namespace MasterBox.mbox
                 // Generate New salt function
                 byte[] newFolderSalt = GenerateSaltFunction();
                 string newSalt = Convert.ToBase64String(newFolderSalt);
-
+                /*
                 // Convert new password to byte array
                 var newPwBytes = Encoding.UTF8.GetBytes(newfolderpassword);
 
@@ -310,6 +312,8 @@ namespace MasterBox.mbox
                 {
                     folderpassword = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
                 }
+                */
+                string newfolderpass = GenerateHashPassword(newfolderpassword, newFolderSalt);
 
                 // Update database password and salt
                 SqlCommand cmd = new SqlCommand(
@@ -319,16 +323,10 @@ namespace MasterBox.mbox
                 cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
                 cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
                 cmd.Prepare();
-                cmd.Parameters["@newfolderpass"].Value = folderpassword;
+                cmd.Parameters["@newfolderpass"].Value = newfolderpass;
                 cmd.Parameters["@newSalt"].Value = newSalt;
                 cmd.Parameters["@foldername"].Value = foldername;               
                 cmd.ExecuteNonQuery();
-
-                // Clean up all sensitive information
-                oldfolderpassword = string.Empty;
-                newfolderpassword = string.Empty;
-                Array.Clear(combinedBytes, 0, combinedBytes.Length);
-                Array.Clear(newPwBytes, 0, newPwBytes.Length);
 
                 return true;
             }
@@ -339,9 +337,10 @@ namespace MasterBox.mbox
         }
 
         // Generating a SHA 512 password
-        public static string GenerateHashPassword(String username, String password, byte[] saltFunction)
-        {
-            
+        public static string GenerateHashPassword(String password, byte[] saltFunction)
+        {          
+            string saltString= Convert.ToBase64String(saltFunction);
+
             // Convert password to byte array
             var passwordBytes = Encoding.UTF8.GetBytes(password);
 
@@ -355,7 +354,8 @@ namespace MasterBox.mbox
             {
                 passwordHash = Convert.ToBase64String(shaCalc.ComputeHash(passwordSaltBytes));
             }
-
+            System.Diagnostics.Debug.WriteLine(passwordHash);
+            System.Diagnostics.Debug.WriteLine(saltString);
             return passwordHash;
         }
 
@@ -400,6 +400,4 @@ namespace MasterBox.mbox
             return sqlConnection;
         }
     }
-
-
 }

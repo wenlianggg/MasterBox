@@ -163,7 +163,7 @@ namespace MasterBox
                 folder.folderuserName = Context.User.Identity.Name;
                 folder.saltfunction = MBFolder.GenerateSaltFunction();
                 folder.folderencryption = 1;
-                folder.folderPass = MBFolder.GenerateHashPassword(Context.User.Identity.Name, encryptionPass.Text, folder.saltfunction);
+                folder.folderPass = MBFolder.GenerateHashPassword(encryptionPass.Text, folder.saltfunction);
                 folderCreation = MBFolder.CreateNewFolderWithPassword(folder);
             }
             else
