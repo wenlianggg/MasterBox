@@ -9,21 +9,21 @@ using System.Diagnostics;
 using MasterBox.Auth;
 
 namespace MasterBox.Auth {
-	public partial class SignIn : Page {
-		private static MBProvider mbprovider = new MBProvider();
-
+	public partial class SignIn : Page { 
 		protected void Page_Load(object sender, EventArgs e) {
 			if (User.Identity.IsAuthenticated) {
 				Response.Redirect("~/Default.aspx");
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
+			MBProvider mbp = MBProvider.Instance;
 			try {
-				mbprovider.ValidateTOTP(UserName.Text, "123456");
-				if (mbprovider.ValidateUser(UserName.Text, UserPass.Text)) {
-					FormsAuthentication.RedirectFromLoginPage(UserName.Text, Persist.Checked);
-				} else {
-					Msg.Text = "Invalid credentials. Please try again, please check your username casing!";
+				if (mbp.ValidateUser(UserName.Text, UserPass.Text)) {
+					System.Diagnostics.Debug.WriteLine("correk");
+					Session["Username"] = mbp.GetCorrectCasingUN(UserName.Text);
+					Session["IsPasswordAuthorized"] = true;
+					Session["StayLoggedIn"] = Persist.Checked;
+					Response.Redirect("~/Auth/otpverify.aspx");
 				}
 			} catch (UserNotFoundException) {
 				Msg.Text = "Invalid credentials. Please try again, please check your username casing!";

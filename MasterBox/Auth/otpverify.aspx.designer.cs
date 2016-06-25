@@ -13,6 +13,15 @@ namespace MasterBox.Auth {
     public partial class otpverify {
         
         /// <summary>
+        /// UID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UID;
+        
+        /// <summary>
         /// OTPValue control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace MasterBox.Auth {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// Msg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Msg;
         
         /// <summary>
         /// OTPLogin control.

@@ -8,7 +8,8 @@
 <script runat="server">
 	void Page_Load(object sender, EventArgs e) {
 		FormsAuthentication.SignOut();
-		Response.Redirect("SignIn.aspx");
+		Session.Abandon();
+		Response.Redirect("~/Auth/signin.aspx");
 	}
 
 	void Signout_Click(object sender, EventArgs e) {

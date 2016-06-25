@@ -18,8 +18,8 @@ namespace MasterBox
         {
             username.Text = Context.User.Identity.Name;
 
-            SqlDataReader reader=MBProvider.SQLGetUserByUN(Context.User.Identity.Name);
-            reader.Read();
+			SqlDataReader reader = MBProvider.Instance.SQLGetUserByUN(Context.User.Identity.Name);
+			reader.Read();
             email.Text = reader["email"].ToString();
             
         }
