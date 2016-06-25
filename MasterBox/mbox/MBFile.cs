@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace MasterBox.mbox
@@ -188,7 +189,6 @@ namespace MasterBox.mbox
                 int userid = int.Parse(sqldr["userid"].ToString());
 
                 // Create Folder
-
                 SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption) VALUES(@user,@name,@encryption)", SQLGetMBoxConnection());
                 cmd.Parameters.AddWithValue("@user", userid);
                 cmd.Parameters.AddWithValue("@name", folder.folderName);
@@ -211,17 +211,21 @@ namespace MasterBox.mbox
                 SqlDataReader sqldr = GetUserInformation(folder.folderuserName);
                 sqldr.Read();
                 int userid = int.Parse(sqldr["userid"].ToString());
-
                 //Convert salt to string
                 string salt = Convert.ToBase64String(folder.saltfunction);
                 // Create Folder
-
                 SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword) VALUES(@user,@name,@encryption,@salt,@pass)", SQLGetMBoxConnection());
-                cmd.Parameters.AddWithValue("@user", userid);
-                cmd.Parameters.AddWithValue("@name", folder.folderName);
-                cmd.Parameters.AddWithValue("@encryption", folder.folderencryption);
-                cmd.Parameters.AddWithValue("@salt", salt);
-                cmd.Parameters.AddWithValue("@pass", folder.folderPass);
+                cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
+                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
+                cmd.Parameters.Add(new SqlParameter("@encryption", SqlDbType.Bit,1));
+                cmd.Parameters.Add(new SqlParameter("@salt", SqlDbType.VarChar, 24));
+                cmd.Parameters.Add(new SqlParameter("@pass", SqlDbType.VarChar,88));
+                cmd.Prepare();
+                cmd.Parameters["@user"].Value = userid;
+                cmd.Parameters["@name"].Value = folder.folderName;
+                cmd.Parameters["@encryption"].Value = folder.folderencryption;
+                cmd.Parameters["@salt"].Value = salt;
+                cmd.Parameters["@pass"].Value = folder.folderPass;
                 cmd.ExecuteNonQuery();
                 return true;
             }
@@ -237,29 +241,24 @@ namespace MasterBox.mbox
             SqlDataReader sqlFoldername = GetFolderInformation(foldername);
             if (sqlFoldername.Read())
             {
+                // Database Folder Password and salt
                 string folderHash = sqlFoldername["folderpassword"].ToString();
-
-                // Add padding to password to make Base64 Compatible
-                int len = folderpassword.Length % 4;
-                if (len > 0)
-                {
-                    folderpassword = folderpassword.PadRight(folderpassword.Length + (4 - len), '=');
-                }
-
-                // Convert padded user input to byte array
-                byte[] userInputBytes = Convert.FromBase64String(folderpassword);
                 byte[] saltBytes = Convert.FromBase64String(sqlFoldername["foldersaltfunction"].ToString());
+
+                // Making password into byte arrays and combine
+                byte[] userInputBytes = Encoding.UTF8.GetBytes(folderpassword);              
                 byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
                 userInputBytes.CopyTo(combinedBytes, 0);
                 saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
 
-                // Get SHA512 value from user input
+                // Get SHA512 value
                 string userHash;
                 using (SHA512 shaCalc = new SHA512Managed())
                 {
                     userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
                 }
 
+                // Check if password mathces database
                 if (userHash.Equals(folderHash))
                 {
                     // Empty out strings and sensitive data arrays
@@ -272,15 +271,12 @@ namespace MasterBox.mbox
                 }
                 else
                 {
-                    // Debug information
-                    System.Diagnostics.Debug.WriteLine(userHash);
-                    System.Diagnostics.Debug.WriteLine(folderHash);
                     // Empty out strings and sensitive data arrays
                     Array.Clear(userInputBytes, 0, userInputBytes.Length);
                     Array.Clear(combinedBytes, 0, combinedBytes.Length);
                     folderpassword = string.Empty;
                     userHash = string.Empty;
-                    // Password incorrect
+                    // Password wrong
                     return false;
                 }
             }
@@ -298,22 +294,15 @@ namespace MasterBox.mbox
             {
                 // Generate New salt function
                 byte[] newFolderSalt = GenerateSaltFunction();
-
-                // Password Padding
-                int len = newfolderpassword.Length % 4;
-                if (len > 0)
-                    newfolderpassword = newfolderpassword.PadRight(newfolderpassword.Length + (4 - len), '=');
+                string newSalt = Convert.ToBase64String(newFolderSalt);
 
                 // Convert new password to byte array
-                byte[] newPwBytes = Convert.FromBase64String(newfolderpassword);
+                var newPwBytes = Encoding.UTF8.GetBytes(newfolderpassword);
 
                 // Join two arrays
                 byte[] combinedBytes = new byte[newPwBytes.Length + newFolderSalt.Length];
                 newPwBytes.CopyTo(combinedBytes, 0);
                 newFolderSalt.CopyTo(combinedBytes, newPwBytes.Length);
-
-                // Convert salt to string
-                string newSalt = Convert.ToBase64String(newFolderSalt);
 
                 // New Hash combined arrays
                 string folderpassword;
@@ -325,19 +314,14 @@ namespace MasterBox.mbox
                 // Update database password and salt
                 SqlCommand cmd = new SqlCommand(
                     "UPDATE mb_folder SET folderpassword = @newfolderpass , foldersaltfunction = @newSalt WHERE foldername = @foldername",
-                    SQLGetMBoxConnection());
-                cmd.Parameters.AddWithValue("@newfolderpass", folderpassword);
-                cmd.Parameters.AddWithValue("@newsalt", newSalt);
-                cmd.Parameters.AddWithValue("@foldername", foldername);
-                /*
+                    SQLGetMBoxConnection());                
                 cmd.Parameters.Add(new SqlParameter("@newfolderpass", SqlDbType.VarChar, 88));
                 cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
                 cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
                 cmd.Prepare();
                 cmd.Parameters["@newfolderpass"].Value = folderpassword;
                 cmd.Parameters["@newSalt"].Value = newSalt;
-                cmd.Parameters["@foldername"].Value = foldername;
-                */
+                cmd.Parameters["@foldername"].Value = foldername;               
                 cmd.ExecuteNonQuery();
 
                 // Clean up all sensitive information
@@ -352,33 +336,30 @@ namespace MasterBox.mbox
             {
                 return false;
             }
-
-
         }
 
         // Generating a SHA 512 password
         public static string GenerateHashPassword(String username, String password, byte[] saltFunction)
         {
-            // Add padding to make it 64bit
-            int lengthPass = password.Length % 4;
-            if (lengthPass > 0)
-            {
-                password = password.PadRight(password.Length + (4 - lengthPass), '=');
-            }
-            // Convert padded password to byte array
-            byte[] passwordBytes = Convert.FromBase64String(password);
+            
+            // Convert password to byte array
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
+
             byte[] passwordSaltBytes = new byte[passwordBytes.Length + saltFunction.Length];
             passwordBytes.CopyTo(passwordSaltBytes, 0);
             saltFunction.CopyTo(passwordSaltBytes, passwordBytes.Length);
+
             // Convert password to SHA512
             string passwordHash;
             using (SHA512 shaCalc = new SHA512Managed())
             {
                 passwordHash = Convert.ToBase64String(shaCalc.ComputeHash(passwordSaltBytes));
             }
+
             return passwordHash;
         }
 
+        // Generate a salt
         public static byte[] GenerateSaltFunction()
         {
             byte[] newSalt = new byte[16];

@@ -65,6 +65,7 @@
                 <h4 class="SettingHr">Folder Password Settings</h4>
                 <a data-toggle="modal" data-target="#FolderChangePsss" data-backdrop="static">Change Password</a>
             <asp:Label ID="testing" runat="server"></asp:Label>
+                <asp:Label ID="Label1" runat="server"></asp:Label>
             </div>
         </div>
 

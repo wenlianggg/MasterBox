@@ -23,6 +23,14 @@ namespace MasterBox.mbox
             string foldername = FolderPasswordOption.SelectedValue;
             string oldpassword = CurrentPassword.Text;
             string newpassword = NewPassValid.Text;
+            if (MBFolder.ValidateFolderPassword(foldername,oldpassword))
+            {
+                Label1.Text = "Can validate";
+            }
+            else
+            {
+                Label1.Text = "cannot validate";
+            }
 
             if (MBFolder.ChangeFolderPassword(foldername, oldpassword,newpassword))
             {
