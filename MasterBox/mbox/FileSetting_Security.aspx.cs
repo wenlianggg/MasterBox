@@ -13,27 +13,53 @@ namespace MasterBox.mbox
         {
             if (!IsPostBack)
             {
-                FolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
-                FolderPasswordOption.DataBind();
+                // Generate list of non encrypted folders
+                NewFolderPasswordOption.DataSource = MBFolder.GenerateUnencryptedFolderLocation(Context.User.Identity.Name);
+                NewFolderPasswordOption.DataBind();
+
+                // Generate list of encrypted folders
+                ChangeFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                ChangeFolderPasswordOption.DataBind();
             }
+        }
+
+        protected void NewFolderPassword_Click(object sender, EventArgs e)
+        {
+            MBFolder folder = new MBFolder();
+            folder.folderName = NewFolderPasswordOption.SelectedValue;
+            folder.folderuserName = Context.User.Identity.Name;
+            folder.folderencryption = 1;
+            string folderpassword = NewPassword.Text;
+
+            if (folder.NewFolderPassword(folder, folderpassword))
+            {
+
+            }else
+            {
+
+            }
+            
         }
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
         {
-            string foldername = FolderPasswordOption.SelectedValue;
+            MBFolder folder = new MBFolder();
+            folder.folderName= ChangeFolderPasswordOption.SelectedValue;
+            folder.folderuserName = Context.User.Identity.Name;
             string oldpassword = CurrentPassword.Text;
-            string newpassword = NewPassValid.Text;
-
-            if (MBFolder.ChangeFolderPassword(foldername, oldpassword,newpassword))
+            string newpassword = ChangeNewPassword.Text;
+                      
+            if (folder.ChangeFolderPassword(folder, oldpassword,newpassword))
             {
-                testing.Text = "can";
                 CurrentPassword.Text = "";
-                NewPassValid.Text="";
+                ChangeNewPassword.Text="";
             }
             else
             {
-                testing.Text = "cannot";
+
             }
+            
+            
             
         }
     }

@@ -13,22 +13,103 @@ namespace MasterBox.mbox {
     public partial class FileSetting_Security {
         
         /// <summary>
-        /// FolderPasswordOptionLabel control.
+        /// NewFolderPasswordOptionLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FolderPasswordOptionLabel;
+        protected global::System.Web.UI.WebControls.Label NewFolderPasswordOptionLabel;
         
         /// <summary>
-        /// FolderPasswordOption control.
+        /// NewFolderPasswordOption control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FolderPasswordOption;
+        protected global::System.Web.UI.WebControls.DropDownList NewFolderPasswordOption;
+        
+        /// <summary>
+        /// NewFolderPasswordLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NewFolderPasswordLabel;
+        
+        /// <summary>
+        /// NewPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewPassword;
+        
+        /// <summary>
+        /// NewPasswordValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewPasswordValidation;
+        
+        /// <summary>
+        /// NewFolderCfmPasswordLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NewFolderCfmPasswordLabel;
+        
+        /// <summary>
+        /// NewCfmPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewCfmPassword;
+        
+        /// <summary>
+        /// NewCfmPasswordValidation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewCfmPasswordValidation;
+        
+        /// <summary>
+        /// NewFolderPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NewFolderPassword;
+        
+        /// <summary>
+        /// ChangeFolderPasswordOptionLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ChangeFolderPasswordOptionLabel;
+        
+        /// <summary>
+        /// ChangeFolderPasswordOption control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ChangeFolderPasswordOption;
         
         /// <summary>
         /// FolderCurrectPassword control.
@@ -67,13 +148,13 @@ namespace MasterBox.mbox {
         protected global::System.Web.UI.WebControls.Label FolderNewPassword;
         
         /// <summary>
-        /// NewPassword control.
+        /// ChangeNewPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NewPassword;
+        protected global::System.Web.UI.WebControls.TextBox ChangeNewPassword;
         
         /// <summary>
         /// NewPassValid control.
@@ -94,13 +175,13 @@ namespace MasterBox.mbox {
         protected global::System.Web.UI.WebControls.Label FolderCfmPassword;
         
         /// <summary>
-        /// CfmPassword control.
+        /// ChangeCfmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CfmPassword;
+        protected global::System.Web.UI.WebControls.TextBox ChangeCfmPassword;
         
         /// <summary>
         /// CfmPassValid control.
@@ -119,14 +200,5 @@ namespace MasterBox.mbox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ChangeFolderPassword;
-        
-        /// <summary>
-        /// testing control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label testing;
     }
 }

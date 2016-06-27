@@ -16,4 +16,18 @@ namespace MasterBox.Auth {
 		protected UserNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) {
 		}
 	}
+
+	internal class DatabaseUpdateFailureException : Exception {
+		public DatabaseUpdateFailureException() {
+		}
+
+		public DatabaseUpdateFailureException(string message) : base(message) {
+		}
+
+		public DatabaseUpdateFailureException(string message, Exception innerException) : base(message, innerException) {
+		}
+
+		protected DatabaseUpdateFailureException(SerializationInfo info, StreamingContext context) : base(info, context) {
+		}
+	}
 }
