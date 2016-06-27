@@ -7,7 +7,6 @@ using System.Web.Security;
 
 namespace MasterBox.Auth {
 	public class User : MembershipUser {
-		private static AuthDBControlDataContext adb = new AuthDBControlDataContext();
 
 		public User(String username, String ptPass) {
 		

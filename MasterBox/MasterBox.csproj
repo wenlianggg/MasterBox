@@ -187,11 +187,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="mbox\Internal.Master" />
     <Content Include="mbox\FileSetting.master" />
-    <Content Include="Auth\AuthDBControl.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>AuthDBControl.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -257,11 +252,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthDBControl.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AuthDBControl.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Auth\State\CookieList.cs" />
     <Compile Include="Auth\MBProvider.cs" />
     <Compile Include="Auth\changepw.aspx.cs">
@@ -419,11 +409,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Auth\AuthDBControl.dbml.layout">
-      <DependentUpon>AuthDBControl.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
