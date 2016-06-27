@@ -20,28 +20,23 @@ namespace MasterBox.mbox
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
         {
+            MBFolder folder = new MBFolder();
             string foldername = FolderPasswordOption.SelectedValue;
             string oldpassword = CurrentPassword.Text;
-            string newpassword = NewPassValid.Text;
-            if (MBFolder.ValidateFolderPassword(foldername,oldpassword))
-            {
-                Label1.Text = "Can validate";
-            }
-            else
-            {
-                Label1.Text = "cannot validate";
-            }
-
-            if (MBFolder.ChangeFolderPassword(foldername, oldpassword,newpassword))
+            string newpassword = NewPassword.Text;
+                      
+            if (folder.ChangeFolderPassword(Context.User.Identity.Name,foldername, oldpassword,newpassword))
             {
                 testing.Text = "can";
                 CurrentPassword.Text = "";
-                NewPassValid.Text="";
+                NewPassword.Text="";
             }
             else
             {
                 testing.Text = "cannot";
             }
+            
+            
             
         }
     }
