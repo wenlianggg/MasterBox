@@ -63,63 +63,72 @@ namespace MasterBox.Auth {
 		public string FirstName {
 			get { return _firstName; }
 			set {
-				_firstName = value;
+				updateValue("fName", value, SqlDbType.VarChar, 100);
+				_firstName = getValue("fName").ToString();
 			}
 		}
 
 		public string LastName {
 			get { return _lastName; }
 			set {
-				_lastName = value;
+				updateValue("lName", value, SqlDbType.VarChar, 100);
+				_lastName = getValue("lName").ToString();
 			}
 		}
 
 		public DateTime BirthDate {
 			get { return _birthDate; }
 			set {
-				_birthDate = value;
+				updateValue("birthDate", value, SqlDbType.Date, 0);
+				_birthDate = (DateTime)getValue("birthDate");
 			}
 		}
 
 		public string EmailAddress {
 			get { return _email; }
 			set {
-				_email = value;
+				updateValue("email", value, SqlDbType.VarChar, 100);
+				_email = getValue("email").ToString();
 			}
 		}
 
 		public bool IsVerified {
 			get { return _isVerified; }
 			set {
-				_isVerified = value;
+				updateValue("verified", value, SqlDbType.Bit, 0);
+				_isVerified = (bool)getValue("verified");
 			}
 		}
 
 		public int MemberType {
 			get { return _memberType; }
 			set {
-				_memberType = value;
+				updateValue("mbrType", value, SqlDbType.Int, 0);
+				_memberType = (int)getValue("mbrType");
 			}
 		}
 
 		public DateTime MbrStartDate {
 			get { return _mbrStartDate; }
 			set {
-				_mbrStartDate = value;
+				updateValue("mbrStartDate", value, SqlDbType.DateTime2, 7);
+				_mbrStartDate = (DateTime)getValue("mbrStartDate");
 			}
 		}
 
 		public DateTime MbrExpireDate {
 			get { return _mbrExpireDate; }
 			set {
-				_mbrExpireDate = value;
+				updateValue("mbrExpireDate", value, SqlDbType.DateTime2, 7);
+				_mbrExpireDate = (DateTime)getValue("mbrExpireDate");
 			}
 		}
 
 		public DateTime RegDateTime {
 			get { return _regDateTime; }
 			set {
-				_regDateTime = value;
+				updateValue("regTime", value, SqlDbType.DateTime2, 7);
+				_regDateTime = (DateTime)getValue("regTime");
 			}
 		}
 
@@ -128,9 +137,11 @@ namespace MasterBox.Auth {
 				"UPDATE mb_users SET " + fieldName + " = @fieldValue WHERE userid = @uid",
 				SQLGetMBoxConnection()
 				);
+
 			cmd.Parameters.Add(new SqlParameter("@fieldValue", sdb, length));
 			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 0));
 			cmd.Prepare();
+
 			cmd.Parameters["@fieldValue"].Value = fieldValue;
 			cmd.Parameters["@uid"].Value = (Int64) _userid;
 			if (cmd.ExecuteNonQuery() == 1) {
@@ -138,6 +149,18 @@ namespace MasterBox.Auth {
 			} else {
 				throw new DatabaseUpdateFailureException("Updating value " + fieldValue + " failed.");
 			}
+		}
+
+		private object getValue(string fieldName) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT " + fieldName + " FROM mb_users WHERE userid = @uid",
+				SQLGetMBoxConnection()
+				);
+
+			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 0));
+			cmd.Prepare();
+			cmd.Parameters["@uid"].Value = (Int64)_userid;
+			return cmd.ExecuteReader()[fieldName];
 		}
 
 		private static SqlConnection SQLGetMBoxConnection() {
