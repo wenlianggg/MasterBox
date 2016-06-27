@@ -119,7 +119,7 @@ namespace MasterBox.mbox
 
             return cmd.ExecuteReader();
         }
-        // Get list of folder names
+        // Get list of all folder names
         public static ArrayList GenerateFolderLocation(String username)
         {
             // Get User ID
@@ -149,6 +149,27 @@ namespace MasterBox.mbox
             int userid = int.Parse(sqlUserID["userid"].ToString());
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
+            cmd.Parameters.AddWithValue("@userid", userid);
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            ArrayList passwordlocationList = new ArrayList();
+            passwordlocationList.Add("==Choose a Folder==");
+            while (sqldr.Read())
+            {
+                passwordlocationList.Add(sqldr["foldername"].ToString());
+            }
+            passwordlocationList.Sort();
+            return passwordlocationList;
+        }
+
+        // Get list of folder names without password
+        public static ArrayList GenerateUnencryptedFolderLocation(String username)
+        {
+            // Get User ID
+            SqlDataReader sqlUserID = GetUserInformation(username);
+            sqlUserID.Read();
+            int userid = int.Parse(sqlUserID["userid"].ToString());
+
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=0", SQLGetMBoxConnection());
             cmd.Parameters.AddWithValue("@userid", userid);
             SqlDataReader sqldr = cmd.ExecuteReader();
             ArrayList passwordlocationList = new ArrayList();
@@ -282,9 +303,9 @@ namespace MasterBox.mbox
         }
 
         // Validate Folder Password
-        public bool ValidateFolderPassword(string username,string foldername, string folderpassword)
+        public bool ValidateFolderPassword(MBFolder folder,string folderpassword)
         {
-            SqlDataReader sqlFoldername = GetFolderInformation(username,foldername);
+            SqlDataReader sqlFoldername = GetFolderInformation(folder.folderuserName,folder.folderName);
             if (sqlFoldername.Read())
             {
                 // Database Folder Password and salt
@@ -342,12 +363,12 @@ namespace MasterBox.mbox
 
         }
 
-        public bool ChangeFolderPassword(string username,string foldername, string oldfolderpassword, string newfolderpassword)
+        public bool ChangeFolderPassword(MBFolder folder, string oldfolderpassword, string newfolderpassword)
         {
-            if (ValidateFolderPassword(username, folderName, oldfolderpassword))
+            if (ValidateFolderPassword(folder, oldfolderpassword))
             {
                 // Get User id
-                SqlDataReader sqldr = GetUserInformation(username);
+                SqlDataReader sqldr = GetUserInformation(folder.folderuserName);
                 sqldr.Read();
                 int userid = int.Parse(sqldr["userid"].ToString());
 
@@ -369,6 +390,8 @@ namespace MasterBox.mbox
                 {
                     folderhashpassword = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
                 }
+
+                // For debug
                 System.Diagnostics.Debug.WriteLine(newfolderpassword);
                 System.Diagnostics.Debug.WriteLine(newSalt);
                 System.Diagnostics.Debug.WriteLine(folderhashpassword);
@@ -384,7 +407,7 @@ namespace MasterBox.mbox
                 cmd.Prepare();
                 cmd.Parameters["@newfolderpass"].Value = folderhashpassword;
                 cmd.Parameters["@newSalt"].Value = newSalt;
-                cmd.Parameters["@foldername"].Value = foldername;
+                cmd.Parameters["@foldername"].Value = folder.folderName;
                 cmd.Parameters["@userid"].Value = userid;
                 cmd.ExecuteNonQuery();
 
