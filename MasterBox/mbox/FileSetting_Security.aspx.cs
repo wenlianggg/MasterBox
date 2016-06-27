@@ -28,9 +28,17 @@ namespace MasterBox.mbox
             MBFolder folder = new MBFolder();
             folder.folderName = NewFolderPasswordOption.SelectedValue;
             folder.folderuserName = Context.User.Identity.Name;
+            folder.folderencryption = 1;
             string folderpassword = NewPassword.Text;
 
+            if (folder.NewFolderPassword(folder, folderpassword))
+            {
 
+            }else
+            {
+
+            }
+            
         }
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
