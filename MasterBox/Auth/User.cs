@@ -25,16 +25,10 @@ namespace MasterBox.Auth {
 		private DateTime _mbrExpireDate;
 		private DateTime _regDateTime;
 
-
-
-		public User(string username, string ptPass) {
-			_mbp = MBProvider.Instance;
-			if (_mbp.ValidateUser(username, ptPass)) {
-
-				SqlDataReader sqldr = _mbp.SQLGetUserByUN(username);
+		public User(string username) {
+				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
 				_userid = (Int64) sqldr["userid"];
 				_userName = sqldr["username"].ToString();
-				_userName = sqldr["userName"].ToString();
 				_firstName = sqldr["fName"].ToString();
 				_lastName = sqldr["lName"].ToString();
 				_birthDate = (DateTime)sqldr["birthdate"];
@@ -44,12 +38,105 @@ namespace MasterBox.Auth {
 				_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
 				_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
 				_regDateTime = (DateTime)sqldr["regTime"];
+		}
 
+		public User(long userid) {
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(userid);
+			_userid = (Int64)sqldr["userid"];
+			_userName = sqldr["username"].ToString();
+			_firstName = sqldr["fName"].ToString();
+			_lastName = sqldr["lName"].ToString();
+			_birthDate = (DateTime)sqldr["birthdate"];
+			_email = sqldr["email"].ToString();
+			_isVerified = (bool)sqldr["verified"];
+			_memberType = (int)sqldr["mbrType"];
+			_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
+			_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
+			_regDateTime = (DateTime)sqldr["regTime"];
+		}
+
+		public User(string username, string firstname, string lastname,
+			DateTime birthdate, string email, bool isVerified) {
+			// New user;
+			_userName = username;
+			_firstName = firstname;
+			_lastName = lastname;
+			_birthDate = birthdate;
+			_email = email;
+			_isVerified = isVerified;
+			_memberType = 0;
+			_mbrStartDate = DateTime.Now;
+			_mbrExpireDate = DateTime.Today.AddYears(100);
+			_regDateTime = DateTime.Now;
+
+		}
+
+		public bool RefreshAllFields() {
+			try {
+				SqlDataReader sqldr = _mbp.SQLGetUserByID(_userid);
+				_userName = sqldr["username"].ToString();
+				_firstName = sqldr["fName"].ToString();
+				_lastName = sqldr["lName"].ToString();
+				_birthDate = (DateTime)sqldr["birthdate"];
+				_email = sqldr["email"].ToString();
+				_isVerified = (bool)sqldr["verified"];
+				_memberType = (int)sqldr["mbrType"];
+				_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
+				_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
+				_regDateTime = (DateTime)sqldr["regTime"];
+				return true;
+			} catch {
+				return false;
 			}
 		}
-		
-		public static User createNewUser() {
-			return new User("shell", "shell");
+
+		public void SetAllFields() {
+			// Does not set the ID, this method saves database connections
+			int rowsupdated = 0;
+
+			SqlCommand cmd = new SqlCommand(
+				"UPDATE mb_users SET " +
+				"fName = @fName," +
+				"lName = @lName," +
+				"birthDate = @birthDate," +
+				"email = @email," +
+				"verified = @verified," +
+				"mbrType = @mbrType," +
+				"mbrStartDate = @mbrStartDate," +
+				"mbrExpireDate = @mbrExpireDate," +
+				"regTime = @regTime " +
+				"WHERE userid = @uid;",
+				SQLGetMBoxConnection()
+			);
+			cmd.Parameters.Add(new SqlParameter("@fName", SqlDbType.VarChar, 100));
+			cmd.Parameters.Add(new SqlParameter("@lName", SqlDbType.VarChar, 100));
+			cmd.Parameters.Add(new SqlParameter("@birthDate", SqlDbType.Date, 0));
+			cmd.Parameters.Add(new SqlParameter("@email", SqlDbType.VarChar, 100));
+			cmd.Parameters.Add(new SqlParameter("@verified", SqlDbType.Bit, 0));
+			cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.Int, 0));
+			cmd.Parameters.Add(new SqlParameter("@mbrStartDate", SqlDbType.DateTime2, 7));
+			cmd.Parameters.Add(new SqlParameter("@mbrExpireDate", SqlDbType.DateTime2, 7));
+			cmd.Parameters.Add(new SqlParameter("@regTime", SqlDbType.DateTime2, 7));
+			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 0));
+			cmd.Prepare();
+
+			cmd.Parameters["@fName"].Value = _firstName;
+			cmd.Parameters["@lName"].Value = _lastName;
+			cmd.Parameters["@birthDate"].Value = _birthDate;
+			cmd.Parameters["@email"].Value = _email;
+			cmd.Parameters["@verified"].Value = _isVerified;
+			cmd.Parameters["@mbrType"].Value = _memberType;
+			cmd.Parameters["@mbrStartDate"].Value = _mbrStartDate;
+			cmd.Parameters["@mbrExpireDate"].Value = _mbrExpireDate;
+			cmd.Parameters["@uid"].Value = _userid;
+			cmd.ExecuteNonQuery();
+			
+			cmd.Parameters["@uid"].Value = (Int64) _userid;
+			if (cmd.ExecuteNonQuery() == 1) {
+				return true;
+			} else {
+				throw new DatabaseUpdateFailureException("Updating value " + fieldValue + " failed.");
+			}
 		}
 
 		public long UserId {
@@ -169,11 +256,12 @@ namespace MasterBox.Auth {
 			return sqlConnection;
 		}
 
-		public DateTime stringToDateTime(string dateString) {
+		public static DateTime StringToDateTime(string dateString) {
 			IFormatProvider culture = new System.Globalization.CultureInfo("en-SG", true);
 			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
 			return dateTime;
 		}
 
 	}
+	
 }
