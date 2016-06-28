@@ -31,12 +31,15 @@
 
 .regTable {
 	background-color:#ffffff;
-	width: 650px;
 }
 
 .regTable input[type="text"],
 .regTable input[type="password"] {
-	width:240px;
+	width:270px;
+}
+
+.regTable td:nth-child(1) {
+	width:180px;
 }
 
 .regTable td:nth-child(3) {

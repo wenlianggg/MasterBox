@@ -28,7 +28,7 @@
 							ID="UserNameValidator"
 							ControlToValidate="UserName"
 							Display="Dynamic"
-							ErrorMessage="Cannot be empty."
+							ErrorMessage="*"
 							ValidationGroup="valGroup1"
 							runat="server" />
 					</td>
@@ -42,7 +42,7 @@
 						<asp:RequiredFieldValidator
 							ID="UserPassValidator"
 							ControlToValidate="UserPass"
-							ErrorMessage="Cannot be empty."
+							ErrorMessage="*"
 							runat="server" />
 					</td>
 				</tr>
