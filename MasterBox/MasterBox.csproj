@@ -201,6 +201,7 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\parallax.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
