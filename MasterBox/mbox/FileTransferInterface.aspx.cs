@@ -18,16 +18,16 @@ namespace MasterBox
     {
 		DataTable dtFile;
 		DataTable dtFolder;
+        DataTable dtFolderFile;
 
 		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-			// Fill up file data on the display
+			
 			if (!IsPostBack)
             {
-				FillData();
+                // Fill up file and folder data on the display
+                FillDataFile();
                 FillDataFolder();
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
@@ -35,7 +35,7 @@ namespace MasterBox
             }
 
         }
-        private void FillData()
+        private void FillDataFile()
         {
             dtFile = new DataTable();
             SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
@@ -65,11 +65,6 @@ namespace MasterBox
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-			// this is for the auto method...however got error atm 
-			// May not use this method cause its by ID.
-			// May use another attribute for this.
-			// string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
-			// int id = int.Parse(stringID);
 			Download(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
         }
 
@@ -107,13 +102,12 @@ namespace MasterBox
                         if (uploadStatus == true)
                         {
                             // Update the file table
-                            FillData();
+                            FillDataFile();
                         }
                     }
                     catch
                     {
-                        Label1.ForeColor = System.Drawing.Color.Red;
-                        Label1.Text = "Upload was not succesful, please try again.";
+                      
                     }
                 }
                 else
@@ -132,13 +126,12 @@ namespace MasterBox
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file,foldername);
                         if (uploadfiletofolderstatus == true)
                         {
-                            FillData();
+                            FillDataFile();
                         }
                     }
                     catch
                     {
-                        Label1.ForeColor = System.Drawing.Color.Red;
-                        Label1.Text = "Upload was not succesful, please try again.";
+                       
                     }
                 }
             }
@@ -168,20 +161,34 @@ namespace MasterBox
             }
             if (folderCreation == true)
             {
-                Label1.Text = "Successs";
+                
             }
             else
             {
-                Label1.Text = "fail";
+                
             }
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
-            /*
-            FolderName.Text = "";
-            encryptionOption.SelectedValue = "yes";
-            encryptionPass.Text = "";
-            encryptionPassCfm.Text = "";
-            */
         }
+
+        protected void OpenFolder(object sender, EventArgs e)
+        {
+            // Get Folder id
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
+            int folderid=Int32.Parse(lnk.Attributes["FolderID"]);
+            
+                dtFolderFile = new DataTable();
+                SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
+                dtFile.Load(reader);
+
+                if (dtFolderFile.Rows.Count > 0)
+                {
+                    Folder_FileTableView.DataSource = dtFolderFile;
+                    Folder_FileTableView.DataBind();
+                }
+            
+        }
+        
     }
 }

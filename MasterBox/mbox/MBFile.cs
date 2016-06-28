@@ -71,13 +71,42 @@ namespace MasterBox.mbox {
 			sqlUserID.Read();
 			int userid = int.Parse(sqlUserID["userid"].ToString());
 
-			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid", SQLGetMBoxConnection());
-			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 30);
+			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
+			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			cmd.Parameters.Add(unameParam);
 			cmd.Parameters["@userid"].Value = userid;
 			cmd.Prepare();
 			return cmd.ExecuteReader();
 		}
+
+        public static SqlDataReader GetFileFromFolderToDisplay(string username,int folderid)
+        {
+            User user = new User(username);
+            System.Diagnostics.Debug.WriteLine(folderid);
+            System.Diagnostics.Debug.WriteLine(user.UserId);
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
+            SqlParameter folderidParam = new SqlParameter("@folderid", SqlDbType.BigInt, 8);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters.Add(folderidParam);
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.Prepare();
+            /*
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            MBFile mbf = new MBFile();
+            if (sqldr.Read())
+            {
+                mbf.filecontent = (byte[])sqldr["filecontent"];
+                mbf.fileName = sqldr["filename"].ToString();
+                mbf.fileSize = (int)sqldr["filesize"];
+                mbf.fileType = sqldr["filetype"].ToString();
+            }
+            System.Diagnostics.Debug.WriteLine(mbf.fileName);
+            */
+            return cmd.ExecuteReader();
+        }
 
 		public static MBFile RetrieveFile(string username, long fileid) {
 			// Get User ID

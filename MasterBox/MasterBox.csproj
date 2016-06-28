@@ -137,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="mbox\downloads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\LoginStyle.css" />

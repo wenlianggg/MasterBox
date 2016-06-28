@@ -155,33 +155,23 @@
                     <Columns>
                         <asp:TemplateField HeaderText="Folder">
                             <ItemTemplate>
-                                <asp:LinkButton ID="LinkButton2" runat="server"  Text='<%# Eval("foldername") %>'></asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton2" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
         </div>
         <div class="FileTreeContainer">
-            <h3>placeHolder{Files-Tree}</h3>
-            <div class="row" style="margin: 0 auto; border-bottom: 2px solid black;">
-                <div class="FileTreeContainerTable">
-                    <p>Name: </p>
-
-                </div>
-                <div class="FileTreeContainerTable">
-                    <p>Last Modified: </p>
-                </div>
-
-            </div>
-            <div class="FileTreeContainerObtainedFiles">
-                <div class="FileTreeContainerTable">
-                    <p>placeHolder{FileName} </p>
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="FileTreeContainerTable">
-                    <p>placeHolder{Last_Modified} </p>
-                </div>
-            </div>
+            <asp:Label ID="FolderFileLabel" runat="server"></asp:Label>
+            <asp:GridView ID="Folder_FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename" >
+                    <Columns>
+                        <asp:TemplateField HeaderText="File Name">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton3" runat="server"  Text='<%# Eval("filename") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+            </asp:GridView>
         </div>
     </div>
 
