@@ -136,7 +136,7 @@ namespace MasterBox
                         BinaryReader br = new BinaryReader(strm);
                         file.filecontent = br.ReadBytes((int)strm.Length);
                         file.fileSize = FileUpload.PostedFile.ContentLength;
-                        bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(foldername, file);
+                        bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file,foldername);
                         if (uploadfiletofolderstatus == true)
                         {
                             FillData();
@@ -161,10 +161,8 @@ namespace MasterBox
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
                 folder.folderuserName = Context.User.Identity.Name;
-                folder.saltfunction = MBFolder.GenerateSaltFunction();
                 folder.folderencryption = 1;
-                folder.folderPass = MBFolder.GenerateHashPassword(encryptionPass.Text, folder.saltfunction);
-                folderCreation = MBFolder.CreateNewFolderWithPassword(folder);
+                folderCreation = folder.CreateNewFolderWithPassword(folder,encryptionPass.Text);
             }
             else
             {
@@ -172,9 +170,7 @@ namespace MasterBox
                 folder.folderName = FolderName.Text;
                 folder.folderuserName = Context.User.Identity.Name;
                 folder.folderencryption = 0;
-                folder.saltfunction = null;
-                folder.folderPass = null;
-                folderCreation = MBFolder.CreateNewFolder(folder);
+                folderCreation = folder.CreateNewFolder(folder);
 
             }
             if (folderCreation == true)
