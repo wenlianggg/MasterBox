@@ -40,8 +40,7 @@
                     <asp:Button class="otpEnable" ID="OTPLogin" runat="server" Text="Enable" CssClass="btn btn-success"/>
 		            <asp:Button class="otpCancelSetup" ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="false"/>
                 </div>
-                <div class="setupRowRight">
-                    <img src="../images/work_in_progress.jpg" class="qrPlaceholder"/>
+                <div class="setupRowRight" runat="server" id="QRCodeHolder">
                 </div>
             </div>
         </div>
