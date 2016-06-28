@@ -10,51 +10,52 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Collections;
+using System.Net;
 
 namespace MasterBox
 {
     public partial class FileTransferInterface : System.Web.UI.Page
     {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-        protected void Page_Load(object sender, EventArgs e)
-        {	
-            // Fill up file data on the display
-            if (!IsPostBack)
-            {
+		DataTable dtFile;
+		DataTable dtFolder;
 
-                FillData();
+		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+
+			// Fill up file data on the display
+			if (!IsPostBack)
+            {
+				FillData();
                 FillDataFolder();
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
-
-				MBFile mbf = MBFile.RetrieveFile("Roy", 1);
-				File.WriteAllBytes("C:\\", mbf.filecontent);
             }
 
         }
         private void FillData()
         {
-            DataTable dtFile = new DataTable();
+            dtFile = new DataTable();
             SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
             dtFile.Load(reader);
 
-
-            if (dtFile.Rows.Count > 0)
-            {
+			if (dtFile.Rows.Count > 0)
+            {	
                 FileTableView.DataSource = dtFile;
                 FileTableView.DataBind();
             }
         }
         private void FillDataFolder()
         {
-            DataTable dtFile = new DataTable();
+			dtFolder = new DataTable();
             SqlDataReader reader = MBFolder.GetFolderToDisplay(Context.User.Identity.Name);
-            dtFile.Load(reader);
+            dtFolder.Load(reader);
 
-            if (dtFile.Rows.Count > 0)
+            if (dtFolder.Rows.Count > 0)
             {
-                FolderTableView.DataSource = dtFile;
+                FolderTableView.DataSource = dtFolder;
                 FolderTableView.DataBind();
             }
         }
@@ -64,38 +65,27 @@ namespace MasterBox
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-            // this is for the auto method...however got error atm 
-            // May not use this method cause its by ID.
-            // May use another attribute for this.
-            // string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
-            // int id = int.Parse(stringID);
-            Download(3);
+			// this is for the auto method...however got error atm 
+			// May not use this method cause its by ID.
+			// May use another attribute for this.
+			// string stringID = FileTableView.DataKeys[gr.RowIndex].Value.ToString();
+			// int id = int.Parse(stringID);
+			Download(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
         }
 
 
-        private void Download(int id)
+        private void Download(string username, int id)
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file where fileid=@ID", con);
-                cmd.Parameters.Add("@ID", SqlDbType.Int).Value = id;
-                cmd.Prepare();
-                SqlDataReader reader = cmd.ExecuteReader();
-                dt.Load(reader);
-            }
-            string name = dt.Rows[0]["filename"].ToString();
-            byte[] documentBytes = (byte[])dt.Rows[0]["filecontent"];
-            Response.ClearContent();
-            Response.ContentType = "application/octestream";
-            Response.AddHeader("Content-Disposition", string.Format("attachment;filename=(0)", name));
-            Response.AddHeader("Content-Length", documentBytes.Length.ToString());
+			MBFile mbf = MBFile.RetrieveFile(username, id);
+			Response.ClearContent();
+			Response.ContentType = mbf.fileType;
+			Response.AddHeader("Content-Disposition", "attachment;filename=\"" + mbf.fileName + "\"");
+			Response.AddHeader("Content-Length", mbf.fileSize.ToString());
 
-            Response.BinaryWrite(documentBytes);
-            Response.Flush();
-            Response.Close();
-        }
+			Response.BinaryWrite(mbf.filecontent);
+			Response.Flush();
+			Response.Close();
+		}
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
             if (FileUpload.HasFile)

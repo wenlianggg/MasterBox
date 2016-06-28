@@ -27,7 +27,25 @@ namespace MasterBox.Auth {
 
 		public User(string username) {
 				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
-				_userid = (Int64) sqldr["userid"];
+				if (sqldr.Read()) {
+					_userid = (Int64)sqldr["userid"];
+					_userName = sqldr["username"].ToString();
+					_firstName = sqldr["fName"].ToString();
+					_lastName = sqldr["lName"].ToString();
+					_birthDate = (DateTime)sqldr["birthdate"];
+					_email = sqldr["email"].ToString();
+					_isVerified = (bool)sqldr["verified"];
+					_memberType = (int)sqldr["mbrType"];
+					_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
+					_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
+					_regDateTime = (DateTime)sqldr["regTime"];
+				}
+		}
+
+		public User(long userid) {
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(userid);
+			if (sqldr.Read()) {
+				_userid = (Int64)sqldr["userid"];
 				_userName = sqldr["username"].ToString();
 				_firstName = sqldr["fName"].ToString();
 				_lastName = sqldr["lName"].ToString();
@@ -38,21 +56,7 @@ namespace MasterBox.Auth {
 				_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
 				_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
 				_regDateTime = (DateTime)sqldr["regTime"];
-		}
-
-		public User(long userid) {
-			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(userid);
-			_userid = (Int64)sqldr["userid"];
-			_userName = sqldr["username"].ToString();
-			_firstName = sqldr["fName"].ToString();
-			_lastName = sqldr["lName"].ToString();
-			_birthDate = (DateTime)sqldr["birthdate"];
-			_email = sqldr["email"].ToString();
-			_isVerified = (bool)sqldr["verified"];
-			_memberType = (int)sqldr["mbrType"];
-			_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
-			_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
-			_regDateTime = (DateTime)sqldr["regTime"];
+			}
 		}
 
 		public User(string username, string firstname, string lastname,

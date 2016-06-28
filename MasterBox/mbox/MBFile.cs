@@ -30,7 +30,7 @@ namespace MasterBox.mbox {
 					"INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
 					+ "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
 				cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
-				cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
+				cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar, -1));
 				cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
 				cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
 				cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));

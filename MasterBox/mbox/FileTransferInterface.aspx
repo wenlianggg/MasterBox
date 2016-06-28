@@ -141,11 +141,11 @@
 
         <div class="FileContainer">
             <h1>Files</h1>
-                <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename" OnRowCommand="DownloadFile">
+                <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
                     <Columns>
                         <asp:TemplateField HeaderText="File" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                             <ItemTemplate>
-                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>'></asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
