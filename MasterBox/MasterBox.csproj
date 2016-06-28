@@ -337,6 +337,7 @@
     <Compile Include="mbox\Internal.Master.designer.cs">
       <DependentUpon>Internal.Master</DependentUpon>
     </Compile>
+    <Compile Include="mbox\MBFolder.cs" />
     <Compile Include="Pricing.aspx.cs">
       <DependentUpon>Pricing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

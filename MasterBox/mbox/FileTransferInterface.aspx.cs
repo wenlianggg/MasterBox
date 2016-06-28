@@ -17,7 +17,7 @@ namespace MasterBox
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {	
             // Fill up file data on the display
             if (!IsPostBack)
             {
@@ -27,6 +27,9 @@ namespace MasterBox
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
+
+				MBFile mbf = MBFile.RetrieveFile("Roy", 1);
+				File.WriteAllBytes("C:\\", mbf.filecontent);
             }
 
         }

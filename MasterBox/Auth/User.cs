@@ -117,7 +117,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@mbrStartDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@mbrExpireDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@regTime", SqlDbType.DateTime2, 7));
-			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 0));
+			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 8));
 			cmd.Prepare();
 
 			cmd.Parameters["@fName"].Value = _firstName;
@@ -133,9 +133,9 @@ namespace MasterBox.Auth {
 			
 			cmd.Parameters["@uid"].Value = (Int64) _userid;
 			if (cmd.ExecuteNonQuery() == 1) {
-				return true;
+				return;
 			} else {
-				throw new DatabaseUpdateFailureException("Updating value " + fieldValue + " failed.");
+				throw new DatabaseUpdateFailureException("Updating value " + " failed.");
 			}
 		}
 
