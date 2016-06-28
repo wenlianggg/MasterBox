@@ -280,6 +280,21 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
+		public SqlDataReader SQLGetUserByID(long userid) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu " +
+				"JOIN mb_auth ma ON mu.userid = ma.userid " +
+				"WHERE ma.userid = @uid",
+				SQLGetMBoxConnection());
+
+			SqlParameter unameParam = new SqlParameter("@uid", SqlDbType.BigInt, 30);
+			cmd.Parameters.Add(unameParam);
+
+			cmd.Prepare();
+			cmd.Parameters["@uid"].Value = userid;
+			return cmd.ExecuteReader();
+		}
+
 		private static SqlConnection SQLGetMBoxConnection() {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
 			sqlConnection.Open();

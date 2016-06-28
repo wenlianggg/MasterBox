@@ -24,9 +24,11 @@ namespace MasterBox.Auth {
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
 					Response.Redirect("~/Auth/otpverify.aspx");
+				} else {
+					Msg.Text = "Invalid credentials, please try again!";
 				}
 			} catch (UserNotFoundException) {
-				Msg.Text = "Invalid credentials. Please try again, please check your username casing!";
+				Msg.Text = "Invalid credentials, please try again!";
 			}
 		}
 
