@@ -61,6 +61,15 @@ namespace MasterBox.mbox
             }
         }
 
+        // Do AES256 Encryption
+        private string EncryptAES256File(string file)
+        {
+            string AESIV256 = "1234567890123456";
+            string AESKEY256 = "";
+
+            return "";
+        }
+
         // Retrieve to display file
         public static SqlDataReader GetFileToDisplay(string username)
         {
