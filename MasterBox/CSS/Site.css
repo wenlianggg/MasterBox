@@ -16,7 +16,7 @@ body {
 /* Wrapping element */
 .body-wrapper {
 	background: #2b94e5; /* Old browsers */
-    background:linear-gradient(45deg, #517fa4 10%, #243949 90%);
+    background:linear-gradient(350deg, #517fa4 10%, #18233c 90%);
 	display: block;
 	min-height: 100%;
 	min-width:100%;
