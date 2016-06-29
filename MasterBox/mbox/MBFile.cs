@@ -17,6 +17,8 @@ namespace MasterBox.mbox {
 		public string fileType { get; set; }
 		public int fileSize { get; set; }
 		public byte[] filecontent { get; set; }
+        private string filekey { get; set; }
+        private string fileiv { get; set; }
 
 		// Upload of file
 		public static bool UploadNewFile(MBFile file) {
@@ -25,8 +27,13 @@ namespace MasterBox.mbox {
 				SqlDataReader sqlUserID = GetUserInformation(file.fileusername);
 				sqlUserID.Read();
 				int userid = int.Parse(sqlUserID["userid"].ToString());
-				// Storing of File
-				SqlCommand cmd = new SqlCommand(
+
+                file.filekey = KeyIvGenerator(32);
+                file.fileiv = KeyIvGenerator(16);
+                file.filecontent = MBFile.EncryptAES256File(file);
+
+                // Storing of File
+                SqlCommand cmd = new SqlCommand(
 					"INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
 					+ "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
 				cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
@@ -42,13 +49,14 @@ namespace MasterBox.mbox {
 				cmd.Parameters["@data"].Value = file.filecontent;
 
 				cmd.ExecuteNonQuery();
-
+                
 				// Clear Sensitive Data
 				file.fileName = "";
 				file.fileType = "";
 				file.fileSize = 0;
 				file.filecontent = null;
-
+                file.filekey = "";
+                file.fileiv = "";
 				return true;
 			}
 			catch {
@@ -56,25 +64,48 @@ namespace MasterBox.mbox {
 			}
 		}
 
-		// Do AES256 Encryption
-		public static void EncryptAES256File() {
-            string key = "G83t2GVq0jzfLAhTFGO56CS4800cUpoP";
-            string iv =  "tE+g+8boSWWkyQ==";
-            string text = "Hello world";
+        // To generate Key and IV
+        private static string KeyIvGenerator(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] uintBuffer = new byte[sizeof(uint)];
 
-            // Convert PT string to byte
-            byte[] plainstring = System.Text.ASCIIEncoding.ASCII.GetBytes(text);
+                while (length-- > 0)
+                {
+                    rng.GetBytes(uintBuffer);
+                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                    res.Append(valid[(int)(num % (uint)valid.Length)]);
+                }
+            }
+            return res.ToString();
+        }
+
+        // Do AES256 Encryption
+        private static byte[] EncryptAES256File(MBFile file) {
+            /*
+            string key = KeyIvGenerator(32);
+            string iv = KeyIvGenerator(16);
+            string text = "hello";
+            */
+
+            // Convert PT to byte
+            byte[] plainbyte = file.filecontent;
 
             AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
             aes.BlockSize = 128;
             aes.KeySize = 256;
-            aes.Key = System.Text.ASCIIEncoding.ASCII.GetBytes(key);
-            aes.IV = System.Text.ASCIIEncoding.ASCII.GetBytes(iv);
+            aes.Key = System.Text.ASCIIEncoding.ASCII.GetBytes(file.filekey);
+            aes.IV = System.Text.ASCIIEncoding.ASCII.GetBytes(file.fileiv);
             aes.Padding = PaddingMode.PKCS7;
             aes.Mode = CipherMode.CBC;
 
             ICryptoTransform crypto = aes.CreateEncryptor(aes.Key,aes.IV);
-            byte[] encryptedstring = crypto.TransformFinalBlock(plainstring, 0, plainstring.Length);
+            byte[] encryptedstring = crypto.TransformFinalBlock(plainbyte, 0, plainbyte.Length);
+
+            // debug
             string keystring = Convert.ToBase64String(aes.Key);
             string keysizestring = aes.KeySize.ToString();
             string ivstring = Convert.ToBase64String(aes.IV);
@@ -82,8 +113,10 @@ namespace MasterBox.mbox {
             System.Diagnostics.Debug.WriteLine("Key size: " + keysizestring);
             System.Diagnostics.Debug.WriteLine("Key: " + keystring);
             System.Diagnostics.Debug.WriteLine("IV: " + ivstring);
-            System.Diagnostics.Debug.WriteLine("Plain Text: " + text);
+            System.Diagnostics.Debug.WriteLine("Plain Text: " + Convert.ToBase64String(file.filecontent));
             System.Diagnostics.Debug.WriteLine("Cipher Text: " + encryptedtext);
+
+            return encryptedstring;
         }
 
         public static void DecryptAES256File()
