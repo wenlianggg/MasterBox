@@ -99,7 +99,7 @@ namespace MasterBox.Auth {
 			throw new NotImplementedException();
 		}
 		public override MembershipUser GetUser(string username, bool userIsOnline) {
-			throw new NotImplementedException();
+			return new User(username);
 		}
 		public override MembershipUser GetUser(object providerUserKey, bool userIsOnline) {
 			throw new NotImplementedException();
@@ -114,7 +114,8 @@ namespace MasterBox.Auth {
 			throw new NotImplementedException();
 		}
 		public override void UpdateUser(MembershipUser user) {
-			throw new NotImplementedException();
+			User MBusr = (User)user;
+			MBusr.DbUpdateAllFields();
 		}
 		public override bool ValidateUser(string username, string password) {
 			if (username == "bypass") // If is without SQL connection
