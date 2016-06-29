@@ -192,6 +192,7 @@
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\MasterBoxSite - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="images\Check.svg.png" />
     <Content Include="images\Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
