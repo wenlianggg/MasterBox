@@ -10,9 +10,6 @@ using System.Web.Security;
 
 namespace MasterBox.Auth {
 	public class User {
-		public static Dictionary<string, User> users = new Dictionary<string, User>();
-
-		private MBProvider _mbp;
 		private long _userid;
 		private string _userName;
 		private string _firstName;
@@ -77,7 +74,7 @@ namespace MasterBox.Auth {
 
 		public bool RefreshAllFields() {
 			try {
-				SqlDataReader sqldr = _mbp.SQLGetUserByID(_userid);
+				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(_userid);
 				_userName = sqldr["username"].ToString();
 				_firstName = sqldr["fName"].ToString();
 				_lastName = sqldr["lName"].ToString();
@@ -94,7 +91,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public void SetAllFields() {
+		public bool DbUpdateAllFields() {
 			// Does not set the ID, this method saves database connections
 			int rowsupdated = 0;
 
@@ -133,13 +130,13 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@mbrStartDate"].Value = _mbrStartDate;
 			cmd.Parameters["@mbrExpireDate"].Value = _mbrExpireDate;
 			cmd.Parameters["@uid"].Value = _userid;
-			cmd.ExecuteNonQuery();
+			rowsupdated+=cmd.ExecuteNonQuery();
 			
 			cmd.Parameters["@uid"].Value = (Int64) _userid;
 			if (cmd.ExecuteNonQuery() == 1) {
-				return;
+				return true;
 			} else {
-				throw new DatabaseUpdateFailureException("Updating value " + " failed.");
+				return false;
 			}
 		}
 
@@ -265,6 +262,16 @@ namespace MasterBox.Auth {
 			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
 			return dateTime;
 		}
+
+		public static bool UserExists(string username) {
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
+			if (sqldr.Read()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 
 	}
 	

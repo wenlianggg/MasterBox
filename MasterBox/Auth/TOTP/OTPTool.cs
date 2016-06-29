@@ -57,6 +57,9 @@ namespace MasterBox.Auth.TOTP {
 		public byte[] Secret {
 			get { return _secret; }
 			set {
+                if (_secret == null) {
+                    _secret = new byte[16];
+                }
 				_secret = value;
 				CalculateCurrentOTP();
 			}
@@ -121,7 +124,7 @@ namespace MasterBox.Auth.TOTP {
 			return SecretBase32;
 		}
 
-		private string GetQRCodeUrl() {
+		public string GetQRCodeUrl() {
 			return String.Format("https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/{0}%3Fsecret%3D{1}",
 								Identity,
 								SecretBase32);

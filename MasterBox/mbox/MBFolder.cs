@@ -110,18 +110,20 @@ namespace MasterBox.mbox {
 				cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
 				cmd.Prepare();
 				cmd.Parameters["@folderid"].Value = folderid;
-				cmd.Parameters["@user"].Value = userid;
+				cmd.Parameters["@userid"].Value = userid;
 				cmd.Parameters["@name"].Value = file.fileName;
 				cmd.Parameters["@type"].Value = file.fileType;
 				cmd.Parameters["@size"].Value = file.fileSize;
 				cmd.Parameters["@data"].Value = file.filecontent;
 
 				cmd.ExecuteNonQuery();
-
+                System.Diagnostics.Debug.WriteLine("Pass");
 				return true;
 			}
-			catch {
-				return false;
+			catch
+            {
+                System.Diagnostics.Debug.WriteLine("fail");
+                return false;
 			}
 
 		}
