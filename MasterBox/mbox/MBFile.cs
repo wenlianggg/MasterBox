@@ -75,11 +75,11 @@ namespace MasterBox.mbox {
 
             ICryptoTransform crypto = aes.CreateEncryptor(aes.Key,aes.IV);
             byte[] encryptedstring = crypto.TransformFinalBlock(plainstring, 0, plainstring.Length);
-
             string keystring = Convert.ToBase64String(aes.Key);
+            string keysizestring = aes.KeySize.ToString();
             string ivstring = Convert.ToBase64String(aes.IV);
             string encryptedtext = Convert.ToBase64String(encryptedstring);
-
+            System.Diagnostics.Debug.WriteLine("Key size: " + keysizestring);
             System.Diagnostics.Debug.WriteLine("Key: " + keystring);
             System.Diagnostics.Debug.WriteLine("IV: " + ivstring);
             System.Diagnostics.Debug.WriteLine("Plain Text: " + text);
