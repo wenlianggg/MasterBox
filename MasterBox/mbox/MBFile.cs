@@ -65,9 +65,9 @@ namespace MasterBox.mbox {
 		}
 
         // To generate Key and IV
-        private static string KeyIvGenerator(int length)
+        public static string KeyIvGenerator(int length)
         {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
             StringBuilder res = new StringBuilder();
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
             {
@@ -83,13 +83,8 @@ namespace MasterBox.mbox {
             return res.ToString();
         }
 
-        // Do AES256 Encryption
+        // AES256 Encryption for file
         private static byte[] EncryptAES256File(MBFile file) {
-            /*
-            string key = KeyIvGenerator(32);
-            string iv = KeyIvGenerator(16);
-            string text = "hello";
-            */
 
             // Convert PT to byte
             byte[] plainbyte = file.filecontent;
@@ -105,12 +100,12 @@ namespace MasterBox.mbox {
             ICryptoTransform crypto = aes.CreateEncryptor(aes.Key,aes.IV);
             byte[] encryptedstring = crypto.TransformFinalBlock(plainbyte, 0, plainbyte.Length);
 
-            // debug
+            // debug purpose
             string keystring = Convert.ToBase64String(aes.Key);
             string keysizestring = aes.KeySize.ToString();
             string ivstring = Convert.ToBase64String(aes.IV);
             string encryptedtext = Convert.ToBase64String(encryptedstring);
-            System.Diagnostics.Debug.WriteLine("Key size: " + keysizestring);
+
             System.Diagnostics.Debug.WriteLine("Key: " + keystring);
             System.Diagnostics.Debug.WriteLine("IV: " + ivstring);
             System.Diagnostics.Debug.WriteLine("Plain Text: " + Convert.ToBase64String(file.filecontent));
