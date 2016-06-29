@@ -10,9 +10,6 @@ using System.Web.Security;
 
 namespace MasterBox.Auth {
 	public class User {
-		public static Dictionary<string, User> users = new Dictionary<string, User>();
-
-		private MBProvider _mbp;
 		private long _userid;
 		private string _userName;
 		private string _firstName;
@@ -72,12 +69,13 @@ namespace MasterBox.Auth {
 			_mbrStartDate = DateTime.Now;
 			_mbrExpireDate = DateTime.Today.AddYears(100);
 			_regDateTime = DateTime.Now;
+			DbUpdateAllFields();
 
 		}
 
 		public bool RefreshAllFields() {
 			try {
-				SqlDataReader sqldr = _mbp.SQLGetUserByID(_userid);
+				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(_userid);
 				_userName = sqldr["username"].ToString();
 				_firstName = sqldr["fName"].ToString();
 				_lastName = sqldr["lName"].ToString();
@@ -94,24 +92,33 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public void SetAllFields() {
+		public bool DbUpdateAllFields() {
 			// Does not set the ID, this method saves database connections
-			int rowsupdated = 0;
-
-			SqlCommand cmd = new SqlCommand(
-				"UPDATE mb_users SET " +
-				"fName = @fName," +
-				"lName = @lName," +
-				"birthDate = @birthDate," +
-				"email = @email," +
-				"verified = @verified," +
-				"mbrType = @mbrType," +
-				"mbrStartDate = @mbrStartDate," +
-				"mbrExpireDate = @mbrExpireDate," +
-				"regTime = @regTime " +
-				"WHERE userid = @uid;",
-				SQLGetMBoxConnection()
-			);
+			SqlCommand cmd;
+			if (Exist) {
+				cmd = new SqlCommand(
+					"UPDATE mb_users SET " +
+					"fName = @fName," +
+					"lName = @lName," +
+					"birthDate = @birthDate," +
+					"email = @email," +
+					"verified = @verified," +
+					"mbrType = @mbrType," +
+					"mbrStartDate = @mbrStartDate," +
+					"mbrExpireDate = @mbrExpireDate," +
+					"regTime = @regTime " +
+					"WHERE userid = @uid;",
+					SQLGetMBoxConnection()
+				);
+			} else {
+				cmd = new SqlCommand(
+					"INSERT INTO mb_users " +
+					"(fName, lName, birthDate, email, verified, mbrType, mbrStartDate, mbrExpireDate, regTime) " +
+					"VALUES " +
+					"(@fName, @lName, @birthDate, @email, @verified, @mbrType, @mbrStartDate, @mbrExpireDate, @regTime)", 
+					SQLGetMBoxConnection()
+				);
+			}
 			cmd.Parameters.Add(new SqlParameter("@fName", SqlDbType.VarChar, 100));
 			cmd.Parameters.Add(new SqlParameter("@lName", SqlDbType.VarChar, 100));
 			cmd.Parameters.Add(new SqlParameter("@birthDate", SqlDbType.Date, 0));
@@ -121,7 +128,8 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@mbrStartDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@mbrExpireDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@regTime", SqlDbType.DateTime2, 7));
-			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 8));
+			if (Exist)
+				cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 8));
 			cmd.Prepare();
 
 			cmd.Parameters["@fName"].Value = _firstName;
@@ -132,15 +140,12 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@mbrType"].Value = _memberType;
 			cmd.Parameters["@mbrStartDate"].Value = _mbrStartDate;
 			cmd.Parameters["@mbrExpireDate"].Value = _mbrExpireDate;
-			cmd.Parameters["@uid"].Value = _userid;
+			cmd.Parameters["@regTime"].Value = _regDateTime;
+			if (Exist)
+				cmd.Parameters["@uid"].Value = _userid;
 			cmd.ExecuteNonQuery();
-			
-			cmd.Parameters["@uid"].Value = (Int64) _userid;
-			if (cmd.ExecuteNonQuery() == 1) {
-				return;
-			} else {
-				throw new DatabaseUpdateFailureException("Updating value " + " failed.");
-			}
+			RefreshAllFields();
+			return (cmd.ExecuteNonQuery() == 1 ? true : false);
 		}
 
 		public long UserId {
@@ -223,6 +228,13 @@ namespace MasterBox.Auth {
 			}
 		}
 
+
+		public bool Exist {
+			get {
+				return UserExists(UserName);
+			}
+		}
+
 		private bool updateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
 			SqlCommand cmd = new SqlCommand(
 				"UPDATE mb_users SET " + fieldName + " = @fieldValue WHERE userid = @uid",
@@ -265,6 +277,17 @@ namespace MasterBox.Auth {
 			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
 			return dateTime;
 		}
+
+		public static bool UserExists(string username) {
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
+			if (sqldr.Read()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
 
 	}
 	

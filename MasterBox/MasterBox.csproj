@@ -192,6 +192,7 @@
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\MasterBoxSite - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="images\Check.svg.png" />
     <Content Include="images\Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
@@ -201,6 +202,7 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\parallax.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -254,6 +256,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\reCAPTCHA.cs" />
     <Compile Include="Auth\State\CookieList.cs" />
     <Compile Include="Auth\MBProvider.cs" />
     <Compile Include="Auth\changepw.aspx.cs">

@@ -33,8 +33,12 @@ namespace MasterBox.Auth {
 		}
 
 		protected void registrationStart(object sender, EventArgs e) {
-			Debug.WriteLine(ResolveUrl("~/auth/signup") + "?username=" + UserName.Text);
-			Response.Redirect("~/auth/signup.aspx" + "?username=" + UserName.Text);
+			if (Auth.User.UserExists(UserName.Text)) {
+				Msg.Text = "User already exists!";
+			} else {
+				Debug.WriteLine(ResolveUrl("~/auth/signup") + "?username=" + UserName.Text);
+				Response.Redirect("~/auth/signup.aspx" + "?username=" + UserName.Text);
+			}
 		}
 	}
 

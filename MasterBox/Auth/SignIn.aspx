@@ -6,7 +6,7 @@
 <asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="jumbotron">
 		<h1><%: Title %></h1>
-		<p>Welcome to MasterBox, please login or register to access our features.</p>
+		<p>Welcome to MasterBox, please login or register to access our features!</p>
 	</div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
@@ -28,7 +28,7 @@
 							ID="UserNameValidator"
 							ControlToValidate="UserName"
 							Display="Dynamic"
-							ErrorMessage="Cannot be empty."
+							ErrorMessage="*"
 							ValidationGroup="valGroup1"
 							runat="server" />
 					</td>
@@ -42,7 +42,7 @@
 						<asp:RequiredFieldValidator
 							ID="UserPassValidator"
 							ControlToValidate="UserPass"
-							ErrorMessage="Cannot be empty."
+							ErrorMessage="*"
 							runat="server" />
 					</td>
 				</tr>
