@@ -32,8 +32,8 @@
 						<asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="UserName" ForeColor="Red"
 							ErrorMessage="Username is required." Text="*" runat="server" />
 						<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
-							ErrorMessage="Username can only contain alphanumerics and underscores"
-							ControlToValidate="UserName" Display="None" ValidationExpression="^[a-zA-Z_]{1,40}$" />
+							ErrorMessage="Username can only contain alphanumerics and underscores, and at least 4 characters"
+							ControlToValidate="UserName" Display="None" ValidationExpression="^[a-zA-Z_]{4,40}$" />
 					</td>
 				</tr>
 				<tr>
@@ -46,7 +46,7 @@
 							ErrorMessage="Password is required." Text="*" runat="server" />
 						<asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
 							ErrorMessage="Password requires an uppercase, lowercase and a number." 
-							ControlToValidate="UserPass" Display="None" ValidationExpression="^[a-zA-Z0-9_]{1,40}$" />
+							ControlToValidate="UserPass" Display="None" ValidationExpression="^[a-zA-Z0-9_]{8,50}$" />
 					</td>
 				</tr>
 				<tr>

@@ -8,16 +8,7 @@ using System.Net;
 namespace MasterBox.Auth {
 
 	public class reCAPTCHA {
-		public static string Validate(string EncodedResponse) {
-			WebClient wc = new WebClient();
-			var googleReply = wc.DownloadString(
-								string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
-								"6Ld6kiETAAAAAJznhW6zGmj9BSgNgxDxkB2sw2Ml",
-								EncodedResponse
-								));
-			var captchaResponse = JsonConvert.DeserializeObject<reCAPTCHA>(googleReply);
-			return captchaResponse.Success;
-		}
+
 
 		[JsonProperty("success")]
 		private string _Success;
@@ -39,6 +30,18 @@ namespace MasterBox.Auth {
 			set {
 				_ErrorCodes = value;
 			}
+		}
+
+		public static bool Validate(string EncodedResponse) {
+			WebClient wc = new WebClient();
+			var googleReply = wc.DownloadString(
+								string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
+								"6Ld6kiETAAAAAJznhW6zGmj9BSgNgxDxkB2sw2Ml",
+								EncodedResponse
+								));
+			var captchaResponse = JsonConvert.DeserializeObject<reCAPTCHA>(googleReply);
+			System.Diagnostics.Debug.WriteLine(captchaResponse.Success);
+			return captchaResponse.Success.Contains("true");
 		}
 	}
 }

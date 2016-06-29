@@ -17,16 +17,24 @@ namespace MasterBox.Auth {
 		}
 
 		protected void processRegistration(object sender, EventArgs e) {
+			Msg.Text = string.Empty;
 			string EncodedResponse = Request.Form["g-Recaptcha-Response"];
-			if (reCAPTCHA.Validate(EncodedResponse) == "True" ? true : false) {
+			if (reCAPTCHA.Validate(EncodedResponse)) {
 				Msg.Text = "CAPTCHA is valid";
 				Page.Validate();
 				if (Page.IsValid) {
-					} else {
-						Msg.Text = "An error has occured while registering.";
-					}
+					User newuser = new User(UserName.Text,
+											FirstName.Text,
+											LastName.Text,
+											DateTime.Now,
+											UserEmail.Text,
+											false);
+					Msg.Text = newuser.UserId.ToString();
+				} else {
+					Msg.Text = "An error has occured while registering.";
+				}
 			} else {
-				Msg.Text = "CAPTCHA is invalid";
+				Msg.Text = "CAPTCHA is invalid.";
 			}
 		}
 	}
