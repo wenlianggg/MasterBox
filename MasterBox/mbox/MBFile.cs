@@ -65,9 +65,9 @@ namespace MasterBox.mbox {
 		}
 
         // To generate Key and IV
-        private static string KeyIvGenerator(int length)
+        public static string KeyIvGenerator(int length)
         {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
             StringBuilder res = new StringBuilder();
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
             {
@@ -83,13 +83,8 @@ namespace MasterBox.mbox {
             return res.ToString();
         }
 
-        // Do AES256 Encryption
+        // AES256 Encryption for file
         private static byte[] EncryptAES256File(MBFile file) {
-            /*
-            string key = KeyIvGenerator(32);
-            string iv = KeyIvGenerator(16);
-            string text = "hello";
-            */
 
             // Convert PT to byte
             byte[] plainbyte = file.filecontent;
@@ -105,12 +100,12 @@ namespace MasterBox.mbox {
             ICryptoTransform crypto = aes.CreateEncryptor(aes.Key,aes.IV);
             byte[] encryptedstring = crypto.TransformFinalBlock(plainbyte, 0, plainbyte.Length);
 
-            // debug
+            // debug purpose
             string keystring = Convert.ToBase64String(aes.Key);
             string keysizestring = aes.KeySize.ToString();
             string ivstring = Convert.ToBase64String(aes.IV);
             string encryptedtext = Convert.ToBase64String(encryptedstring);
-            System.Diagnostics.Debug.WriteLine("Key size: " + keysizestring);
+
             System.Diagnostics.Debug.WriteLine("Key: " + keystring);
             System.Diagnostics.Debug.WriteLine("IV: " + ivstring);
             System.Diagnostics.Debug.WriteLine("Plain Text: " + Convert.ToBase64String(file.filecontent));
@@ -119,25 +114,27 @@ namespace MasterBox.mbox {
             return encryptedstring;
         }
 
-        public static void DecryptAES256File()
+        // AES256 Decryption for file
+        public static byte[] DecryptAES256File(byte[] filecontent,string AESKEY,string AESIV)
         {
-            string key = "G83t2GVq0jzfLAhTFGO56CS4800cUpoP";
-            string iv = "tE+g+8boSWWkyQ==";
-            byte[] encryptedtext = Convert.FromBase64String("d0Wz91cdwsYyMKCfzTjwYA==");
+            byte[] encryptedtext = filecontent;
 
             AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
             aes.BlockSize = 128;
             aes.KeySize = 256;
-            aes.Key = System.Text.ASCIIEncoding.ASCII.GetBytes(key);
-            aes.IV = System.Text.ASCIIEncoding.ASCII.GetBytes(iv);
+            aes.Key = System.Text.ASCIIEncoding.ASCII.GetBytes(AESKEY);
+            aes.IV = System.Text.ASCIIEncoding.ASCII.GetBytes(AESIV);
             aes.Padding = PaddingMode.PKCS7;
             aes.Mode = CipherMode.CBC;
 
             ICryptoTransform crypto = aes.CreateDecryptor(aes.Key, aes.IV);
             byte[] plaintext = crypto.TransformFinalBlock(encryptedtext, 0, encryptedtext.Length);
 
+            // Debug
             string originaltext = System.Text.ASCIIEncoding.ASCII.GetString(plaintext);
             System.Diagnostics.Debug.WriteLine("Plain Text: " + originaltext);
+
+            return plaintext;         
         }
 
         // Retrieve to display file
@@ -169,6 +166,8 @@ namespace MasterBox.mbox {
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
             cmd.Prepare();
+
+
             /*
             SqlDataReader sqldr = cmd.ExecuteReader();
             MBFile mbf = new MBFile();
@@ -200,7 +199,7 @@ namespace MasterBox.mbox {
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			MBFile mbf = new MBFile();
 			if (sqldr.Read()) {
-				mbf.filecontent = (byte[])sqldr["filecontent"];
+				mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"],"","");
 				mbf.fileName = sqldr["filename"].ToString();
 				mbf.fileSize = (int)sqldr["filesize"];
 				mbf.fileType = sqldr["filetype"].ToString();
