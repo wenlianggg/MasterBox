@@ -253,6 +253,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\reCAPTCHA.cs" />
     <Compile Include="Auth\State\CookieList.cs" />
     <Compile Include="Auth\MBProvider.cs" />
     <Compile Include="Auth\changepw.aspx.cs">

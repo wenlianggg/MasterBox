@@ -12,7 +12,17 @@ namespace MasterBox.Auth {
 		}
 
 		protected void processRegistration(object sender, EventArgs e) {
-
+			string EncodedResponse = Request.Form["g-Recaptcha-Response"];
+			if (reCAPTCHA.Validate(EncodedResponse) == "True" ? true : false) {
+				Msg.Text = "CAPTCHA is valid";
+				Page.Validate();
+				if (Page.IsValid) {
+					} else {
+						Msg.Text = "An error has occured while registering.";
+					}
+			} else {
+				Msg.Text = "CAPTCHA is invalid";
+			}
 		}
 	}
 }
