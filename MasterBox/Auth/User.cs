@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Security;
 
 namespace MasterBox.Auth {
-	public class User {
+	public class User : MembershipUser {
 		private long _userid;
 		private string _userName;
 		private string _firstName;
@@ -22,25 +22,11 @@ namespace MasterBox.Auth {
 		private DateTime _mbrExpireDate;
 		private DateTime _regDateTime;
 
-		public User(string username) {
-				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
-				if (sqldr.Read()) {
-					_userid = (Int64)sqldr["userid"];
-					_userName = sqldr["username"].ToString();
-					_firstName = sqldr["fName"].ToString();
-					_lastName = sqldr["lName"].ToString();
-					_birthDate = (DateTime)sqldr["birthdate"];
-					_email = sqldr["email"].ToString();
-					_isVerified = (bool)sqldr["verified"];
-					_memberType = (int)sqldr["mbrType"];
-					_mbrStartDate = (DateTime)sqldr["mbrStartDate"];
-					_mbrExpireDate = (DateTime)sqldr["mbrExpireDate"];
-					_regDateTime = (DateTime)sqldr["regTime"];
-				}
+		public User(string username) : this(MBProvider.Instance.UsernameToId(username)) {
 		}
 
 		public User(long userid) {
-			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(userid);
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUser(userid);
 			if (sqldr.Read()) {
 				_userid = (Int64)sqldr["userid"];
 				_userName = sqldr["username"].ToString();
@@ -70,12 +56,11 @@ namespace MasterBox.Auth {
 			_mbrExpireDate = DateTime.Today.AddYears(100);
 			_regDateTime = DateTime.Now;
 			DbUpdateAllFields();
-
 		}
 
 		public bool RefreshAllFields() {
 			try {
-				SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByID(_userid);
+				SqlDataReader sqldr = MBProvider.Instance.SQLGetUser(_userid);
 				_userName = sqldr["username"].ToString();
 				_firstName = sqldr["fName"].ToString();
 				_lastName = sqldr["lName"].ToString();
@@ -92,10 +77,10 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public bool DbUpdateAllFields() {
+		public int DbUpdateAllFields() {
 			// Does not set the ID, this method saves database connections
 			SqlCommand cmd;
-			if (Exist) {
+			if (Exist)
 				cmd = new SqlCommand(
 					"UPDATE mb_users SET " +
 					"fName = @fName," +
@@ -110,15 +95,14 @@ namespace MasterBox.Auth {
 					"WHERE userid = @uid;",
 					SQLGetMBoxConnection()
 				);
-			} else {
+			else
 				cmd = new SqlCommand(
 					"INSERT INTO mb_users " +
 					"(fName, lName, birthDate, email, verified, mbrType, mbrStartDate, mbrExpireDate, regTime) " +
 					"VALUES " +
-					"(@fName, @lName, @birthDate, @email, @verified, @mbrType, @mbrStartDate, @mbrExpireDate, @regTime)", 
+					"(@fName, @lName, @birthDate, @email, @verified, @mbrType, @mbrStartDate, @mbrExpireDate, @regTime)",
 					SQLGetMBoxConnection()
 				);
-			}
 			cmd.Parameters.Add(new SqlParameter("@fName", SqlDbType.VarChar, 100));
 			cmd.Parameters.Add(new SqlParameter("@lName", SqlDbType.VarChar, 100));
 			cmd.Parameters.Add(new SqlParameter("@birthDate", SqlDbType.Date, 0));
@@ -143,91 +127,8 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@regTime"].Value = _regDateTime;
 			if (Exist)
 				cmd.Parameters["@uid"].Value = _userid;
-			cmd.ExecuteNonQuery();
-			RefreshAllFields();
-			return (cmd.ExecuteNonQuery() == 1 ? true : false);
+			return cmd.ExecuteNonQuery();
 		}
-
-		public long UserId {
-			get { return _userid; }
-		}
-
-		public string UserName {
-			get { return _userName; }
-		}
-
-		public string FirstName {
-			get { return _firstName; }
-			set {
-				updateValue("fName", value, SqlDbType.VarChar, 100);
-				_firstName = getValue("fName").ToString();
-			}
-		}
-
-		public string LastName {
-			get { return _lastName; }
-			set {
-				updateValue("lName", value, SqlDbType.VarChar, 100);
-				_lastName = getValue("lName").ToString();
-			}
-		}
-
-		public DateTime BirthDate {
-			get { return _birthDate; }
-			set {
-				updateValue("birthDate", value, SqlDbType.Date, 0);
-				_birthDate = (DateTime)getValue("birthDate");
-			}
-		}
-
-		public string EmailAddress {
-			get { return _email; }
-			set {
-				updateValue("email", value, SqlDbType.VarChar, 100);
-				_email = getValue("email").ToString();
-			}
-		}
-
-		public bool IsVerified {
-			get { return _isVerified; }
-			set {
-				updateValue("verified", value, SqlDbType.Bit, 0);
-				_isVerified = (bool)getValue("verified");
-			}
-		}
-
-		public int MemberType {
-			get { return _memberType; }
-			set {
-				updateValue("mbrType", value, SqlDbType.Int, 0);
-				_memberType = (int)getValue("mbrType");
-			}
-		}
-
-		public DateTime MbrStartDate {
-			get { return _mbrStartDate; }
-			set {
-				updateValue("mbrStartDate", value, SqlDbType.DateTime2, 7);
-				_mbrStartDate = (DateTime)getValue("mbrStartDate");
-			}
-		}
-
-		public DateTime MbrExpireDate {
-			get { return _mbrExpireDate; }
-			set {
-				updateValue("mbrExpireDate", value, SqlDbType.DateTime2, 7);
-				_mbrExpireDate = (DateTime)getValue("mbrExpireDate");
-			}
-		}
-
-		public DateTime RegDateTime {
-			get { return _regDateTime; }
-			set {
-				updateValue("regTime", value, SqlDbType.DateTime2, 7);
-				_regDateTime = (DateTime)getValue("regTime");
-			}
-		}
-
 
 		public bool Exist {
 			get {
@@ -235,18 +136,42 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		private static SqlConnection SQLGetMBoxConnection() {
+			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+			sqlConnection.Open();
+			return sqlConnection;
+		}
+
+		public static DateTime StringToDateTime(string dateString) {
+			IFormatProvider culture = new System.Globalization.CultureInfo("en-SG", true);
+			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+			return dateTime;
+		}
+
+		public static bool UserExists(string username) {
+			SqlDataReader sqldr = MBProvider.Instance.SQLGetUser(username);
+			if (sqldr.Read()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+
+		// ACCESSORS AND MUTATORS
+		// ======================
+
 		private bool updateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
 			SqlCommand cmd = new SqlCommand(
 				"UPDATE mb_users SET " + fieldName + " = @fieldValue WHERE userid = @uid",
 				SQLGetMBoxConnection()
 				);
-
 			cmd.Parameters.Add(new SqlParameter("@fieldValue", sdb, length));
 			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.BigInt, 0));
 			cmd.Prepare();
 
 			cmd.Parameters["@fieldValue"].Value = fieldValue;
-			cmd.Parameters["@uid"].Value = (Int64) _userid;
+			cmd.Parameters["@uid"].Value = (Int64)_userid;
 			if (cmd.ExecuteNonQuery() == 1) {
 				return true;
 			} else {
@@ -266,29 +191,119 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader()[fieldName];
 		}
 
-		private static SqlConnection SQLGetMBoxConnection() {
-			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-			sqlConnection.Open();
-			return sqlConnection;
+		public long UserId {
+			get {
+				return _userid;
+			}
 		}
 
-		public static DateTime StringToDateTime(string dateString) {
-			IFormatProvider culture = new System.Globalization.CultureInfo("en-SG", true);
-			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
-			return dateTime;
+		public override string UserName {
+			get {
+				RefreshAllFields();
+				return _userName;
+			}
 		}
 
-		public static bool UserExists(string username) {
-			SqlDataReader sqldr = MBProvider.Instance.SQLGetUserByUN(username);
-			if (sqldr.Read()) {
-				return true;
-			} else {
-				return false;
+		public string FirstName {
+			get {
+				RefreshAllFields();
+				return _firstName;
+			}
+			set {
+				updateValue("fName", value, SqlDbType.VarChar, 100);
+				RefreshAllFields();
+			}
+		}
+
+		public string LastName {
+			get {
+				RefreshAllFields();
+				return _lastName;
+			}
+			set {
+				updateValue("lName", value, SqlDbType.VarChar, 100);
+				RefreshAllFields();
+			}
+		}
+
+		public DateTime BirthDate {
+			get {
+				RefreshAllFields();
+				return _birthDate;
+			}
+			set {
+				updateValue("birthDate", value, SqlDbType.Date, 0);
+				RefreshAllFields();
+			}
+		}
+
+		public string EmailAddress {
+			get {
+				RefreshAllFields();
+				return _email;
+			}
+			set {
+				updateValue("email", value, SqlDbType.VarChar, 100);
+				RefreshAllFields();
+			}
+		}
+
+		public bool IsVerified {
+			get {
+				RefreshAllFields();
+				return _isVerified;
+			}
+			set {
+				updateValue("verified", value, SqlDbType.Bit, 0);
+				RefreshAllFields();
+			}
+		}
+
+		public int MemberType {
+			get {
+				RefreshAllFields();
+				return _memberType;
+			}
+			set {
+				updateValue("mbrType", value, SqlDbType.Int, 0);
+				RefreshAllFields();
+			}
+		}
+
+		public DateTime MbrStartDate {
+			get {
+				RefreshAllFields();
+				return _mbrStartDate;
+			}
+			set {
+				updateValue("mbrStartDate", value, SqlDbType.DateTime2, 7);
+				RefreshAllFields();
+			}
+		}
+
+		public DateTime MbrExpireDate {
+			get {
+				RefreshAllFields();
+				return _mbrExpireDate;
+			}
+			set {
+				updateValue("mbrExpireDate", value, SqlDbType.DateTime2, 7);
+				RefreshAllFields();
+			}
+		}
+
+		public DateTime RegDateTime {
+			get {
+				RefreshAllFields();
+				return _regDateTime;
+			}
+			set {
+				updateValue("regTime", value, SqlDbType.DateTime2, 7);
+				RefreshAllFields();
 			}
 		}
 
 
-
 	}
-	
+
 }
