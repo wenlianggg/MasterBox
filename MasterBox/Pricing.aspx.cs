@@ -11,7 +11,7 @@ namespace MasterBox
 {
     public partial class Pricing : Page
     {
- 
+    
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Context.User.Identity.IsAuthenticated)
