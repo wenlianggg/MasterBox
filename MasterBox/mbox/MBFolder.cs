@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,10 +18,9 @@ namespace MasterBox.mbox {
 
 
 		public static SqlDataReader GetFolderToDisplay(string username) {
-			// Get User ID
-			SqlDataReader sqlUserID = GetUserInformation(username);
-			sqlUserID.Read();
-			int userid = int.Parse(sqlUserID["userid"].ToString());
+            // Get User ID
+            User user = new User(username);
+            long userid = user.UserId;
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE userid = @userid", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 30);
@@ -32,12 +32,11 @@ namespace MasterBox.mbox {
 		}
 		// Get list of all folder names
 		public static ArrayList GenerateFolderLocation(String username) {
-			// Get User ID
-			SqlDataReader sqlUserID = GetUserInformation(username);
-			sqlUserID.Read();
-			int userid = int.Parse(sqlUserID["userid"].ToString());
+            // Get User ID
+            User user = new User(username);
+            long userid = user.UserId;
 
-			SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList locationList = new ArrayList();
@@ -51,12 +50,11 @@ namespace MasterBox.mbox {
 
 		// Get list of folder names with password
 		public static ArrayList GenerateEncryptedFolderLocation(String username) {
-			// Get User ID
-			SqlDataReader sqlUserID = GetUserInformation(username);
-			sqlUserID.Read();
-			int userid = int.Parse(sqlUserID["userid"].ToString());
+            // Get User ID
+            User user = new User(username);
+            long userid = user.UserId;
 
-			SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList passwordlocationList = new ArrayList();
@@ -70,12 +68,11 @@ namespace MasterBox.mbox {
 
 		// Get list of folder names without password
 		public static ArrayList GenerateUnencryptedFolderLocation(String username) {
-			// Get User ID
-			SqlDataReader sqlUserID = GetUserInformation(username);
-			sqlUserID.Read();
-			int userid = int.Parse(sqlUserID["userid"].ToString());
+            // Get User ID
+            User user = new User(username);
+            long userid = user.UserId;
 
-			SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=0", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=0", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList passwordlocationList = new ArrayList();
@@ -89,17 +86,16 @@ namespace MasterBox.mbox {
 
 		public static bool UploadFileToFolder(MBFile file, string foldername) {
 			try {
-				// Get User ID
+				// Get Folder ID
 				SqlDataReader sqlFolderID = GetFolderInformation(file.fileusername, foldername);
 				sqlFolderID.Read();
 				int folderid = int.Parse(sqlFolderID["folderid"].ToString());
 
-				// Get User ID
-				SqlDataReader sqlUserID = GetUserInformation(file.fileusername);
-				sqlUserID.Read();
-				int userid = int.Parse(sqlUserID["userid"].ToString());
+                // Get User ID
+                User user = new User(file.fileusername);
+                long userid = user.UserId;
 
-				SqlCommand cmd = new SqlCommand(
+                SqlCommand cmd = new SqlCommand(
 					"INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
 					+ "values(@folderid,@userid,@name,@type,@size,@data)", SQLGetMBoxConnection());
 				cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
@@ -130,13 +126,12 @@ namespace MasterBox.mbox {
 
 		public bool CreateNewFolder(MBFolder folder) {
 			try {
-				// Get User ID
-				SqlDataReader sqldr = GetUserInformation(folder.folderuserName);
-				sqldr.Read();
-				int userid = int.Parse(sqldr["userid"].ToString());
+                // Get User ID
+                User user = new User(folder.folderuserName);
+                long userid = user.UserId;
 
-				// Create Folder
-				SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption) VALUES(@user,@name,@encryption)", SQLGetMBoxConnection());
+                // Create Folder
+                SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption) VALUES(@user,@name,@encryption)", SQLGetMBoxConnection());
 				cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
 				cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
 				cmd.Parameters.Add(new SqlParameter("@encryption", SqlDbType.Bit, 1));
@@ -155,13 +150,12 @@ namespace MasterBox.mbox {
 
 		public bool CreateNewFolderWithPassword(MBFolder folder, string folderpassword) {
 			try {
-				// Get User ID
-				SqlDataReader sqldr = GetUserInformation(folder.folderuserName);
-				sqldr.Read();
-				int userid = int.Parse(sqldr["userid"].ToString());
+                // Get User ID
+                User user = new User(folder.folderuserName);
+                long userid = user.UserId;
 
-				//Generate New Salt
-				byte[] newSalt = GenerateSaltFunction();
+                //Generate New Salt
+                byte[] newSalt = GenerateSaltFunction();
 				string saltstring = Convert.ToBase64String(newSalt);
 
 				// Convert Password to byte array
@@ -258,10 +252,12 @@ namespace MasterBox.mbox {
 		public bool NewFolderPassword(MBFolder folder, string folderpassword) {
 			SqlDataReader sqlFoldername = GetFolderInformation(folder.folderuserName, folder.folderName);
 			if (sqlFoldername.Read()) {
-				int userid = int.Parse(sqlFoldername["userid"].ToString());
+                // Get UserID
+                User user = new User(folder.folderuserName);
+                long userid = user.UserId;
 
-				// Generate New salt function
-				byte[] newFolderSalt = GenerateSaltFunction();
+                // Generate New salt function
+                byte[] newFolderSalt = GenerateSaltFunction();
 				string newSalt = Convert.ToBase64String(newFolderSalt);
 
 				// Convert new password to byte array
