@@ -109,13 +109,21 @@ namespace MasterBox.mbox {
         }
 
         // Files in folder Blowfish448 Encryption
-        private static void EncryptionBlowfishFileFolder()
+        private static void EncryptionBlowfishFileFolder(byte[] filecontent,string key)
         {
             Blowfish blow = new Blowfish();
+            byte[] encryptedFile=blow.EncryptBytes(filecontent,key);
+
+        }
+        // Files in folder Blowfish448 Decryption
+        private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
+        {
+            Blowfish blow = new Blowfish();
+            byte[] decryptedFile = blow.DecryptBytes(filecontent, key);
 
         }
 
-		public static bool UploadFileToFolder(MBFile file, string foldername) {
+        public static bool UploadFileToFolder(MBFile file, string foldername) {
 			try {
 				// Get Folder ID
 				SqlDataReader sqlFolderID = GetFolderInformation(file.fileusername, foldername);
