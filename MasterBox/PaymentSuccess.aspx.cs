@@ -15,6 +15,7 @@ namespace MasterBox
             {
                 string previousPageUrl = Request.UrlReferrer.AbsoluteUri;
                 string previousPageName = System.IO.Path.GetFileName(Request.UrlReferrer.AbsolutePath);
+                System.Diagnostics.Debug.WriteLine(previousPageUrl);
             }
 
             Response.AddHeader("REFRESH", "3;URL=Default.aspx");

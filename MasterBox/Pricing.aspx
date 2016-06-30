@@ -52,4 +52,10 @@
             </div>
         </div>
     </div>
+    <asp:ImageButton
+                                ID="TestButton"  
+                                runat="server"
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                OnClick="PayPalBtn5MB_Click" />
+               
 </asp:Content>
