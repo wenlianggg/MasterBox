@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -10,6 +11,7 @@ namespace MasterBox
 {
     public partial class Pricing : Page
     {
+    
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Context.User.Identity.IsAuthenticated)
@@ -36,76 +38,28 @@ namespace MasterBox
             }
         }
 
-        protected void PayPalBtn5MB_Click(object sender, ImageClickEventArgs e)
+        protected void PayPalBtn_Click(object sender, ImageClickEventArgs e)
         {
-            string business = "VY34CAC6JZ6LU";
-            string itemName = "5 MegaBytes";
-            double itemAmount = 100.00;
-            string currencyCode = "SGD";
+            ImageButton buttonclicked = (ImageButton)sender;
+            int storageOpted;
+            if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted)) {
+                string business = "VY34CAC6JZ6LU";
+                string itemName = Context.User.Identity.Name + ": " + storageOpted + " MB";
+                double itemAmount = 20.00 * storageOpted;
+                string currencyCode = "SGD";
 
-            StringBuilder ppHref = new StringBuilder();
+                StringBuilder ppHref = new StringBuilder();
 
-            ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-            ppHref.Append("&business=" + business);
-            ppHref.Append("&item_name=" + itemName);
-            ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-            ppHref.Append("&currency_code=" + currencyCode);
+                ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
+                ppHref.Append("&business=" + business);
+                ppHref.Append("&item_name=" + itemName);
+                ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
+                ppHref.Append("&currency_code=" + currencyCode);
 
-            Response.Redirect(ppHref.ToString(), true);
+                Response.Redirect(ppHref.ToString(), true);
+            }
         }
 
-        protected void PayPalBtn10MB_Click(object sender, ImageClickEventArgs e)
-        {
-            string business = "VY34CAC6JZ6LU";
-            string itemName = "10 MegaBytes";
-            double itemAmount = 200.00;
-            string currencyCode = "SGD";
-
-            StringBuilder ppHref = new StringBuilder();
-
-            ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-            ppHref.Append("&business=" + business);
-            ppHref.Append("&item_name=" + itemName);
-            ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-            ppHref.Append("&currency_code=" + currencyCode);
-
-            Response.Redirect(ppHref.ToString(), true);
-        }
-
-        protected void PayPalBtn15MB_Click(object sender, ImageClickEventArgs e)
-        {
-            string business = "VY34CAC6JZ6LU";
-            string itemName = "15 MegaBytes";
-            double itemAmount = 300.00;
-            string currencyCode = "SGD";
-
-            StringBuilder ppHref = new StringBuilder();
-
-            ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-            ppHref.Append("&business=" + business);
-            ppHref.Append("&item_name=" + itemName);
-            ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-            ppHref.Append("&currency_code=" + currencyCode);
-
-            Response.Redirect(ppHref.ToString(), true);
-        }
-
-        protected void PayPalBtn20MB_Click(object sender, ImageClickEventArgs e)
-        {
-            string business = "VY34CAC6JZ6LU";
-            string itemName = "20 MegaBytes";
-            double itemAmount = 400.00;
-            string currencyCode = "SGD";
-
-            StringBuilder ppHref = new StringBuilder();
-
-            ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-            ppHref.Append("&business=" + business);
-            ppHref.Append("&item_name=" + itemName);
-            ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-            ppHref.Append("&currency_code=" + currencyCode);
-
-            Response.Redirect(ppHref.ToString(), true);
-        }
+       
     }
 }

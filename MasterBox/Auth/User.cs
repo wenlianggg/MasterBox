@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Security;
 
@@ -157,6 +159,33 @@ namespace MasterBox.Auth {
 			} else {
 				return false;
 			}
+		}
+
+		// Convert a byte array to an Object
+		private Object ByteArrayToObject(byte[] arrBytes) {
+			MemoryStream memStream = new MemoryStream();
+			BinaryFormatter binForm = new BinaryFormatter();
+			memStream.Write(arrBytes, 0, arrBytes.Length);
+			memStream.Seek(0, SeekOrigin.Begin);
+			Object obj = (Object)binForm.Deserialize(memStream);
+
+			return obj;
+		}
+
+		public static string KeyIvGen(int length) {
+			const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+			StringBuilder res = new StringBuilder();
+			using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider()) {
+				byte[] uintBuffer = new byte[sizeof(uint)];
+
+				while (length-- > 0) {
+					rng.GetBytes(uintBuffer);
+					uint num = BitConverter.ToUInt32(uintBuffer, 0);
+					res.Append(valid[(int)(num % (uint)valid.Length)]);
+				}
+			}
+			System.Diagnostics.Debug.WriteLine(res.ToString());
+			return res.ToString();
 		}
 
 
@@ -315,16 +344,7 @@ namespace MasterBox.Auth {
 			return ms.ToArray();
 		}
 
-		// Convert a byte array to an Object
-		private Object ByteArrayToObject(byte[] arrBytes) {
-			MemoryStream memStream = new MemoryStream();
-			BinaryFormatter binForm = new BinaryFormatter();
-			memStream.Write(arrBytes, 0, arrBytes.Length);
-			memStream.Seek(0, SeekOrigin.Begin);
-			Object obj = (Object)binForm.Deserialize(memStream);
 
-			return obj;
-		}
 
 	}
 
