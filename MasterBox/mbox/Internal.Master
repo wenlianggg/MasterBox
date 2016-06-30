@@ -2,16 +2,7 @@
 
 <!DOCTYPE html>
 	<script runat="server">
-		void Page_Load(object sender, EventArgs e) {
-			if (Context.User.Identity.IsAuthenticated) {
-				LoggedIn.Text = Context.User.Identity.Name;	
-			}
-		}
 
-		void Logout_Click(object sender, EventArgs e) {
-			FormsAuthentication.SignOut();
-			Response.Redirect("~/Auth/signin.aspx");
-		}
 	</script>
 <html lang="en">
 <head runat="server">
@@ -27,7 +18,7 @@
     <script src='<%= ResolveUrl("~/Scripts/Internal.js") %>'></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<!-- CSS Libraries -->
     <webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
