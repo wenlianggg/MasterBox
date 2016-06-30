@@ -1,9 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Internal.master.cs" Inherits="MasterBox.Internal" %>
 
 <!DOCTYPE html>
-	<script runat="server">
-
-	</script>
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
