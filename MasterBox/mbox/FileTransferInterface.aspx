@@ -134,8 +134,12 @@
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" /></a>
                 <a data-toggle="modal" data-target="#folderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-                <a data-toggle="modal" data-target="#uploadModel" data-backdrop="static">
+               <!--
+                 <a data-toggle="modal" data-target="#uploadModel" data-backdrop="static">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static" /></a>
+                -->
+                <asp:LinkButton ID="UploadFile" runat="server" ><img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static" />
+                </asp:LinkButton>
             </div>
         </div>
 

@@ -84,8 +84,6 @@
 
                 <li><a onclick="gotoContact()" title="Contact Us" data-toggle="tooltip" data-placement="right">
                     <span class="glyphicon glyphicon-envelope"></span>Contact Us</a></li>
-
-
             </ul>
             <div class="AdvertisementBar">
                 <p>placeHolder{Advertisement}</p>
