@@ -99,7 +99,7 @@ namespace MasterBox.Auth {
 			throw new NotImplementedException();
 		}
 		public override MembershipUser GetUser(string username, bool userIsOnline) {
-			throw new NotImplementedException();
+			return new User(username);
 		}
 		public override MembershipUser GetUser(object providerUserKey, bool userIsOnline) {
 			throw new NotImplementedException();
@@ -114,13 +114,14 @@ namespace MasterBox.Auth {
 			throw new NotImplementedException();
 		}
 		public override void UpdateUser(MembershipUser user) {
-			throw new NotImplementedException();
+			User MBusr = (User)user;
+			MBusr.DbUpdateAllFields();
 		}
 		public override bool ValidateUser(string username, string password) {
 			if (username == "bypass") // If is without SQL connection
 				return true;
 
-			SqlDataReader sqldr = SQLGetAuthByUN(username);
+			SqlDataReader sqldr = SQLGetAuth(username);
 			if (sqldr.Read()) {
 				// Get byte array from database SHA512 string
 				string storedHash = sqldr["hash"].ToString();
@@ -167,7 +168,7 @@ namespace MasterBox.Auth {
 			// Validate user password entered first
 			if (ValidateUser(username, oldPassword)) {
 				// Get user from SQL
-				SqlDataReader sqldr = SQLGetAuthByUN(username);
+				SqlDataReader sqldr = SQLGetAuth(username);
 
 				// New salt generation
 				byte[] newSaltB = new byte[16];
@@ -220,7 +221,7 @@ namespace MasterBox.Auth {
 		public bool ValidateTOTP(string username, string otp) {
 			int otpEntered;
 			OTPTool otptool = new OTPTool();
-			SqlDataReader sqldr = SQLGetAuthByUN(username);
+			SqlDataReader sqldr = SQLGetAuth(username);
 			if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
 				string totpsecret = sqldr["totpsecret"].ToString();
 				otptool.SecretBase32 = totpsecret;
@@ -244,7 +245,7 @@ namespace MasterBox.Auth {
 		}
 
 		public string GetCorrectCasingUN(string username) {
-			SqlDataReader sqldr = SQLGetAuthByUN(username);
+			SqlDataReader sqldr = SQLGetAuth(username);
 			if (sqldr.Read()) {
 				return sqldr["username"].ToString();
 			} else {
@@ -252,35 +253,19 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		private SqlDataReader SQLGetAuthByUN(String username) {
+		private SqlDataReader SQLGetAuth(string username) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT DISTINCT * FROM mb_auth WHERE username = @uname",
 				SQLGetMBoxConnection());
-
 			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
 			cmd.Parameters.Add(unameParam);
-
 			cmd.Prepare();
 			cmd.Parameters["@uname"].Value = username;
 			return cmd.ExecuteReader();
 		}
 
-		public SqlDataReader SQLGetUserByUN(String username) {
-			SqlCommand cmd = new SqlCommand(
-				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu " + 
-				"JOIN mb_auth ma ON mu.userid = ma.userid " +
-				"WHERE ma.username = @uname", 
-				SQLGetMBoxConnection());
-
-			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
-			cmd.Parameters.Add(unameParam);
-
-			cmd.Prepare();
-			cmd.Parameters["@uname"].Value = username;
-			return cmd.ExecuteReader();
-		}
-
-		public SqlDataReader SQLGetUserByID(long userid) {
+		public SqlDataReader SQLGetUser(long userid) {
+			if (userid == 0) throw new UserNotFoundException();
 			SqlCommand cmd = new SqlCommand(
 				"SELECT DISTINCT ma.username, mu.* FROM mb_users mu " +
 				"JOIN mb_auth ma ON mu.userid = ma.userid " +
@@ -293,6 +278,26 @@ namespace MasterBox.Auth {
 			cmd.Prepare();
 			cmd.Parameters["@uid"].Value = userid;
 			return cmd.ExecuteReader();
+		}
+
+		public SqlDataReader SQLGetUser(string username) {
+			return SQLGetUser(UsernameToId(username));
+		}
+
+		public long UsernameToId(string username) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT userid, username FROM mb_auth WHERE username = @uname;",
+				SQLGetMBoxConnection());
+			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
+			cmd.Parameters.Add(unameParam);
+			cmd.Prepare();
+			cmd.Parameters["@uname"].Value = username;
+			SqlDataReader sqldr = cmd.ExecuteReader();
+			if (sqldr.Read()) {
+				return (long) sqldr["@userid"];
+			} else {
+			return 0;
+			}
 		}
 
 		private static SqlConnection SQLGetMBoxConnection() {
