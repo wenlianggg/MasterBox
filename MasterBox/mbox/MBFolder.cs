@@ -1,4 +1,5 @@
 ﻿using MasterBox.Auth;
+using NCiphers.Ciphers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,6 +106,13 @@ namespace MasterBox.mbox {
             
             System.Diagnostics.Debug.WriteLine(res.ToString());
            // return res.ToString();
+        }
+
+        // Files in folder Blowfish448 Encryption
+        private static void EncryptionBlowfishFileFolder()
+        {
+            Blowfish blow = new Blowfish();
+
         }
 
 		public static bool UploadFileToFolder(MBFile file, string foldername) {

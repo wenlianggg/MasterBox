@@ -136,12 +136,13 @@ namespace MasterBox.mbox {
         public static SqlDataReader GetFileToDisplay(string username) {
             // Get User ID
             User user = new User(username);
-            long userid = user.UserId;
+            int userid = (int)user.UserId;
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			cmd.Parameters.Add(unameParam);
 			cmd.Parameters["@userid"].Value = userid;
+
 			cmd.Prepare();
 			return cmd.ExecuteReader();
 		}
