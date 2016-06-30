@@ -16,11 +16,11 @@ namespace MasterBox.mbox {
 		public string folderuserName { get; set; }
 		public int folderencryption { get; set; }
 
-
+        // Get Folder Information to display
 		public static SqlDataReader GetFolderToDisplay(string username) {
             // Get User ID
             User user = new User(username);
-            long userid = user.UserId;
+            int userid = (int) user.UserId;
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE userid = @userid", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 30);
@@ -30,11 +30,12 @@ namespace MasterBox.mbox {
 
 			return cmd.ExecuteReader();
 		}
+
 		// Get list of all folder names
 		public static ArrayList GenerateFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            long userid = user.UserId;
+            int userid =(int)user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
@@ -48,11 +49,11 @@ namespace MasterBox.mbox {
 			return locationList;
 		}
 
-		// Get list of folder names with password
+		// Get list of folder names with passwords
 		public static ArrayList GenerateEncryptedFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            long userid = user.UserId;
+            int userid =(int) user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
@@ -70,7 +71,7 @@ namespace MasterBox.mbox {
 		public static ArrayList GenerateUnencryptedFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            long userid = user.UserId;
+            int userid = (int)user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=0", SQLGetMBoxConnection());
 			cmd.Parameters.AddWithValue("@userid", userid);
@@ -84,6 +85,28 @@ namespace MasterBox.mbox {
 			return passwordlocationList;
 		}
 
+        // Generate BlowFish Key
+        public static void KeyGeneration(int length)
+        {
+            string valid = "W1Hi2YgOdJ0g44L4x1bxzDpxtzIWVVghCWP8dklOeuPqD90QAvEHy2dsRdF6bOhJ2hdx/Tywh+mAe5FHLOwL/A==";
+
+            StringBuilder res = new StringBuilder();
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] uintBuffer = new byte[sizeof(uint)];
+
+                while (length-- > 0)
+                {
+                    rng.GetBytes(uintBuffer);
+                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                    res.Append(valid[(int)(num % (uint)valid.Length)]);
+                }
+            }
+            
+            System.Diagnostics.Debug.WriteLine(res.ToString());
+           // return res.ToString();
+        }
+
 		public static bool UploadFileToFolder(MBFile file, string foldername) {
 			try {
 				// Get Folder ID
@@ -93,7 +116,7 @@ namespace MasterBox.mbox {
 
                 // Get User ID
                 User user = new User(file.fileusername);
-                long userid = user.UserId;
+                int userid = (int)user.UserId;
 
                 SqlCommand cmd = new SqlCommand(
 					"INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
@@ -128,7 +151,7 @@ namespace MasterBox.mbox {
 			try {
                 // Get User ID
                 User user = new User(folder.folderuserName);
-                long userid = user.UserId;
+                int userid = (int)user.UserId;
 
                 // Create Folder
                 SqlCommand cmd = new SqlCommand("INSERT INTO mb_folder(userid,foldername,folderencryption) VALUES(@user,@name,@encryption)", SQLGetMBoxConnection());

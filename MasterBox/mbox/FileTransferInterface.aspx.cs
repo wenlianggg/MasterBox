@@ -9,8 +9,6 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
-using System.Collections;
-using System.Net;
 
 namespace MasterBox
 {
@@ -23,15 +21,22 @@ namespace MasterBox
 		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+            MBFolder.KeyGeneration(64);
+            
             if (!IsPostBack)
             {
+                            
                 // Fill up file and folder data on the display
                 FillDataFile();
                 FillDataFolder();
+                
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
+                
+                
             }
+            
 
         }
         private void FillDataFile()
