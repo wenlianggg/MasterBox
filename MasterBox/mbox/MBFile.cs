@@ -23,8 +23,8 @@ namespace MasterBox.mbox {
                 User user = new User(file.fileusername);
                 long userid = user.UserId;				
 
-                file.filekey = KeyIvGenerator(32);
-                file.fileiv = KeyIvGenerator(16);
+                file.filekey = FileKeyIvGenerator(32);
+                file.fileiv = FileKeyIvGenerator(16);
                 file.filecontent = MBFile.EncryptAES256File(file);
 
                 // Storing of File
@@ -60,7 +60,7 @@ namespace MasterBox.mbox {
 		}
 
         // To generate Key and IV
-        public static string KeyIvGenerator(int length)
+        public static string FileKeyIvGenerator(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();

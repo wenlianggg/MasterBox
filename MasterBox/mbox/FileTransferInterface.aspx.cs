@@ -21,7 +21,7 @@ namespace MasterBox
 		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            MBFolder.KeyGeneration(64);
+
             
             if (!IsPostBack)
             {

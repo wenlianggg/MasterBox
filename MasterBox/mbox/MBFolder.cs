@@ -16,6 +16,9 @@ namespace MasterBox.mbox {
 		public string folderName { get; set; }
 		public string folderuserName { get; set; }
 		public int folderencryption { get; set; }
+        public string folderBlowFishKey { get; set; }
+        public string folderBlowFishIV { get; set; }
+
 
         // Get Folder Information to display
 		public static SqlDataReader GetFolderToDisplay(string username) {
@@ -87,10 +90,10 @@ namespace MasterBox.mbox {
 		}
 
         // Generate BlowFish Key
-        public static void KeyGeneration(int length)
+        private string FolderKeyIVGeneration(int length,string input)
         {
-            string valid = "W1Hi2YgOdJ0g44L4x1bxzDpxtzIWVVghCWP8dklOeuPqD90QAvEHy2dsRdF6bOhJ2hdx/Tywh+mAe5FHLOwL/A==";
-
+            string valid = input;
+            
             StringBuilder res = new StringBuilder();
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
             {
@@ -105,12 +108,15 @@ namespace MasterBox.mbox {
             }
             
             System.Diagnostics.Debug.WriteLine(res.ToString());
-           // return res.ToString();
+            return res.ToString();
         }
 
         // Files in folder Blowfish448 Encryption
-        private static void EncryptionBlowfishFileFolder(byte[] filecontent,string key)
+        private static void EncryptionBlowfishFileFolder(byte[] filecontent,string key,string iv)
         {
+            // IV is 64bits
+            // Password is 64bits as well
+
             Blowfish blow = new Blowfish();
             byte[] encryptedFile=blow.EncryptBytes(filecontent,key);
 
@@ -118,7 +124,7 @@ namespace MasterBox.mbox {
         // Files in folder Blowfish448 Decryption
         private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
         {
-            Blowfish blow = new Blowfish();
+            Blowfish blow = new Blowfish();          
             byte[] decryptedFile = blow.DecryptBytes(filecontent, key);
 
         }
@@ -199,6 +205,7 @@ namespace MasterBox.mbox {
 
 				// Convert Password to byte array
 				var folderpassbyte = Encoding.UTF8.GetBytes(folderpassword);
+
 				// Join Pass and salt together
 				byte[] saltpassbyte = new byte[folderpassbyte.Length + newSalt.Length];
 				folderpassbyte.CopyTo(saltpassbyte, 0);
@@ -209,21 +216,29 @@ namespace MasterBox.mbox {
 					passhash = Convert.ToBase64String(shaCalc.ComputeHash(saltpassbyte));
 				}
 
-				// Create Folder
-				SqlCommand cmd = new SqlCommand(
-					"INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword) "
-					+ "VALUES(@user,@name,@encryption,@salt,@pass)", SQLGetMBoxConnection());
+                // Creating of KEY and IV for blowfish
+                folder.folderBlowFishKey = folder.FolderKeyIVGeneration(64,passhash);
+                folder.folderBlowFishIV = folder.FolderKeyIVGeneration(32, saltstring);
+
+                // Create Folder
+                SqlCommand cmd = new SqlCommand(
+					"INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword,folderkey,folderiv) "
+					+ "VALUES(@user,@name,@encryption,@salt,@pass,@key,@iv)", SQLGetMBoxConnection());
 				cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
 				cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
 				cmd.Parameters.Add(new SqlParameter("@encryption", SqlDbType.Bit, 1));
 				cmd.Parameters.Add(new SqlParameter("@salt", SqlDbType.VarChar, 24));
 				cmd.Parameters.Add(new SqlParameter("@pass", SqlDbType.VarChar, 88));
-				cmd.Prepare();
+                cmd.Parameters.Add(new SqlParameter("@key", SqlDbType.VarChar, 64));
+                cmd.Parameters.Add(new SqlParameter("@iv", SqlDbType.VarChar, 32));
+                cmd.Prepare();
 				cmd.Parameters["@user"].Value = userid;
 				cmd.Parameters["@name"].Value = folder.folderName;
 				cmd.Parameters["@encryption"].Value = folder.folderencryption;
 				cmd.Parameters["@salt"].Value = saltstring;
 				cmd.Parameters["@pass"].Value = passhash;
+                cmd.Parameters["@key"].Value = folder.folderBlowFishKey;
+                cmd.Parameters["@iv"].Value = folder.folderBlowFishIV;
 				cmd.ExecuteNonQuery();
 				return true;
 			}
