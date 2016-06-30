@@ -23,8 +23,6 @@ namespace MasterBox
 		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            MBFile.EncryptAES256File();
-            MBFile.DecryptAES256File();
             if (!IsPostBack)
             {
                 // Fill up file and folder data on the display
