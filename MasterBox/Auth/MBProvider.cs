@@ -144,6 +144,7 @@ namespace MasterBox.Auth {
 					Array.Clear(combinedBytes, 0, combinedBytes.Length);
 					password = string.Empty;
 					userHash = string.Empty;
+					
 					// Password correct
 					return true;
 				} else {
@@ -151,11 +152,13 @@ namespace MasterBox.Auth {
 					System.Diagnostics.Debug.WriteLine("Salt Value:" + sqldr["salt"].ToString());
 					System.Diagnostics.Debug.WriteLine("Input Hash:" + userHash);
 					System.Diagnostics.Debug.WriteLine(storedHash);
+					
 					// Empty out strings and sensitive data arrays
 					Array.Clear(userInputBytes, 0, userInputBytes.Length);
 					Array.Clear(combinedBytes, 0, combinedBytes.Length);
 					password = string.Empty;
 					userHash = string.Empty;
+					
 					// Password incorrect
 					return false;
 				}
@@ -175,15 +178,18 @@ namespace MasterBox.Auth {
 				using (RNGCryptoServiceProvider cryptrng = new RNGCryptoServiceProvider()) {
 					cryptrng.GetBytes(newSaltB);
 				}
+				
 				// Convert salt to string
 				string newSalt = Convert.ToBase64String(newSaltB);
 
 				// Convert new password to byte array
 				var newPasswordBytes = Encoding.UTF8.GetBytes(newPassword);
+				
 				// Join two arrays
 				byte[] combinedBytes = new byte[newPasswordBytes.Length + newSaltB.Length];
 				newPasswordBytes.CopyTo(combinedBytes, 0);
 				newSaltB.CopyTo(combinedBytes, newPasswordBytes.Length);
+				
 				// Hash combined arrays
 				string userHash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
