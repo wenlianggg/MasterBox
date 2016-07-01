@@ -265,6 +265,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\UserCrypto.cs" />
     <Compile Include="Auth\reCAPTCHA.cs" />
     <Compile Include="Auth\State\CookieList.cs" />
     <Compile Include="Auth\MBProvider.cs" />
