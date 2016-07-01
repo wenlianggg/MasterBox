@@ -1,14 +1,10 @@
 ﻿using MasterBox.Auth;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace MasterBox.mbox {
 	public class MBFile {
@@ -23,13 +19,12 @@ namespace MasterBox.mbox {
 		// Upload of file
 		public static bool UploadNewFile(MBFile file) {
 			try {
-				// Get User ID
-				SqlDataReader sqlUserID = GetUserInformation(file.fileusername);
-				sqlUserID.Read();
-				int userid = int.Parse(sqlUserID["userid"].ToString());
+                // Get User ID
+                User user = new User(file.fileusername);
+                long userid = user.UserId;				
 
-                file.filekey = KeyIvGenerator(32);
-                file.fileiv = KeyIvGenerator(16);
+                file.filekey = FileKeyIvGenerator(32);
+                file.fileiv = FileKeyIvGenerator(16);
                 file.filecontent = MBFile.EncryptAES256File(file);
 
                 // Storing of File
@@ -65,7 +60,7 @@ namespace MasterBox.mbox {
 		}
 
         // To generate Key and IV
-        public static string KeyIvGenerator(int length)
+        public static string FileKeyIvGenerator(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -139,15 +134,15 @@ namespace MasterBox.mbox {
 
         // Retrieve to display file
         public static SqlDataReader GetFileToDisplay(string username) {
-			// Get User ID
-			SqlDataReader sqlUserID = GetUserInformation(username);
-			sqlUserID.Read();
-			int userid = int.Parse(sqlUserID["userid"].ToString());
+            // Get User ID
+            User user = new User(username);
+            int userid = (int)user.UserId;
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			cmd.Parameters.Add(unameParam);
 			cmd.Parameters["@userid"].Value = userid;
+
 			cmd.Prepare();
 			return cmd.ExecuteReader();
 		}
@@ -209,16 +204,6 @@ namespace MasterBox.mbox {
 			return mbf;
 		}
 
-
-		// Get User Information from Database
-		private static SqlDataReader GetUserInformation(string username) {
-			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", SQLGetMBoxConnection());
-			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
-			cmd.Parameters.Add(unameParam);
-			cmd.Parameters["@uname"].Value = username;
-			cmd.Prepare();
-			return cmd.ExecuteReader();
-		}
 
 		private static SqlConnection SQLGetMBoxConnection() {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
