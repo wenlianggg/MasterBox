@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -9,12 +10,13 @@ using System.Web;
 namespace MasterBox.Auth {
 	public static class UserCrypto {
 
-		private const string globalKey = "OElhTCCrIj1Wax8ITmeQQPZiBhcwBYgz";
+		private static string globalKey = ConfigurationManager.AppSettings["GlobalUserCryptKey"];
 
 		public static byte[] EncryptObject(object value, string iv) {
+			if (!(value is byte[]))
+				value = ObjectToBytes(value);
 			
-
-			return new byte[0];
+			return (byte[]) value;
 		}
 
 		public static object DecryptObject(byte[] encrypted, string iv) {
