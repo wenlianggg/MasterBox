@@ -162,8 +162,6 @@ namespace MasterBox.mbox {
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
             cmd.Prepare();
-
-
             /*
             SqlDataReader sqldr = cmd.ExecuteReader();
             MBFile mbf = new MBFile();
