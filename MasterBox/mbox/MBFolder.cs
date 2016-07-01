@@ -1,5 +1,4 @@
 ﻿using MasterBox.Auth;
-using NCiphers.Ciphers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -117,15 +116,17 @@ namespace MasterBox.mbox {
             // IV is 64bits
             // Password is 64bits as well
 
-            Blowfish blow = new Blowfish();
-            byte[] encryptedFile=blow.EncryptBytes(filecontent,key);
-
+            
+            
         }
         // Files in folder Blowfish448 Decryption
         private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
         {
+            /*
             Blowfish blow = new Blowfish();          
             byte[] decryptedFile = blow.DecryptBytes(filecontent, key);
+            */
+            
 
         }
 
