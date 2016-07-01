@@ -52,6 +52,7 @@ namespace MasterBox
                 FileTableView.DataBind();
             }
         }
+
         private void FillDataFolder()
         {
 			dtFolder = new DataTable();
