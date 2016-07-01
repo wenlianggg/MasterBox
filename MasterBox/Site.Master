@@ -77,7 +77,7 @@
 								<asp:Label ID="UnameDropdown" runat="server" />
 								<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li runat="server" id="KeyManagement"><a runat="server" href="#">Key Management</a></li>
+								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
 									<li role="separator" class="divider"></li>
 								<li runat="server" id="UserSettings"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
 								<li runat="server" id="OTPConf"><a runat="server" href="#">Configure 2FA</a></li>
