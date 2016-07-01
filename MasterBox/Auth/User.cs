@@ -1,19 +1,12 @@
-﻿using MasterBox.Auth;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
 using System.Web.Security;
 
 namespace MasterBox.Auth {
 	public class User : MembershipUser {
+
 		private long _userid;
 		private string _userName;
 		private string _firstName;
@@ -134,17 +127,6 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteNonQuery();
 		}
 
-		public bool Exist {
-			get {
-				return UserExists(UserName);
-			}
-		}
-
-		private static SqlConnection SQLGetMBoxConnection() {
-			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-			sqlConnection.Open();
-			return sqlConnection;
-		}
 
 		public static DateTime StringToDateTime(string dateString) {
 			IFormatProvider culture = new System.Globalization.CultureInfo("en-SG", true);
@@ -152,41 +134,6 @@ namespace MasterBox.Auth {
 			return dateTime;
 		}
 
-		public static bool UserExists(string username) {
-			SqlDataReader sqldr = MBProvider.Instance.SQLGetUser(username);
-			if (sqldr.Read()) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		// Convert a byte array to an Object
-		private Object ByteArrayToObject(byte[] arrBytes) {
-			MemoryStream memStream = new MemoryStream();
-			BinaryFormatter binForm = new BinaryFormatter();
-			memStream.Write(arrBytes, 0, arrBytes.Length);
-			memStream.Seek(0, SeekOrigin.Begin);
-			Object obj = (Object)binForm.Deserialize(memStream);
-
-			return obj;
-		}
-
-		public static string KeyIvGen(int length) {
-			const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-			StringBuilder res = new StringBuilder();
-			using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider()) {
-				byte[] uintBuffer = new byte[sizeof(uint)];
-
-				while (length-- > 0) {
-					rng.GetBytes(uintBuffer);
-					uint num = BitConverter.ToUInt32(uintBuffer, 0);
-					res.Append(valid[(int)(num % (uint)valid.Length)]);
-				}
-			}
-			System.Diagnostics.Debug.WriteLine(res.ToString());
-			return res.ToString();
-		}
 
 
 		// ACCESSORS AND MUTATORS
@@ -220,6 +167,25 @@ namespace MasterBox.Auth {
 			cmd.Prepare();
 			cmd.Parameters["@uid"].Value = (Int64)_userid;
 			return cmd.ExecuteReader()[fieldName];
+		}
+
+		public static bool UserExists(string username) {
+			try {
+				SqlDataReader sqldr = MBProvider.Instance.SQLGetUser(username);
+				if (sqldr.Read()) {
+					return true;
+				}
+			}
+			catch (UserNotFoundException) {
+				return false;
+			}
+			return false;
+		}
+
+		public bool Exist {
+			get {
+				return UserExists(UserName);
+			}
 		}
 
 		public long UserId {
@@ -333,18 +299,12 @@ namespace MasterBox.Auth {
 				RefreshAllFields();
 			}
 		}
-		private byte[] ObjectToByteArray(Object obj) {
-			if (obj == null)
-				return null;
 
-			BinaryFormatter bf = new BinaryFormatter();
-			MemoryStream ms = new MemoryStream();
-			bf.Serialize(ms, obj);
-
-			return ms.ToArray();
+		private static SqlConnection SQLGetMBoxConnection() {
+			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
+			sqlConnection.Open();
+			return sqlConnection;
 		}
-
-
 
 	}
 
