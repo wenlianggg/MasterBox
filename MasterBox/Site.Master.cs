@@ -18,7 +18,7 @@ namespace MasterBox {
 				SignInText.Text = "Login / Register";
 				UserLogs.Visible = false;
 				OTPConf.Visible = false;
-				KeyManagement.Visible = false;
+				Subscriptions.Visible = false;
 				Options.Visible = false;
 				UserSettings.Visible = false;
 				SignOutLink.Visible = false;
