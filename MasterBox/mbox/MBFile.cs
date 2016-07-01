@@ -137,6 +137,7 @@ namespace MasterBox.mbox {
             // Get User ID
             User user = new User(username);
             int userid = (int)user.UserId;
+            System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
