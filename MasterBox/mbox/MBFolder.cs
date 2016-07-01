@@ -208,19 +208,25 @@ namespace MasterBox.mbox {
 				folderpassbyte.CopyTo(saltpassbyte, 0);
 				newSalt.CopyTo(saltpassbyte, folderpassbyte.Length);
 
+                // Get key and iv for blowfish encryption
                 Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(folderpassbyte,newSalt,16);
                 byte[] blowkey= key.GetBytes(32);
+                byte[] blowiv = key.GetBytes(16);
                 string blowkeystring = Convert.ToBase64String(blowkey);
-
+                string blowivstring = Convert.ToBase64String(blowiv);
+                System.Diagnostics.Debug.WriteLine("Blowfish key: " +blowkeystring);
+                System.Diagnostics.Debug.WriteLine("Blowfish IV: " + blowivstring);
 
                 string passhash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
 					passhash = Convert.ToBase64String(shaCalc.ComputeHash(saltpassbyte));
 				}
 
+                /*
                 // Creating of KEY and IV for blowfish
                 folder.folderBlowFishKey = folder.FolderKeyIVGeneration(64,passhash);
                 folder.folderBlowFishIV = folder.FolderKeyIVGeneration(32, saltstring);
+                */
 
                 // Create Folder
                 SqlCommand cmd = new SqlCommand(
@@ -239,8 +245,8 @@ namespace MasterBox.mbox {
 				cmd.Parameters["@encryption"].Value = folder.folderencryption;
 				cmd.Parameters["@salt"].Value = saltstring;
 				cmd.Parameters["@pass"].Value = passhash;
-                cmd.Parameters["@key"].Value = folder.folderBlowFishKey;
-                cmd.Parameters["@iv"].Value = folder.folderBlowFishIV;
+                cmd.Parameters["@key"].Value = blowkeystring;
+                cmd.Parameters["@iv"].Value = blowivstring;
 				cmd.ExecuteNonQuery();
 				return true;
 			}
