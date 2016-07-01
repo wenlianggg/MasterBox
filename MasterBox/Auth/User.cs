@@ -112,7 +112,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@birthDate", SqlDbType.Date, 0));
 			cmd.Parameters.Add(new SqlParameter("@email", SqlDbType.VarChar, 100));
 			cmd.Parameters.Add(new SqlParameter("@verified", SqlDbType.Bit, 0));
-			cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.Int, 0));
+			cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.BigInt, 0));
 			cmd.Parameters.Add(new SqlParameter("@mbrStartDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@mbrExpireDate", SqlDbType.DateTime2, 7));
 			cmd.Parameters.Add(new SqlParameter("@regTime", SqlDbType.DateTime2, 7));
@@ -296,7 +296,7 @@ namespace MasterBox.Auth {
 				return _memberType;
 			}
 			set {
-				updateValue("mbrType", value, SqlDbType.Int, 0);
+				updateValue("mbrType", value, SqlDbType.BigInt, 0);
 				RefreshAllFields();
 			}
 		}

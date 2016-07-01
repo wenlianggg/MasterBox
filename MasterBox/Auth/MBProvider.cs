@@ -278,7 +278,7 @@ namespace MasterBox.Auth {
 				"WHERE ma.userid = @uid",
 				SQLGetMBoxConnection());
 
-			SqlParameter unameParam = new SqlParameter("@uid", SqlDbType.BigInt, 30);
+			SqlParameter unameParam = new SqlParameter("@uid", SqlDbType.BigInt, 0);
 			cmd.Parameters.Add(unameParam);
 
 			cmd.Prepare();
