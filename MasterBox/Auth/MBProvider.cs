@@ -292,17 +292,16 @@ namespace MasterBox.Auth {
 
 		public long UsernameToId(string username) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT userid, username FROM mb_auth WHERE username = @uname;",
+				"SELECT userid, username FROM mb_auth WHERE username = @un",
 				SQLGetMBoxConnection());
-			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
-			cmd.Parameters.Add(unameParam);
+			cmd.Parameters.Add(new SqlParameter("@un", SqlDbType.VarChar, 30));
 			cmd.Prepare();
-			cmd.Parameters["@uname"].Value = username;
+			cmd.Parameters["@un"].Value = username;
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			if (sqldr.Read()) {
-				return (long) sqldr["@userid"];
+				return Convert.ToInt64(sqldr[0]);
 			} else {
-			return 0;
+				return 0;
 			}
 		}
 
