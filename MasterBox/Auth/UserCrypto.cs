@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Web;
 
+
 namespace MasterBox.Auth {
 	public static class UserCrypto {
 
@@ -15,13 +16,16 @@ namespace MasterBox.Auth {
 		public static byte[] EncryptObject(object value, string iv) {
 			if (!(value is byte[]))
 				value = ObjectToBytes(value);
-			
+			byte[] valueBytes = (byte[]) value;
 			return (byte[]) value;
 		}
 
 		public static object DecryptObject(byte[] encrypted, string iv) {
+			// TODO: 
+			byte[] decrypted = new byte[0];
 
-			return "";
+			object value = BytesToObject(decrypted);
+			return value;
 		}
 
 		//
