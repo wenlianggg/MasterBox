@@ -23,12 +23,11 @@ namespace MasterBox.mbox {
 		public static SqlDataReader GetFolderToDisplay(string username) {
             // Get User ID
             User user = new User(username);
-            int userid = (int) user.UserId;
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE userid = @userid", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			cmd.Parameters.Add(unameParam);
-			cmd.Parameters["@userid"].Value = userid;
+			cmd.Parameters["@userid"].Value = user.UserId;
 			cmd.Prepare();
 
 			return cmd.ExecuteReader();
@@ -38,10 +37,9 @@ namespace MasterBox.mbox {
 		public static ArrayList GenerateFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            int userid =(int)user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
-			cmd.Parameters.AddWithValue("@userid", userid);
+			cmd.Parameters.AddWithValue("@userid", user.UserId);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList locationList = new ArrayList();
 			locationList.Add("==Master Folder==");
@@ -56,10 +54,9 @@ namespace MasterBox.mbox {
 		public static ArrayList GenerateEncryptedFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            int userid =(int) user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=1", SQLGetMBoxConnection());
-			cmd.Parameters.AddWithValue("@userid", userid);
+			cmd.Parameters.AddWithValue("@userid", user.UserId);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList passwordlocationList = new ArrayList();
 			passwordlocationList.Add("==Choose a Folder==");
@@ -74,10 +71,9 @@ namespace MasterBox.mbox {
 		public static ArrayList GenerateUnencryptedFolderLocation(String username) {
             // Get User ID
             User user = new User(username);
-            int userid = (int)user.UserId;
 
             SqlCommand cmd = new SqlCommand("SELECT distinct foldername FROM mb_folder WHERE userid=@userid and folderencryption=0", SQLGetMBoxConnection());
-			cmd.Parameters.AddWithValue("@userid", userid);
+			cmd.Parameters.AddWithValue("@userid", user.UserId);
 			SqlDataReader sqldr = cmd.ExecuteReader();
 			ArrayList passwordlocationList = new ArrayList();
 			passwordlocationList.Add("==Choose a Folder==");
@@ -212,7 +208,12 @@ namespace MasterBox.mbox {
 				folderpassbyte.CopyTo(saltpassbyte, 0);
 				newSalt.CopyTo(saltpassbyte, folderpassbyte.Length);
 
-				string passhash;
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(folderpassbyte,newSalt,16);
+                byte[] blowkey= key.GetBytes(32);
+                string blowkeystring = Convert.ToBase64String(blowkey);
+
+
+                string passhash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
 					passhash = Convert.ToBase64String(shaCalc.ComputeHash(saltpassbyte));
 				}

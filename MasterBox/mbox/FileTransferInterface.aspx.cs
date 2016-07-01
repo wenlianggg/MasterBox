@@ -27,14 +27,13 @@ namespace MasterBox
             {
                             
                 // Fill up file and folder data on the display
-                FillDataFile();      
-                /*         
+                FillDataFile();                             
                 FillDataFolder();
                 
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
-                */
+                
                 
             }
             

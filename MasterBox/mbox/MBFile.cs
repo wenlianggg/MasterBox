@@ -20,8 +20,7 @@ namespace MasterBox.mbox {
 		public static bool UploadNewFile(MBFile file) {
 			try {
                 // Get User ID
-                User user = new User(file.fileusername);
-                long userid = user.UserId;				
+                User user = new User(file.fileusername);			
 
                 file.filekey = FileKeyIvGenerator(32);
                 file.fileiv = FileKeyIvGenerator(16);
@@ -37,7 +36,7 @@ namespace MasterBox.mbox {
 				cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
 				cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
 				cmd.Prepare();
-				cmd.Parameters["@user"].Value = userid;
+				cmd.Parameters["@user"].Value = user.UserId;
 				cmd.Parameters["@name"].Value = file.fileName;
 				cmd.Parameters["@type"].Value = file.fileType;
 				cmd.Parameters["@size"].Value = file.fileSize;
@@ -136,13 +135,11 @@ namespace MasterBox.mbox {
         public static SqlDataReader GetFileToDisplay(string username) {
             // Get User ID
             User user = new User(username);
-            int userid = (int)user.UserId;
-            System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			cmd.Parameters.Add(unameParam);
-			cmd.Parameters["@userid"].Value = userid;
+			cmd.Parameters["@userid"].Value = user.UserId;
 
 			cmd.Prepare();
 			return cmd.ExecuteReader();
