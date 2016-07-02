@@ -38,8 +38,12 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		public static User GetUser(string username) {
+			return GetUser(User.ConvertToId(username));
+		}
+
 		public static User CreateUser(string username, string password, string firstname, string lastname,
-										DateTime birthdate, string email, bool isVerified) {
+								DateTime birthdate, string email, bool isVerified) {
 			User target;
 			if (!Exists(username)) {
 				target = new User(username, password, firstname, lastname, birthdate, email, isVerified);
@@ -48,10 +52,6 @@ namespace MasterBox.Auth {
 				throw new UserAlreadyExistsException();
 			}
 			return target;
-		}
-
-		public static User GetUser(string username) {
-			return GetUser(User.ConvertToId(username));
 		}
 
 		private User(int userid) {
