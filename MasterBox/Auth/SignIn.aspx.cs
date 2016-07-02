@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Diagnostics;
-using MasterBox.Auth;
 
 namespace MasterBox.Auth {
 	public partial class SignIn : Page { 
@@ -19,8 +19,8 @@ namespace MasterBox.Auth {
 			MBProvider mbp = MBProvider.Instance;
 			try {
 				if (mbp.ValidateUser(UserName.Text, UserPass.Text)) {
-					System.Diagnostics.Debug.WriteLine("correk");
-					Session["Username"] = mbp.GetCorrectCasingUN(UserName.Text);
+					User usr = Auth.User.GetUser(UserName.Text);
+					Session["Username"] = usr.UserName;
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
 					Response.Redirect("~/Auth/otpverify.aspx");
@@ -32,8 +32,8 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		protected void registrationStart(object sender, EventArgs e) {
-			if (Auth.User.UserExists(UserName.Text)) {
+		protected void Registration_Start(object sender, EventArgs e) {
+			if (Auth.User.Exists(UserName.Text)) {
 				Msg.Text = "User already exists!";
 			} else {
 				Debug.WriteLine(ResolveUrl("~/auth/signup") + "?username=" + UserName.Text);
