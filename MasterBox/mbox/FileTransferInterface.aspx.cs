@@ -146,12 +146,14 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
+
             bool folderCreation;
+
             if (encryptionOption.Text == "yes")
             {
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
-                folder.folderuserName = Context.User.Identity.Name;
+                folder.folderusername = Context.User.Identity.Name;
                 folder.folderencryption = 1;
                 folderCreation = folder.CreateNewFolderWithPassword(folder,encryptionPass.Text);
             }
@@ -159,30 +161,29 @@ namespace MasterBox
             {
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
-                folder.folderuserName = Context.User.Identity.Name;
+                folder.folderusername = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folderCreation = folder.CreateNewFolder(folder);
 
             }
-            if (folderCreation == true)
-            {
-                
-            }
-            else
-            {
-                
-            }
+
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
         }
 
         protected void OpenFolder(object sender, EventArgs e)
         {
+            
             // Get Folder id
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
             int folderid=Int32.Parse(lnk.Attributes["FolderID"]);
-            
+            string foldername = lnk.Text;
+
+            FolderHeader.Text = foldername;
+
+
+            /*
                 dtFolderFile = new DataTable();
                 SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
                 dtFile.Load(reader);
@@ -192,6 +193,8 @@ namespace MasterBox
                     Folder_FileTableView.DataSource = dtFolderFile;
                     Folder_FileTableView.DataBind();
                 }
+                
+               */
             
         }
         
