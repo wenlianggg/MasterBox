@@ -11,22 +11,57 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 
+/// Author: Goh Wen Liang (154473G) 
+
 namespace MasterBox.Auth {
-	public static class UserCrypto {
+	
+	/// <summary>
+	/// UserCrypto is used to encrypt and decrypt a user field with a given initialization vector. 
+	/// </summary>
+	public class UserCrypto : IDisposable, IEquatable<UserCrypto> {
 
-		private static byte[] globalKey = Encoding.UTF8.GetBytes("y7T5YqUgwqOuxhy255s7Ad4XrXt6W768");
+		/// <summary> Global decryption key value </summary>
+		private byte[] _globalKey;
+		/// <summary> Per-user initialization vector </summary>
+		private byte[] _initVector;
 
-		public static byte[] Encrypt(string plainText, string iv) {
+		/// <summary> Creates a UserCrypto instance. </summary>
+		/// <param name="initVector"> Per-user initialization vector </param>
+		internal UserCrypto(string initVector) {
+			_globalKey = Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["GlobalUserCryptKey"]);
+			_initVector = Encoding.UTF8.GetBytes(initVector);
+		}
+
+		~ UserCrypto() {
+			Dispose();
+		}
+
+		public void Dispose() {
+			Dispose(true);
+		}
+
+		protected virtual void Dispose(bool disposing) {
+			_globalKey = null;
+		}
+
+		public bool Equals(UserCrypto uc) {
+			if (_initVector.Equals(uc._initVector))
+				return true;
+			else
+				return false;
+		}
+
+
+		public byte[] Encrypt(string plainText) {
 			// Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
 			// so that the same Salt and IV values can be used when decrypting.  
-			var ivBytes = Encoding.UTF8.GetBytes(iv);
 			var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
 			using (AesManaged aes = new AesManaged()) {
 				aes.BlockSize = 128;
 				aes.KeySize = 256;
 				aes.Mode = CipherMode.CBC;
 				aes.Padding = PaddingMode.PKCS7;
-				using (var encryptor = aes.CreateEncryptor(globalKey, ivBytes))
+				using (var encryptor = aes.CreateEncryptor(_globalKey, _initVector))
 				using (var memoryStream = new MemoryStream())
 				using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write)) {
 						cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
@@ -40,13 +75,12 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public static string Decrypt(byte[] cipherBytes, string iv) {
-			byte[] ivBytes = Encoding.UTF8.GetBytes(iv);
+		public string Decrypt(byte[] cipherBytes) {
 			using (AesManaged aes = new AesManaged()) {
 				aes.BlockSize = 128;
 				aes.Mode = CipherMode.CBC;
 				aes.Padding = PaddingMode.PKCS7;
-				using (var decryptor = aes.CreateDecryptor(globalKey, ivBytes))
+				using (var decryptor = aes.CreateDecryptor(_globalKey, _initVector))
 				using (var memoryStream = new MemoryStream(cipherBytes))
 				using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read)) {
 					var plainTextBytes = new byte[cipherBytes.Length];
@@ -62,13 +96,19 @@ namespace MasterBox.Auth {
 		// Utilities for encryption and decryption
 		//
 		public static string GenerateEntropy(int length) {
-			var randomBytes = new byte[length]; // 32 Bytes will give us 256 bits.
-			using (var rngCsp = new RNGCryptoServiceProvider()) {
-				// Fill the array with cryptographically secure random bytes.
-				rngCsp.GetBytes(randomBytes);
+			const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+			StringBuilder res = new StringBuilder();
+			using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider()) {
+				byte[] uintBuffer = new byte[sizeof(uint)];
+				while (length -- > 0) {
+					rng.GetBytes(uintBuffer);
+					uint num = BitConverter.ToUInt32(uintBuffer, 0);
+					res.Append(valid[(int)(num % (uint)valid.Length)]);
+				}
 			}
-			return Encoding.UTF8.GetString(randomBytes);
+			return res.ToString();
 		}
+
 
 	}
 }

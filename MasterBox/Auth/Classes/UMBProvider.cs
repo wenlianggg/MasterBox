@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
+/// Author: Goh Wen Liang (154473G)
+
 namespace MasterBox.Auth {
+
 	public sealed partial class MBProvider : MembershipProvider {
 		
 		// Unimplemented methods and Singleton Design Pattern
 		private static volatile MBProvider _instance;
-		private static object syncRoot = new Object();
+		private static object syncRoot = new object();
 
 		private MBProvider() { }
 

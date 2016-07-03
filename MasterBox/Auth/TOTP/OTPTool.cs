@@ -9,7 +9,10 @@ using System.ComponentModel;
 using System.Timers;
 
 namespace MasterBox.Auth.TOTP {
-	public class OTPTool {
+	public class OTPTool : IDisposable {
+
+		private bool disposed = false;
+
 		private int _secondsToGo;
 		private string _identity;
 		private byte[] _secret;
@@ -19,6 +22,32 @@ namespace MasterBox.Auth.TOTP {
 		private int _OTPNow;
 		private int[] _OTPRange = new int[5];
 
+		~ OTPTool() {
+			Dispose();
+		}
+
+		public void Dispose() {
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected void Dispose(bool disposing) {
+
+			if (disposed)
+				return;
+
+			if (disposing) {
+				if (_secret != null)
+					Array.Clear(_secret, 0, _secret.Length);
+				if (_hmac != null)
+					Array.Clear(_hmac, 0, _hmac.Length);
+				if (_OTPRange != null)
+					Array.Clear(_OTPRange, 0, _OTPRange.Length);
+				_OTPNow = 0;
+			}
+
+			disposed = true;
+		}
 
 		public int SecondsToGo {
 			get {

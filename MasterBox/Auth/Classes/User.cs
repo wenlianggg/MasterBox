@@ -5,11 +5,18 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Security;
 
+/// Author: Goh Wen Liang (154473G) 
+
 namespace MasterBox.Auth {
+
+	/// <summary>
+	/// MasterBox user entity class, interacts with Data Access Layer for
+	/// manipulation of user information.
+	/// </summary>
 	public class User : MembershipUser {
 
 		private static Dictionary<int, User> UserList;
-
+		private DataAccess _da = new DataAccess();
 		private int _userid; // NOT NULLABLE IN DB
 		private string _username; // NOT NULLABLE IN DB
 		private DateTime _lastlogin;
@@ -22,6 +29,7 @@ namespace MasterBox.Auth {
 		private DateTime _mbrStart;
 		private DateTime _mbrExpiry;
 		private DateTime _regStamp;
+		private string _aesKey;
 		private string _aesIV;
 
 		public static User GetUser(int userid) {
@@ -45,70 +53,72 @@ namespace MasterBox.Auth {
 		public static User CreateUser(string username, string password, string firstname, string lastname,
 								DateTime birthdate, string email, bool isVerified) {
 			User target;
-			if (!Exists(username)) {
-				target = new User(username, password, firstname, lastname, birthdate, email, isVerified);
-				UserList.Add(target.UserId, target);
-			} else {
+			if (Exists(username)) {
 				throw new UserAlreadyExistsException();
+			} else {
+				target = new User(username, password, firstname, lastname, birthdate, email, isVerified);
+				if (UserList == null) {
+					UserList = new Dictionary<int, User>();
+				}
+				UserList.Add(target.UserId, target);
 			}
 			return target;
 		}
 
 		private User(int userid) {
-			// Existing user data retrieval
-			SqlDataReader sqldr = MBProvider.Instance.SqlGetUser(userid);
-			if (sqldr.Read()) {
-				_userid = (int)sqldr["userid"];
-				_username = sqldr["username"].ToString();
-				_fName = sqldr["fName"].ToString();
-				_lName = sqldr["lName"].ToString();
-				_dob = (DateTime)sqldr["dob"];
-				_email = sqldr["email"].ToString();
-				_verified = (bool)sqldr["verified"];
-				_mbrType = (int)sqldr["mbrType"];
-				_mbrStart = (DateTime)sqldr["mbrStart"];
-				_mbrExpiry = (DateTime)sqldr["mbrExpiry"];
-				_regStamp = (DateTime)sqldr["regStamp"];
-				_aesIV = sqldr["aesIV"].ToString();
-			}
+			// Existing user data retrieval (trusted execution)
+			if (_da == null)
+				_da = new DataAccess();
+			_aesIV = _da.SqlGetUserIV(userid);
+			SqlDataReader sqldr = _da.SqlGetUser(userid);
+			_userid = userid;
+			RefreshFields();
 		}
 
 
 
 		private User(string username, string password, string firstname, string lastname,
 						DateTime birthdate, string email, bool isVerified) {
+			if (_da == null)
+				_da = new DataAccess();
 			int _userId = MBProvider.Instance.CreateUser(username, password);
 			if (_userId == 0)
 				throw new UserNotFoundException();
-			// Registration for new sign ups
+			// Registration for new sign ups (trusted execution)
 			_username = username;
 			_fName = firstname;
 			_lName = lastname;
 			_dob = birthdate;
 			_email = email;
-			_verified = isVerified;
+			_verified = false;
 			_mbrType = 0;
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
 			_mbrStart = DateTime.Now;
 			_aesIV = UserCrypto.GenerateEntropy(16);
 			UpdateDB();
+			RefreshFields();
 		}
 
 		public bool RefreshFields() {
 			try {
-				SqlDataReader sqldr = MBProvider.Instance.SqlGetUser(_userid);
-				_username = sqldr["username"].ToString();
-				_fName = sqldr["fName"].ToString();
-				_lName = sqldr["lName"].ToString();
-				_dob = (DateTime)sqldr["dob"];
-				_email = sqldr["email"].ToString();
-				_verified = (bool)sqldr["verified"];
-				_mbrType = (int)sqldr["mbrType"];
-				_mbrStart = (DateTime)sqldr["mbrStart"];
-				_mbrExpiry = (DateTime)sqldr["mbrExpiry"];
-				_regStamp = (DateTime)sqldr["regStamp"];
-				_aesIV = sqldr["aesIV"].ToString();
+				using (UserCrypto uc = new UserCrypto(_aesIV)) {
+					SqlDataReader sqldr = _da.SqlGetUser(_userid);
+					if (sqldr.Read()) {
+						_username = sqldr["username"].ToString();
+						_fName = uc.Decrypt((byte[]) sqldr["fNameEnc"]);
+						_lName = uc.Decrypt((byte[]) sqldr["lNameEnc"]);
+						_email = uc.Decrypt((byte[]) sqldr["emailEnc"]);
+						_aesKey = uc.Decrypt((byte[]) sqldr["aesKey"]);
+						_dob = (DateTime) sqldr["dob"];
+						_verified = (bool) sqldr["verified"];
+						_mbrType = (int) sqldr["mbrType"];
+						_mbrStart = (DateTime) sqldr["mbrStart"];
+						_mbrExpiry = (DateTime) sqldr["mbrExpiry"];
+						_regStamp = (DateTime) sqldr["regStamp"];
+						_aesIV = sqldr["aesIV"].ToString();
+					}
+				}
 				return true;
 			} catch {
 				return false;
@@ -117,51 +127,16 @@ namespace MasterBox.Auth {
 
 		public int UpdateDB() {
 			// Does not set the ID, this method saves database connections
-			SqlCommand cmd;
-			if (Exist) {
-				cmd = new SqlCommand(
-					"UPDATE mb_users SET " +
-					"fName = @fName," +
-					"lName = @lName," +
-					"dob = @dob," +
-					"email = @email," +
-					"verified = @verified," +
-					"mbrType = @mbrType," +
-					"mbrStart = @mbrStart," +
-					"mbrExpiry = @mbrExpiry," +
-					"regStamp = @regStamp " +
-					"aesIV = @aesIV " +
-					"WHERE userid = @userid;",
-					SqlGetConn()
-				);
-
-				cmd.Parameters.Add(new SqlParameter("@fName", SqlDbType.VarChar, 100));
-				cmd.Parameters.Add(new SqlParameter("@lName", SqlDbType.VarChar, 100));
-				cmd.Parameters.Add(new SqlParameter("@dob", SqlDbType.Date, 0));
-				cmd.Parameters.Add(new SqlParameter("@email", SqlDbType.VarChar, 100));
-				cmd.Parameters.Add(new SqlParameter("@verified", SqlDbType.Bit, 0));
-				cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.Int, 0));
-				cmd.Parameters.Add(new SqlParameter("@mbrStart", SqlDbType.DateTime2, 7));
-				cmd.Parameters.Add(new SqlParameter("@mbrExpiry", SqlDbType.DateTime2, 7));
-				cmd.Parameters.Add(new SqlParameter("@regStamp", SqlDbType.DateTime2, 7));
-				cmd.Parameters.Add(new SqlParameter("@aesIV", SqlDbType.VarChar, 20));
-				cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 8));
-				cmd.Prepare();
-
-				cmd.Parameters["@fName"].Value = _fName;
-				cmd.Parameters["@lName"].Value = _lName;
-				cmd.Parameters["@dob"].Value = _dob;
-				cmd.Parameters["@email"].Value = _email;
-				cmd.Parameters["@verified"].Value = _verified;
-				cmd.Parameters["@mbrType"].Value = _mbrType;
-				cmd.Parameters["@mbrStart"].Value = _mbrStart;
-				cmd.Parameters["@mbrExpiry"].Value = _mbrExpiry;
-				cmd.Parameters["@regStamp"].Value = _regStamp;
-				cmd.Parameters["@aesIV"].Value = _aesIV;
-				cmd.Parameters["@uid"].Value = _userid;
-				return cmd.ExecuteNonQuery();
-			} else {
-				return 0;
+			using (UserCrypto uc = new UserCrypto(_aesIV)) {
+				byte[] fNameEnc = uc.Encrypt(_fName);
+				byte[] lNameEnc = uc.Encrypt(_lName);
+				byte[] emailEnc = uc.Encrypt(_email);
+				byte[] aesKeyEnc = uc.Encrypt(_aesKey);
+				// Call using Named Parameters to avoid confusion
+				return _da.SqlUpdateAllUserValues(userid: _userid, username: _username,
+					fNameEnc: fNameEnc, lNameEnc: lNameEnc, dob: _dob, emailEnc: emailEnc,
+					verified: _verified, mbrType: _mbrType, mbrStart: _mbrStart, mbrExpiry: _mbrExpiry,
+					regStamp: _regStamp, aesKeyEnc: aesKeyEnc, aesIV: _aesIV);
 			}
 		}
 
@@ -177,56 +152,23 @@ namespace MasterBox.Auth {
 		// ACCESSORS AND MUTATORS
 		// ======================
 
-		public static int ConvertToId(string username) {
-			SqlCommand cmd = new SqlCommand(
-				"SELECT DISTINCT userid, username FROM mb_users WHERE username = @un",
-				SqlGetConn());
-			cmd.Parameters.Add(new SqlParameter("@un", SqlDbType.VarChar, 30));
-			cmd.Prepare();
-			cmd.Parameters["@un"].Value = username;
-			SqlDataReader sqldr = cmd.ExecuteReader();
-			if (sqldr.Read()) {
-				return (int)sqldr[0];
-			} else {
-				throw new UserNotFoundException(username);
+		protected internal static int ConvertToId(string username) {
+			using (DataAccess da = new DataAccess()) {
+				return da.SqlGetUserId(username);
 			}
 		}
 
-		private bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
-			SqlCommand cmd = new SqlCommand(
-				"UPDATE mb_users SET " + fieldName + " = @fieldValue WHERE userid = @uid",
-				SqlGetConn()
-				);
-			cmd.Parameters.Add(new SqlParameter("@fieldValue", sdb, length));
-			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 0));
-			cmd.Prepare();
-
-			cmd.Parameters["@fieldValue"].Value = fieldValue;
-			cmd.Parameters["@uid"].Value = (Int64)_userid;
-			if (cmd.ExecuteNonQuery() == 1) {
-				return true;
-			} else {
-				throw new DatabaseUpdateFailureException("Updating value " + fieldValue + " failed.");
-			}
+		protected internal bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
+			return _da.SqlUpdateUserValue(_userid, fieldName, fieldValue, sdb, length);
 		}
 
-		private object GetValue(string fieldName) {
-			SqlCommand cmd = new SqlCommand(
-				"SELECT " + fieldName + " FROM mb_users WHERE userid = @uid",
-				SqlGetConn()
-				);
-
-			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 0));
-			cmd.Prepare();
-			cmd.Parameters["@uid"].Value = (Int64)_userid;
-			return cmd.ExecuteReader()[fieldName];
-		}
-
-		public static bool Exists(int userid) {
+		protected internal static bool Exists(int userid) {
 			try {
-				SqlDataReader sqldr = MBProvider.Instance.SqlGetUser(userid);
-				if (sqldr.Read()) {
-					return true;
+				using (DataAccess da = new DataAccess()) {
+					SqlDataReader sqldr = da.SqlGetUser(userid);
+					if (sqldr.Read()) {
+						return true;
+					}
 				}
 			} catch (UserNotFoundException) {
 				return false;
@@ -234,11 +176,13 @@ namespace MasterBox.Auth {
 			return false;
 		}
 
-		public static bool Exists(string username) {
+		protected internal static bool Exists(string username) {
 			try {
-				SqlDataReader sqldr = MBProvider.Instance.SqlGetUser(username);
-				if (sqldr.Read()) {
-					return true;
+				using (DataAccess da = new DataAccess()) {
+					SqlDataReader sqldr = da.SqlGetUser(username);
+					if (sqldr.Read()) {
+						return true;
+					}
 				}
 			} catch (UserNotFoundException) {
 				return false;
@@ -246,46 +190,57 @@ namespace MasterBox.Auth {
 			return false;
 		}
 
-		public bool Exist {
+		protected internal bool Exist {
 			get { return Exists(_userid); }
-		}
-
-		public int UserId {
-			get { return _userid; }
 		}
 
 		public override string UserName {
 			get { RefreshFields(); return _username; }
 		}
 
-		public DateTime LastLogin {
+		protected internal DateTime LastLogin {
 			get { RefreshFields(); return _lastlogin; }
 		}
 
-		public void Login() {
+		protected internal void Login() {
 			RefreshFields();
 			_lastlogin = DateTime.Now;
 			UpdateDB();
 		}
 
+		public int UserId {
+			get { return _userid; }
+		}
+
 		public string FirstName {
 			get { RefreshFields(); return _fName; }
-			set { UpdateValue("fName", value, SqlDbType.VarChar, 100); RefreshFields(); }
+			set {
+				using (UserCrypto uc = new UserCrypto(_aesIV))
+					UpdateValue("fNameEnc", uc.Encrypt(value), SqlDbType.VarBinary, 200);
+				RefreshFields();
+			}
 		}
 
 		public string LastName {
 			get { RefreshFields(); return _lName; }
-			set { UpdateValue("lName", value, SqlDbType.VarChar, 100); RefreshFields(); }
+			set {
+				using (UserCrypto uc = new UserCrypto(_aesIV))
+					UpdateValue("lNameEnc", uc.Encrypt(value), SqlDbType.VarBinary, 200);
+				RefreshFields(); }
+		}
+
+		public override string Email {
+			get { RefreshFields(); return _email; }
+			set {
+				using (UserCrypto uc = new UserCrypto(_aesIV))
+					UpdateValue("emailEnc", uc.Encrypt(value), SqlDbType.VarBinary, 200);
+				RefreshFields();
+			}
 		}
 
 		public DateTime Birthdate {
 			get { RefreshFields(); return _dob; }
 			set { UpdateValue("dob", value, SqlDbType.Date, 0); RefreshFields(); }
-		}
-
-		public override string Email {
-			get { RefreshFields(); return _email; }
-			set { UpdateValue("email", value, SqlDbType.VarChar, 100); RefreshFields(); }
 		}
 
 		public bool IsVerified {
@@ -313,16 +268,28 @@ namespace MasterBox.Auth {
 			set { UpdateValue("regStamp", value, SqlDbType.DateTime2, 7); RefreshFields(); }
 		}
 
-		public string AesIv {
-			get { RefreshFields(); return _aesIV; }
-			set { UpdateValue("aesIV", value, SqlDbType.VarChar, 128); RefreshFields(); }
+		public string AesKey {
+			get { RefreshFields(); return _aesKey; }
+			set {
+				using (UserCrypto uc = new UserCrypto(_aesIV))
+					UpdateValue("aesKey", uc.Encrypt(value), SqlDbType.VarBinary, 100);
+				RefreshFields(); }
 		}
 
-		private static SqlConnection SqlGetConn() {
-			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
-			sqlConnection.Open();
-			return sqlConnection;
+		public string AesIV {
+			get { RefreshFields(); return _aesIV; }
+			set {
+				UpdateValue("aesIV", value, SqlDbType.VarChar, 40);
+				using (UserCrypto uc = new UserCrypto(value)) {
+					UpdateValue("fNameEnc", uc.Encrypt(_fName), SqlDbType.VarBinary, 200);
+					UpdateValue("lNameEnc", uc.Encrypt(_lName), SqlDbType.VarBinary, 200);
+					UpdateValue("emailEnc", uc.Encrypt(_email), SqlDbType.VarBinary, 200);
+					UpdateValue("aesKey", uc.Encrypt(_aesKey), SqlDbType.VarBinary, 100);
+
+				}
+				RefreshFields(); }
 		}
+
 
 	}
 

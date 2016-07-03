@@ -5,11 +5,11 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Net;
 
+/// Author: Goh Wen Liang (154473G) 
+
 namespace MasterBox.Auth {
 
 	public class reCAPTCHA {
-
-
 		[JsonProperty("success")]
 		private string _Success;
 		public string Success {

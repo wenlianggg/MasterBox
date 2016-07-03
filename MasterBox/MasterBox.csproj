@@ -266,6 +266,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\Classes\DataAccess.cs" />
     <Compile Include="Auth\Classes\UMBProvider.cs" />
     <Compile Include="Auth\DEBUG.aspx.cs">
       <DependentUpon>DEBUG.aspx</DependentUpon>
