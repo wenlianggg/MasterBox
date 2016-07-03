@@ -6,6 +6,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace MasterBox.mbox {
 	public class MBFolder {
@@ -104,13 +107,21 @@ namespace MasterBox.mbox {
         }
 
         // Files in folder Blowfish448 Encryption
-        private static void EncryptionBlowfishFileFolder(byte[] filecontent,string key,string iv)
+        private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent,string key,string iv)
         {
-            // IV is 64bits
-            // Password is 64bits as well
+            // Password is 256bits
+            BlowfishEngine engine = new BlowfishEngine();
 
-            
-            
+            //Testing
+            byte[] output = new byte[32];
+            byte[] encryptkey = Convert.FromBase64String(key);
+            BufferedBlockCipher Blowfish = new BufferedBlockCipher(new BlowfishEngine());
+            KeyParameter blowkey = new KeyParameter(encryptkey);
+            Blowfish.Init(false, blowkey);
+            Blowfish.ProcessBytes(filecontent, 0, (int)filecontent.Length, output, 0);
+
+
+            return output;
         }
         // Files in folder Blowfish448 Decryption
         private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
@@ -124,6 +135,7 @@ namespace MasterBox.mbox {
         }
 
         public static bool UploadFileToFolder(MBFile file, string foldername) {
+            
 			try {
 				// Get Folder ID
 				SqlDataReader sqlFolderID = GetFolderInformation(file.fileusername, foldername);
@@ -134,6 +146,23 @@ namespace MasterBox.mbox {
                 User user = User.GetUser(file.fileusername);
                 int userid = (int)user.UserId;
 
+                if (CheckFolderEncryptionType(file.fileusername,foldername))
+                { 
+                    SqlDataReader encryptionInformation = GetFolderInformation(file.fileusername, foldername);
+                    if (encryptionInformation.Read())
+                    {
+                        string key = encryptionInformation["folderkey"].ToString();
+                        string iv = encryptionInformation["folderiv"].ToString();
+                        file.filecontent = EncryptionBlowfishFileFolder(file.filecontent, key, iv);
+
+                    }
+                }
+                else
+                {
+
+                }
+
+                // Insert Database into database
                 SqlCommand cmd = new SqlCommand(
 					"INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
 					+ "values(@folderid,@userid,@name,@type,@size,@data)", SQLGetMBoxConnection());
@@ -162,6 +191,29 @@ namespace MasterBox.mbox {
 			}
 
 		}
+
+        private static bool CheckFolderEncryptionType(string username,string foldername)
+        {
+            SqlDataReader data=GetFolderInformation(foldername,username);
+            MBFolder folder = new MBFolder();
+            if (data.Read())
+            {
+                int check = (int)data["folderencryption"];
+                if(check == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+         
+        }
 
 		public bool CreateNewFolder(MBFolder folder) {
 			try {
@@ -207,24 +259,26 @@ namespace MasterBox.mbox {
 
                 // Get key and iv for blowfish encryption
                 Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(folderpassbyte,newSalt,16);
-                byte[] blowkey= key.GetBytes(32);
-                byte[] blowiv = key.GetBytes(16);
+                byte[] blowkey= key.GetBytes(32); // 32bytes is 256bits
+                byte[] blowiv = key.GetBytes(16); // 16bytes is 128bits
+
+                //Debug purpose only
+                System.Diagnostics.Debug.WriteLine("Blowfish Key Length: "+blowkey.Length);
+                System.Diagnostics.Debug.WriteLine("Blowfish IV Length: " + blowiv.Length);
+
+                // Convert Key and IV to String
                 string blowkeystring = Convert.ToBase64String(blowkey);
                 string blowivstring = Convert.ToBase64String(blowiv);
                 System.Diagnostics.Debug.WriteLine("Blowfish key: " +blowkeystring);
                 System.Diagnostics.Debug.WriteLine("Blowfish IV: " + blowivstring);
 
+                // Get Password Hash
                 string passhash;
 				using (SHA512 shaCalc = new SHA512Managed()) {
 					passhash = Convert.ToBase64String(shaCalc.ComputeHash(saltpassbyte));
 				}
 
-                /*
-                // Creating of KEY and IV for blowfish
-                folder.folderBlowFishKey = folder.FolderKeyIVGeneration(64,passhash);
-                folder.folderBlowFishIV = folder.FolderKeyIVGeneration(32, saltstring);
-                */
-
+               
                 // Create Folder
                 SqlCommand cmd = new SqlCommand(
 					"INSERT INTO mb_folder(userid,foldername,folderencryption,foldersaltfunction,folderpassword,folderkey,folderiv) "
@@ -245,6 +299,7 @@ namespace MasterBox.mbox {
                 cmd.Parameters["@key"].Value = blowkeystring;
                 cmd.Parameters["@iv"].Value = blowivstring;
 				cmd.ExecuteNonQuery();
+
 				return true;
 			}
 			catch {
@@ -455,6 +510,8 @@ namespace MasterBox.mbox {
 
 			return cmd.ExecuteReader();
 		}
+
+
 
 		private static SqlConnection SQLGetMBoxConnection() {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
