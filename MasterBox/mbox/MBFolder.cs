@@ -84,6 +84,14 @@ namespace MasterBox.mbox {
 			return passwordlocationList;
 		}
 
+        // Check Folder name for creation
+        public static bool CheckFolderName(string foldername,string username)
+        {
+            ArrayList Foldernames = GenerateFolderLocation(username);
+            
+            return false;
+        }
+
         // Generate BlowFish Key
         private string FolderKeyIVGeneration(int length,string input)
         {

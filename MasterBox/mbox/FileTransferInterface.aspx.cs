@@ -146,7 +146,9 @@ namespace MasterBox
 
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
+
             bool folderCreation;
+
             if (encryptionOption.Text == "yes")
             {
                 MBFolder folder = new MBFolder();
@@ -164,14 +166,7 @@ namespace MasterBox
                 folderCreation = folder.CreateNewFolder(folder);
 
             }
-            if (folderCreation == true)
-            {
-                
-            }
-            else
-            {
-                
-            }
+
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
         }
