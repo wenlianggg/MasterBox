@@ -165,13 +165,20 @@
                     </Columns>
                 </asp:GridView>
         </div>
+
         <div class="FileTreeContainer">
+            <asp:Label ID="FolderHeader" runat="server"></asp:Label>
             <asp:Label ID="FolderFileLabel" runat="server"></asp:Label>
-            <asp:GridView ID="Folder_FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename" >
+            <asp:GridView ID="Folder_FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename,filesize" >
                     <Columns>
                         <asp:TemplateField HeaderText="File Name">
-                            <ItemTemplate>
+                            <ItemTemplate>                   
                                 <asp:LinkButton ID="LinkButton3" runat="server"  Text='<%# Eval("filename") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="File Size">
+                            <ItemTemplate>                   
+                               
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

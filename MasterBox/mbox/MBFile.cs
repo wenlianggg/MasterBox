@@ -159,18 +159,7 @@ namespace MasterBox.mbox {
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
             cmd.Prepare();
-            /*
-            SqlDataReader sqldr = cmd.ExecuteReader();
-            MBFile mbf = new MBFile();
-            if (sqldr.Read())
-            {
-                mbf.filecontent = (byte[])sqldr["filecontent"];
-                mbf.fileName = sqldr["filename"].ToString();
-                mbf.fileSize = (int)sqldr["filesize"];
-                mbf.fileType = sqldr["filetype"].ToString();
-            }
-            System.Diagnostics.Debug.WriteLine(mbf.fileName);
-            */
+         
             return cmd.ExecuteReader();
         }
 

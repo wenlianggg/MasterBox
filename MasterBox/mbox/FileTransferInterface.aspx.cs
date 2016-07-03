@@ -178,11 +178,17 @@ namespace MasterBox
 
         protected void OpenFolder(object sender, EventArgs e)
         {
+            
             // Get Folder id
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
             int folderid=Int32.Parse(lnk.Attributes["FolderID"]);
-            
+            string foldername = lnk.Text;
+
+            FolderHeader.Text = foldername;
+
+
+            /*
                 dtFolderFile = new DataTable();
                 SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
                 dtFile.Load(reader);
@@ -192,6 +198,8 @@ namespace MasterBox
                     Folder_FileTableView.DataSource = dtFolderFile;
                     Folder_FileTableView.DataBind();
                 }
+                
+               */
             
         }
         
