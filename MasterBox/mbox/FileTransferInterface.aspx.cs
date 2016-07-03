@@ -151,7 +151,7 @@ namespace MasterBox
             {
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
-                folder.folderuserName = Context.User.Identity.Name;
+                folder.folderusername = Context.User.Identity.Name;
                 folder.folderencryption = 1;
                 folderCreation = folder.CreateNewFolderWithPassword(folder,encryptionPass.Text);
             }
@@ -159,7 +159,7 @@ namespace MasterBox
             {
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
-                folder.folderuserName = Context.User.Identity.Name;
+                folder.folderusername = Context.User.Identity.Name;
                 folder.folderencryption = 0;
                 folderCreation = folder.CreateNewFolder(folder);
 

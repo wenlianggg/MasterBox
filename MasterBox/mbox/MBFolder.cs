@@ -110,11 +110,15 @@ namespace MasterBox.mbox {
         private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
             // Password is 256bits
+            
+
+            //testing
             BlowfishEngine engine = new BlowfishEngine();
 
-            //Testing
-            
+            engine.GetBlockSize();
+            System.Diagnostics.Debug.WriteLine("Block size: "+engine.GetBlockSize());
             byte[] encryptkey = Convert.FromBase64String(key);
+
             byte[] output = new byte[100];
             
             BufferedBlockCipher Blowfish = new BufferedBlockCipher(new BlowfishEngine());
@@ -148,6 +152,7 @@ namespace MasterBox.mbox {
                 User user = User.GetUser(file.fileusername);
                 int userid = (int)user.UserId;
 
+                
                 if (CheckFolderEncryptionType(file.fileusername,foldername))
                 { 
                     SqlDataReader encryptionInformation = GetFolderInformation(file.fileusername, foldername);
@@ -155,6 +160,7 @@ namespace MasterBox.mbox {
                     {
                         string key = encryptionInformation["folderkey"].ToString();
                         string iv = encryptionInformation["folderiv"].ToString();
+                        System.Diagnostics.Debug.WriteLine(Convert.ToBase64String(file.filecontent));
                         file.filecontent = EncryptionBlowfishFileFolder(file.filecontent, key, iv);
 
                     }
@@ -163,6 +169,7 @@ namespace MasterBox.mbox {
                 {
 
                 }
+                
 
                 // Insert Database into database
                 SqlCommand cmd = new SqlCommand(
