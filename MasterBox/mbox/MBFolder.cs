@@ -13,7 +13,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 namespace MasterBox.mbox {
 	public class MBFolder {
 		public string folderName { get; set; }
-		public string folderuserName { get; set; }
+		public string folderusername { get; set; }
 		public int folderencryption { get; set; }
         public string folderBlowFishKey { get; set; }
         public string folderBlowFishIV { get; set; }
@@ -107,29 +107,31 @@ namespace MasterBox.mbox {
         }
 
         // Files in folder Blowfish448 Encryption
-        private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent,string key,string iv)
+        private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
             // Password is 256bits
             BlowfishEngine engine = new BlowfishEngine();
 
             //Testing
-            byte[] output = new byte[32];
+            
             byte[] encryptkey = Convert.FromBase64String(key);
+            byte[] output = new byte[100];
+            
             BufferedBlockCipher Blowfish = new BufferedBlockCipher(new BlowfishEngine());
             KeyParameter blowkey = new KeyParameter(encryptkey);
+            
             Blowfish.Init(false, blowkey);
             Blowfish.ProcessBytes(filecontent, 0, (int)filecontent.Length, output, 0);
+            string outputstring = Convert.ToBase64String(output);
 
+            System.Diagnostics.Debug.WriteLine("Cipher Text: " + outputstring);
 
             return output;
         }
         // Files in folder Blowfish448 Decryption
         private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
         {
-            /*
-            Blowfish blow = new Blowfish();          
-            byte[] decryptedFile = blow.DecryptBytes(filecontent, key);
-            */
+
             
 
         }
@@ -218,7 +220,7 @@ namespace MasterBox.mbox {
 		public bool CreateNewFolder(MBFolder folder) {
 			try {
                 // Get User ID
-                User user = User.GetUser(folder.folderuserName);
+                User user = User.GetUser(folder.folderusername);
                 int userid = (int)user.UserId;
 
                 // Create Folder
@@ -242,7 +244,7 @@ namespace MasterBox.mbox {
 		public bool CreateNewFolderWithPassword(MBFolder folder, string folderpassword) {
 			try {
                 // Get User ID
-                User user = User.GetUser(folder.folderuserName);
+                User user = User.GetUser(folder.folderusername);
                 long userid = user.UserId;
 
                 //Generate New Salt
@@ -269,6 +271,8 @@ namespace MasterBox.mbox {
                 // Convert Key and IV to String
                 string blowkeystring = Convert.ToBase64String(blowkey);
                 string blowivstring = Convert.ToBase64String(blowiv);
+
+                //Debug
                 System.Diagnostics.Debug.WriteLine("Blowfish key: " +blowkeystring);
                 System.Diagnostics.Debug.WriteLine("Blowfish IV: " + blowivstring);
 
@@ -309,7 +313,7 @@ namespace MasterBox.mbox {
 
 		// Validate Folder Password
 		private bool ValidateFolderPassword(MBFolder folder, string folderpassword) {
-			SqlDataReader sqlFoldername = GetFolderInformation(folder.folderuserName, folder.folderName);
+			SqlDataReader sqlFoldername = GetFolderInformation(folder.folderusername, folder.folderName);
 			if (sqlFoldername.Read()) {
 				// Database Folder Password and salt
 				string folderHash = sqlFoldername["folderpassword"].ToString();
@@ -364,10 +368,10 @@ namespace MasterBox.mbox {
 
 		// Make New password for exisiting folders
 		public bool NewFolderPassword(MBFolder folder, string folderpassword) {
-			SqlDataReader sqlFoldername = GetFolderInformation(folder.folderuserName, folder.folderName);
+			SqlDataReader sqlFoldername = GetFolderInformation(folder.folderusername, folder.folderName);
 			if (sqlFoldername.Read()) {
                 // Get UserID
-                User user = User.GetUser(folder.folderuserName);
+                User user = User.GetUser(folder.folderusername);
                 long userid = user.UserId;
 
                 // Generate New salt function
@@ -414,10 +418,8 @@ namespace MasterBox.mbox {
 		// Change Folder Password
 		public bool ChangeFolderPassword(MBFolder folder, string oldfolderpassword, string newfolderpassword) {
 			if (ValidateFolderPassword(folder, oldfolderpassword)) {
-				// Get User id
-				SqlDataReader sqldr = GetUserInformation(folder.folderuserName);
-				if (sqldr.Read()) {
-					int userid = int.Parse(sqldr["userid"].ToString());
+                    // Get User id
+                    User user = User.GetUser(folder.folderusername);
 
 					// Generate New salt function
 					byte[] newFolderSalt = GenerateSaltFunction();
@@ -437,7 +439,7 @@ namespace MasterBox.mbox {
 						folderhashpassword = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
 					}
 
-					// For debug
+					// For debug purpose only
 					System.Diagnostics.Debug.WriteLine(newfolderpassword);
 					System.Diagnostics.Debug.WriteLine(newSalt);
 					System.Diagnostics.Debug.WriteLine(folderhashpassword);
@@ -454,7 +456,7 @@ namespace MasterBox.mbox {
 					cmd.Parameters["@newfolderpass"].Value = folderhashpassword;
 					cmd.Parameters["@newSalt"].Value = newSalt;
 					cmd.Parameters["@foldername"].Value = folder.folderName;
-					cmd.Parameters["@userid"].Value = userid;
+					cmd.Parameters["@userid"].Value =user.UserId;
 					cmd.ExecuteNonQuery();
 
 					// Clear sensitive data
@@ -464,10 +466,7 @@ namespace MasterBox.mbox {
 					folderhashpassword = string.Empty;
 
 					return true;
-				}
-				else {
-					return false;
-				}
+				
 			}
 			else {
 				return false;
@@ -480,33 +479,21 @@ namespace MasterBox.mbox {
 			using (RNGCryptoServiceProvider rngcsp = new RNGCryptoServiceProvider()) {
 				rngcsp.GetBytes(newSalt);
 			}
-
 			return newSalt;
 		}
 
-		// Get User Information from Database
-		private static SqlDataReader GetUserInformation(string username) {
-			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_auth WHERE username = @uname", SQLGetMBoxConnection());
-			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
-			cmd.Parameters.Add(unameParam);
-			cmd.Parameters["@uname"].Value = username;
-			cmd.Prepare();
-			return cmd.ExecuteReader();
-		}
 
 		// Get User Information from Database
 		private static SqlDataReader GetFolderInformation(string username, string foldername) {
-			// Get Userid
-			SqlDataReader sqldr = GetUserInformation(username);
-			sqldr.Read();
-			int userid = int.Parse(sqldr["userid"].ToString());
+            // Get Userid
+            User user = User.GetUser(username);
 
-			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE foldername = @foldername and userid= @user", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE foldername = @foldername and userid= @user", SQLGetMBoxConnection());
 			cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
 			cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
 			cmd.Prepare();
 			cmd.Parameters["@foldername"].Value = foldername;
-			cmd.Parameters["@user"].Value = userid;
+			cmd.Parameters["@user"].Value = user.UserId;
 
 			return cmd.ExecuteReader();
 		}
