@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,16 @@ namespace MasterBox
 		void Page_Load(object sender, EventArgs e) {
 			if (Context.User.Identity.IsAuthenticated) {
 				LoggedIn.Text = Context.User.Identity.Name;
+				User usr = User.GetUser(Context.User.Identity.Name);
+				UserFullName.Text = usr.FirstName + " " + usr.LastName;
+				UnameDropdown.Text = usr.UserName;
+			} else {
+				UserLogs.Visible = false;
+				OTPConf.Visible = false;
+				Subscriptions.Visible = false;
+				Options.Visible = false;
+				UserSettings.Visible = false;
+				SignOutLink.Visible = false;
 			}
 		}
 

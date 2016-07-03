@@ -11,10 +11,6 @@ namespace MasterBox.Auth {
 	public partial class DEBUG : System.Web.UI.Page {
 		protected void Page_Load(object sender, EventArgs e) {
 			User usr = Auth.User.GetUser(5);
-			usr.FirstName = "Dominic";
-			usr.LastName = "Gian";
-			usr.Email = "dominic@misterbox.com";
-			usr.AesKey = UserCrypto.GenerateEntropy(32);
 			Response.Write(usr.UserId + "<br>");
 			Response.Write(usr.UserName + "<br>");
 			Response.Write(usr.FirstName + "<br>");

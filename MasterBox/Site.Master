@@ -74,11 +74,12 @@
 
 						<li class="dropdown" id="Options" runat="server">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<asp:Label ID="UnameDropdown" runat="server" />
+								<asp:Label ID="UserFullName" runat="server" />
 								<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
+								<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
 									<li role="separator" class="divider"></li>
+								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
 								<li runat="server" id="UserSettings"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
 								<li runat="server" id="OTPConf"><a runat="server" href="#">Configure 2FA</a></li>
 								<li runat="server" id="UserLogs"><a runat="server" href="#">Account Logs</a></li>
