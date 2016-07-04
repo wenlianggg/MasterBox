@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
@@ -148,27 +144,36 @@ namespace MasterBox
         {
 
             bool folderCreation;
-
-            if (encryptionOption.Text == "yes")
+            bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
+            if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
             {
-                MBFolder folder = new MBFolder();
-                folder.folderName = FolderName.Text;
-                folder.folderusername = Context.User.Identity.Name;
-                folder.folderencryption = 1;
-                folderCreation = folder.CreateNewFolderWithPassword(folder,encryptionPass.Text);
+                if (encryptionOption.Text == "yes")
+                {
+                    MBFolder folder = new MBFolder();
+                    folder.folderName = FolderName.Text;
+                    folder.folderusername = Context.User.Identity.Name;
+                    folder.folderencryption = 1;
+                    folderCreation = folder.CreateNewFolderWithPassword(folder, encryptionPass.Text);
+                }
+                else
+                {
+                    MBFolder folder = new MBFolder();
+                    folder.folderName = FolderName.Text;
+                    folder.folderusername = Context.User.Identity.Name;
+                    folder.folderencryption = 0;
+                    folderCreation = folder.CreateNewFolder(folder);
+
+                }
+
+
             }
             else
             {
-                MBFolder folder = new MBFolder();
-                folder.folderName = FolderName.Text;
-                folder.folderusername = Context.User.Identity.Name;
-                folder.folderencryption = 0;
-                folderCreation = folder.CreateNewFolder(folder);
-
+                // Pop up box
             }
-
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
+
         }
 
         protected void OpenFolder(object sender, EventArgs e)
@@ -179,7 +184,6 @@ namespace MasterBox
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
             int folderid=Int32.Parse(lnk.Attributes["FolderID"]);
             string foldername = lnk.Text;
-
             FolderHeader.Text = foldername;
 
 
@@ -194,9 +198,10 @@ namespace MasterBox
                     Folder_FileTableView.DataBind();
                 }
                 
-               */
+            */
             
         }
-        
+
+
     }
 }

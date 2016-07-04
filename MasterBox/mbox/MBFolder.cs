@@ -9,6 +9,7 @@ using System.Text;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
+using System.Web.Services;
 
 namespace MasterBox.mbox {
 	public class MBFolder {
@@ -84,12 +85,19 @@ namespace MasterBox.mbox {
 			return passwordlocationList;
 		}
 
+        [System.Web.Services.WebMethod]
         // Check Folder name for creation
         public static bool CheckFolderName(string foldername,string username)
         {
             ArrayList Foldernames = GenerateFolderLocation(username);
-            
-            return false;
+            for(int i = 0; i<Foldernames.Count; i++)
+            {
+                if(Foldernames[i].ToString() == foldername)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // Generate BlowFish Key

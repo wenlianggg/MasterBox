@@ -145,6 +145,7 @@ namespace MasterBox.mbox {
 			return cmd.ExecuteReader();
 		}
 
+        // Retrieve to display file from folder
         public static SqlDataReader GetFileFromFolderToDisplay(string username,int folderid)
         {
             User user = User.GetUser(username);
@@ -163,6 +164,7 @@ namespace MasterBox.mbox {
             return cmd.ExecuteReader();
         }
 
+        // Download File
 		public static MBFile RetrieveFile(string username, long fileid) {
 			// Get User ID
 			User user = User.GetUser(username);

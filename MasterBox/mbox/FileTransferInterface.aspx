@@ -8,7 +8,8 @@
         <li data-action="delete">Delete</li>
     </ul>
 
-
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+</asp:ScriptManager>
 
     <div class="MainContent">
         <!--Upload Modal -->
@@ -57,7 +58,7 @@
                     </div>
                     <div class="modal-body">
                         <span>Folder Name:</span>
-                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" />
+                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control"/>               
                         <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="FolderName"
@@ -97,7 +98,7 @@
                             ErrorMessage="Password does not match"
                             ForeColor="Red" Enabled="false">
                         </asp:RequiredFieldValidator>
-
+                        <asp:Label ID="Test" runat="server"></asp:Label>
                     </div>
                     <div class="modal-footer">
                         <asp:Button ID="NewFolder" runat="server" Text="Create" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
