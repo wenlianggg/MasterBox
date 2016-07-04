@@ -11,7 +11,7 @@ namespace MasterBox.Auth {
 			if (User.Identity.IsAuthenticated) {
 				Response.Redirect("~/Default.aspx");
 			}
-			if (Request.QueryString["username"] != null) {
+			if (Request.QueryString["username"] != null && !Page.IsPostBack) {
 				UserName.Text = Request.QueryString["username"];
 			}
 		}
@@ -23,13 +23,19 @@ namespace MasterBox.Auth {
 				Msg.Text = "CAPTCHA is valid";
 				Page.Validate();
 				if (Page.IsValid) {
-					User newuser = new User(UserName.Text,
-											FirstName.Text,
-											LastName.Text,
-											DateTime.Now,
-											UserEmail.Text,
-											false);
-					Msg.Text = newuser.UserId.ToString();
+					try {
+						User newuser = Auth.User.CreateUser(UserName.Text,
+												UserPass.Text,
+												FirstName.Text,
+												LastName.Text,
+												DateTime.Now,
+												UserEmail.Text,
+												false);
+						Msg.Text = newuser.UserId.ToString();
+					} catch (UserAlreadyExistsException) {
+						Msg.Text = "User already exists";
+						return;
+					}
 				} else {
 					Msg.Text = "An error has occured while registering.";
 				}

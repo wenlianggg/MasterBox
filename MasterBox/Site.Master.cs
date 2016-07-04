@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,7 +12,9 @@ namespace MasterBox {
 		protected void Page_Load(object sender, EventArgs e) {
 			IPAddr.Text = "Connected from: " + GetIPAddress();
 			if (Context.User.Identity.IsAuthenticated) {
-				UnameDropdown.Text = Context.User.Identity.Name;
+				User usr = User.GetUser(Context.User.Identity.Name);
+				UserFullName.Text = usr.FirstName + " " + usr.LastName;
+				UnameDropdown.Text = usr.UserName;
 				SignInText.Text = "File Browser";
 				SignInLink.HRef = "~/mbox/FileTransferInterface.aspx";
 				IPAddr.Text = "Connected from: " + GetIPAddress();
@@ -34,6 +38,39 @@ namespace MasterBox {
 				}
 			}
 			return Context.Request.ServerVariables["REMOTE_ADDR"];
+		}
+	}
+
+	public class TimingModule : IHttpModule {
+		public void Dispose() {
+		}
+
+		public void Init(HttpApplication context) {
+			context.BeginRequest += OnBeginRequest;
+			context.EndRequest += OnEndRequest;
+		}
+
+		void OnBeginRequest(object sender, System.EventArgs e) {
+			if (HttpContext.Current.Request.IsLocal
+				&& HttpContext.Current.IsDebuggingEnabled) {
+				var stopwatch = new Stopwatch();
+				HttpContext.Current.Items["Stopwatch"] = stopwatch;
+				stopwatch.Start();
+			}
+		}
+
+		void OnEndRequest(object sender, System.EventArgs e) {
+			if (HttpContext.Current.Request.IsLocal
+				&& HttpContext.Current.IsDebuggingEnabled) {
+				Stopwatch stopwatch =
+				  (Stopwatch)HttpContext.Current.Items["Stopwatch"];
+				stopwatch.Stop();
+
+				TimeSpan ts = stopwatch.Elapsed;
+				string elapsedTime = String.Format("{0}ms", ts.TotalMilliseconds);
+
+				HttpContext.Current.Response.Write("<p>" + elapsedTime + "</p>");
+			}
 		}
 	}
 }

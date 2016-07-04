@@ -42,7 +42,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
+                    <a class="navbar-brand" runat="server" href="~/">MasterBox Files</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -52,7 +52,21 @@
 							<li><a runat="server" href="~/Pricing">Pricing</a></li>
 						</ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="navbar-brand" href="~/auth/signout" runat="server">Sign Out</a></li>
+						<li class="dropdown" id="Options" runat="server">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<asp:Label ID="UserFullName" runat="server" />
+								<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
+									<li role="separator" class="divider"></li>
+								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
+								<li runat="server" id="UserSettings"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
+								<li runat="server" id="OTPConf"><a runat="server" href="#">Configure 2FA</a></li>
+								<li runat="server" id="UserLogs"><a runat="server" href="#">Account Logs</a></li>
+									<li role="separator" class="divider"></li>
+								<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
+							</ul>
+						</li>
                     </ul>
                 </div>
             </div>

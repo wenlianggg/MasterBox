@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+/// Author: Goh Wen Liang (154473G) 
+
 namespace MasterBox.Auth {
 	[Serializable]
 	internal class UserNotFoundException : Exception {
@@ -17,6 +19,7 @@ namespace MasterBox.Auth {
 		}
 	}
 
+	[Serializable]
 	internal class DatabaseUpdateFailureException : Exception {
 		public DatabaseUpdateFailureException() {
 		}
@@ -28,6 +31,21 @@ namespace MasterBox.Auth {
 		}
 
 		protected DatabaseUpdateFailureException(SerializationInfo info, StreamingContext context) : base(info, context) {
+		}
+	}
+
+	[Serializable]
+	internal class UserAlreadyExistsException : Exception {
+		public UserAlreadyExistsException() {
+		}
+
+		public UserAlreadyExistsException(string message) : base(message) {
+		}
+
+		public UserAlreadyExistsException(string message, Exception innerException) : base(message, innerException) {
+		}
+
+		protected UserAlreadyExistsException(SerializationInfo info, StreamingContext context) : base(info, context) {
 		}
 	}
 }

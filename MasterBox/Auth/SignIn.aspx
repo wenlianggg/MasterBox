@@ -74,7 +74,7 @@
 				Text="Sign Up"
 				ValidationGroup="valGroup1"
 				CssClass="btn btn-success regBtn"
-				OnClick="registrationStart"
+				OnClick="Registration_Start"
 				runat="server" />
 		</div>
 	</div>

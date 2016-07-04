@@ -20,7 +20,7 @@ namespace MasterBox.mbox {
 		public static bool UploadNewFile(MBFile file) {
 			try {
                 // Get User ID
-                User user = new User(file.fileusername);			
+                User user = User.GetUser(file.fileusername);			
 
                 file.filekey = FileKeyIvGenerator(32);
                 file.fileiv = FileKeyIvGenerator(16);
@@ -134,7 +134,7 @@ namespace MasterBox.mbox {
         // Retrieve to display file
         public static SqlDataReader GetFileToDisplay(string username) {
             // Get User ID
-            User user = new User(username);
+            User user = User.GetUser(username);
 
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid and folderid is null", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
@@ -147,7 +147,7 @@ namespace MasterBox.mbox {
 
         public static SqlDataReader GetFileFromFolderToDisplay(string username,int folderid)
         {
-            User user = new User(username);
+            User user = User.GetUser(username);
             System.Diagnostics.Debug.WriteLine(folderid);
             System.Diagnostics.Debug.WriteLine(user.UserId);
             SqlCommand cmd = new SqlCommand(
@@ -159,24 +159,13 @@ namespace MasterBox.mbox {
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
             cmd.Prepare();
-            /*
-            SqlDataReader sqldr = cmd.ExecuteReader();
-            MBFile mbf = new MBFile();
-            if (sqldr.Read())
-            {
-                mbf.filecontent = (byte[])sqldr["filecontent"];
-                mbf.fileName = sqldr["filename"].ToString();
-                mbf.fileSize = (int)sqldr["filesize"];
-                mbf.fileType = sqldr["filetype"].ToString();
-            }
-            System.Diagnostics.Debug.WriteLine(mbf.fileName);
-            */
+         
             return cmd.ExecuteReader();
         }
 
 		public static MBFile RetrieveFile(string username, long fileid) {
 			// Get User ID
-			User user = new User(username);
+			User user = User.GetUser(username);
 			SqlCommand cmd = new SqlCommand("SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid", SQLGetMBoxConnection());
 			SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
 			SqlParameter fileidParam = new SqlParameter("@fileid", SqlDbType.BigInt, 8);
