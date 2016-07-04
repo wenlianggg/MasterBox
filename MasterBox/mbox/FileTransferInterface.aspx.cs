@@ -25,7 +25,6 @@ namespace MasterBox
                 // Fill up file and folder data on the display
                 FillDataFile();                             
                 FillDataFolder();
-                
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
@@ -58,6 +57,31 @@ namespace MasterBox
             {
                 FolderTableView.DataSource = dtFolder;
                 FolderTableView.DataBind();
+            }
+        }
+        protected void OpenFolder(object sender, EventArgs e)
+        {
+            // Get Folder id
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
+            int folderid = Int32.Parse(lnk.Attributes["FolderID"]);
+            string foldername = lnk.Text;
+            FolderHeader.Text = foldername;
+            FillFileDataFolder(folderid);
+
+
+        }
+
+        private void FillFileDataFolder(int folderid)
+        {
+            dtFolderFile = new DataTable();
+            SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name,folderid);
+            dtFolderFile.Load(reader);
+
+            if (dtFolderFile.Rows.Count > 0)
+            {
+                GridView1.DataSource = dtFolderFile;
+                GridView1.DataBind();
             }
         }
 
@@ -175,33 +199,6 @@ namespace MasterBox
             Response.Redirect(Request.RawUrl);
 
         }
-
-        protected void OpenFolder(object sender, EventArgs e)
-        {
-            
-            // Get Folder id
-            LinkButton lnk = (LinkButton)sender;
-            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-            int folderid=Int32.Parse(lnk.Attributes["FolderID"]);
-            string foldername = lnk.Text;
-            FolderHeader.Text = foldername;
-
-
-            /*
-                dtFolderFile = new DataTable();
-                SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
-                dtFile.Load(reader);
-
-                if (dtFolderFile.Rows.Count > 0)
-                {
-                    Folder_FileTableView.DataSource = dtFolderFile;
-                    Folder_FileTableView.DataBind();
-                }
-                
-            */
-            
-        }
-
 
     }
 }

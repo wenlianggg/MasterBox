@@ -8,8 +8,8 @@
         <li data-action="delete">Delete</li>
     </ul>
 
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
-</asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+    </asp:ScriptManager>
 
     <div class="MainContent">
         <!--Upload Modal -->
@@ -34,12 +34,12 @@
                         </asp:RequiredFieldValidator>
                         <br />
                         <span>Choose Location: </span>
-                        <asp:DropDownList ID="UploadLocation" runat="server" 
+                        <asp:DropDownList ID="UploadLocation" runat="server"
                             AutoEventWireup="true" EnableViewState="true">
                         </asp:DropDownList>
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation"  AutoPostBack="true"/>
+                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true" />
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="modal-body">
                         <span>Folder Name:</span>
-                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control"/>               
+                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" />
                         <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
                             ValidationGroup="NewFolder"
                             ControlToValidate="FolderName"
@@ -131,14 +131,14 @@
             <div style="margin-right: 2.5%;">
                 <a onclick="">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-               
+
                 <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#sharefolderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
-                </asp:LinkButton>                    
+                </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewFolder" runat="server" data-toggle="modal" data-target="#folderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" />
-                </asp:LinkButton>                             
-                <asp:LinkButton ID="UploadFile" runat="server" data-toggle="modal" data-target="#uploadModel" >
+                </asp:LinkButton>
+                <asp:LinkButton ID="UploadFile" runat="server" data-toggle="modal" data-target="#uploadModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static" />
                 </asp:LinkButton>
             </div>
@@ -146,44 +146,50 @@
 
         <div class="FileContainer">
             <h1>Files</h1>
-                <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
-                    <Columns>
-                        <asp:TemplateField HeaderText="File" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-                <br />
-                <asp:GridView ID="FolderTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername" >
-                    <Columns>
-                        <asp:TemplateField HeaderText="Folder">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="LinkButton2" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+            <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
+                <Columns>
+                    <asp:TemplateField HeaderText="Master Folder" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+            <br />
+            <asp:GridView ID="FolderTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
+                <Columns>
+                    <asp:TemplateField HeaderText="Folders">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+            <br />
+            
+
         </div>
 
         <div class="FileTreeContainer">
-            <asp:Label ID="FolderHeader" runat="server"></asp:Label>
-            <asp:Label ID="FolderFileLabel" runat="server"></asp:Label>
-            <asp:GridView ID="Folder_FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename,filesize" >
-                    <Columns>
-                        <asp:TemplateField HeaderText="File Name">
-                            <ItemTemplate>                   
-                                <asp:LinkButton ID="LinkButton3" runat="server"  Text='<%# Eval("filename") %>'></asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="File Size">
-                            <ItemTemplate>                   
-                               
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
+            <asp:Label ID="FolderHeader" runat="server" Font-Size="X-Large"></asp:Label>
+            <br />
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
+                <Columns>
+                    <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="LinkButton3" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="File-Size" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="LinkButton4" runat="server"  Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False"></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
             </asp:GridView>
+
+
+
         </div>
     </div>
 
