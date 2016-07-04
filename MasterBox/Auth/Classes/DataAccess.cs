@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 
 /// Author: Goh Wen Liang (154473G) 
- 
+
 namespace MasterBox.Auth {
 	internal class DataAccess : IDisposable {
 		private static string connString = ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString;
@@ -37,6 +37,23 @@ namespace MasterBox.Auth {
 		/*
 		 *  STORED FUNCTIONS FOR UPDATING DATABASE
 		 */
+		
+		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, int loglevel) {
+			// Update database values
+			SqlCommand cmd = new SqlCommand(
+				"INSERT INTO mb_logs (userid, logip, logdesc, loglevel) VALUES (@userid, @logip, @logdesc, @loglevel)", sqlConn);
+			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
+			cmd.Parameters.Add(new SqlParameter("@ipaddress", SqlDbType.VarChar, 45));
+			cmd.Parameters.Add(new SqlParameter("@logdesc", SqlDbType.VarChar, 255));
+			cmd.Parameters.Add(new SqlParameter("@loglevel", SqlDbType.Int, 0));
+			cmd.Prepare();
+
+			cmd.Parameters["@userid"].Value = userid;
+			cmd.Parameters["@ipaddress"].Value = ipaddress;
+			cmd.Parameters["@logdesc"].Value = description;
+			cmd.Parameters["@loglevel"].Value = loglevel;
+			return cmd.ExecuteNonQuery();
+		}
 
 		internal int SqlUpdateHashSalt(string username, string hash, string salt, bool useDefaultDA = true) {
 			// Update database values

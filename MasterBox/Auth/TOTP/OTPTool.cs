@@ -34,7 +34,7 @@ namespace MasterBox.Auth.TOTP {
 		protected void Dispose(bool disposing) {
 
 			if (disposed)
-				return;
+				throw new ObjectDisposedException("OTPTool");
 
 			if (disposing) {
 				if (_secret != null)

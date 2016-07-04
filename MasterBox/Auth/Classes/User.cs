@@ -70,7 +70,6 @@ namespace MasterBox.Auth {
 			if (_da == null)
 				_da = new DataAccess();
 			_aesIV = _da.SqlGetUserIV(userid);
-			SqlDataReader sqldr = _da.SqlGetUser(userid);
 			_userid = userid;
 			RefreshFields();
 		}
@@ -103,7 +102,7 @@ namespace MasterBox.Auth {
 		public bool RefreshFields() {
 			try {
 				using (UserCrypto uc = new UserCrypto(_aesIV)) {
-					SqlDataReader sqldr = _da.SqlGetUser(_userid);
+					using (SqlDataReader sqldr = _da.SqlGetUser(_userid))
 					if (sqldr.Read()) {
 						_username = sqldr["username"].ToString();
 						_fName = uc.Decrypt((byte[]) sqldr["fNameEnc"]);
@@ -164,26 +163,23 @@ namespace MasterBox.Auth {
 
 		protected internal static bool Exists(int userid) {
 			try {
-				using (DataAccess da = new DataAccess()) {
-					SqlDataReader sqldr = da.SqlGetUser(userid);
-					if (sqldr.Read()) {
+				using (DataAccess da = new DataAccess())
+				using (SqlDataReader sqldr = da.SqlGetUser(userid))
+					if (sqldr.Read())
 						return true;
-					}
-				}
+					else
+						return false;
 			} catch (UserNotFoundException) {
 				return false;
 			}
-			return false;
 		}
 
 		protected internal static bool Exists(string username) {
 			try {
-				using (DataAccess da = new DataAccess()) {
-					SqlDataReader sqldr = da.SqlGetUser(username);
-					if (sqldr.Read()) {
-						return true;
-					}
-				}
+				using (DataAccess da = new DataAccess())
+				using (SqlDataReader sqldr = da.SqlGetUser(username))
+				if (sqldr.Read())
+					return true;
 			} catch (UserNotFoundException) {
 				return false;
 			}
