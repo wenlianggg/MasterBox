@@ -171,7 +171,7 @@
         </div>
 
         <div class="FileTreeContainer">
-            <asp:Label ID="FolderHeader" runat="server" Font-Size="X-Large"></asp:Label>
+            <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
                 <Columns>
@@ -182,7 +182,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="File-Size" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton4" runat="server"  Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False"></asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton4" runat="server"  Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False" EnableTheming="False" EnableViewState="False"></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
