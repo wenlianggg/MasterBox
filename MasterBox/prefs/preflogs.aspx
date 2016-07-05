@@ -1,10 +1,11 @@
 ﻿<%@ Page Title="Access Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
 
 <asp:Content ID="AccessLogs" ContentPlaceHolderID="Preferences" runat="server">
-	<div class="jumbotron">
-		<h1><%: Title %></h1>
-		<p>Periodically review your access logs to ensure account security</p>
-	</div>
+        <div class="page-header">
+          <h1><%: Page.Title %>
+              <small>Periodically review your access logs for security</small>
+          </h1>
+        </div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
         <li>Security</li>
