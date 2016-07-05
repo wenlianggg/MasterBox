@@ -13,6 +13,24 @@ namespace MasterBox.mbox {
     public partial class FileSetting {
         
         /// <summary>
+        /// FBItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor FBItem;
+        
+        /// <summary>
+        /// FileBrowser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FileBrowser;
+        
+        /// <summary>
         /// Preferences control.
         /// </summary>
         /// <remarks>

@@ -1,5 +1,10 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/filestore/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
+<asp:Content ID="FileTransferNavBar" ContentPlaceHolderID="NavBar" runat="server">
+    <li><a runat="server" id="FBItem" href="~/prefs/prefgeneral.aspx">
+	<asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
+</asp:Content>
+
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
     <ul class='custom-menu'>
         <li data-action="upload" data-toggle="modal" data-target="#uploadModel">Upload</li>

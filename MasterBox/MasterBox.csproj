@@ -177,7 +177,8 @@
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Auth\LoginStyle.css" />
     <Content Include="Auth\changepw.aspx" />
-    <Content Include="Auth\otpsetup.aspx" />
+    <Content Include="CSS\Preferences.css" />
+    <Content Include="prefs\prefotp.aspx" />
     <Content Include="Auth\otpverify.aspx" />
     <Content Include="prefs\preflogs.aspx" />
     <Content Include="Auth\signout.aspx" />
@@ -314,12 +315,12 @@
     <Compile Include="Auth\changepw.aspx.designer.cs">
       <DependentUpon>changepw.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Auth\otpsetup.aspx.cs">
-      <DependentUpon>otpsetup.aspx</DependentUpon>
+    <Compile Include="prefs\prefotp.aspx.cs">
+      <DependentUpon>prefotp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auth\otpsetup.aspx.designer.cs">
-      <DependentUpon>otpsetup.aspx</DependentUpon>
+    <Compile Include="prefs\prefotp.aspx.designer.cs">
+      <DependentUpon>prefotp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\otpverify.aspx.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>

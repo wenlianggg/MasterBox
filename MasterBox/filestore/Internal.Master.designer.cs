@@ -31,22 +31,13 @@ namespace MasterBox {
         protected global::System.Web.UI.HtmlControls.HtmlForm InteralForm;
         
         /// <summary>
-        /// FBItem control.
+        /// NavBar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor FBItem;
-        
-        /// <summary>
-        /// FileBrowser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FileBrowser;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder NavBar;
         
         /// <summary>
         /// Options control.
