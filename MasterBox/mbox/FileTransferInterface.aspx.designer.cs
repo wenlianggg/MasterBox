@@ -148,6 +148,42 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button NewFolder;
         
         /// <summary>
+        /// Delete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Delete;
+        
+        /// <summary>
+        /// DeleteLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DeleteLocation;
+        
+        /// <summary>
+        /// DeleteView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView DeleteView;
+        
+        /// <summary>
+        /// DeleteFile&Folder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton DeleteFile&Folder;
+        
+        /// <summary>
         /// CreateNewSharedFolder control.
         /// </summary>
         /// <remarks>

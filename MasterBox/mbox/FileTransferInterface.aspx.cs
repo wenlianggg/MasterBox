@@ -29,7 +29,9 @@ namespace MasterBox
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
                 
-                
+                DeleteLocation.DataSource=MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
+                DeleteLocation.DataBind();
+
             }
             
 
@@ -194,11 +196,16 @@ namespace MasterBox
             else
             {
                 // Pop up box
+                
             }
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
 
         }
 
+        protected void Delete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

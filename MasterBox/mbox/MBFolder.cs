@@ -10,6 +10,7 @@ using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using System.Web.Services;
+using BlowFishCS;
 
 namespace MasterBox.mbox {
 	public class MBFolder {
@@ -123,30 +124,13 @@ namespace MasterBox.mbox {
         }
 
         // Files in folder Blowfish448 Encryption
-        private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
+        private static void EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
-            // Password is 256bits
-            
-
-            //testing
-            BlowfishEngine engine = new BlowfishEngine();
-
-            engine.GetBlockSize();
-            System.Diagnostics.Debug.WriteLine("Block size: "+engine.GetBlockSize());
-            byte[] encryptkey = Convert.FromBase64String(key);
-
-            byte[] output = new byte[100];
-            
-            BufferedBlockCipher Blowfish = new BufferedBlockCipher(new BlowfishEngine());
-            KeyParameter blowkey = new KeyParameter(encryptkey);
-            
-            Blowfish.Init(false, blowkey);
-            Blowfish.ProcessBytes(filecontent, 0, (int)filecontent.Length, output, 0);
-            string outputstring = Convert.ToBase64String(output);
-
-            System.Diagnostics.Debug.WriteLine("Cipher Text: " + outputstring);
-
-            return output;
+            // Play Testing
+            BlowFish b = new BlowFish(key);
+            byte[] blowiv = System.Text.ASCIIEncoding.UTF8.GetBytes(iv);
+            b.IV = blowiv;
+            b.Encrypt_CBC(filecontent);
         }
         // Files in folder Blowfish448 Decryption
         private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
