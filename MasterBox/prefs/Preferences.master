@@ -8,7 +8,7 @@
                 <li><a runat="server" href="PrefGeneral.aspx">General Settings</a></li>
                 <li><a runat="server" href="PrefProfile.aspx">Profile Preferences</a></li>
                 <li><a runat="server" href="PrefPassword.aspx">Password Preferences</a></li>
-                <li><a runat="server" href="PrefOtpsetup.aspx">2nd Factor Authentication</a></li>
+                <li><a runat="server" href="PrefOtpsetup.aspx">2FA Settings</a></li>
                 <li><a runat="server" href="PrefLogs.aspx">Access Logs</a></li>
                 <li><a runat="server" href="PrefSubscription.aspx">Subscription</a></li>
             </ul>

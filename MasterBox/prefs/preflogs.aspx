@@ -1,12 +1,9 @@
-﻿<%@ Page Title="Access Logs" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="logs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
+﻿<%@ Page Title="Access Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
 
-<asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
-	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
-</asp:Content>
-<asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="AccessLogs" ContentPlaceHolderID="Preferences" runat="server">
 	<div class="jumbotron">
 		<h1><%: Title %></h1>
-		<p>Welcome to MasterBox, please login or register to access our features!</p>
+		<p>Periodically review your access logs to ensure account security</p>
 	</div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
 		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>

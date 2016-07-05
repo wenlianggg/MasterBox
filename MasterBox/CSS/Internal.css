@@ -244,8 +244,9 @@
 .SettingSelectionPanel {
     height: 100%;
     position:absolute;
-    width: 80%;
-    left: 20%;
+    padding: 2% 1% 1% 2%;
+    width:80%;
+    left:20%;
     float: left;
     background-color: #fdfbfb;
 }

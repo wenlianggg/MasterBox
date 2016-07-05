@@ -50,7 +50,7 @@
 							<li><a runat="server" href="~/Pricing">Pricing</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a runat="server" id="FBItem" href="~/Auth/signin.aspx">
+							<li><a runat="server" id="FBItem" href="~/filestore/FileTransferInterface.aspx">
 								<asp:Label ID="FileBrowser" runat="server" Text="File Browser" /></a></li>
 
 						<li class="dropdown" id="Options" runat="server">
