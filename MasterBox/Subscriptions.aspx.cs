@@ -14,7 +14,7 @@ namespace MasterBox
             // Progress Bar Values //
             double freespace = 5;
             double actualspace = 1000 + freespace;
-            double spaceused = 2;
+            double spaceused = 1005;
             double percentused = (spaceused / actualspace) * 100;
             double availablespace = actualspace - spaceused;
             var roundedused = Math.Round(percentused, 1);

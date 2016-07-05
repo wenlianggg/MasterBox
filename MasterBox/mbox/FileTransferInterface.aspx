@@ -121,17 +121,55 @@
                     <div class="modal-body">
                     </div>
                     <div class="modal-footer">
+                        <asp:Button ID="Delete" runat="server" Text="Delete" OnClick="Delete_Click" ValidationGroup="DeleteValidation" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--Shared Folder Modal -->
+        <div id="deleteModel" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>Choose Location: </span>
+                        <asp:DropDownList ID="DeleteLocation" runat="server"
+                            AutoEventWireup="true" EnableViewState="true">
+                        </asp:DropDownList>
+                        <br />
+                        <span>Choose File to delete: </span>
+                        <asp:GridView ID="DeleteView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename">
+                            <Columns>
+                                <asp:TemplateField HeaderText="File-Name">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="FolderLinkButton" runat="server" Text='<%# Eval("filename") %>' FolderID='<%# Eval("fileid") %>'></asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+
+
+                    </div>
+                    <div class="modal-footer">
                     </div>
                 </div>
 
             </div>
         </div>
 
+
+
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <a onclick="">
-                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" /></a>
-
+                <asp:LinkButton ID="DeleteFileFolder" runat="server" data-toggle="modal" data-target="#deleteModel">
+                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" />
+                </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#sharefolderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
                 </asp:LinkButton>
@@ -150,7 +188,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton1" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FileLinkButton" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -158,7 +196,7 @@
             <br />
             <asp:GridView ID="FolderTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
                 <Columns>
-                    <asp:TemplateField HeaderText="Folders">
+                    <asp:TemplateField HeaderText="Folders" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
                             <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                         </ItemTemplate>
@@ -166,7 +204,7 @@
                 </Columns>
             </asp:GridView>
             <br />
-            
+
 
         </div>
 
@@ -182,7 +220,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="File-Size" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton4" runat="server"  Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False" EnableTheming="False" EnableViewState="False"></asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton4" runat="server" Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False" EnableTheming="False" EnableViewState="False"></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
