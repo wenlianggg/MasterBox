@@ -161,7 +161,7 @@ namespace MasterBox.mbox {
                         string key = encryptionInformation["folderkey"].ToString();
                         string iv = encryptionInformation["folderiv"].ToString();
                         System.Diagnostics.Debug.WriteLine(Convert.ToBase64String(file.filecontent));
-                        file.filecontent = EncryptionBlowfishFileFolder(file.filecontent, key, iv);
+                        
 
                     }
                 }
