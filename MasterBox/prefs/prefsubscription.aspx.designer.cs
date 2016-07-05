@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox {
+namespace MasterBox.mbox {
     
     
-    public partial class Subscriptions {
+    public partial class PrefSubscription {
         
         /// <summary>
         /// TotalSpace control.

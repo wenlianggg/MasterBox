@@ -13,12 +13,12 @@ namespace MasterBox.mbox {
     public partial class FileSetting {
         
         /// <summary>
-        /// Child_Profile control.
+        /// Preferences control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder Child_Profile;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder Preferences;
     }
 }

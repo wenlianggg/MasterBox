@@ -16,7 +16,7 @@ namespace MasterBox {
 				UserFullName.Text = usr.FirstName + " " + usr.LastName;
 				UnameDropdown.Text = usr.UserName;
 				SignInText.Text = "File Browser";
-				SignInLink.HRef = "~/mbox/FileTransferInterface.aspx";
+				SignInLink.HRef = "~/filestore/FileTransferInterface.aspx";
 				IPAddr.Text = "Connected from: " + GetIPAddress();
 			} else {
 				SignInText.Text = "Login / Register";

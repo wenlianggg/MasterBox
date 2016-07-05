@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/FileSetting.Master" AutoEventWireup="true" CodeBehind="FileSetting_Profile.aspx.cs" Inherits="MasterBox.FileSetting_Profile" %>
+﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.FileSetting_Profile" %>
 
-<asp:Content ID="SetProfile" ContentPlaceHolderID="Child_Profile" runat="server">
+<asp:Content ID="SetProfile" ContentPlaceHolderID="Preferences" runat="server">
     <div class="Setting_Profile">
         <h1>Profile</h1>
         <hr class="aboutRowHR" />

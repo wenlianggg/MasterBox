@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
+﻿<%@ Page Language="C#" Title="" MasterPageFile="~/filestore/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
     <ul class='custom-menu'>

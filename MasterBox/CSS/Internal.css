@@ -189,18 +189,22 @@
     position: absolute;
     height: 100%;
     float: left;
-    background: linear-gradient(to bottom right, #4C7DB4, #6f97c3);
-    background-color: #4C7DB4;
+    background: linear-gradient(90deg, #114271, #4C7DB4);
+    background-color: #5a5a5a;
+    -webkit-box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
+    -moz-box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
+    box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
+    z-index:10;
 }
 
     .SettingsPanel h3 {
-        border-bottom: 1px solid #3c6490;
+        border-bottom: 1px solid #8f8f8f;
         margin: 0;
         text-align: center;
         padding: 5% 2% 4% 2%;
         color: white;
-        background: linear-gradient(to bottom right, #4C7DB4, #6f97c3);
-        background-color: #4C7DB4;
+        background: linear-gradient(90deg, #114271, #4C7DB4);
+        background-color: #5a5a5a;
         -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
         -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
@@ -213,32 +217,40 @@
     }
 
         .SettingsPanel ul li {
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid #8b8b8b;
             margin: 0 auto;
             text-align: center;
-            padding: 5%;
             background-color: #fdfbfb;
         }
 
             .SettingsPanel ul li a {
-                font-size: 1.2em;
+                display:block;
+                height:100%;
+                width:100%;
+                font-size: 1.3em;
                 cursor: pointer;
+                padding: 7%;
                 text-decoration: none;
                 color: black;
                 font-weight: 500;
             }
 
+             .SettingsPanel ul li a:hover {
+                background: linear-gradient(90deg, #114271, #4C7DB4);
+                background-color: #5a5a5a;
+                color:white;
+            }
+
 .SettingSelectionPanel {
     height: 100%;
     position:absolute;
-    width:80%;
-    left:20%;
+    width: 80%;
+    left: 20%;
     float: left;
     background-color: #fdfbfb;
 }
 
 .Setting_Profile {
-    border: 1px solid black;
     height: 100%;
     width: 100%;
     float:left;

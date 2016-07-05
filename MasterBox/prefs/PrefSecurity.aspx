@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mbox/FileSetting.master" AutoEventWireup="true" CodeBehind="FileSetting_Security.aspx.cs" Inherits="MasterBox.mbox.FileSetting_Security" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsecurity.aspx.cs" Inherits="MasterBox.mbox.FileSetting_Security" %>
 
-<asp:Content ID="SetSecurity" ContentPlaceHolderID="Child_Profile" runat="server">
+<asp:Content ID="SetSecurity" ContentPlaceHolderID="Preferences" runat="server">
 
     <div id="FolderNewPass" class="modal fade" role="dialog">
         <div class="modal-dialog">

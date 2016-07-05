@@ -188,8 +188,9 @@
     <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
     <Content Include="images\work_in_progress.jpg" />
-    <Content Include="mbox\FileSetting_General.aspx" />
-    <Content Include="mbox\FileSetting_Profile.aspx" />
+    <Content Include="prefs\prefsubscription.aspx" />
+    <Content Include="prefs\prefgeneral.aspx" />
+    <Content Include="prefs\prefprofile.aspx" />
     <Content Include="images\encryption.png" />
     <Content Include="images\Logged\contact.png" />
     <Content Include="images\Logged\File.png" />
@@ -204,7 +205,7 @@
     <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
     <Content Include="images\MasterBoxSlidergreenExtended.png" />
     <Content Include="images\MasterBoxSlidergreyExtended.png" />
-    <Content Include="mbox\FileSetting_Security.aspx" />
+    <Content Include="prefs\prefsecurity.aspx" />
     <Content Include="PaymentSuccess.aspx" />
     <Content Include="Pricing.aspx" />
     <Content Include="About.aspx" />
@@ -214,7 +215,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="CSS\Site.css" />
-    <Content Include="mbox\FileTransferInterface.aspx" />
+    <Content Include="filestore\FileTransferInterface.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -224,8 +225,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="mbox\Internal.Master" />
-    <Content Include="mbox\FileSetting.master" />
+    <Content Include="filestore\Internal.Master" />
+    <Content Include="prefs\Preferences.master" />
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -277,7 +278,6 @@
     <Content Include="Global.asax" />
     <None Include="Scripts\_references.js" />
     <Content Include="Site.Master" />
-    <Content Include="Subscriptions.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -360,44 +360,51 @@
       <DependentUpon>signup2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Classes\Exceptions.cs" />
-    <Compile Include="mbox\blowfish.cs" />
-    <Compile Include="mbox\FileSetting_Security.aspx.cs">
-      <DependentUpon>FileSetting_Security.aspx</DependentUpon>
+    <Compile Include="filestore\blowfish.cs" />
+    <Compile Include="prefs\prefsubscription.aspx.cs">
+      <DependentUpon>prefsubscription.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileSetting_Security.aspx.designer.cs">
-      <DependentUpon>FileSetting_Security.aspx</DependentUpon>
+    <Compile Include="prefs\prefsubscription.aspx.designer.cs">
+      <DependentUpon>prefsubscription.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mbox\MBFile.cs" />
-    <Compile Include="mbox\FileSetting.master.cs">
-      <DependentUpon>FileSetting.master</DependentUpon>
+    <Compile Include="prefs\prefsecurity.aspx.cs">
+      <DependentUpon>prefsecurity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileSetting.master.designer.cs">
-      <DependentUpon>FileSetting.master</DependentUpon>
+    <Compile Include="prefs\prefsecurity.aspx.designer.cs">
+      <DependentUpon>prefsecurity.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mbox\FileSetting_General.aspx.cs">
-      <DependentUpon>FileSetting_General.aspx</DependentUpon>
+    <Compile Include="filestore\MBFile.cs" />
+    <Compile Include="prefs\Preferences.master.cs">
+      <DependentUpon>Preferences.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileSetting_General.aspx.designer.cs">
-      <DependentUpon>FileSetting_General.aspx</DependentUpon>
+    <Compile Include="prefs\Preferences.master.designer.cs">
+      <DependentUpon>Preferences.master</DependentUpon>
     </Compile>
-    <Compile Include="mbox\FileSetting_Profile.aspx.cs">
-      <DependentUpon>FileSetting_Profile.aspx</DependentUpon>
+    <Compile Include="prefs\prefgeneral.aspx.cs">
+      <DependentUpon>prefgeneral.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileSetting_Profile.aspx.designer.cs">
-      <DependentUpon>FileSetting_Profile.aspx</DependentUpon>
+    <Compile Include="prefs\prefgeneral.aspx.designer.cs">
+      <DependentUpon>prefgeneral.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mbox\Internal.Master.cs">
+    <Compile Include="prefs\prefprofile.aspx.cs">
+      <DependentUpon>prefprofile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prefs\prefprofile.aspx.designer.cs">
+      <DependentUpon>prefprofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="filestore\Internal.Master.cs">
       <DependentUpon>Internal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\Internal.Master.designer.cs">
+    <Compile Include="filestore\Internal.Master.designer.cs">
       <DependentUpon>Internal.Master</DependentUpon>
     </Compile>
-    <Compile Include="mbox\MBFolder.cs" />
+    <Compile Include="filestore\MBFolder.cs" />
     <Compile Include="PaymentSuccess.aspx.cs">
       <DependentUpon>PaymentSuccess.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -435,11 +442,11 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mbox\FileTransferInterface.aspx.cs">
+    <Compile Include="filestore\FileTransferInterface.aspx.cs">
       <DependentUpon>FileTransferInterface.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mbox\FileTransferInterface.aspx.designer.cs">
+    <Compile Include="filestore\FileTransferInterface.aspx.designer.cs">
       <DependentUpon>FileTransferInterface.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -459,13 +466,6 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Subscriptions.aspx.cs">
-      <DependentUpon>Subscriptions.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Subscriptions.aspx.designer.cs">
-      <DependentUpon>Subscriptions.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

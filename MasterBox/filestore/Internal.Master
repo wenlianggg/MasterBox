@@ -5,7 +5,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %></title>
+    <title><%: Page.Title %> - MasterBox</title>
 	<!-- JS Scripts -->
 	<asp:PlaceHolder runat="server">
     <%: Scripts.Render("~/bundles/modernizr") %>
@@ -60,10 +60,10 @@
 							<ul class="dropdown-menu">
 								<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
 									<li role="separator" class="divider"></li>
-								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
+								<li runat="server" id="Subscriptions"><a runat="server" href="~/Subscriptions">Subscriptions</a></li>
 								<li runat="server" id="ChangePW"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
 								<li runat="server" id="OTPConf"><a runat="server" href="~/Auth/otpsetup.aspx">Configure 2FA</a></li>
-                                <li runat="server" id="Setting"><a runat="server" href="~/mbox/FileSetting_Profile.aspx">Profile Settings</a></li>
+                                <li runat="server" id="Setting"><a runat="server" href="~/prefs/prefgeneral.aspx">Preferences</a></li>
 								<li runat="server" id="UserLogs"><a runat="server" href="~/Auth/logs.aspx">Account Logs</a></li>
 	                                <li role="separator" class="divider"></li>
 								<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
