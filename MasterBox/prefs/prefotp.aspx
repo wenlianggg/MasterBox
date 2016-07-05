@@ -19,8 +19,8 @@
 			<h3 class="panel-title">Two-Factor Authentication Setup</h3>
 		</div>
         <div class="panel-body">
-            <div class="setupRow">
-                <div class="setupRowLeft">
+            <div class="seowtupRow">
+                <div class="setupRLeft">
                     <p><strong>Use the QR code to configure your Two-Factor Authentication on your TOTP app on multiple devices</strong></p>
                     <ol>
                         <li>Download the any TOTP app, E.g. Authy, Google Authenticator, Etc.</li>
@@ -43,6 +43,6 @@
                 <div class="setupRowRight" runat="server" id="QRCodeHolder">
                 </div>
             </div>
-        </div>
-    </div>
+		</div>
+       </div>
 </asp:Content>
