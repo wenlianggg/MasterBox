@@ -167,7 +167,7 @@
 
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <asp:LinkButton ID="DeleteFile&Folder" runat="server" data-toggle="modal" data-target="#deleteModel">
+                <asp:LinkButton ID="DeleteFileFolder" runat="server" data-toggle="modal" data-target="#deleteModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" />
                 </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#sharefolderModel">
