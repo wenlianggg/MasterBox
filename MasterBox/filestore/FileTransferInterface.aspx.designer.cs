@@ -166,13 +166,22 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.DropDownList DeleteLocation;
         
         /// <summary>
-        /// DeleteView control.
+        /// Testing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView DeleteView;
+        protected global::System.Web.UI.WebControls.Label Testing;
+        
+        /// <summary>
+        /// GridView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
         
         /// <summary>
         /// DeleteFileFolder control.

@@ -13,6 +13,7 @@ namespace MasterBox
 		DataTable dtFile;
 		DataTable dtFolder;
         DataTable dtFolderFile;
+        DataTable dtDelete;
 
 		SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -206,6 +207,24 @@ namespace MasterBox
         protected void Delete_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void DeleteLocation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // To test out if i get the value
+            e.ToString();
+
+            Testing.Text = "Working Status";
+
+            dtDelete = new DataTable();
+            SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
+            dtDelete.Load(reader);
+
+            if (dtDelete.Rows.Count > 0)
+            {
+                GridView2.DataSource = dtFile;
+                GridView2.DataBind();
+            }
         }
     }
 }
