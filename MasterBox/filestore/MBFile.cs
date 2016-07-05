@@ -191,9 +191,8 @@ namespace MasterBox.mbox {
 				return null;
 			return mbf;
 		}
-
-
-		private static SqlConnection SQLGetMBoxConnection() {
+     
+        private static SqlConnection SQLGetMBoxConnection() {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
 			sqlConnection.Open();
 			return sqlConnection;

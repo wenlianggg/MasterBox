@@ -101,6 +101,47 @@ namespace MasterBox.mbox {
             return true;
         }
 
+        // Download File From Folder
+        public static MBFile RetrieveFolderFile(string username, long fileid,long folderid)
+        {
+            // Get User ID
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid", SQLGetMBoxConnection());
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
+            SqlParameter fileidParam = new SqlParameter("@fileid", SqlDbType.BigInt, 8);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Parameters["@fileid"].Value = fileid;
+            cmd.Prepare();
+
+            // Tempo
+            SqlDataReader sqlFoldername = GetFolderName(username, folderid);
+            sqlFoldername.Read();
+            string foldername = sqlFoldername["foldername"].ToString();
+
+            SqlDataReader sqlFolder = GetFolderInformation(username, foldername);
+            sqlFolder.Read();
+            string key = sqlFolder["folderkey"].ToString();
+            string iv = sqlFolder["folderiv"].ToString();
+
+            // File Retrieval
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            MBFile mbf = new MBFile();
+            if (sqldr.Read())
+            {
+                mbf.filecontent = DecryptionBlowfishFileFolder((byte[])sqldr["filecontent"], key, iv);
+                mbf.fileName = sqldr["filename"].ToString();
+                mbf.fileSize = (int)sqldr["filesize"];
+                mbf.fileType = sqldr["filetype"].ToString();
+            }
+            if (mbf.fileSize == 0)
+                return null;
+            return mbf;
+        }
+
+
         // Generate BlowFish Key
         private string FolderKeyIVGeneration(int length,string input)
         {
@@ -124,105 +165,95 @@ namespace MasterBox.mbox {
         }
 
         // Files in folder Blowfish448 Encryption
-        private static void EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
+        private static byte[] EncryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
-            // Play Testing
+            // Declare Blowfish
             BlowFish b = new BlowFish(key);
-            byte[] blowiv = System.Text.ASCIIEncoding.UTF8.GetBytes(iv);
-            b.IV = blowiv;
-            b.Encrypt_CBC(filecontent);
+            // Get IV 
+            byte[] blowiv = Convert.FromBase64String(iv);
+            b.IV=blowiv;
+            // Encrypt using CBC
+            byte[]encryptedFile= b.Encrypt_CBC(filecontent);
+            // Debug
+            string ct = Convert.ToBase64String(encryptedFile);
+            System.Diagnostics.Debug.WriteLine("Cipher Text: "+ct);
+
+            return encryptedFile;
         }
+
         // Files in folder Blowfish448 Decryption
-        private static void DecryptionBlowfishFileFolder(byte[] filecontent, string key)
+        private static byte[] DecryptionBlowfishFileFolder(byte[] filecontent, string key,string iv)
         {
+            // Declare Blowfish
+            BlowFish b = new BlowFish(key);
+            // Get IV 
+            byte[] blowiv = Convert.FromBase64String(iv);
+            b.IV = blowiv;
+            // Encrypt using CBC
+            byte[] decryptedfile = b.Decrypt_CBC(filecontent);
+            // Debug
+            string pt = Convert.ToBase64String(decryptedfile);
+            System.Diagnostics.Debug.WriteLine("Plain Text: " + pt);
 
-            
-
+            return decryptedfile;
         }
 
         public static bool UploadFileToFolder(MBFile file, string foldername) {
-            
-			try {
-				// Get Folder ID
-				SqlDataReader sqlFolderID = GetFolderInformation(file.fileusername, foldername);
-				sqlFolderID.Read();
-				int folderid = int.Parse(sqlFolderID["folderid"].ToString());
+            try
+            {
+                // Get Folder ID
+                SqlDataReader sqlFolder = GetFolderInformation(file.fileusername, foldername);
+                sqlFolder.Read();
+                int folderid = int.Parse(sqlFolder["folderid"].ToString());
+                bool folderencryption = Convert.ToBoolean(sqlFolder["folderencryption"]);
+                System.Diagnostics.Debug.WriteLine(folderencryption);
 
                 // Get User ID
                 User user = User.GetUser(file.fileusername);
                 int userid = (int)user.UserId;
 
-                
-                if (CheckFolderEncryptionType(file.fileusername,foldername))
+                // Encryption With Blowfish if there is a password
+                if (folderencryption)
                 { 
-                    SqlDataReader encryptionInformation = GetFolderInformation(file.fileusername, foldername);
-                    if (encryptionInformation.Read())
-                    {
-                        string key = encryptionInformation["folderkey"].ToString();
-                        string iv = encryptionInformation["folderiv"].ToString();
-                        System.Diagnostics.Debug.WriteLine(Convert.ToBase64String(file.filecontent));
-                        
-
-                    }
-                }
-                else
-                {
-
+                    string key = sqlFolder["folderkey"].ToString();
+                    string iv = sqlFolder["folderiv"].ToString();
+                    file.filecontent=EncryptionBlowfishFileFolder(file.filecontent,key,iv);
                 }
                 
 
                 // Insert Database into database
                 SqlCommand cmd = new SqlCommand(
-					"INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
-					+ "values(@folderid,@userid,@name,@type,@size,@data)", SQLGetMBoxConnection());
-				cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
-				cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
-				cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
-				cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
-				cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
-				cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
-				cmd.Prepare();
-				cmd.Parameters["@folderid"].Value = folderid;
-				cmd.Parameters["@userid"].Value = userid;
-				cmd.Parameters["@name"].Value = file.fileName;
-				cmd.Parameters["@type"].Value = file.fileType;
-				cmd.Parameters["@size"].Value = file.fileSize;
-				cmd.Parameters["@data"].Value = file.filecontent;
+                    "INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
+                    + "values(@folderid,@userid,@name,@type,@size,@data)", SQLGetMBoxConnection());
+                    cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+                    cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+                    cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
+                    cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
+                    cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
+                    cmd.Prepare();
+                    cmd.Parameters["@folderid"].Value = folderid;
+                    cmd.Parameters["@userid"].Value = userid;
+                    cmd.Parameters["@name"].Value = file.fileName;
+                    cmd.Parameters["@type"].Value = file.fileType;
+                    cmd.Parameters["@size"].Value = file.fileSize;
+                    cmd.Parameters["@data"].Value = file.filecontent;
 
-				cmd.ExecuteNonQuery();
-                System.Diagnostics.Debug.WriteLine("Pass");
-				return true;
-			}
-			catch
+                    cmd.ExecuteNonQuery();
+                    System.Diagnostics.Debug.WriteLine("Pass");
+
+                    return true;
+                
+            }
+            catch
             {
                 System.Diagnostics.Debug.WriteLine("fail");
                 return false;
-			}
+            }
 
 		}
 
-        private static bool CheckFolderEncryptionType(string username,string foldername)
-        {
-            SqlDataReader data=GetFolderInformation(foldername,username);
-            MBFolder folder = new MBFolder();
-            if (data.Read())
-            {
-                int check = (int)data["folderencryption"];
-                if(check == 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-         
-        }
+
 
 		public bool CreateNewFolder(MBFolder folder) {
 			try {
@@ -268,9 +299,9 @@ namespace MasterBox.mbox {
 
                 // Get key and iv for blowfish encryption
                 Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(folderpassbyte,newSalt,16);
-                byte[] blowkey= key.GetBytes(32); // 32bytes is 256bits
-                byte[] blowiv = key.GetBytes(16); // 16bytes is 128bits
-
+                byte[] blowkey= key.GetBytes(56); // 32bytes is 256bits
+                byte[] blowiv = key.GetBytes(8); // 8bytes is 64bits
+           
                 //Debug purpose only
                 System.Diagnostics.Debug.WriteLine("Blowfish Key Length: "+blowkey.Length);
                 System.Diagnostics.Debug.WriteLine("Blowfish IV Length: " + blowiv.Length);
@@ -490,7 +521,7 @@ namespace MasterBox.mbox {
 		}
 
 
-		// Get User Information from Database
+		// Get Folder Information from Database
 		private static SqlDataReader GetFolderInformation(string username, string foldername) {
             // Get Userid
             User user = User.GetUser(username);
@@ -504,10 +535,23 @@ namespace MasterBox.mbox {
 
 			return cmd.ExecuteReader();
 		}
+        // Tempo
+        private static SqlDataReader GetFolderName(string username, long folderid)
+        {
+            // Get Userid
+            User user = User.GetUser(username);
 
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE folderid = @folderid and userid= @user", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.VarChar, 50));
+            cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.Parameters["@user"].Value = user.UserId;
 
+            return cmd.ExecuteReader();
+        }
 
-		private static SqlConnection SQLGetMBoxConnection() {
+        private static SqlConnection SQLGetMBoxConnection() {
 			SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
 			sqlConnection.Open();
 			return sqlConnection;

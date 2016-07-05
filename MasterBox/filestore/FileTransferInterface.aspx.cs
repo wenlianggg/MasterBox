@@ -88,16 +88,16 @@ namespace MasterBox
             }
         }
 
-        // Trying to do download button
+        // Download Files from Master Folder
         protected void DownloadFile(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-			Download(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
+            DownloadFile(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
         }
 
 
-        private void Download(string username, int id)
+        private void DownloadFile(string username, int id)
         {
 			MBFile mbf = MBFile.RetrieveFile(username, id);
 			Response.ClearContent();
@@ -109,14 +109,35 @@ namespace MasterBox
 			Response.Flush();
 			Response.Close();
 		}
+
+        // Download file from folders
+        protected void DownloadFolderFile(object sender, EventArgs e)
+        {
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
+            DownloadFolderFile(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]), Int32.Parse(lnk.Attributes["FolderID"]));
+
+        }
+        private void DownloadFolderFile(string username, int id,int folderid)
+        {
+            MBFile mbf = MBFolder.RetrieveFolderFile(username, id, folderid);
+            Response.ClearContent();
+            Response.ContentType = mbf.fileType;
+            Response.AddHeader("Content-Disposition", "attachment;filename=\"" + mbf.fileName + "\"");
+            Response.AddHeader("Content-Length", mbf.fileSize.ToString());
+
+            Response.BinaryWrite(mbf.filecontent);
+            Response.Flush();
+            Response.Close();
+        }
+
+        // Upload a new file
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
             if (FileUpload.HasFile)
             {
                 if (UploadLocation.SelectedValue == "==Master Folder==")
                 {
-                    try
-                    {
                         MBFile file = new MBFile();
                         file.fileusername = Context.User.Identity.Name;
                         file.fileName = Path.GetFileName(FileUpload.FileName);
@@ -126,22 +147,14 @@ namespace MasterBox
                         file.filecontent = br.ReadBytes((int)strm.Length);
                         file.fileSize = FileUpload.PostedFile.ContentLength;
                         bool uploadStatus = MBFile.UploadNewFile(file);
-
                         if (uploadStatus == true)
                         {
                             // Update the file table
                             FillDataFile();
                         }
-                    }
-                    catch
-                    {
-                      
-                    }
                 }
                 else
                 {
-                    try
-                    {
                         string foldername = UploadLocation.SelectedValue;
                         MBFile file = new MBFile();
                         file.fileusername = Context.User.Identity.Name;
@@ -156,17 +169,14 @@ namespace MasterBox
                         {
                             FillDataFile();
                         }
-                    }
-                    catch
-                    {
-                       
-                    }
+
                 }
             }
 
 
         }
 
+        // Creating a folder
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
 
