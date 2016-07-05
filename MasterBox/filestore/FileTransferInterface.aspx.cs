@@ -95,8 +95,6 @@ namespace MasterBox
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
             DownloadFile(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
         }
-
-
         private void DownloadFile(string username, int id)
         {
 			MBFile mbf = MBFile.RetrieveFile(username, id);
@@ -184,25 +182,11 @@ namespace MasterBox
             bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
             if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
             {
-                if (encryptionOption.Text == "yes")
-                {
+                System.Diagnostics.Debug.WriteLine("Password:" + encryptionPass.Text);
                     MBFolder folder = new MBFolder();
                     folder.folderName = FolderName.Text;
                     folder.folderusername = Context.User.Identity.Name;
-                    folder.folderencryption = 1;
-                    folderCreation = folder.CreateNewFolderWithPassword(folder, encryptionPass.Text);
-                }
-                else
-                {
-                    MBFolder folder = new MBFolder();
-                    folder.folderName = FolderName.Text;
-                    folder.folderusername = Context.User.Identity.Name;
-                    folder.folderencryption = 0;
-                    folderCreation = folder.CreateNewFolder(folder);
-
-                }
-
-
+                    folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);              
             }
             else
             {
