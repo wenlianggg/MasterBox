@@ -127,7 +127,7 @@
 
             </div>
         </div>
-        <!--Shared Folder Modal -->
+        <!--Delete Modal -->
         <div id="deleteModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -140,20 +140,21 @@
                     <div class="modal-body">
                         <span>Choose Location: </span>
                         <asp:DropDownList ID="DeleteLocation" runat="server"
-                            AutoEventWireup="true" EnableViewState="true">
+                            AutoEventWireup="true" EnableViewState="true"
+                            OnSelectedIndexChanged="DeleteLocation_SelectedIndexChanged">
                         </asp:DropDownList>
                         <br />
                         <span>Choose File to delete: </span>
-                        <asp:GridView ID="DeleteView" runat="server" AutoGenerateColumns="False" DataKeyNames="filename">
+                        <asp:Label ID="Testing" runat="server"></asp:Label>
+                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
                             <Columns>
-                                <asp:TemplateField HeaderText="File-Name">
+                                <asp:TemplateField HeaderText="Folders" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="FolderLinkButton" runat="server" Text='<%# Eval("filename") %>' FolderID='<%# Eval("fileid") %>'></asp:LinkButton>
+                                        <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
-
 
                     </div>
                     <div class="modal-footer">
