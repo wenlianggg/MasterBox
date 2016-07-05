@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/FileSetting.Master" AutoEventWireup="true" CodeBehind="FileSetting_Profile.aspx.cs" Inherits="MasterBox.FileSettingInterface" %>
+﻿<%@ Page Language="C#" Title="" MasterPageFile="~/mbox/FileSetting.Master" AutoEventWireup="true" CodeBehind="FileSetting_Profile.aspx.cs" Inherits="MasterBox.FileSetting_Profile" %>
 
 <asp:Content ID="SetProfile" ContentPlaceHolderID="Child_Profile" runat="server">
     <div class="Setting_Profile">
@@ -15,7 +15,7 @@
                                 <label>Username: </label>
                             </td>
                             <td>
-                                <asp:Label ID="username" runat="server" Font-Size="Medium"></asp:Label>
+                                <asp:TextBox CssClass="form-control" ID="username" runat="server" Font-Size="Medium"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -23,7 +23,7 @@
                                 <label>E-mail: </label>
                             </td>
                             <td>
-                                <asp:Label ID="email" runat="server" Font-Size="Medium"></asp:Label>
+                                <asp:TextBox CssClass="form-control" ID="email" runat="server" Font-Size="Medium"></asp:TextBox>
                             </td>
                         </tr>
                     </table>

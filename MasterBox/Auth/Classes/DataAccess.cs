@@ -43,13 +43,13 @@ namespace MasterBox.Auth {
 			SqlCommand cmd = new SqlCommand(
 				"INSERT INTO mb_logs (userid, logip, logdesc, loglevel) VALUES (@userid, @logip, @logdesc, @loglevel)", sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
-			cmd.Parameters.Add(new SqlParameter("@ipaddress", SqlDbType.VarChar, 45));
+			cmd.Parameters.Add(new SqlParameter("@logip", SqlDbType.VarChar, 45));
 			cmd.Parameters.Add(new SqlParameter("@logdesc", SqlDbType.VarChar, 255));
 			cmd.Parameters.Add(new SqlParameter("@loglevel", SqlDbType.Int, 0));
 			cmd.Prepare();
 
 			cmd.Parameters["@userid"].Value = userid;
-			cmd.Parameters["@ipaddress"].Value = ipaddress;
+			cmd.Parameters["@logip"].Value = ipaddress;
 			cmd.Parameters["@logdesc"].Value = description;
 			cmd.Parameters["@loglevel"].Value = loglevel;
 			return cmd.ExecuteNonQuery();
@@ -147,11 +147,27 @@ namespace MasterBox.Auth {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT userid, username, hash, salt FROM mb_users WHERE username = @uname",
 				sqlConn);
-			SqlParameter unameParam = new SqlParameter("@uname", SqlDbType.VarChar, 30);
-			cmd.Parameters.Add(unameParam);
+			cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
 			cmd.Prepare();
 			cmd.Parameters["@uname"].Value = username;
 			return cmd.ExecuteReader();
+		}
+
+		internal DataTable SqlGetLogs(int userid) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT userid, logdesc, logip, logdesc, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
+				sqlConn);
+			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
+			cmd.Prepare();
+			cmd.Parameters["@userid"].Value = userid;
+			DataTable data = new DataTable();
+			data.Load(cmd.ExecuteReader());
+			data.Columns["userid"].ColumnName = "User Name";
+			data.Columns["logdesc"].ColumnName = "Log Description";
+			data.Columns["logip"].ColumnName = "Logged IP";
+			data.Columns["loglevel"].ColumnName = "Log Level";
+			data.Columns["logtime"].ColumnName = "Time";
+			return data;
 		}
 
 

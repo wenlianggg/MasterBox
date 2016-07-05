@@ -10,18 +10,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox
-{
-    public partial class FileSettingInterface : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            username.Text = Context.User.Identity.Name;
-
-			string email = Auth.User.GetUser(Context.User.Identity.Name).Email;
-            
+namespace MasterBox {
+    public partial class FileSetting_Profile : System.Web.UI.Page {
+        protected void Page_Load(object sender, EventArgs e) {
+			User CurrentUser = Auth.User.GetUser(Context.User.Identity.Name);
+			username.Text = CurrentUser.UserName;
+			email.Text = CurrentUser.Email;
         }
-
-
     }
 }

@@ -86,6 +86,9 @@ namespace MasterBox.Auth {
 						// Empty out strings and sensitive data arrays
 						ClearSensitiveData(userInputBytes, combinedBytes, password, userHash);
 
+						// Call the logger to log a failed verification attempt
+						Logger.Instance.FailedLoginAttempt(User.ConvertToId(username));
+						
 						// Password incorrect
 						return false;
 					}
@@ -138,23 +141,25 @@ namespace MasterBox.Auth {
 
 		public bool ValidateTOTP(string username, string otp) {
 			int otpEntered;
-			using (OTPTool otptool = new OTPTool())
-			using (DataAccess da = new DataAccess())
-			using (SqlDataReader sqldr = da.SqlGetAuth(username))
-				if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
-					string totpsecret = sqldr["totpsecret"].ToString();
-					otptool.SecretBase32 = totpsecret;
+			if (otp.Length == 6) {
+				using (OTPTool otptool = new OTPTool())
+				using (DataAccess da = new DataAccess())
+				using (SqlDataReader sqldr = da.SqlGetAuth(username))
+					if (sqldr.Read() && int.TryParse(otp, out otpEntered)) {
+						string totpsecret = sqldr["totpsecret"].ToString();
+						otptool.SecretBase32 = totpsecret;
 
-					System.Diagnostics.Debug.WriteLine(string.Join(" ", otptool.OneTimePasswordRange));
+						System.Diagnostics.Debug.WriteLine(string.Join(" ", otptool.OneTimePasswordRange));
 
-					foreach (int SingleOTP in otptool.OneTimePasswordRange) {
-						if (SingleOTP == otpEntered) {
-							// Success
-							System.Diagnostics.Debug.WriteLine(true);
-							return true;
+						foreach (int SingleOTP in otptool.OneTimePasswordRange) {
+							if (SingleOTP == otpEntered) {
+								// Success
+								System.Diagnostics.Debug.WriteLine(true);
+								return true;
+							}
 						}
 					}
-				}
+			}
 			// Failure
 			return false;
 		}

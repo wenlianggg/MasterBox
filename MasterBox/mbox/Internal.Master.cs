@@ -12,19 +12,10 @@ namespace MasterBox
     public partial class Internal : System.Web.UI.MasterPage
     {
 		void Page_Load(object sender, EventArgs e) {
-			if (Context.User.Identity.IsAuthenticated) {
-				LoggedIn.Text = Context.User.Identity.Name;
-				User usr = User.GetUser(Context.User.Identity.Name);
-				UserFullName.Text = usr.FirstName + " " + usr.LastName;
-				UnameDropdown.Text = usr.UserName;
-			} else {
-				UserLogs.Visible = false;
-				OTPConf.Visible = false;
-				Subscriptions.Visible = false;
-				Options.Visible = false;
-				UserSettings.Visible = false;
-				SignOutLink.Visible = false;
-			}
+			LoggedIn.Text = Context.User.Identity.Name;
+			User usr = User.GetUser(Context.User.Identity.Name);
+			UserFullName.Text = usr.FirstName + " " + usr.LastName;
+			UnameDropdown.Text = usr.UserName;
 		}
 
 		void Logout_Click(object sender, EventArgs e) {

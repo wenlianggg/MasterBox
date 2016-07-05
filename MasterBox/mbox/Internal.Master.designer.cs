@@ -31,6 +31,24 @@ namespace MasterBox {
         protected global::System.Web.UI.HtmlControls.HtmlForm InteralForm;
         
         /// <summary>
+        /// FBItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor FBItem;
+        
+        /// <summary>
+        /// FileBrowser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FileBrowser;
+        
+        /// <summary>
         /// Options control.
         /// </summary>
         /// <remarks>
@@ -76,13 +94,13 @@ namespace MasterBox {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Subscriptions;
         
         /// <summary>
-        /// UserSettings control.
+        /// ChangePW control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl UserSettings;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ChangePW;
         
         /// <summary>
         /// OTPConf control.
@@ -92,6 +110,15 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl OTPConf;
+        
+        /// <summary>
+        /// Setting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Setting;
         
         /// <summary>
         /// UserLogs control.

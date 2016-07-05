@@ -57,7 +57,6 @@
 .SideMenuBar ul li a {
     display: block;
     color: ghostwhite;
-    padding: 8px 0 8px 16px;
     font-size: 120%;
     text-decoration: none;
     text-align: left;
@@ -100,7 +99,7 @@
 /*Main Content*/
 .MainContent {
     float: left;
-    width: 77%;
+    width: 100%;
     display: block;
     height: 100vh;
     margin-top: 50px;
@@ -115,9 +114,9 @@
     padding: 1%;
     color: white;
     background-color: #4C7DB4;
-    -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
 }
 
     .FileToolBar img {
@@ -186,10 +185,11 @@
 
 /*Setting Pane*/
 .SettingsPanel {
-    width: 30%;
+    width: 20%;
+    position: absolute;
     height: 100%;
     float: left;
-    background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
+    background: linear-gradient(to bottom right, #4C7DB4, #6f97c3);
     background-color: #4C7DB4;
 }
 
@@ -199,11 +199,11 @@
         text-align: center;
         padding: 5% 2% 4% 2%;
         color: white;
-        background: linear-gradient(to bottom right, #4C7DB4, ##6f97c3);
+        background: linear-gradient(to bottom right, #4C7DB4, #6f97c3);
         background-color: #4C7DB4;
-        -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
-        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+        -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
+        -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
     }
 
     .SettingsPanel ul {
@@ -230,7 +230,9 @@
 
 .SettingSelectionPanel {
     height: 100%;
-    width: 70%;
+    position:absolute;
+    width:80%;
+    left:20%;
     float: left;
     background-color: #fdfbfb;
 }
@@ -238,6 +240,8 @@
 .Setting_Profile {
     border: 1px solid black;
     height: 100%;
+    width: 100%;
+    float:left;
     padding: 0 2% 1% 2%;
     overflow: scroll;
 }
@@ -269,4 +273,5 @@
 /*Overiding CSS - May cause problems*/
 .row {
     padding: 2%;
+
 }

@@ -100,7 +100,9 @@
         <div class="row">
             <div class="SettingsRow">
                 <h4 class="SettingHr">User Password Settings</h4>
-                <a class="btn btn-default" href="../Auth/changepw.aspx">Change Password</a>
+                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/changepw.aspx">Change Password</asp:LinkButton>
+                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/otpsetup.aspx">Configure 2FA</asp:LinkButton>
+                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/logs.aspx">Access Logs</asp:LinkButton>
             </div>
             <div class="SettingsRow">
                 <h4 class="SettingHr">Folder Password Settings</h4>

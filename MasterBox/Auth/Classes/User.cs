@@ -33,15 +33,17 @@ namespace MasterBox.Auth {
 		private string _aesIV;
 
 		public static User GetUser(int userid) {
+			User target;
 			if (UserList == null) {
 				UserList = new Dictionary<int, User>();
 			}
-			User target;
-			if (UserList.TryGetValue(userid, out target)) {
+			if (UserList.ContainsKey(userid)) {
+				UserList.TryGetValue(userid, out target);
 				return target;
 			} else {
 				target = new User(userid);
-				UserList.Add(target.UserId, target);
+				if (!UserList.ContainsKey(userid))
+					UserList.Add(userid, target);
 				return GetUser(userid);
 			}
 		}
@@ -154,6 +156,16 @@ namespace MasterBox.Auth {
 		protected internal static int ConvertToId(string username) {
 			using (DataAccess da = new DataAccess()) {
 				return da.SqlGetUserId(username);
+			}
+		}
+
+		protected internal static string ConvertToUname(string username) {
+			using (DataAccess da = new DataAccess()) {
+				SqlDataReader sqldr = da.SqlGetUser(username);
+				if (sqldr.Read())
+					return sqldr["username"].ToString();
+				else
+					return "";
 			}
 		}
 

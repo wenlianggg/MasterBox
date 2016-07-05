@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -8,14 +9,14 @@ namespace MasterBox.Auth {
 
 	public class Logger {
 
-		public enum LogLevel {Normal, Changed, Notable, Error, Global}
+		public enum LogLevel {Normal, Security, Changed, Error, Global}
 		/*
 		 * Log Levels
-		 * 1 - Normal login logging
+		 * 0 - Normal login logging
+		 * 1 - Security related access
 		 * 2 - Something was changed
-		 * 3 - Notable issue has occured
-		 * 4 - A severe error occured
-		 * 5 - A large change was done
+		 * 3 - Client error occured
+		 * 4 - Server error occured
 		 */
 
 		private DataAccess _da;
@@ -51,7 +52,27 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		internal void FailedLoginAttempt(int userid) {
+			string description = "Unsuccessful login attempt";
+			string ipaddress = GetIP();
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertLogEntry(userid, ipaddress, description, 1);
+			} 
+		}
 
+		private string GetIP() {
+			HttpContext context = HttpContext.Current;
+			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+			if (!string.IsNullOrEmpty(ipAddress)) {
+				string[] addresses = ipAddress.Split(',');
+				if (addresses.Length != 0) {
+					return addresses[0];
+				}
+			}
+
+			return context.Request.ServerVariables["REMOTE_ADDR"];
+		}
 
 	}
 }

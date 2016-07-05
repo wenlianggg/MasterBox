@@ -10,7 +10,7 @@
 namespace MasterBox {
     
     
-    public partial class FileSettingInterface {
+    public partial class FileSetting_Profile {
         
         /// <summary>
         /// username control.
@@ -19,7 +19,7 @@ namespace MasterBox {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label username;
+        protected global::System.Web.UI.WebControls.TextBox username;
         
         /// <summary>
         /// email control.
@@ -28,6 +28,6 @@ namespace MasterBox {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label email;
+        protected global::System.Web.UI.WebControls.TextBox email;
     }
 }

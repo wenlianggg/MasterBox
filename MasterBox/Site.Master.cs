@@ -24,7 +24,6 @@ namespace MasterBox {
 				OTPConf.Visible = false;
 				Subscriptions.Visible = false;
 				Options.Visible = false;
-				UserSettings.Visible = false;
 				SignOutLink.Visible = false;
 			}
 		}

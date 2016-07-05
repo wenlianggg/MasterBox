@@ -12,8 +12,6 @@
     </asp:PlaceHolder>
     <script src='<%= ResolveUrl("~/Scripts/nprogress.js") %>'></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
-    <script src='<%= ResolveUrl("~/Scripts/Internal.js") %>'></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<!-- CSS Libraries -->
@@ -21,11 +19,11 @@
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
 	<link href='~/Content/nprogress.css' rel="stylesheet" />
 
-	<!-- CSS Customisations -->   
+	<!-- CSS Customisations -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
     <link href='~/CSS/Internal.css' rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<!-- Favicon -->
     <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
@@ -51,7 +49,10 @@
 							<li><a runat="server" href="~/Contact">Contact</a></li>
 							<li><a runat="server" href="~/Pricing">Pricing</a></li>
 						</ul>
-                    <ul class="nav navbar-nav navbar-right">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a runat="server" id="FBItem" href="~/Auth/signin.aspx">
+								<asp:Label ID="FileBrowser" runat="server" Text="File Browser" /></a></li>
+
 						<li class="dropdown" id="Options" runat="server">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								<asp:Label ID="UserFullName" runat="server" />
@@ -60,18 +61,20 @@
 								<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
 									<li role="separator" class="divider"></li>
 								<li runat="server" id="Subscriptions"><a runat="server" href="#">Subscriptions</a></li>
-								<li runat="server" id="UserSettings"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
-								<li runat="server" id="OTPConf"><a runat="server" href="#">Configure 2FA</a></li>
-								<li runat="server" id="UserLogs"><a runat="server" href="#">Account Logs</a></li>
-									<li role="separator" class="divider"></li>
+								<li runat="server" id="ChangePW"><a runat="server" href="~/Auth/changepw.aspx">Change Password</a></li>
+								<li runat="server" id="OTPConf"><a runat="server" href="~/Auth/otpsetup.aspx">Configure 2FA</a></li>
+                                <li runat="server" id="Setting"><a runat="server" href="~/mbox/FileSetting_Profile.aspx">Profile Settings</a></li>
+								<li runat="server" id="UserLogs"><a runat="server" href="~/Auth/logs.aspx">Account Logs</a></li>
+	                                <li role="separator" class="divider"></li>
 								<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
 							</ul>
 						</li>
-                    </ul>
+						</ul>
                 </div>
             </div>
         </div>
 
+        <!---
         <div class="SideMenuBar">
             <div class="LoginUser">
                <p><asp:Label ID="LoggedIn" runat="server" Font-Size="Large" /></p>
@@ -93,6 +96,7 @@
             </div>
 
         </div>
+            --->
         <div>
             <asp:ContentPlaceHolder ID="InternalContent" runat="server">
             </asp:ContentPlaceHolder>
