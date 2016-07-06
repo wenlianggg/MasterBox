@@ -48,4 +48,36 @@ namespace MasterBox.Auth {
 		protected UserAlreadyExistsException(SerializationInfo info, StreamingContext context) : base(info, context) {
 		}
 	}
+
+	[Serializable]
+	internal class InvalidTOTPLength : Exception {
+		public InvalidTOTPLength() {
+		}
+
+		public InvalidTOTPLength(string message) : base(message) {
+		}
+
+		public InvalidTOTPLength(string message, Exception innerException) : base(message, innerException) {
+		}
+
+		protected InvalidTOTPLength(SerializationInfo info, StreamingContext context) : base(info, context) {
+		}
+	}
+
+
+	[Serializable]
+	internal class TooManyFailedLoginsException : Exception {
+		public TooManyFailedLoginsException() {
+		}
+
+		public TooManyFailedLoginsException(string message) : base(message) {
+		}
+
+		public TooManyFailedLoginsException(string message, Exception innerException) : base(message, innerException) {
+		}
+
+		protected TooManyFailedLoginsException(SerializationInfo info, StreamingContext context) : base(info, context) {
+		}
+	}
+
 }

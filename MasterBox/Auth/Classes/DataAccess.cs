@@ -38,7 +38,7 @@ namespace MasterBox.Auth {
 		 *  STORED FUNCTIONS FOR UPDATING DATABASE
 		 */
 		
-		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, int loglevel) {
+		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, Logger.LogLevel loglevel) {
 			// Update database values
 			SqlCommand cmd = new SqlCommand(
 				"INSERT INTO mb_logs (userid, logip, logdesc, loglevel) VALUES (@userid, @logip, @logdesc, @loglevel)", sqlConn);
@@ -51,7 +51,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@userid"].Value = userid;
 			cmd.Parameters["@logip"].Value = ipaddress;
 			cmd.Parameters["@logdesc"].Value = description;
-			cmd.Parameters["@loglevel"].Value = loglevel;
+			cmd.Parameters["@loglevel"].Value = (int)loglevel;
 			return cmd.ExecuteNonQuery();
 		}
 
@@ -145,7 +145,7 @@ namespace MasterBox.Auth {
 
 		internal SqlDataReader SqlGetAuth(string username) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT userid, username, hash, salt FROM mb_users WHERE username = @uname",
+				"SELECT userid, username, hash, salt, totpsecret, totpbackup FROM mb_users WHERE username = @uname",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
 			cmd.Prepare();
@@ -155,7 +155,7 @@ namespace MasterBox.Auth {
 
 		internal DataTable SqlGetLogs(int userid) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT userid, logdesc, logip, logdesc, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
+				"SELECT userid, logdesc, logip, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
 			cmd.Prepare();
@@ -167,9 +167,28 @@ namespace MasterBox.Auth {
 			data.Columns["logip"].ColumnName = "Logged IP";
 			data.Columns["loglevel"].ColumnName = "Log Level";
 			data.Columns["logtime"].ColumnName = "Time";
+			for (int i = 0; i < data.Rows.Count; i++) {
+				data.Rows[i][3] = ConvertToLogLevel((int) data.Rows[i][3]);
+			}
 			return data;
 		}
 
+		private string ConvertToLogLevel(int loglevel) {
+			switch(loglevel) {
+				case 0:
+					return "Normal";
+				case 1:
+					return "Security";
+				case 2:
+					return "Changed";
+				case 3:
+					return "Error";
+				case 4:
+					return "Critical Error";
+				default:
+					return "-";
+			}
+		}
 
 		internal SqlDataReader SqlGetUser(int userid) {
 			if (userid == 0) throw new UserNotFoundException();

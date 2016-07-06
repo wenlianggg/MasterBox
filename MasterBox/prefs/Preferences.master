@@ -11,18 +11,18 @@
 
 <asp:Content ID="Setting" ContentPlaceHolderID="InternalContent" runat="server">
     <div class="MainContent">
-        <div class="SettingsPanel col-md-2">
+        <div class="SettingsPanel col-md-2 col-sm-12 col-lg-6">
             <h3>MasterBox Preferences</h3>
             <ul>
-                <li><a runat="server" href="prefgeneral.aspx">General Settings</a></li>
+                <li><a runat="server" href="prefgeneral.aspx">General Settings </a></li>
                 <li><a runat="server" href="prefprofile.aspx">Profile Preferences</a></li>
-                <li><a runat="server" href="prefpassword.aspx">Password Preferences</a></li>
+                <li><a runat="server" href="prefpassword.aspx">Change Password </a></li>
                 <li><a runat="server" href="prefotp.aspx">2FA Settings</a></li>
                 <li><a runat="server" href="prefsubscription.aspx">Subscription</a></li>
                 <li><a runat="server" href="preflogs.aspx">Access Logs</a></li>
             </ul>
         </div>
-        <div class="SettingSelectionPanel col-md-10">
+        <div class="SettingSelectionPanel col-md-10 col-sm-12 col-lg-6">
         <asp:ContentPlaceHolder ID="Preferences" runat="server" />
         </div>
     </div>

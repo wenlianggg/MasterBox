@@ -175,9 +175,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\DEBUG.aspx" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Auth\LoginStyle.css" />
     <Content Include="Auth\changepw.aspx" />
     <Content Include="CSS\Preferences.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="prefs\prefotp.aspx" />
     <Content Include="Auth\otpverify.aspx" />
     <Content Include="prefs\preflogs.aspx" />
@@ -228,6 +230,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="filestore\Internal.Master" />
     <Content Include="prefs\Preferences.master" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>

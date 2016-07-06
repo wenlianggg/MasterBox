@@ -39,7 +39,10 @@ namespace MasterBox.Auth {
 			}
 			if (UserList.ContainsKey(userid)) {
 				UserList.TryGetValue(userid, out target);
-				return target;
+				if (target != null)
+					return target;
+				else
+					return GetUser(userid);
 			} else {
 				target = new User(userid);
 				if (!UserList.ContainsKey(userid))

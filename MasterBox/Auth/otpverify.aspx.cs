@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MasterBox.Auth {
-    public partial class otpverify : System.Web.UI.Page {
-		string username;
+	public partial class otpverify : System.Web.UI.Page {
+		User usr;
 		bool loginpersist;
 
         protected void Page_Load(object sender, EventArgs e)  {
 			if (Session["IsPasswordAuthorized"] != null) {
-				if ((bool)Session["IsPasswordAuthorized"]) {
-					username = (string)Session["Username"];
-					loginpersist = (bool)Session["StayLoggedIn"];
-					UID.Text = "Logging in as: " + username;
+				if ((bool) Session["IsPasswordAuthorized"]) {
+					usr = (User) Session["UserEntity"];
+					loginpersist = (bool) Session["StayLoggedIn"];
+					UID.Text = "Logging in as: " + usr.UserName;
 				} else {
 					Response.Redirect("~/Auth/signout.aspx");
 				}
@@ -27,16 +21,16 @@ namespace MasterBox.Auth {
 		}
 
         protected void ConfirmOTP(object sender, EventArgs e)  {
-			if (MBProvider.Instance.ValidateTOTP(username, OTPValue.Text)) {
-				Session.Abandon();				
-				FormsAuthentication.RedirectFromLoginPage(username, loginpersist);
+			if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text)) {
+				Session.Abandon();
+				MBProvider.Instance.LoginSuccess(usr, (bool) Session["StayLoggedIn"]);
 			} else {
 				Msg.Text = "Incorrect OTP entered!";
 			}
 		}
 
 		protected void CancelOTP(object sender, EventArgs e) {
-			FormsAuthentication.RedirectFromLoginPage(username, loginpersist);
+			MBProvider.Instance.LoginSuccess(usr, (bool)Session["StayLoggedIn"]);
 		}
 
     }

@@ -22,22 +22,40 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
         
         /// <summary>
-        /// SignInLink control.
+        /// NavRightLink1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor SignInLink;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor NavRightLink1;
         
         /// <summary>
-        /// SignInText control.
+        /// NavRightLabel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SignInText;
+        protected global::System.Web.UI.WebControls.Label NavRightLabel1;
+        
+        /// <summary>
+        /// NavRightLink2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor NavRightLink2;
+        
+        /// <summary>
+        /// NavRightLabel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NavRightLabel2;
         
         /// <summary>
         /// Options control.

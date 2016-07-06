@@ -18,6 +18,7 @@
 	<webopt:BundleReference runat="server" Path="~/Content/css" />
 	<link href='~/Content/jquery.mCustomScrollbar.css' rel="stylesheet" />
 	<link href='~/Content/nprogress.css' rel="stylesheet" />
+	<link href='~/Content/font-awesome.min.css' rel="stylesheet"/>
 	<!--- CSS Customisations --->
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
@@ -69,25 +70,29 @@
 							<li><a runat="server" href="~/Pricing">Pricing</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a runat="server" id="SignInLink" href="~/Auth/signin.aspx">
-								<asp:Label ID="SignInText" runat="server" /></a></li>
+							<li><a runat="server" id="NavRightLink1">
+								<asp:Label ID="NavRightLabel1" runat="server" /></a></li>
 
-						<li class="dropdown" id="Options" runat="server">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<asp:Label ID="UserFullName" runat="server" />
+							<li><a runat="server" id="NavRightLink2">
+								<asp:Label ID="NavRightLabel2" runat="server" /></a></li>
+
+							<li class="dropdown" ID="Options" runat="server">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									<asp:Label ID="UserFullName" runat="server" />
 								<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
-									<li role="separator" class="divider"></li>
-								<li runat="server" id="Subscriptions"><a runat="server" href="~/prefs/prefsubscription.aspx">Subscriptions</a></li>
-								<li runat="server" id="ChangePW"><a runat="server" href="~/prefs/preflogs.aspx">Change Password</a></li>
-								<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotp.aspx">Configure 2FA</a></li>
-                                <li runat="server" id="Setting"><a runat="server" href="~/prefs/prefprofile.aspx">Profile Settings</a></li>
-								<li runat="server" id="UserLogs"><a runat="server" href="~/prefs/preflogs.aspx">Account Logs</a></li>
-	                                <li role="separator" class="divider"></li>
-								<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
-							</ul>
-						</li>
+
+								<ul class="dropdown-menu">
+									<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
+										<li role="separator" class="divider"></li>
+									<li runat="server" id="Subscriptions"><a runat="server" href="~/prefs/prefsubscription.aspx">Subscriptions</a></li>
+									<li runat="server" id="ChangePW"><a runat="server" href="~/prefs/preflogs.aspx">Change Password</a></li>
+									<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotp.aspx">Configure 2FA</a></li>
+									<li runat="server" id="Setting"><a runat="server" href="~/prefs/prefprofile.aspx">Profile Settings</a></li>
+									<li runat="server" id="UserLogs"><a runat="server" href="~/prefs/preflogs.aspx">Account Logs</a></li>
+										<li role="separator" class="divider"></li>
+									<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 				</div>

@@ -6,13 +6,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
 using MasterBox.Auth.TOTP;
+using System.Collections.Generic;
 
 /// Author: Goh Wen Liang (154473G) 
 
 namespace MasterBox.Auth {
 	public sealed partial class MBProvider : MembershipProvider {
 
-		public int CreateUser(string username, string password) {
+		internal Dictionary<string, int> failedlogins = new Dictionary<string, int>();
+
+		internal int CreateUser(string username, string password) {
 
 			// New salt generation
 			byte[] newSaltB = GenerateSalt();
@@ -41,7 +44,7 @@ namespace MasterBox.Auth {
 			return User.ConvertToId(username);
 		}
 
-		public bool HasOtp(string username) {
+		internal bool HasOtp(string username) {
 			throw new NotImplementedException();
 		}
 
@@ -126,6 +129,7 @@ namespace MasterBox.Auth {
 
 					// Update database values
 					da.SqlUpdateHashSalt(username, newHash, newSalt);
+					Logger.Instance.UserPassChanged(User.ConvertToId(username));
 
 					// Clean up all sensitive information
 					ClearSensitiveData(oldPassword, newPassword, combinedBytes, newPasswordBytes);
@@ -135,11 +139,12 @@ namespace MasterBox.Auth {
 
 			} else {
 				// Existing password is wrong
+				Logger.Instance.UserPassChangeFailed(User.ConvertToId(username));
 				return false;
 			}
 		}
 
-		public bool ValidateTOTP(string username, string otp) {
+		internal bool ValidateTOTP(string username, string otp) {
 			int otpEntered;
 			if (otp.Length == 6) {
 				using (OTPTool otptool = new OTPTool())
@@ -164,11 +169,33 @@ namespace MasterBox.Auth {
 			return false;
 		}
 
-		public bool ValidateBackupTOTP(string username, string backupcode) {
+		internal bool IsTotpEnabled(string username) {
+			using (DataAccess da = new DataAccess())
+			using (SqlDataReader sqldr = da.SqlGetAuth(username)) {
+				if (sqldr.Read()) {
+					if (sqldr["totpsecret"].ToString().Length == 16) {
+						return true;
+					} else if (sqldr["totpsecret"] == null) {
+						return false; 
+					} else {
+						throw new InvalidTOTPLength(sqldr["totpsecret"].ToString().Length.ToString());
+					}
+				} else {
+					throw new UserNotFoundException(username);
+				}
+			}
+		}
+	
+		internal void LoginSuccess(User usr, bool persistlogin) {
+			Logger.Instance.SuccessfulLogin(usr.UserId);
+			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
+		}
+
+		internal bool ValidateBackupTOTP(string username, string backupcode) {
 			return false;
 		}
 
-		public string GetCorrectCasingUN(string username) {
+		internal string GetCorrectCasingUN(string username) {
 			DataAccess da = new DataAccess();
 			SqlDataReader sqldr = da.SqlGetAuth(username);
 			if (sqldr.Read()) {

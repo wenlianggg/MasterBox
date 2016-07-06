@@ -55,10 +55,68 @@ namespace MasterBox.Auth {
 		internal void FailedLoginAttempt(int userid) {
 			string description = "Unsuccessful login attempt";
 			string ipaddress = GetIP();
+			TriggerFailedLogin();
 			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, 1);
-			} 
+				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Security);
+			}
 		}
+
+		internal void FailedTOTPAttempt(int userid) {
+			string description = "Unsuccessful 2FA (TOTP) attempt";
+			string ipaddress = GetIP();
+			TriggerFailedLogin();
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Security);
+			}
+		}
+
+		internal bool IsLoginBlocked() {
+			string ip = GetIP();
+			if (MBProvider.Instance.failedlogins.ContainsKey(ip))
+				if (MBProvider.Instance.failedlogins[ip] > 3)
+					return true;
+				else
+					return false;
+			else
+				return false;
+		}
+
+		private void TriggerFailedLogin() {
+			string ip = GetIP();
+			System.Diagnostics.Debug.WriteLine("Logged failed login");
+			if (MBProvider.Instance.failedlogins.ContainsKey(ip)) {
+				MBProvider.Instance.failedlogins[ip]++;
+			} else {
+				MBProvider.Instance.failedlogins.Add(ip, 0);
+			}
+		}
+
+
+		internal void UserPassChanged(int userid) {
+			string description = "User password was changed";
+			string ipaddress = GetIP();
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Changed);
+			}
+		}
+
+		internal void UserPassChangeFailed(int userid) {
+			string description = "Unsuccessful password changing attempt";
+			string ipaddress = GetIP();
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Error);
+			}
+		}
+
+		internal void SuccessfulLogin(int userid) {
+			string description = "Login was successful";
+			string ipaddress = GetIP();
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Normal);
+			}
+		}
+
+
 
 		private string GetIP() {
 			HttpContext context = HttpContext.Current;

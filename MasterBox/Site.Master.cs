@@ -10,21 +10,20 @@ using System.Web.UI.WebControls;
 namespace MasterBox {
 	public partial class SiteMaster : MasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
-			IPAddr.Text = "Connected from: " + GetIPAddress();
+			IPAddr.Text = "Your IP address (" + GetIPAddress() + ") will be logged for security";
 			if (Context.User.Identity.IsAuthenticated) {
 				User usr = User.GetUser(Context.User.Identity.Name);
+				NavRightLink1.Visible = false;
+				NavRightLabel2.Text = "File Browser";
+				NavRightLink2.HRef = "~/filestore/FileTransferInterface.aspx";
 				UserFullName.Text = usr.FirstName + " " + usr.LastName;
 				UnameDropdown.Text = usr.UserName;
-				SignInText.Text = "File Browser";
-				SignInLink.HRef = "~/filestore/FileTransferInterface.aspx";
-				IPAddr.Text = "Connected from: " + GetIPAddress();
 			} else {
-				SignInText.Text = "Login / Register";
-				UserLogs.Visible = false;
-				OTPConf.Visible = false;
-				Subscriptions.Visible = false;
+				NavRightLabel1.Text = "Register  <i class=\"fa fa-user-plus\" aria-hidden=\"true\"></i>";
+				NavRightLink1.HRef = "~/Auth/signup.aspx";
+				NavRightLabel2.Text = "Login  <i class=\"fa fa-sign-in\" aria-hidden=\"true\"></i>";
+				NavRightLink2.HRef = "~/Auth/signin.aspx";
 				Options.Visible = false;
-				SignOutLink.Visible = false;
 			}
 		}
 

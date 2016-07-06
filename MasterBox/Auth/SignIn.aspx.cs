@@ -16,19 +16,30 @@ namespace MasterBox.Auth {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
+			if (Logger.Instance.IsLoginBlocked()) {
+				Msg.Text = "Your IP has been blocked for too many failed logins, please contact us.";
+				return;
+			}
 			MBProvider mbp = MBProvider.Instance;
 			try {
 				if (mbp.ValidateUser(UserName.Text, UserPass.Text)) {
 					User usr = Auth.User.GetUser(UserName.Text);
-					Session["Username"] = usr.UserName;
+					Session["UserEntity"] = usr;
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
-					Response.Redirect("~/Auth/otpverify.aspx");
+					if (MBProvider.Instance.IsTotpEnabled(usr.UserName)) {
+						Response.Redirect("~/Auth/otpverify.aspx");
+					} else {
+						MBProvider.Instance.LoginSuccess(usr, Persist.Checked);
+					}
+
 				} else {
 					Msg.Text = "Invalid credentials, please try again!";
 				}
 			} catch (UserNotFoundException) {
 				Msg.Text = "Invalid credentials, please try again!";
+			} catch (InvalidTOTPLength) {
+				Msg.Text = "Error while loading OTP info, contact us.";
 			}
 		}
 
