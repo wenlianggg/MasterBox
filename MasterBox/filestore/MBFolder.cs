@@ -153,6 +153,7 @@ namespace MasterBox.mbox
             while(sqldr.Read())
             {
                 mbf = new MBFile();
+                mbf.fileName = sqldr["filename"].ToString();
                 mbf.filecontent = MBFolder.DecryptionBlowfishFileFolder((byte[])sqldr["filecontent"], oldfolder.folderBlowFishKey, oldfolder.folderBlowFishIV);
                 mbf.filecontent = MBFolder.EncryptionBlowfishFileFolder((byte[])sqldr["filecontent"], newFolder.folderBlowFishKey, newFolder.folderBlowFishIV);
 
@@ -170,6 +171,7 @@ namespace MasterBox.mbox
                 fileUpdate.Parameters["@folderid"].Value = oldfolder.folderid;
                 fileUpdate.Parameters["@filename"].Value = mbf.fileName;
                 fileUpdate.Parameters["@filecontent"].Value = mbf.filecontent;
+
                 fileUpdate.ExecuteNonQuery();
             }
         }
