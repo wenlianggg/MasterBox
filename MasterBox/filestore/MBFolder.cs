@@ -16,6 +16,7 @@ namespace MasterBox.mbox
 {
     public class MBFolder
     {
+        public long folderid { get; set; }
         public string folderName { get; set; }
         public string folderusername { get; set; }
         public string folderBlowFishKey { get; set; }
@@ -94,20 +95,6 @@ namespace MasterBox.mbox
             return passwordlocationList;
         }
 
-        [System.Web.Services.WebMethod]
-        // Check Folder name for creation
-        public static bool CheckFolderName(string foldername, string username)
-        {
-            ArrayList Foldernames = GenerateFolderLocation(username);
-            for (int i = 0; i < Foldernames.Count; i++)
-            {
-                if (Foldernames[i].ToString() == foldername)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         // Download File From Folder
         public static MBFile RetrieveFolderFile(string username, long fileid, long folderid)
@@ -280,7 +267,7 @@ namespace MasterBox.mbox
                     folderpassbyte = Encoding.UTF8.GetBytes(RandomPasswordGeneration(16));
                 }
                 // Debug
-                System.Diagnostics.Debug.WriteLine("Folder Password: "+Convert.ToBase64String(folderpassbyte));
+                System.Diagnostics.Debug.WriteLine("Folder Password: " + Convert.ToBase64String(folderpassbyte));
 
                 // Join Pass and salt together
                 byte[] saltpassbyte = new byte[folderpassbyte.Length + newSalt.Length];
@@ -310,7 +297,7 @@ namespace MasterBox.mbox
                 {
                     passhash = Convert.ToBase64String(shaCalc.ComputeHash(saltpassbyte));
                 }
-                System.Diagnostics.Debug.WriteLine("Hash: "+passhash);
+                System.Diagnostics.Debug.WriteLine("Hash: " + passhash);
 
                 // Create Folder
                 SqlCommand cmd = new SqlCommand(
@@ -534,7 +521,8 @@ namespace MasterBox.mbox
             // Get Userid
             User user = User.GetUser(username);
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE foldername = @foldername and userid= @user", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_folder WHERE foldername = @foldername and userid= @user", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
             cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
             cmd.Prepare();
@@ -543,6 +531,7 @@ namespace MasterBox.mbox
 
             return cmd.ExecuteReader();
         }
+
         // Tempo
         private static SqlDataReader GetFolderName(string username, long folderid)
         {
@@ -565,5 +554,52 @@ namespace MasterBox.mbox
             sqlConnection.Open();
             return sqlConnection;
         }
+
+        // Getter and setter
+
+        public static MBFolder GetFolder(string username, string foldername)
+        {
+            MBFolder folder = new MBFolder();
+            User user = User.GetUser(username);
+
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_folder WHERE foldername = @foldername and userid= @user", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
+            cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@foldername"].Value = foldername;
+            cmd.Parameters["@user"].Value = user.UserId;
+
+            SqlDataReader folderReader = cmd.ExecuteReader();
+            folder.folderid = (long)folderReader["folderid"];
+            folder.folderName = folderReader["foldername"].ToString();
+            folder.folderBlowFishKey = folderReader["folderkey"].ToString();
+            folder.folderBlowFishIV = folderReader["folderiv"].ToString();
+
+            return folder;
+        }
+
+        public static MBFolder GetFolder(string username,long folderid)
+        {
+            MBFolder folder = new MBFolder();
+            User user = User.GetUser(username);
+
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_folder WHERE folderid = @folderid and userid= @user", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.VarChar, 50));
+            cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.Parameters["@user"].Value = user.UserId;
+
+            SqlDataReader folderReader = cmd.ExecuteReader();
+            folder.folderid = (long)folderReader["folderid"];
+            folder.folderName = folderReader["foldername"].ToString();
+            folder.folderBlowFishKey = folderReader["folderkey"].ToString();
+            folder.folderBlowFishIV = folderReader["folderiv"].ToString();
+
+            return folder;
+        }
+
     }
 }
