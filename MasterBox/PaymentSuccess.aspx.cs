@@ -1,70 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using PayPal.Api;
-using System.Collections;
-using System.Collections.Specialized;
+using System.IO;
+using System.Net;
 
 namespace MasterBox
 {
     public partial class PaymentSuccess : System.Web.UI.Page
     {
-        private static List<string> posts = new List<string>();
-        private static List<NameValueCollection> forms = new List<NameValueCollection>();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            String[] keys = Request.Form.AllKeys;
-            for(int i=0; i < keys.Length; i++)
-            {
-                posts.Add(keys[i] + ": " + Request.Form[keys[i]] + "<br>");
-            }
-            foreach (var post in posts)
-            {
-                Response.Write(post);
-            }
+            // CUSTOMIZE THIS: This is the seller's Payment Data Transfer authorization token.
+            // Replace this with the PDT token in "Website Payment Preferences" under your account.
+            string authToken = "Sbx5L1TExNnB1KTDit_UOn4Q0zYqZjzfoCI2udRxvfoQ0OW3A91-KtO9vFO";
+            string txToken = Request.QueryString["tx"];
+            string query = "cmd=_notify-synch&tx=" + txToken + "&at=" + authToken;
 
-            if (Request.UrlReferrer != null)
+            //Post back to either sandbox or live
+            string strSandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(strSandbox);
+
+            //Set values for the request back
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.ContentLength = query.Length;
+
+
+            //Send the request to PayPal and get the response
+            StreamWriter streamOut = new StreamWriter(req.GetRequestStream(), System.Text.Encoding.ASCII);
+            streamOut.Write(query);
+            streamOut.Close();
+            StreamReader streamIn = new StreamReader(req.GetResponse().GetResponseStream());
+            string strResponse = streamIn.ReadToEnd();
+            streamIn.Close();
+
+            Dictionary<string, string> results = new Dictionary<string, string>();
+            if (strResponse != "")
             {
-                string previousPageUrl = Request.UrlReferrer.AbsoluteUri;
-                string previousPageName = System.IO.Path.GetFileName(Request.UrlReferrer.AbsolutePath);
-                System.Diagnostics.Debug.WriteLine(previousPageUrl);
-                GetNewWebhook();
+                StringReader reader = new StringReader(strResponse);
+                string line = reader.ReadLine();
+
+                if (line == "SUCCESS")
+                {
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        results.Add(line.Split('=')[0], line.Split('=')[1]);
+
+                    }
+                    Response.Write("<p><h3>Your order has been received.</h3></p>");
+                    Response.Write("<b>Details</b><br>");
+                    Response.Write("<li>Name: " + results["first_name"] + " " + results["last_name"] + "</li>");
+                    Response.Write("<li>Item: " + results["item_name"] + "</li>");
+                    Response.Write("<li>Amount: " + results["payment_gross"] + "</li>");
+                    Response.Write("<hr>");
+                }
+                else if (line == "FAIL")
+                {
+                    // Log for manual investigation
+                    Response.Write("Unable to retrive transaction detail");
+                }
+            }
+            else
+            {
+                //unknown error
+                Response.Write("ERROR");
             }
 
             //Response.AddHeader("REFRESH", "3;URL=Default.aspx");
         }
 
-        public static string GetNewWebhookUrl()
-        {
-            return "https://masterboxsite.azurewebsites.net/PaymentSuccess" + Guid.NewGuid().ToString();
-        }
-
-        /// <summary>
-        /// Helper method for creating a new webhook object to be used by the webhook sample pages.
-        /// </summary>
-        /// <returns>A new Webhook object.</returns>
-        public static Webhook GetNewWebhook()
-        {
-            return new Webhook
-            {
-                url = GetNewWebhookUrl(),
-                event_types = new List<WebhookEventType>
-                {
-                    new WebhookEventType
-                    {
-                        name = "PAYMENT.SALE.COMPLETED"
-                    },
-                    new WebhookEventType
-                    {
-                        name = "PAYMENT.SALE.DENIED"
-                    }
-                }
-
-            };
-        }
     }
+
 }
