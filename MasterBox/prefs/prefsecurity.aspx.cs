@@ -30,37 +30,25 @@ namespace MasterBox.mbox
             folder.folderusername = Context.User.Identity.Name;
             string folderpassword = NewPassword.Text;
 
-            if (folder.NewFolderPassword(folder, folderpassword))
-            {
-
-
-            }else
-            {
-
-            }
             
         }
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
         {
-            MBFolder folder = new MBFolder();
-            folder.folderName= ChangeFolderPasswordOption.SelectedValue;
-            folder.folderusername = Context.User.Identity.Name;
+
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name,ChangeFolderPasswordOption.SelectedValue);
             string oldpassword = CurrentPassword.Text;
             string newpassword = ChangeNewPassword.Text;
-                      
-            if (folder.ChangeFolderPassword(folder, oldpassword,newpassword))
-            {
-                CurrentPassword.Text = "";
-                ChangeNewPassword.Text="";
-            }
-            else
-            {
 
+            if (folder.ValidateFolderPassword(folder,oldpassword))
+            {
+               if(folder.FolderPasswordSettings(folder, newpassword))
+                {
+
+                }
             }
-            
-            
-            
+
+
         }
     }
 }
