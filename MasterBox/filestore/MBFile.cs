@@ -164,7 +164,7 @@ namespace MasterBox.mbox {
             return cmd.ExecuteReader();
         }
 
-        // Download File
+        // Get File Information
 		public static MBFile RetrieveFile(string username, long fileid) {
 			// Get User ID
 			User user = User.GetUser(username);

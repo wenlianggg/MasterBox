@@ -186,7 +186,8 @@ namespace MasterBox
                     MBFolder folder = new MBFolder();
                     folder.folderName = FolderName.Text;
                     folder.folderusername = Context.User.Identity.Name;
-                    folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);              
+                    folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text); 
+                         
             //}
             //else
             //{
