@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="User Registration" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signup2.aspx.cs" Inherits="MasterBox.SignUp2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= ResolveUrl("~/CSS/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 </asp:Content>
 <asp:Content ID="Register" ContentPlaceHolderID="MainContent" runat="server">

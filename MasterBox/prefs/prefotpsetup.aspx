@@ -29,16 +29,16 @@
                         <li>Enter the current six-digit numerical passcode from the application to verify that your device is properly configured</li>
                     </ol>
                     <br />
-                        <asp:TextBox ID="setupValue" class="otpSetupValue" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="setupValue" CssClass="otpSetupValue" runat="server"></asp:TextBox>
                     <br />
                             <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server"
 		                    ControlToValidate="setupValue"
-		                    ValidatorGroup="valGroup1"
+		                    ValidationGroup="valGroup1"
 		                    ErrorMessage="Please Enter The Generated 6-digit code to continue."
 		                    ForeColor="Red"/>
                     <br />
-                    <asp:Button class="otpEnable" ID="OTPLogin" runat="server" Text="Enable" CssClass="btn btn-success"/>
-		            <asp:Button class="otpCancelSetup" ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="false"/>
+                    <asp:Button ID="OTPLogin" runat="server" Text="Enable" CssClass="btn btn-success otpEnable"/>
+		            <asp:Button ID="OTPCancel" runat="server" Text="Cancel" CssClass="btn btn-danger otpCancelSetup" CausesValidation="false"/>
                 </div>
                 <div class="setupRowRight" runat="server" id="QRCodeHolder">
                 </div>

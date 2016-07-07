@@ -175,7 +175,7 @@ namespace MasterBox.Auth {
 				if (sqldr.Read()) {
 					if (sqldr["totpsecret"].ToString().Length == 16) {
 						return true;
-					} else if (sqldr["totpsecret"] == null) {
+					} else if (sqldr["totpsecret"].ToString().Length == 0) {
 						return false; 
 					} else {
 						throw new InvalidTOTPLength(sqldr["totpsecret"].ToString().Length.ToString());

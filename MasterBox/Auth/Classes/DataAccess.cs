@@ -65,8 +65,8 @@ namespace MasterBox.Auth {
 			cmd.Prepare();
 
 			cmd.Parameters["@uname"].Value = username;
-			cmd.Parameters["@hash"].Value = hash;
-			cmd.Parameters["@salt"].Value = salt;
+			cmd.Parameters["@newHash"].Value = hash;
+			cmd.Parameters["@newSalt"].Value = salt;
 			return cmd.ExecuteNonQuery();
 		}
 
@@ -97,15 +97,16 @@ namespace MasterBox.Auth {
 
 			SqlCommand cmd = new SqlCommand(
 				"UPDATE mb_users SET " +
-				"fName = @fName," +
-				"lName = @lName," +
+                "fNameEnc = @fNameEnc," +
+				"lNameEnc = @lNameEnc," +
 				"dob = @dob," +
-				"email = @email," +
+				"emailEnc = @emailEnc," +
 				"verified = @verified," +
 				"mbrType = @mbrType," +
 				"mbrStart = @mbrStart," +
 				"mbrExpiry = @mbrExpiry," +
 				"regStamp = @regStamp, " +
+                "aesKey = @aesKey, " + 
 				"aesIV = @aesIV " +
 				"WHERE userid = @userid;",
 				sqlConn);
@@ -126,7 +127,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@fNameEnc"].Value = fNameEnc;
 			cmd.Parameters["@lNameEnc"].Value = lNameEnc;
 			cmd.Parameters["@dob"].Value = dob;
-			cmd.Parameters["@email"].Value = emailEnc;
+			cmd.Parameters["@emailEnc"].Value = emailEnc;
 			cmd.Parameters["@verified"].Value = verified;
 			cmd.Parameters["@mbrType"].Value = mbrType;
 			cmd.Parameters["@mbrStart"].Value = mbrStart;
@@ -168,7 +169,7 @@ namespace MasterBox.Auth {
 			data.Columns["loglevel"].ColumnName = "Log Level";
 			data.Columns["logtime"].ColumnName = "Time";
 			for (int i = 0; i < data.Rows.Count; i++) {
-				data.Rows[i][3] = ConvertToLogLevel((int) data.Rows[i][3]);
+				data.Rows[i][3] = ConvertToLogLevel(int.Parse(data.Rows[i][3].ToString()));
 			}
 			return data;
 		}

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Internal.master.cs" Inherits="MasterBox.Internal" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="~/Internal.master.cs" Inherits="MasterBox.Internal" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">MasterBox Files</a>
+                    <a class="navbar-brand" runat="server" href="~/">MasterBox</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -60,7 +60,7 @@
 									<li role="separator" class="divider"></li>
 								<li runat="server" id="Subscriptions"><a runat="server" href="~/prefs/prefsubscription.aspx">Subscriptions</a></li>
 								<li runat="server" id="ChangePW"><a runat="server" href="~/prefs/preflogs.aspx">Change Password</a></li>
-								<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotp.aspx">Configure 2FA</a></li>
+								<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotpsetup.aspx">Configure 2FA</a></li>
                                 <li runat="server" id="Setting"><a runat="server" href="~/prefs/prefprofile.aspx">Profile Settings</a></li>
 								<li runat="server" id="UserLogs"><a runat="server" href="~/prefs/preflogs.aspx">Account Logs</a></li>
 	                                <li role="separator" class="divider"></li>

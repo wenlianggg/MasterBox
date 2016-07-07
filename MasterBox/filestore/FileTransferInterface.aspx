@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="" MasterPageFile="~/filestore/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
+﻿<%@ Page Language="C#" Title="" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
 <asp:Content ID="FileTransferNavBar" ContentPlaceHolderID="NavBar" runat="server">
     <li><a runat="server" id="FBItem" href="~/prefs/prefgeneral.aspx">

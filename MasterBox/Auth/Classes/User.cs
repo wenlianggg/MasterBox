@@ -99,6 +99,7 @@ namespace MasterBox.Auth {
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
 			_mbrStart = DateTime.Now;
+            _aesKey = UserCrypto.GenerateEntropy(32);
 			_aesIV = UserCrypto.GenerateEntropy(16);
 			UpdateDB();
 			RefreshFields();
@@ -120,6 +121,7 @@ namespace MasterBox.Auth {
 						_mbrStart = (DateTime) sqldr["mbrStart"];
 						_mbrExpiry = (DateTime) sqldr["mbrExpiry"];
 						_regStamp = (DateTime) sqldr["regStamp"];
+                        _aesKey = uc.Decrypt((byte[]) sqldr["aesKey"]);
 						_aesIV = sqldr["aesIV"].ToString();
 					}
 				}

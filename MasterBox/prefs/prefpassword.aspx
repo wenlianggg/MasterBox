@@ -1,9 +1,6 @@
-﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="changepw.aspx.cs" Inherits="MasterBox.ChangePw" %>
+﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefpassword.aspx.cs" Inherits="MasterBox.ChangePw" %>
 
-<asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
-	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
-</asp:Content>
-<asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="LoginIn" ContentPlaceHolderID="Preferences" runat="server">
 	<div class="jumbotron">
 		<h1><%: Title %></h1>
 		<p>Edit your user information here</p>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signin.aspx.cs" Inherits="MasterBox.Auth.SignIn" %>
 
 <asp:Content ID="HeadContent" runat="server" ContentPlaceHolderID="HeadContent">
-	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= ResolveUrl("~/CSS/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="LoginIn" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="jumbotron">

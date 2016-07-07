@@ -1,7 +1,8 @@
-﻿<%@ Master  Language="C#" MasterPageFile="~/filestore/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.mbox.FileSetting" %>
+﻿<%@ Master  Language="C#" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.mbox.FileSetting" %>
 
 <asp:Content ID="PrefCss" ContentPlaceHolderID="HeadContent" runat="server">
     <link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />
+    <link runat="server" href="../../CSS/LoginStyle.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Header" ContentPlaceHolderID="NavBar" runat="server">

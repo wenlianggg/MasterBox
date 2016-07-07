@@ -176,11 +176,11 @@
   <ItemGroup>
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Auth\LoginStyle.css" />
-    <Content Include="Auth\changepw.aspx" />
+    <Content Include="CSS\LoginStyle.css" />
+    <Content Include="prefs\prefotpsetup.aspx" />
+    <Content Include="prefs\prefpassword.aspx" />
     <Content Include="CSS\Preferences.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="prefs\prefotp.aspx" />
     <Content Include="Auth\otpverify.aspx" />
     <Content Include="prefs\preflogs.aspx" />
     <Content Include="Auth\signout.aspx" />
@@ -228,7 +228,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="filestore\Internal.Master" />
+    <Content Include="Internal.Master" />
     <Content Include="prefs\Preferences.master" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
@@ -315,19 +315,26 @@
     <Compile Include="Auth\Classes\UserCrypto.cs" />
     <Compile Include="Auth\Classes\reCAPTCHA.cs" />
     <Compile Include="Auth\Classes\MBProvider.cs" />
-    <Compile Include="Auth\changepw.aspx.cs">
-      <DependentUpon>changepw.aspx</DependentUpon>
+    <Compile Include="prefs\prefotpsetup.aspx.cs">
+      <DependentUpon>prefotpsetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auth\changepw.aspx.designer.cs">
-      <DependentUpon>changepw.aspx</DependentUpon>
+    <Compile Include="prefs\prefotpsetup.aspx.designer.cs">
+      <DependentUpon>prefotpsetup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="prefs\prefpassword.aspx.cs">
+      <DependentUpon>prefpassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prefs\prefpassword.aspx.designer.cs">
+      <DependentUpon>prefpassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="prefs\prefotp.aspx.cs">
-      <DependentUpon>prefotp.aspx</DependentUpon>
+      <DependentUpon>prefpassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="prefs\prefotp.aspx.designer.cs">
-      <DependentUpon>prefotp.aspx</DependentUpon>
+      <DependentUpon>prefpassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\otpverify.aspx.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>
@@ -405,11 +412,11 @@
     <Compile Include="prefs\prefprofile.aspx.designer.cs">
       <DependentUpon>prefprofile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="filestore\Internal.Master.cs">
+    <Compile Include="Internal.Master.cs">
       <DependentUpon>Internal.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="filestore\Internal.Master.designer.cs">
+    <Compile Include="Internal.Master.designer.cs">
       <DependentUpon>Internal.Master</DependentUpon>
     </Compile>
     <Compile Include="filestore\MBFolder.cs" />

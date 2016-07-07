@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="signup.aspx.cs" Inherits="MasterBox.Auth.SignUp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-	<link href="<%= ResolveUrl("~/Auth/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= ResolveUrl("~/CSS/LoginStyle.css") %>" rel="stylesheet" type="text/css" />
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 </asp:Content>
 <asp:Content ID="Register" ContentPlaceHolderID="MainContent" runat="server">
@@ -39,7 +39,7 @@
 				<tr>
 					<td><strong>Password:</strong></td>
 					<td>
-						<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder="••••••••••"/>
+						<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder=""/>
 					</td>
 					<td>
 						<asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="UserPass" ForeColor="Red"
@@ -52,7 +52,7 @@
 				<tr>
 					<td><strong>Confirm Password:</strong></td>
 					<td>
-						<asp:TextBox ID="UserPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder="••••••••••"/>
+						<asp:TextBox ID="UserPassCfm" CssClass="pwdfield form-control" TextMode="Password" runat="server" placeholder=""/>
 					</td>
 					<td>
 						<asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="UserPassCfm" ForeColor="Red"
@@ -85,6 +85,19 @@
 						<asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server"
 							ErrorMessage="Last name can only contain alphabets and spaces up to 50 characters" 
 							ControlToValidate="FirstName" Display="None" ValidationExpression="^[a-zA-Z ]{1,50}$" />
+					</td>
+				</tr>
+                <tr>
+					<td><strong>Birthdate:</strong></td>
+					<td>
+                        <asp:TextBox ID="UserDob" CssClass="form-control" runat="server" placeholder="dd/MM/yyyy" />
+					</td>
+					<td>
+						<asp:RequiredFieldValidator ID="RequiredFieldValidator8" ControlToValidate="LastName" ForeColor="Red"
+							ErrorMessage="Birthdate is required." Text="*" runat="server" />
+						<asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server"
+							ErrorMessage="Please enter your birthdate in dd/MM/yyy format!" 
+							ControlToValidate="FirstName" Display="None" ValidationExpression="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$" />
 					</td>
 				</tr>
 				<tr>
