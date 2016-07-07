@@ -179,20 +179,20 @@ namespace MasterBox
         {
 
             bool folderCreation;
-            bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
-            if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
-            {
+            //bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
+            //if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
+            //{
                 System.Diagnostics.Debug.WriteLine("Password:" + encryptionPass.Text);
                     MBFolder folder = new MBFolder();
                     folder.folderName = FolderName.Text;
                     folder.folderusername = Context.User.Identity.Name;
                     folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);              
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 // Pop up box
                 
-            }
+            //}
             // Reset the form fields
             Response.Redirect(Request.RawUrl);
 
