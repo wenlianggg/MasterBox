@@ -1,9 +1,16 @@
-﻿<%@ Page Title="General Settings" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefgeneral.aspx.cs" Inherits="MasterBox.mbox.FileSetting_General" %>
+﻿<%@ Page Title="User Dashboard" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefgeneral.aspx.cs" Inherits="MasterBox.mbox.FileSetting_General" %>
 
 <asp:Content ID="SetGeneral" ContentPlaceHolderID="Preferences" runat="server">
     <div class="Setting_Profile">
-        <h1>General Information</h1>
-        <hr class="aboutRowHR"/>
+		<div class="page-header">
+			<h1><%: Page.Title %>
+			</h1>
+		</div>
+		<ol class="breadcrumb" style="margin-bottom: 5px;">
+			<li><a href="<%= ResolveUrl("~/Default") %>">MasterBox</a></li>
+			<li>User Preferences</li>
+			<li class="active"><%: Page.Title %></li>
+		</ol>
         <div class="row">
             <div class="SettingsRow">
             <h4 class="SettingHr">Storage Space</h4>

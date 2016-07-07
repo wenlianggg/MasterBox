@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsecurity.aspx.cs" Inherits="MasterBox.mbox.FileSetting_Security" %>
+﻿<%@ Page Title="Folder Encryption" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsecurity.aspx.cs" Inherits="MasterBox.mbox.FileSetting_Security" %>
 
 <asp:Content ID="SetSecurity" ContentPlaceHolderID="Preferences" runat="server">
 
@@ -95,15 +95,18 @@
     </div>
 
     <div class="Setting_Profile">
-        <h1>Security</h1>
-        <hr class="aboutRowHR" />
+		<div class="page-header">
+			<h1><%: Page.Title %>
+			</h1>
+		</div>
+		<ol class="breadcrumb" style="margin-bottom: 5px;">
+			<li><a href="<%= ResolveUrl("~/Default") %>">MasterBox</a></li>
+			<li>User Preferences</li>
+			<li>Security</li>
+			<li>Encryption</li>
+			<li class="active"><%: Page.Title %></li>
+		</ol>
         <div class="row">
-            <div class="SettingsRow">
-                <h4 class="SettingHr">User Password Settings</h4>
-                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/changepw.aspx">Change Password</asp:LinkButton>
-                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/otpsetup.aspx">Configure 2FA</asp:LinkButton>
-                <asp:LinkButton CssClass="btn btn-success" runat="server" href="~/Auth/logs.aspx">Access Logs</asp:LinkButton>
-            </div>
             <div class="SettingsRow">
                 <h4 class="SettingHr">Folder Password Settings</h4>
                 <a class="btn btn-default" data-toggle="modal" data-target="#FolderNewPass" data-backdrop="static">New Password</a>

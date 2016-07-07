@@ -1,4 +1,4 @@
-﻿<%@ Page Title="General Settings" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.mbox.PrefSubscription" %>
+﻿<%@ Page Title="Expand Storage" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.mbox.PrefSubscription" %>
 
 <asp:Content ID="SetGeneral" ContentPlaceHolderID="Preferences" runat="server">
     <div class="Setting_Profile">
@@ -7,6 +7,11 @@
               <small>Expand your available storage space</small>
           </h1>
         </div>
+		<ol class="breadcrumb" style="margin-bottom: 5px;">
+			<li><a href="<%= ResolveUrl("~/Default") %>">MasterBox</a></li>
+			<li>User Preferences</li>
+			<li class="active"><%: Page.Title %></li>
+		</ol>
         <h1 id="TotalSpace" runat="server"></h1>
         <div class="panel panel-default">
             <div class="panel-heading"><strong>Storage</strong></div>

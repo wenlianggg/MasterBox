@@ -3,6 +3,15 @@
 <asp:Content ID="PrefCss" ContentPlaceHolderID="HeadContent" runat="server">
     <link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />
     <link runat="server" href="../../CSS/LoginStyle.css" rel="stylesheet" />
+	<script>
+		$(document).ready(function () {
+			$("navLink").each(function () {
+				if (this.href == window.location.href) {
+					$(this).addClass("active");
+				}
+			});
+		});
+	</script>
 </asp:Content>
 
 <asp:Content ID="Header" ContentPlaceHolderID="NavBar" runat="server">
@@ -12,19 +21,19 @@
 
 <asp:Content ID="Setting" ContentPlaceHolderID="InternalContent" runat="server">
     <div class="MainContent">
-        <div class="SettingsPanel col-md-2 col-sm-12 col-lg-6">
-            <h3>MasterBox Preferences</h3>
+        <div class="SettingsPanel">
+            <h3>Preferences</h3>
             <ul>
-                <li><a runat="server" href="prefgeneral.aspx">General Settings </a></li>
-                <li><a runat="server" href="prefprofile.aspx">Profile Preferences</a></li>
-                <li><a runat="server" href="prefpassword.aspx">Change Password </a></li>
-                <li><a runat="server" href="prefsecurity.aspx">Change Folder Settings </a></li>
-                <li><a runat="server" href="prefotp.aspx">2FA Settings</a></li>
-                <li><a runat="server" href="prefsubscription.aspx">Subscription</a></li>
-                <li><a runat="server" href="preflogs.aspx">Access Logs</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefgeneral.aspx">User Dashboard</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefprofile.aspx">Profile Preferences</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefpassword.aspx">Modify Password</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefotpsetup.aspx">2FA Settings</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefsecurity.aspx">Folder Encryption</a></li>
+                <li><a runat="server" CssClass="navLink" href="prefsubscription.aspx">Expand Storage</a></li>
+                <li><a runat="server" CssClass="navLink" href="preflogs.aspx">Access Logs</a></li>
             </ul>
         </div>
-        <div class="SettingSelectionPanel col-md-10 col-sm-12 col-lg-6">
+        <div class="SettingSelectionPanel">
         <asp:ContentPlaceHolder ID="Preferences" runat="server" />
         </div>
     </div>

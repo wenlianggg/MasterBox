@@ -1,14 +1,17 @@
 ﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefpassword.aspx.cs" Inherits="MasterBox.ChangePw" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="Preferences" runat="server">
-	<div class="jumbotron">
-		<h1><%: Title %></h1>
-		<p>Edit your user information here</p>
-	</div>
+        <div class="page-header">
+          <h1><%: Page.Title %>
+              <small>Change your password periodically for security</small>
+          </h1>
+        </div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
-		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
-		<li>User Settings</li>
-		<li class="active">User Password</li>
+		<li><a href="<%= ResolveUrl("~/Default") %>">MasterBox</a></li>
+		<li>User Preferences</li>
+		<li>Security</li>
+		<li>Authentication</li>
+		<li class="active">Change Password</li>
 	</ol>
 	<br />
 	<div class="panel panel-default">

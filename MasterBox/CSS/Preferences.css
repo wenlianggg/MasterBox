@@ -1,14 +1,16 @@
 ﻿/*Setting Pane*/
 .SettingsPanel {
     width: 20%;
-    position: absolute;
+    position: fixed;
     height: 100%;
     float: left;
-    background: linear-gradient(90deg, #114271, #4C7DB4);
+	padding:0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: linear-gradient(90deg, #272c40, #0d191d);
     background-color: #5a5a5a;
-    -webkit-box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
-    -moz-box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
-    box-shadow: 9px -3px 4px -4px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
+    -moz-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
+    box-shadow: 6px -3px 3px -4px rgba(0,0,0,0.35);
     z-index:10;
 }
 
@@ -17,31 +19,25 @@
         text-align: center;
         padding: 5% 2% 4% 2%;
         color: white;
-        background: linear-gradient(90deg, #114271, #4C7DB4);
-        background-color: #5a5a5a;
     }
 
     .SettingsPanel ul {
         list-style: none;
         padding: 0;
         margin: 0;
+		width:100%;
     }
 
-        .SettingsPanel ul li:first-child,
-        .SettingsPanel ul li:first-child a:hover {
-            border-radius:20px 20px 0 0;    
+        .SettingsPanel ul li:first-child {
+			 border-top: 1px solid #8b8b8b;
         }
 
-        .SettingsPanel ul li:last-child,
-        .SettingsPanel ul li:last-child a:hover {
-            border-radius:0 0 20px 20px;
-            border-bottom: none;
-        }
 
         .SettingsPanel ul li {
-            border-bottom: 2px solid #8b8b8b;
-            border-left: 2px solid #8b8b8b;
-            border-right: 2px solid #8b8b8b;
+            border-bottom: 1px solid #8b8b8b;
+            border-left: 1px solid #8b8b8b;
+            border-right: 1px solid #8b8b8b;
+			font-size: 15px;
             margin: 0 auto;
             text-align: center;
             background-color: #fdfbfb;
@@ -54,23 +50,29 @@
                 padding: 7%;
                 text-decoration: none;
                 color: black;
-                font-weight: 500;
+                font-weight: 300;
             }
 
              .SettingsPanel ul li a:hover {
-                background: linear-gradient(90deg, #114271, #4C7DB4);
-                background-color: #5a5a5a;
+                background-color: #2d6aa5;
+                color:white;
+            }
+
+			 
+             .SettingsPanel ul li a:active {
+                background-color: #2d6aa5;
                 color:white;
             }
 
 .SettingSelectionPanel {
     height: 100%;
-    position:absolute;
-    padding: 1% 2% 1% 2%;
+	position: absolute;
+	overflow: scroll;
+    padding-left: 1%;
     width:80%;
     left:20%;
     float: left;
-    background-color: #fdfbfb;
+    background-color: #f7ffff;
 }
 
 .Setting_Profile {
@@ -104,4 +106,21 @@
     border-radius: 5px;
     margin-top: 2%;
     margin-bottom: 2%;
+}
+
+/*Overiding CSS - May cause problems*/
+.row {
+    padding: 1%;
+
+}
+
+@media (max-width: 720px) {
+	.SettingsPanel {
+		display:none;
+	}
+
+	.SettingSelectionPanel {
+		width:100%;
+		left:0;
+	}
 }

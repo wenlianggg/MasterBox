@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 /// Author: Goh Wen Liang (154473G) 
@@ -154,42 +155,38 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
-		internal DataTable SqlGetLogs(int userid) {
+		internal DataTable SqlGetUserLogs(int userid) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT userid, logdesc, logip, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
+				"SELECT logdesc, logip, loglevel, logtime FROM mb_logs WHERE userid = @userid ORDER BY logtime DESC",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
 			cmd.Prepare();
 			cmd.Parameters["@userid"].Value = userid;
 			DataTable data = new DataTable();
 			data.Load(cmd.ExecuteReader());
-			data.Columns["userid"].ColumnName = "User Name";
 			data.Columns["logdesc"].ColumnName = "Log Description";
 			data.Columns["logip"].ColumnName = "Logged IP";
-			data.Columns["loglevel"].ColumnName = "Log Level";
+			data.Columns["loglevel"].ColumnName = "Severity";
 			data.Columns["logtime"].ColumnName = "Time";
-			for (int i = 0; i < data.Rows.Count; i++) {
-				data.Rows[i][3] = ConvertToLogLevel(int.Parse(data.Rows[i][3].ToString()));
-			}
 			return data;
 		}
 
-		private string ConvertToLogLevel(int loglevel) {
-			switch(loglevel) {
-				case 0:
-					return "Normal";
-				case 1:
-					return "Security";
-				case 2:
-					return "Changed";
-				case 3:
-					return "Error";
-				case 4:
-					return "Critical Error";
-				default:
-					return "-";
-			}
+		internal DataTable SqlGetServerLogs() {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT logid, userid, logdesc, logip, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
+				sqlConn);
+			cmd.Prepare();
+			DataTable data = new DataTable();
+			data.Load(cmd.ExecuteReader());
+			data.Columns["logid"].ColumnName = "ID";
+			data.Columns["userid"].ColumnName = "User Name";
+			data.Columns["logdesc"].ColumnName = "Log Description";
+			data.Columns["logip"].ColumnName = "Logged IP";
+			data.Columns["loglevel"].ColumnName = "Severity";
+			data.Columns["logtime"].ColumnName = "Time";
+			return data;
 		}
+
 
 		internal SqlDataReader SqlGetUser(int userid) {
 			if (userid == 0) throw new UserNotFoundException();

@@ -19,14 +19,14 @@ namespace MasterBox.Auth {
 				if (!IsPostBack)
 				using (DataAccess da = new DataAccess()) {
 					userid = Auth.User.ConvertToId(User.Identity.Name);
-					LogsTable.DataSource = da.SqlGetLogs(userid);
+					LogsTable.DataSource = da.SqlGetUserLogs(userid);
 					LogsTable.DataBind();
 				}
 			}
 		}
 		protected void RefreshTable(object sender, EventArgs e) {
 			using (DataAccess da = new DataAccess()) {
-				LogsTable.DataSource = da.SqlGetLogs(userid);
+				LogsTable.DataSource = da.SqlGetUserLogs(userid);
 				LogsTable.DataBind();
 			}
 		}

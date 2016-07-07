@@ -101,7 +101,7 @@
     float: left;
     width: 100%;
     display: block;
-    height: 100vh;
+    height: 95vh;
     margin-top: 50px;
 }
 
@@ -184,8 +184,4 @@
 }
 
 
-/*Overiding CSS - May cause problems*/
-.row {
-    padding: 2%;
 
-}

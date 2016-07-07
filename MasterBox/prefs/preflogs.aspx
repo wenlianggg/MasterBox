@@ -7,9 +7,10 @@
           </h1>
         </div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
-		<li><a href="<%= ResolveUrl("~/Auth/signin") %>">Authentication</a></li>
-        <li>Security</li>
-		<li class="active">Access Logs</li>
+		<li><a href="<%= ResolveUrl("~/Default") %>">MasterBox</a></li>
+		<li>User Preferences</li>
+		<li>Security</li>
+		<li class="active"><%: Page.Title %></li>
 	</ol>
 	<br />
 	<div class="panel panel-default">
