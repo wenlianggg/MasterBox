@@ -204,7 +204,6 @@
     <Content Include="Contact.aspx" />
     <Content Include="CSS\Site.css" />
     <Content Include="filestore\FileTransferInterface.aspx" />
-    <Content Include="filestore\Internal.Master" />
     <Content Include="prefs\Preferences.master" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
