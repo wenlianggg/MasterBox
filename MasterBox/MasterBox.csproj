@@ -170,7 +170,6 @@
     <Content Include="CSS\Preferences.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="prefs\prefotp.aspx" />
     <Content Include="Auth\otpverify.aspx" />
     <Content Include="prefs\preflogs.aspx" />
     <Content Include="Auth\signout.aspx" />
