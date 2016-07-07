@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Net;
+using System.Web;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MasterBox
 {
@@ -15,6 +18,7 @@ namespace MasterBox
             string txToken = Request.QueryString["tx"];
             string query = "cmd=_notify-synch&tx=" + txToken + "&at=" + authToken;
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             //Post back to either sandbox or live
             string strSandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(strSandbox);
@@ -53,6 +57,10 @@ namespace MasterBox
                     Response.Write("<li>Item: " + results["item_name"] + "</li>");
                     Response.Write("<li>Amount: " + results["payment_gross"] + "</li>");
                     Response.Write("<hr>");
+
+                    
+                    ItemName.InnerText = "You paid for: " + SpecChar.CleanInput(results["item_name"]);
+
                 }
                 else if (line == "FAIL")
                 {
@@ -66,9 +74,7 @@ namespace MasterBox
                 Response.Write("ERROR");
             }
 
-            //Response.AddHeader("REFRESH", "3;URL=Default.aspx");
+            Response.AddHeader("REFRESH", "5;URL=Default.aspx");
         }
-
     }
-
 }

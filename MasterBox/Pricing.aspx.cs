@@ -44,9 +44,10 @@ namespace MasterBox
             int storageOpted;
             if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted)) {
                 string business = "VY34CAC6JZ6LU";
-                string itemName = Context.User.Identity.Name + ": " + storageOpted + " MB";
+                string itemName = storageOpted + " MB";
                 double itemAmount = 20.00 * storageOpted;
                 string currencyCode = "SGD";
+                string itemId = buttonclicked.Attributes["ItemID"];
 
                 StringBuilder ppHref = new StringBuilder();
 
@@ -55,6 +56,7 @@ namespace MasterBox
                 ppHref.Append("&item_name=" + itemName);
                 ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
                 ppHref.Append("&currency_code=" + currencyCode);
+                ppHref.Append("&item_id=" + itemId);
 
                 Response.Redirect(ppHref.ToString(), true);
             }

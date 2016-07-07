@@ -5,5 +5,6 @@
         <div class="jumbotron">
             <h1>Payment Succesful.</h1>
             <p>You will be automatically redirected! Hold on!</p>
+            <p ID="ItemName" runat="server"></p>
         </div>
 </asp:Content>
