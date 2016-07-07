@@ -1,40 +1,33 @@
-﻿<%@ Master  Language="C#" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.mbox.FileSetting" %>
+﻿<%@ Master  Language="C#" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.mbox.Prefs" %>
 
 <asp:Content ID="PrefCss" ContentPlaceHolderID="HeadContent" runat="server">
-    <link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />
+	<link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />
     <link runat="server" href="../../CSS/LoginStyle.css" rel="stylesheet" />
-	<script>
-		$(document).ready(function () {
-			$("navLink").each(function () {
-				if (this.href == window.location.href) {
-					$(this).addClass("active");
-				}
-			});
-		});
-	</script>
 </asp:Content>
 
 <asp:Content ID="Header" ContentPlaceHolderID="NavBar" runat="server">
-    <li><a runat="server" id="FBItem" href="~/filestore/FileTransferInterface.aspx">
+	<li><a runat="server" id="FBItem" href="~/filestore/FileTransferInterface.aspx">
 	<asp:Label ID="FileBrowser" runat="server" Text="File Browser" /></a></li>
 </asp:Content>
 
 <asp:Content ID="Setting" ContentPlaceHolderID="InternalContent" runat="server">
-    <div class="MainContent">
+	<div class="MainContent">
         <div class="SettingsPanel">
-            <h3>Preferences</h3>
-            <ul>
-                <li><a runat="server" CssClass="navLink" href="prefgeneral.aspx">User Dashboard</a></li>
-                <li><a runat="server" CssClass="navLink" href="prefprofile.aspx">Profile Preferences</a></li>
-                <li><a runat="server" CssClass="navLink" href="prefpassword.aspx">Modify Password</a></li>
-                <li><a runat="server" CssClass="navLink" href="prefotpsetup.aspx">2FA Settings</a></li>
-                <li><a runat="server" CssClass="navLink" href="prefsecurity.aspx">Folder Encryption</a></li>
-                <li><a runat="server" CssClass="navLink" href="prefsubscription.aspx">Expand Storage</a></li>
-                <li><a runat="server" CssClass="navLink" href="preflogs.aspx">Access Logs</a></li>
+            <h3>Preferences <i class="fa fa-sliders" aria-hidden="true"></i></h3>
+            <ul class="navLink">
+                <li><a runat="server" ID="prefgeneral" href="prefgeneral.aspx">Dashboard</a></li>
+                <li><a runat="server" ID="prefprofile" href="prefprofile.aspx">Profile Preferences <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="prefpassword" href="prefpassword.aspx">Change Password <i class="fa fa-key" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="prefotpsetup" href="prefotpsetup.aspx">2FA Settings <i class="fa fa-th" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="prefsecurity" href="prefsecurity.aspx">Folder Encryption <i class="fa fa-lock" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="prefsubscription" href="prefsubscription.aspx">Expand Storage <i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="preflogs" href="preflogs.aspx">Access Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
             </ul>
         </div>
         <div class="SettingSelectionPanel">
         <asp:ContentPlaceHolder ID="Preferences" runat="server" />
         </div>
     </div>
+
+
 </asp:Content>

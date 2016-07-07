@@ -23,6 +23,7 @@
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
     <link href='~/CSS/Internal.css' rel="stylesheet" />
+	<link href='~/Content/font-awesome.min.css' rel="stylesheet"/>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 	<!-- Favicon -->
     <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />

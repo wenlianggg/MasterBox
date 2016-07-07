@@ -30,7 +30,7 @@
 						<li>Enter the current six-digit numerical passcode from the application to verify that your device is properly configured</li>
 					</ol>
 					<br />
-					<asp:TextBox ID="setupValue" CssClass="otpSetupValue" runat="server"></asp:TextBox>
+					<asp:TextBox ID="setupValue" CssClass="otpSetupValue form-control" runat="server"></asp:TextBox>
 					<br />
 					<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
 						ControlToValidate="setupValue"
