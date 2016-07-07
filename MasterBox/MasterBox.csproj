@@ -328,13 +328,6 @@
     <Compile Include="prefs\prefpassword.aspx.designer.cs">
       <DependentUpon>prefpassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="prefs\prefotp.aspx.cs">
-      <DependentUpon>prefpassword.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="prefs\prefotp.aspx.designer.cs">
-      <DependentUpon>prefpassword.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Auth\otpverify.aspx.cs">
       <DependentUpon>otpverify.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
