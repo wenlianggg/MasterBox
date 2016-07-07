@@ -17,6 +17,7 @@
                 <li><a runat="server" href="prefgeneral.aspx">General Settings </a></li>
                 <li><a runat="server" href="prefprofile.aspx">Profile Preferences</a></li>
                 <li><a runat="server" href="prefpassword.aspx">Change Password </a></li>
+                <li><a runat="server" href="prefsecurity.aspx">Change Folder Settings </a></li>
                 <li><a runat="server" href="prefotp.aspx">2FA Settings</a></li>
                 <li><a runat="server" href="prefsubscription.aspx">Subscription</a></li>
                 <li><a runat="server" href="preflogs.aspx">Access Logs</a></li>
