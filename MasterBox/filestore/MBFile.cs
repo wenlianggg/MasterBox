@@ -203,7 +203,25 @@ namespace MasterBox.mbox
             return mbf;
         }
 
+        public static int GetTotalFileStorage(string username)
+        {
+            int totalFileSize=0;
 
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE userid = @userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = user.UserId;
+
+            SqlDataReader sqlDR = cmd.ExecuteReader();
+            while (sqlDR.Read())
+            {
+                int filesize =(int) sqlDR["filesize"];
+                totalFileSize=totalFileSize+filesize;
+            }
+            return totalFileSize;
+        }
 
         private static SqlConnection SQLGetMBoxConnection()
         {
