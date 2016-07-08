@@ -303,7 +303,12 @@ namespace MasterBox.Auth {
 				RefreshFields(); }
 		}
 
-
+        public bool IsAdmin {
+            get {
+                if (_mbrType == -1) return true;
+                else return false;
+            }
+        }
 	}
 
 }
