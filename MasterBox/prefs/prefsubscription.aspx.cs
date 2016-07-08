@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +11,14 @@ namespace MasterBox.mbox
     public partial class PrefSubscription : System.Web.UI.Page
     {
 		protected void Page_Load(object sender, EventArgs e) {
-			// Progress Bar Values //
-			double freespace = 5;
-			double actualspace = 1000 + freespace;
-			double spaceused = 1005;
+            String user = Context.User.Identity.Name;
+            User currentUser = Auth.User.GetUser(user);
+
+            // Progress Bar Values //
+            double freespace = 5;
+			double actualspace = (currentUser.MbrType * 5);
+            double addspace = actualspace - 5;
+            double spaceused = BytesToMega(MBFile.GetTotalFileStorage(user));
 			double percentused = (spaceused / actualspace) * 100;
 			double availablespace = actualspace - spaceused;
 			var roundedused = Math.Round(percentused, 1);
@@ -44,6 +49,8 @@ namespace MasterBox.mbox
 
 			// Subscription Plans Values //
 			FreeSpace.InnerText = "Free Space Given: " + freespace + "MB";
+            Additional.InnerText = "Additional Space: " + addspace + "MB";
+
 		}
 
 		protected void GoToFiles(object sender, EventArgs e) {
@@ -53,5 +60,10 @@ namespace MasterBox.mbox
 		protected void GoToPrices(object sender, EventArgs e) {
 			Response.Redirect("~/Pricing.aspx");
 		}
+
+        protected double BytesToMega(double bytes)
+        {
+            return (bytes / 1024f) / 1024f;
+        }
 	}
 }

@@ -13,24 +13,6 @@ namespace MasterBox {
     public partial class Pricing {
         
         /// <summary>
-        /// LoginLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginLink;
-        
-        /// <summary>
-        /// PayPalBtn5MB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn5MB;
-        
-        /// <summary>
         /// ThisLogin control.
         /// </summary>
         /// <remarks>
@@ -83,5 +65,23 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton PayPalBtn20MB;
+        
+        /// <summary>
+        /// LoginLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginLink;
+        
+        /// <summary>
+        /// PayPalBtn30MB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton PayPalBtn30MB;
     }
 }

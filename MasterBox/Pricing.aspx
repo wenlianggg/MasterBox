@@ -12,22 +12,12 @@
             <div class="table-responsive">
                 <table class="fiveMbs table">
                     <tr class="tableHeaders">
-                        <th>5MB</th>
                         <th>10MB</th>
                         <th>15MB</th>
                         <th>20MB</th>
+                        <th>30MB</th>
                     </tr>
                     <tr class="tableData">
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
-                        <a ID="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
-                        <asp:ImageButton
-                                ID="PayPalBtn5MB"
-                                ItemSize="5"
-                                ItemID="RRFX7PSVFP3UQ"
-                                runat="server"
-                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" />
-                        </td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
                         <a id="ThisLogin" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                           <asp:ImageButton
@@ -55,6 +45,16 @@
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
                                 OnClick="PayPalBtn_Click" /></td>
+                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
+                        <a ID="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                        <asp:ImageButton
+                                ID="PayPalBtn30MB"
+                                ItemSize="30"
+                                ItemID="E3SP9YWU962SQ"
+                                runat="server"
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                OnClick="PayPalBtn_Click" />
+                        </td>
                     </tr>
                 </table>
             </div>

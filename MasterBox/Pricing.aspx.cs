@@ -16,7 +16,7 @@ namespace MasterBox
         {
             if (Context.User.Identity.IsAuthenticated)
             {
-                PayPalBtn5MB.Visible = true;
+                PayPalBtn30MB.Visible = true;
                 PayPalBtn10MB.Visible = true;
                 PayPalBtn15MB.Visible = true;
                 PayPalBtn20MB.Visible = true;
@@ -31,7 +31,7 @@ namespace MasterBox
                 LoginLink2.Visible = true;
                 LoginLink3.Visible = true;
                 ThisLogin.Visible = true;
-                PayPalBtn5MB.Visible = false;
+                PayPalBtn30MB.Visible = false;
                 PayPalBtn10MB.Visible = false;
                 PayPalBtn15MB.Visible = false;
                 PayPalBtn20MB.Visible = false;

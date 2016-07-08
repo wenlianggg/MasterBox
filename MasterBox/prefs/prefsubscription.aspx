@@ -29,6 +29,7 @@
             <div class="panel-heading"><strong>Subscription Plans</strong></div>
             <div class="panel-body">
                 <p runat="server" id="FreeSpace"></p>
+                <p runat="server" id="Additional"></p>
                 <asp:Button runat="server" CssClass="btn btn-info" Text="Purchase Space" OnClick="GoToPrices" />
             </div>
         </div>
