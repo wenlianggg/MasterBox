@@ -51,7 +51,6 @@ namespace MasterBox.Auth {
 				return false;
 		}
 
-
 		public byte[] Encrypt(string plainText) {
 			// Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
 			// so that the same Salt and IV values can be used when decrypting.  
