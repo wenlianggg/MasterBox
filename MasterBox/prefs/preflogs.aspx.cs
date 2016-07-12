@@ -8,29 +8,25 @@ using System.Web.Security;
 using System.Diagnostics;
 
 namespace MasterBox.Auth {
-	public partial class AccessLog : Page {
+    public partial class AccessLog : Page {
 
-		int userid;
+        protected void Page_Load(object sender, EventArgs e) {
+            if (!User.Identity.IsAuthenticated) {
+                Response.Redirect("~/Default.aspx");
+            }
+        }
+        protected void RefreshAuthTable(object sender, EventArgs e) {
+            FileLogs.Visible = false;
+            AuthLogs.Visible = true;
+            AuthLogsTable.DataSource = AuthLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
+            AuthLogsTable.DataBind();
+        }
 
-		protected void Page_Load(object sender, EventArgs e) {
-			if (!User.Identity.IsAuthenticated) {
-				Response.Redirect("~/Default.aspx");
-			} else {
-				if (!IsPostBack)
-				using (DataAccess da = new DataAccess()) {
-					userid = Auth.User.ConvertToId(User.Identity.Name);
-					LogsTable.DataSource = da.SqlGetUserLogs(userid);
-					LogsTable.DataBind();
-				}
-			}
-		}
-		protected void RefreshTable(object sender, EventArgs e) {
-			using (DataAccess da = new DataAccess()) {
-				LogsTable.DataSource = da.SqlGetUserLogs(userid);
-				LogsTable.DataBind();
-			}
-		}
-
-	}
-
+        protected void RefreshFilesTable(object sender, EventArgs e) {
+            AuthLogs.Visible = false;
+            FileLogs.Visible = true;
+            FileLogsTable.DataSource = FileLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
+            FileLogsTable.DataBind();
+        }
+    }
 }

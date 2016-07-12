@@ -89,8 +89,8 @@ namespace MasterBox.Auth {
 						// Empty out strings and sensitive data arrays
 						ClearSensitiveData(userInputBytes, combinedBytes, password, userHash);
 
-						// Call the logger to log a failed verification attempt
-						Logger.Instance.FailedLoginAttempt(User.ConvertToId(username));
+                        // Call the logger to log a failed verification attempt
+                        AuthLogger.Instance.FailedLoginAttempt(User.ConvertToId(username));
 						
 						// Password incorrect
 						return false;
@@ -129,7 +129,7 @@ namespace MasterBox.Auth {
 
 					// Update database values
 					da.SqlUpdateHashSalt(username, newHash, newSalt);
-					Logger.Instance.UserPassChanged(User.ConvertToId(username));
+					AuthLogger.Instance.UserPassChanged(User.ConvertToId(username));
 
 					// Clean up all sensitive information
 					ClearSensitiveData(oldPassword, newPassword, combinedBytes, newPasswordBytes);
@@ -138,8 +138,8 @@ namespace MasterBox.Auth {
 				return true;
 
 			} else {
-				// Existing password is wrong
-				Logger.Instance.UserPassChangeFailed(User.ConvertToId(username));
+                // Existing password is wrong
+                AuthLogger.Instance.UserPassChangeFailed(User.ConvertToId(username));
 				return false;
 			}
 		}
@@ -187,7 +187,7 @@ namespace MasterBox.Auth {
 		}
 	
 		internal void LoginSuccess(User usr, bool persistlogin) {
-			Logger.Instance.SuccessfulLogin(usr.UserId);
+            AuthLogger.Instance.SuccessfulLogin(usr.UserId);
 			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
 		}
 

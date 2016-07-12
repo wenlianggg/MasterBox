@@ -16,7 +16,7 @@ namespace MasterBox.Auth {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if (Logger.Instance.IsLoginBlocked()) {
+			if (AuthLogger.Instance.IsLoginBlocked()) {
 				Msg.Text = "Your IP has been blocked for too many failed logins, please contact us.";
 				return;
 			}
