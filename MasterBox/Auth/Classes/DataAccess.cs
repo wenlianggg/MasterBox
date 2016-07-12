@@ -56,19 +56,34 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteNonQuery();
 		}
 
-		internal int SqlUpdateHashSalt(string username, string hash, string salt, bool useDefaultDA = true) {
-			// Update database values
-			SqlCommand cmd = new SqlCommand(
-				"INSERT INTO mb_users (username, hash, salt) VALUES (@uname, @newHash, @newSalt)", sqlConn);
-			cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
-			cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
-			cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
-			cmd.Prepare();
+        internal int SqlUpdateHashSalt(string username, string hash, string salt) {
+            if (User.Exists(username)) {
+                // Update database values
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE mb_users SET hash = @newHash, salt = @newSalt WHERE username = @uname", sqlConn);
+                cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+                cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
+                cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+                cmd.Prepare();
 
-			cmd.Parameters["@uname"].Value = username;
-			cmd.Parameters["@newHash"].Value = hash;
-			cmd.Parameters["@newSalt"].Value = salt;
-			return cmd.ExecuteNonQuery();
+                cmd.Parameters["@uname"].Value = username;
+                cmd.Parameters["@newHash"].Value = hash;
+                cmd.Parameters["@newSalt"].Value = salt;
+                return cmd.ExecuteNonQuery();
+            } else {
+                // Update database values
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO mb_users (username, hash, salt) VALUES (@uname, @newHash, @newSalt)", sqlConn);
+                cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+                cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
+                cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+                cmd.Prepare();
+
+                cmd.Parameters["@uname"].Value = username;
+                cmd.Parameters["@newHash"].Value = hash;
+                cmd.Parameters["@newSalt"].Value = salt;
+                return cmd.ExecuteNonQuery();
+            }
 		}
 
 		internal bool SqlUpdateUserValue(int userid, string fieldName, object fieldValue, SqlDbType sdb, int length) {
