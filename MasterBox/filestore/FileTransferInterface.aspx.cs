@@ -22,7 +22,6 @@ namespace MasterBox
             
             if (!IsPostBack)
             {
-                            
                 // Fill up file and folder data on the display
                 FillDataFile();                             
                 FillDataFolder();
@@ -132,6 +131,8 @@ namespace MasterBox
         // Upload a new file
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
+            
+
             if (FileUpload.HasFile)
             {
                 if (UploadLocation.SelectedValue == "==Master Folder==")
@@ -177,6 +178,8 @@ namespace MasterBox
         // Creating a folder
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
+
+
 
             bool folderCreation;
             //bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);

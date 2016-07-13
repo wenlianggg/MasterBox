@@ -35,6 +35,8 @@ namespace MasterBox.mbox
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("Hello World");
+
 
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name,ChangeFolderPasswordOption.SelectedValue);
             string oldpassword = CurrentPassword.Text;
