@@ -13,21 +13,40 @@
 		<li class="active"><%: Page.Title %></li>
 	</ol>
 	<br />
-	<div class="panel panel-default">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+		    <h3 class="panel-title">Log Controls</h3>
+	    </div>
+        <div class="panel-body">
+            <asp:Button ID="RefreshAuth"
+            Text="Load Access Logs"
+            CssClass="btn btn-default loginBtn"
+            OnClick="RefreshAuthTable"
+            runat="server" />
+            <asp:Button ID="RefreshFiles"
+            Text="Load File Logs"
+            CssClass="btn btn-default loginBtn"
+            OnClick="RefreshFilesTable"
+            runat="server" />
+        </div>
+    </div>
+
+	<div class="panel panel-default" runat="server" ID="AuthLogs" visible="false">
 		<div class="panel-heading">
 			<h3 class="panel-title">Access Logs</h3>
 		</div>
 		<div class="panel-body">
-            <asp:GridView runat="server" ID="LogsTable" CssClass="table table-striped table-condensed"/>
-            <asp:Button ID="RefreshButton"
-            Text="Refresh Logs"
-            CssClass="btn btn-primary loginBtn"
-            OnClick="RefreshTable"
-            runat="server" />
+            <asp:GridView runat="server" ID="AuthLogsTable" CssClass="table table-striped table-condensed"/>
 		</div>
 	</div>
-
-
+    <div class="panel panel-default" runat="server" ID="FileLogs" visible="false">
+		<div class="panel-heading">
+			<h3 class="panel-title">File Logs</h3>
+		</div>
+		<div class="panel-body">
+            <asp:GridView runat="server" ID="FileLogsTable" CssClass="table table-striped table-condensed"/>
+		</div>
+	</div>
 	<p>
 		<asp:Label ID="Msg" ForeColor="red" runat="server" />
 	</p>

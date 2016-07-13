@@ -300,8 +300,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\Classes\DataAccess.cs" />
     <Compile Include="Auth\Classes\Logger.cs" />
+    <Compile Include="Auth\Classes\DataAccess.cs" />
+    <Compile Include="Auth\Classes\AuthLogger.cs" />
     <Compile Include="Auth\Classes\UMBProvider.cs" />
     <Compile Include="Auth\DEBUG.aspx.cs">
       <DependentUpon>DEBUG.aspx</DependentUpon>
@@ -313,6 +314,7 @@
     <Compile Include="Auth\Classes\UserCrypto.cs" />
     <Compile Include="Auth\Classes\reCAPTCHA.cs" />
     <Compile Include="Auth\Classes\MBProvider.cs" />
+    <Compile Include="Auth\Classes\FileLogger.cs" />
     <Compile Include="prefs\prefotpsetup.aspx.cs">
       <DependentUpon>prefotpsetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -95,7 +95,7 @@ namespace MasterBox.Auth {
 			_dob = birthdate;
 			_email = email;
 			_verified = false;
-			_mbrType = 0;
+			_mbrType = 1;
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
 			_mbrStart = DateTime.Now;

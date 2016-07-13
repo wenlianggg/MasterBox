@@ -13,22 +13,58 @@ namespace MasterBox.Auth {
     public partial class AccessLog {
         
         /// <summary>
-        /// LogsTable control.
+        /// RefreshAuth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LogsTable;
+        protected global::System.Web.UI.WebControls.Button RefreshAuth;
         
         /// <summary>
-        /// RefreshButton control.
+        /// RefreshFiles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RefreshButton;
+        protected global::System.Web.UI.WebControls.Button RefreshFiles;
+        
+        /// <summary>
+        /// AuthLogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AuthLogs;
+        
+        /// <summary>
+        /// AuthLogsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView AuthLogsTable;
+        
+        /// <summary>
+        /// FileLogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FileLogs;
+        
+        /// <summary>
+        /// FileLogsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView FileLogsTable;
         
         /// <summary>
         /// Msg control.
