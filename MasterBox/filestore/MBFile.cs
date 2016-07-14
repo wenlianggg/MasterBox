@@ -22,44 +22,51 @@ namespace MasterBox.mbox
         // Upload of file
         public static bool UploadNewFile(MBFile file)
         {
-            try
+            if (SufficientSpace(file).Equals(true))
             {
-                // Get User ID
-                User user = User.GetUser(file.fileusername);
+                try
+                {
+                    // Get User ID
+                    User user = User.GetUser(file.fileusername);
 
-                file.filekey = user.AesKey;
-                file.fileiv = user.AesIV;
-                file.filecontent = MBFile.EncryptAES256File(file);
+                    file.filekey = user.AesKey;
+                    file.fileiv = user.AesIV;
+                    file.filecontent = MBFile.EncryptAES256File(file);
 
 
-                // Storing of File
-                SqlCommand cmd = new SqlCommand(
-                    "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
-                    + "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
-                cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
-                cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar, -1));
-                cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
-                cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
-                cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
-                cmd.Prepare();
-                cmd.Parameters["@user"].Value = user.UserId;
-                cmd.Parameters["@name"].Value = file.fileName;
-                cmd.Parameters["@type"].Value = file.fileType;
-                cmd.Parameters["@size"].Value = file.fileSize;
-                cmd.Parameters["@data"].Value = file.filecontent;
+                    // Storing of File
+                    SqlCommand cmd = new SqlCommand(
+                        "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
+                        + "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
+                    cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
+                    cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
+                    cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
+                    cmd.Prepare();
+                    cmd.Parameters["@user"].Value = user.UserId;
+                    cmd.Parameters["@name"].Value = file.fileName;
+                    cmd.Parameters["@type"].Value = file.fileType;
+                    cmd.Parameters["@size"].Value = file.fileSize;
+                    cmd.Parameters["@data"].Value = file.filecontent;
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                // Clear Sensitive Data
-                file.fileName = "";
-                file.fileType = "";
-                file.fileSize = 0;
-                file.filecontent = null;
-                file.filekey = "";
-                file.fileiv = "";
-                return true;
+                    // Clear Sensitive Data
+                    file.fileName = "";
+                    file.fileType = "";
+                    file.fileSize = 0;
+                    file.filecontent = null;
+                    file.filekey = "";
+                    file.fileiv = "";
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
-            catch
+            else
             {
                 return false;
             }
@@ -221,6 +228,42 @@ namespace MasterBox.mbox
                 totalFileSize=totalFileSize+filesize;
             }
             return totalFileSize;
+        }
+
+        // Check for exceeding current storage space
+        private static Boolean SufficientSpace(MBFile file)
+        {
+            // Get current user's Member Type
+            User user = User.GetUser(file.fileusername);
+            SqlCommand cmd = new SqlCommand("SELECT mbrType FROM mb_users WHERE userid = @userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Prepare();
+
+            // Execute Retrieval of mbrType
+            SqlDataReader rd = cmd.ExecuteReader();
+            int mbrType = rd.GetInt32(1);
+
+            // Values of space max threshold
+            int threshold = mbrType * 5;
+            double sizeMB = Math.Round(BytesToMega(file.fileSize), 0);
+
+            // File is within threshold
+            if(sizeMB < threshold)
+            {
+                return true;
+            }
+            // File exceeds threshold
+            else
+            {
+                return false;
+            }
+        }
+
+        // Bytes to Megabytes
+        protected static double BytesToMega(double bytes)
+        {
+            return (bytes / 1024f) / 1024f;
         }
 
         private static SqlConnection SQLGetMBoxConnection()
