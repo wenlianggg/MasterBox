@@ -303,6 +303,7 @@
     <Compile Include="Auth\Classes\Logger.cs" />
     <Compile Include="Auth\Classes\DataAccess.cs" />
     <Compile Include="Auth\Classes\AuthLogger.cs" />
+    <Compile Include="Auth\Classes\Stegano.cs" />
     <Compile Include="Auth\Classes\UMBProvider.cs" />
     <Compile Include="Auth\DEBUG.aspx.cs">
       <DependentUpon>DEBUG.aspx</DependentUpon>
