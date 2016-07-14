@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
+using System.Web.UI;
 
 namespace MasterBox
 {
@@ -154,7 +155,6 @@ namespace MasterBox
                         // File cannot be uploaded
                     else
                     {
-                        UploadFail.Attributes["visible"] = "true";
                     }
                 }
                 else
@@ -175,7 +175,6 @@ namespace MasterBox
                     }
                     else
                     {
-                        UploadFail.Attributes["visible"] = "true";
                     }
 
                 }
