@@ -46,6 +46,9 @@
                     <div class="modal-footer">
                         <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true" />
                     </div>
+                    <div ID="UploadFail" class="alert alert-danger" runat="server" visible="false">
+                        <strong>File has failed to upload! It may have exceeded your current storage space!</strong>
+                    </div>
                 </div>
             </div>
         </div>

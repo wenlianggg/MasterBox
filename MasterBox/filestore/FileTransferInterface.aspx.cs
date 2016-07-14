@@ -150,7 +150,12 @@ namespace MasterBox
                         {
                             // Update the file table
                             FillDataFile();
-                        }
+                    }
+                        // File cannot be uploaded
+                    else
+                    {
+                        UploadFail.Attributes["visible"] = "true";
+                    }
                 }
                 else
                 {
@@ -167,7 +172,11 @@ namespace MasterBox
                         if (uploadfiletofolderstatus == true)
                         {
                             FillDataFile();
-                        }
+                    }
+                    else
+                    {
+                        UploadFail.Attributes["visible"] = "true";
+                    }
 
                 }
             }
