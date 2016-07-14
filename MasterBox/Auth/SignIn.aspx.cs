@@ -28,7 +28,7 @@ namespace MasterBox.Auth {
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
 					if (MBProvider.Instance.IsTotpEnabled(usr.UserName)) {
-						Server.Execute("~/Auth/otpverify.aspx", false);
+						Response.Redirect("~/Auth/otpverify.aspx", false);
 					} else {
 						MBProvider.Instance.LoginSuccess(usr, Persist.Checked);
 					}
