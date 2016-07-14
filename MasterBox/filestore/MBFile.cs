@@ -242,7 +242,8 @@ namespace MasterBox.mbox
 
             // Execute Retrieval of mbrType
             SqlDataReader rd = cmd.ExecuteReader();
-            int mbrType = rd.GetInt32(1);
+            rd.Read();
+            int mbrType = (int)rd["mbrType"];
 
             // Values of space max threshold
             int threshold = mbrType * 5;
