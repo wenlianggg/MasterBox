@@ -96,7 +96,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 0));
 			cmd.Prepare();
 
-			cmd.Parameters["@fieldValue"].Value = fieldValue;
+			cmd.Parameters["@fieldValue"].Value = (fieldValue != null) ? fieldValue : DBNull.Value;
 			cmd.Parameters["@uid"].Value = userid;
 			if (cmd.ExecuteNonQuery() == 1) {
 				return true;

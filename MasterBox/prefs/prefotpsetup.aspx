@@ -14,7 +14,7 @@
 		<li class="active"><%: Page.Title %></li>
 	</ol>
 	<br />
-    <div runat="server" id="ExistingOTP" class="alert alert-warning" role="alert">Hey, it seems like you already have 2FA set up!</div>
+    <div runat="server" id="ExistingOTP" class="alert alert-warning" role="alert" visible="false">Hey, it seems like you already have 2FA set up!</div>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">Two-Factor Authentication Setup</h3>
@@ -33,7 +33,7 @@
 					<table>
                         <tr>
                             <td><strong>Current Password:  </strong></td>
-                            <td><asp:TextBox ID="CurrPw" CssClass="otpSetupValue form-control" runat="server" /></td>
+                            <td><asp:TextBox ID="CurrPw" CssClass="otpSetupValue form-control" runat="server" TextMode="Password"/></td>
                         </tr>
                         <tr>
                             <td><strong>Generated OTP:  </strong></td>
@@ -41,9 +41,9 @@
                         </tr>
                     </table>
 					<br />
-                    <asp:Label runat="server" ID="Msg" ForeColor="Red" />
-					<asp:Button ID="OTPValue" runat="server" Text="Enable OTP" CssClass="btn btn-success otpEnable" OnClick="VerifyOTP_Button" />
-					<asp:Button ID="OTPCancel" runat="server" Text="Disable OTP" CssClass="btn btn-danger otpCancelSetup" OnClick="DisableTOTP_Button" />
+                    <asp:Label runat="server" ID="Msg" ForeColor="Red" /><br>
+					<asp:Button ID="OTPValue" runat="server" Text="Enable 2FA" CssClass="btn btn-success otpEnable" OnClick="VerifyOTP_Button" />
+					<asp:Button ID="OTPCancel" runat="server" Text="Disable 2FA" CssClass="btn btn-danger otpCancelSetup" OnClick="DisableTOTP_Button" />
 				</div>
 				<div class="setupRowRight" runat="server" id="QRCodeHolder">
                     <asp:Image ID="OTPQrCode" runat="server" AlternateText="QR Code Not Available" height="300px" Width="300px"/>

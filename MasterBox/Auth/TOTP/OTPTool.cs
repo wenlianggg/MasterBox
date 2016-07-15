@@ -22,7 +22,14 @@ namespace MasterBox.Auth.TOTP {
 		private int _OTPNow;
 		private int[] _OTPRange = new int[5];
 
-		~ OTPTool() {
+        public OTPTool(string base32sec) {
+            SecretBase32 = base32sec;
+        }
+
+        public OTPTool() {
+        }
+
+        ~ OTPTool() {
 			Dispose();
 		}
 
