@@ -14,7 +14,7 @@
 		<li class="active"><%: Page.Title %></li>
 	</ol>
 	<br />
-    <div runat="server" id="ExistingOTP" class="alert alert-warning" role="alert" visible="false">Hey, it seems like you already have 2FA set up!</div>
+    <div runat="server" id="ExistingOTP" class="alert alert-success" role="alert" visible="false">Hey, it seems like you already have 2FA set up!</div>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">Two-Factor Authentication Setup</h3>

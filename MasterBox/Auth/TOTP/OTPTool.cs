@@ -15,7 +15,7 @@ namespace MasterBox.Auth.TOTP {
 
 		private int _secondsToGo;
 		private string _identity;
-		private byte[] _secret = new byte[10];
+		private byte[] _secret = new byte[14];
 		private Int64 _timestamp;
 		private byte[] _hmac;
 		private int _offset;
@@ -94,7 +94,7 @@ namespace MasterBox.Auth.TOTP {
 			get { return _secret; }
 			set {
                 if (_secret == null) {
-                    _secret = new byte[10];
+                    _secret = new byte[14];
                 }
 				_secret = value;
 				CalculateCurrentOTP();
