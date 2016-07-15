@@ -35,6 +35,7 @@
 						</tr>
 					</table>
 				</div>
+                </div>
 				<div class="row">
 					<h4 class="SettingHr">Preference</h4>
 					<h5>Email Notifications</h5>
@@ -83,7 +84,6 @@
 		<div class="row">
 			<button type="submit">Update</button>
 		</div>
-	</div>
 
 </asp:Content>
 

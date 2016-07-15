@@ -37,7 +37,7 @@ namespace MasterBox.Auth {
 				// the encrypted section is automatically decrypted!!
 				Response.Write("Configuration Section " + "<b>" +
 					WebConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString + "</b>" + " is automatically decrypted");
-			} catch (Exception ex) {
+			} catch (Exception) {
 
 			}
 		}
@@ -51,7 +51,7 @@ namespace MasterBox.Auth {
 					confg.Save();
 				}
 
-			} catch (Exception ex) {
+			} catch (Exception) {
 
 			}
 		}

@@ -19,7 +19,6 @@ namespace MasterBox.Prefs {
 		}
 
 		protected void ChangePassClick(object sender, EventArgs e) {
-			// TODO: Check if the passwords match
 			if (NewUserPass.Text.Equals(NewUserPassCfm.Text)) {
 				try {
 					if (MBProvider.Instance.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
