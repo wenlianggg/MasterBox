@@ -11,22 +11,24 @@ namespace MasterBox.Auth {
     public partial class AccessLog : Page {
 
         protected void Page_Load(object sender, EventArgs e) {
-            if (!User.Identity.IsAuthenticated) {
-                Response.Redirect("~/Default.aspx");
-            }
+
         }
         protected void RefreshAuthTable(object sender, EventArgs e) {
-            FileLogs.Visible = false;
-            AuthLogs.Visible = true;
-            AuthLogsTable.DataSource = AuthLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
-            AuthLogsTable.DataBind();
+            LogTypeName.Text = "Access Logs";
+            LogTable.DataSource = AuthLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
+            LogTable.DataBind();
         }
 
         protected void RefreshFilesTable(object sender, EventArgs e) {
-            AuthLogs.Visible = false;
-            FileLogs.Visible = true;
-            FileLogsTable.DataSource = FileLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
-            FileLogsTable.DataBind();
+            LogTypeName.Text = "File Logs";
+            LogTable.DataSource = FileLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
+            LogTable.DataBind();
+        }
+
+        protected void RefreshTransactTable(object sender, EventArgs e) {
+            LogTypeName.Text = "Transaction Logs";
+            LogTable.DataSource = TransactLogger.Instance.GetUserLogs(Auth.User.ConvertToId(User.Identity.Name));
+            LogTable.DataBind();
         }
     }
 }

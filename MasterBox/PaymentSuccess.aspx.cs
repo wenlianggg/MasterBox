@@ -100,7 +100,7 @@ namespace MasterBox
                             currUser.MbrStart = DateTime.Now;
                             currUser.MbrExpiry = DateTime.Now.AddDays(addDays).AddMonths(1);
                         }
-
+                        TransactLogger.Instance.TransactionCompleted(currUser.UserId, storageBought);
                     }
                     // // End execution of updates // //
                 }

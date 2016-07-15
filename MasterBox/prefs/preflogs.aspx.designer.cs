@@ -31,40 +31,31 @@ namespace MasterBox.Auth {
         protected global::System.Web.UI.WebControls.Button RefreshFiles;
         
         /// <summary>
-        /// AuthLogs control.
+        /// RefreshTransact control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AuthLogs;
+        protected global::System.Web.UI.WebControls.Button RefreshTransact;
         
         /// <summary>
-        /// AuthLogsTable control.
+        /// LogTypeName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView AuthLogsTable;
+        protected global::System.Web.UI.WebControls.Label LogTypeName;
         
         /// <summary>
-        /// FileLogs control.
+        /// LogTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FileLogs;
-        
-        /// <summary>
-        /// FileLogsTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView FileLogsTable;
+        protected global::System.Web.UI.WebControls.GridView LogTable;
         
         /// <summary>
         /// Msg control.

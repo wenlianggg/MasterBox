@@ -36,6 +36,12 @@ namespace MasterBox.Auth {
             }
         }
 
+        internal void LogTransactEntry(int userid, string ipaddress, string description, LogLevel loglevel) {
+            using (DataAccess da = new DataAccess()) {
+                da.SqlInsertLogEntry(userid, ipaddress, description, (int)loglevel, 2);
+            }
+        }
+
         internal DataTable GetUserLogs(int userid, int logtype) {
             DataTable dt = new DataTable();
             using (DataAccess da = new DataAccess())
@@ -66,7 +72,7 @@ namespace MasterBox.Auth {
                 userIp = "127.0.0.1";
             }
 
-            return userIp + " " + browser.Type;
+            return browser.Type + " FROM " + userIp;
         }
     }
 }

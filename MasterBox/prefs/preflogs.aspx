@@ -1,9 +1,9 @@
-﻿<%@ Page Title="Access Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
+﻿<%@ Page Title="User Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
 
 <asp:Content ID="AccessLogs" ContentPlaceHolderID="Preferences" runat="server">
         <div class="page-header">
           <h1><%: Page.Title %>
-              <small>Periodically review your access logs for security</small>
+              <small>Periodically review your user logs for security</small>
           </h1>
         </div>
 	<ol class="breadcrumb" style="margin-bottom: 5px;">
@@ -20,31 +20,37 @@
         <div class="panel-body">
             <asp:Button ID="RefreshAuth"
             Text="Load Access Logs"
-            CssClass="btn btn-default loginBtn"
+            CssClass="btn btn-default"
             OnClick="RefreshAuthTable"
             runat="server" />
             <asp:Button ID="RefreshFiles"
             Text="Load File Logs"
-            CssClass="btn btn-default loginBtn"
+            CssClass="btn btn-default"
+            OnClick="RefreshFilesTable"
+            runat="server" />
+            <asp:Button ID="RefreshTransact"
+            Text="Load Transaction Logs"
+            CssClass="btn btn-default"
             OnClick="RefreshFilesTable"
             runat="server" />
         </div>
     </div>
 
-	<div class="panel panel-default" runat="server" ID="AuthLogs" visible="false">
+	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Access Logs</h3>
+			<h3 class="panel-title">
+            <asp:Label 
+                runat="server" 
+                ID="LogTypeName" 
+                Text="Logs View"/>
+			</h3>
 		</div>
 		<div class="panel-body">
-            <asp:GridView runat="server" ID="AuthLogsTable" CssClass="table table-striped table-condensed"/>
-		</div>
-	</div>
-    <div class="panel panel-default" runat="server" ID="FileLogs" visible="false">
-		<div class="panel-heading">
-			<h3 class="panel-title">File Logs</h3>
-		</div>
-		<div class="panel-body">
-            <asp:GridView runat="server" ID="FileLogsTable" CssClass="table table-striped table-condensed"/>
+            <asp:GridView 
+                runat="server" 
+                ID="LogTable" 
+                CssClass="table table-striped table-condensed" 
+                EmptyDataText="Load a log to display"/>
 		</div>
 	</div>
 	<p>
