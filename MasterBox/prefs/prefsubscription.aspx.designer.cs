@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox.mbox {
+namespace MasterBox.Prefs {
     
     
     public partial class PrefSubscription {

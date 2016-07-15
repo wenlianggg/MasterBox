@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox.Auth {
+namespace MasterBox.Prefs {
     
     
     public partial class AccessLog {

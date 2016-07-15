@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Expand Storage" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.mbox.PrefSubscription" %>
+﻿<%@ Page Title="Expand Storage" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.Prefs.PrefSubscription" %>
 
 <asp:Content ID="SetGeneral" ContentPlaceHolderID="Preferences" runat="server">
     <div class="Setting_Profile">

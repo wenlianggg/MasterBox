@@ -1,4 +1,5 @@
 ﻿using MasterBox.Auth;
+using MasterBox.mbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox.mbox
-{
+namespace MasterBox.Prefs {
     public partial class PrefSubscription : System.Web.UI.Page
     {
 		protected void Page_Load(object sender, EventArgs e) {

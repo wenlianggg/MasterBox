@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.FileSetting_Profile" %>
+﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.Prefs.FileSetting_Profile" %>
 
 <asp:Content ID="SetProfile" ContentPlaceHolderID="Preferences" runat="server">
 	<div class="Setting_Profile">

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="User Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Auth.AccessLog" %>
+﻿<%@ Page Title="User Logs" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="preflogs.aspx.cs" Inherits="MasterBox.Prefs.AccessLog" %>
 
 <asp:Content ID="Logs" ContentPlaceHolderID="Preferences" runat="server">
         <div class="page-header">

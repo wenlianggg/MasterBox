@@ -1,4 +1,4 @@
-﻿<%@ Page Title="One Time Password Setup" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefotpsetup.aspx.cs" Inherits="MasterBox.Auth.prefotpsetup" %>
+﻿<%@ Page Title="One Time Password Setup" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefotpsetup.aspx.cs" Inherits="MasterBox.Prefs.prefotpsetup" %>
 
 <asp:Content ID="OneTimeSetup" ContentPlaceHolderID="Preferences" runat="server">
         <div class="page-header">

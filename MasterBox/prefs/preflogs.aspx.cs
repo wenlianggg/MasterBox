@@ -6,8 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 using System.Drawing;
+using MasterBox.Auth;
 
-namespace MasterBox.Auth {
+namespace MasterBox.Prefs {
     public partial class AccessLog : Page {
 
         protected void Page_Load(object sender, EventArgs e) {
