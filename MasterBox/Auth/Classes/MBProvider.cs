@@ -185,6 +185,13 @@ namespace MasterBox.Auth {
 				}
 			}
 		}
+
+        internal bool SetTotpSecret(string username, string secret) {
+            int userid = User.ConvertToId(username);
+            using (DataAccess da = new DataAccess()) {
+                return da.SqlUpdateUserValue(userid, "totpsecret", secret, SqlDbType.VarChar, 12);
+            }
+        }
 	
 		internal void LoginSuccess(User usr, bool persistlogin) {
             AuthLogger.Instance.SuccessfulLogin(usr.UserId);

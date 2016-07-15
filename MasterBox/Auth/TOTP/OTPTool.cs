@@ -15,7 +15,7 @@ namespace MasterBox.Auth.TOTP {
 
 		private int _secondsToGo;
 		private string _identity;
-		private byte[] _secret;
+		private byte[] _secret = new byte[10];
 		private Int64 _timestamp;
 		private byte[] _hmac;
 		private int _offset;
@@ -62,7 +62,7 @@ namespace MasterBox.Auth.TOTP {
 
 		public string Identity {
 			get {
-				return _identity;
+				return "MasterBox";
 			}
 			set {
 				_identity = value;
@@ -87,7 +87,7 @@ namespace MasterBox.Auth.TOTP {
 			get { return _secret; }
 			set {
                 if (_secret == null) {
-                    _secret = new byte[16];
+                    _secret = new byte[10];
                 }
 				_secret = value;
 				CalculateCurrentOTP();
@@ -154,7 +154,7 @@ namespace MasterBox.Auth.TOTP {
 		}
 
 		public string GetQRCodeUrl() {
-			return String.Format("https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/{0}%3Fsecret%3D{1}",
+			return string.Format("https://chart.googleapis.com/chart?chs=400x400&chld=M|0&cht=qr&chl=otpauth://totp/{0}?secret={1}",
 								Identity,
 								SecretBase32);
 		}
