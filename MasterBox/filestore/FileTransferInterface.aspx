@@ -230,10 +230,7 @@
                 </Columns>
             </asp:GridView>
 
-
-
         </div>
-    </div>
 
     <script>
         // Toggle for encryption option

@@ -50,6 +50,8 @@ namespace MasterBox.mbox
 			// Subscription Plans Values //
 			FreeSpace.InnerText = "Free Space Given: " + freespace + "MB";
             Additional.InnerText = "Additional Space: " + addspace + "MB";
+            SubscriptionStart.InnerText = "Subscription Start Date: " + currentUser.MbrStart.ToString();
+            SubscriptionEnd.InnerText = "Subscription Expiry Date: " + currentUser.MbrExpiry.ToString();
 
 		}
 

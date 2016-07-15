@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
+using System.Web.UI;
 
 namespace MasterBox
 {
@@ -150,7 +151,11 @@ namespace MasterBox
                         {
                             // Update the file table
                             FillDataFile();
-                        }
+                    }
+                        // File cannot be uploaded
+                    else
+                    {
+                    }
                 }
                 else
                 {
@@ -167,7 +172,10 @@ namespace MasterBox
                         if (uploadfiletofolderstatus == true)
                         {
                             FillDataFile();
-                        }
+                    }
+                    else
+                    {
+                    }
 
                 }
             }
