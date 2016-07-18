@@ -3,104 +3,6 @@ a, a:active {
    outline: 0;
 }
 
-/*Custom Context Menu*/
-.custom-menu {
-    display: none;
-    z-index: 1000;
-    position: absolute;
-    overflow: hidden;
-    border: 1px solid #CCC;
-    white-space: nowrap;
-    font-family: sans-serif;
-    background: #FFF;
-    color: #333;
-    border-radius: 5px;
-    padding: 0;
-}
-
-    .custom-menu li {
-        padding: 8px 12px;
-        cursor: pointer;
-        list-style-type: none;
-        transition: all .3s ease;
-    }
-
-        .custom-menu li:hover {
-            background-color: #DEF;
-        }
-
-/*SideBarNavigation*/
-/*Maybe able to use bootstrap to overide instead of using new div*/
-.SideMenuBar {
-    height: 100vh;
-    background-color: #343434;
-    float: left;
-    display: block;
-    width: 23%;
-    margin-top: 50px;
-}
-
-    .SideMenuBar lh {
-        color: white;
-        padding: 10px;
-        display: block;
-    }
-
-    .SideMenuBar ul {
-        list-style-type: none;
-        margin-left: 4%;
-        padding: 0;
-        width: 250px;
-    }
-
-.SideMenu ul li {
-    list-style-type: none;
-    border: 1px;
-    border-style: solid;
-}
-
-.SideMenuBar ul li a {
-    display: block;
-    color: ghostwhite;
-    font-size: 120%;
-    text-decoration: none;
-    text-align: left;
-    padding: 10px 20px 10px 20px;
-    cursor: pointer;
-}
-
-    .SideMenuBar ul li a span {
-        padding: 3.5%;
-    }
-
-    .SideMenuBar ul li a:hover {
-        font-style: italic;
-        color: white;
-    }
-
-.SideMenuBar img {
-    width: 20px;
-    height: 20px;
-    margin-right: 2%;
-}
-/*user information*/
-.LoginUser {
-    color: white;
-    text-align: center;
-    padding-top: 6%;
-    padding-bottom: 2%;
-    border-bottom: 1px solid white;
-}
-
-.AdvertisementBar {
-    color: white;
-    text-align: center;
-    padding-top: 6%;
-    padding-bottom: 2%;
-    border-top: 1px solid white;
-}
-
-
 /*Main Content*/
 .MainContent {
     float: left;
@@ -119,9 +21,6 @@ a, a:active {
     padding: 1%;
     color: white;
     background-color: #4C7DB4;
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
-    -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.75);
 }
 
     .FileToolBar img {
@@ -132,23 +31,18 @@ a, a:active {
         height: 20px;
     }
 
-.FileContainer {
-    background-color: #f2f2fc;
+.FileContainer {   
+    background:linear-gradient(90deg,#d5d9de,#c9d8e8,#b7cbe1,#93b1d2);
     position: relative;
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px;
     float: left;
-    width: 30%;
+    width: 28%;
     height: 93.5%;
     overflow: auto;
-    border-right: 1px solid black;
 }
 
-    .FileContainer h1 {
-        padding-bottom: 3%;
-        border-bottom: 1px solid black;
-    }
 
     .FileContainer ul {
         margin: 0.75em 0;
@@ -170,13 +64,13 @@ a, a:active {
         }
 
 .FileTreeContainer {
-    background-color: #fbfbfe;
+    background-color:#f7ffff;
     position: relative;
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px;
     float: left;
-    width: 70%;
+    width: 72%;
     height: 93%;
     overflow: auto;
 }
@@ -188,5 +82,34 @@ a, a:active {
     padding-left: 2.2%;
 }
 
-
+/*Table Styling*/
+.datagrid{
+    width: 100%;
+}
+.datagrid th,td{
+    padding:5px;
+}
+.datagridHeader
+{
+	background:linear-gradient(90deg, #272c40, #252f33);
+	font-family: Arial;
+	color: White;
+	border: none 0px transparent;
+	height: 25px;
+	font-size:large;
+}
+.datagridRows
+{
+	background-color: #fff;
+	font-family: Arial;
+	font-size: 15px;
+	color: #000;
+	height: 25px;
+	text-align: left;
+	border: none 0px transparent;
+}
+.datagridRows:hover
+{
+	background:linear-gradient(90deg,#b7cbe1,#93b1d2);
+}
 

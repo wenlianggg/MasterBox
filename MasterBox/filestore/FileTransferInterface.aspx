@@ -5,19 +5,8 @@
 	<asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
 </asp:Content>
 
-<asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
-    <ul class='custom-menu'>
-        <li data-action="upload" data-toggle="modal" data-target="#uploadModel">Upload</li>
-        <li data-action="file">New Folder</li>
-        <li data-action="sharefile">New Shared Folder</li>
-        <li data-action="delete">Delete</li>
-    </ul>
-
-    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
-    </asp:ScriptManager>
-
-    <div class="MainContent">
-        <!--Upload Modal -->
+    <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+<!--Upload Modal -->
         <div id="uploadModel" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -132,50 +121,12 @@
 
             </div>
         </div>
-        <!--Delete Modal -->
-        <div id="deleteModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+       
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Delete</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>Choose Location: </span>
-                        <asp:DropDownList ID="DeleteLocation" runat="server"
-                            AutoEventWireup="true" EnableViewState="true"
-                            OnSelectedIndexChanged="DeleteLocation_SelectedIndexChanged">
-                        </asp:DropDownList>
-                        <br />
-                        <span>Choose File to delete: </span>
-                        <asp:Label ID="Testing" runat="server"></asp:Label>
-                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Folders" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-
+    <div class="MainContent">
+        
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <asp:LinkButton ID="DeleteFileFolder" runat="server" data-toggle="modal" data-target="#deleteModel">
-                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/FileDelete.png") %>" title="Delete Folder" data-toggle="tooltip" data-placement="bottom" />
-                </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#sharefolderModel">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
                 </asp:LinkButton>
@@ -189,10 +140,12 @@
         </div>
 
         <div class="FileContainer">
-            <h1>Files</h1>
-            <asp:GridView ID="FileTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
+            <div class="page-header">
+			    <h1>Files</h1>
+		    </div>
+            <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
                 <Columns>
-                    <asp:TemplateField HeaderText="Master Folder" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                    <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
                             <asp:LinkButton ID="FileLinkButton" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
                         </ItemTemplate>
@@ -200,9 +153,9 @@
                 </Columns>
             </asp:GridView>
             <br />
-            <asp:GridView ID="FolderTableView" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
+            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server"  AutoGenerateColumns="False" DataKeyNames="foldername">
                 <Columns>
-                    <asp:TemplateField HeaderText="Folders" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                    <asp:TemplateField HeaderText="Folders" >
                         <ItemTemplate>
                             <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                         </ItemTemplate>
@@ -215,7 +168,7 @@
         <div class="FileTreeContainer">
             <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
+            <asp:GridView ID="GridView1"  CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
                 <Columns>
                     <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
@@ -231,7 +184,7 @@
             </asp:GridView>
 
         </div>
-
+      </div>
     <script>
         // Toggle for encryption option
         function encryptionChk(val) {

@@ -30,8 +30,6 @@ namespace MasterBox
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
                 
-                DeleteLocation.DataSource=MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
-                DeleteLocation.DataBind();
 
             }
             
@@ -223,22 +221,5 @@ namespace MasterBox
 
         }
 
-        protected void DeleteLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // To test out if i get the value
-            e.ToString();
-
-            Testing.Text = "Working Status";
-
-            dtDelete = new DataTable();
-            SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
-            dtDelete.Load(reader);
-
-            if (dtDelete.Rows.Count > 0)
-            {
-                GridView2.DataSource = dtFile;
-                GridView2.DataBind();
-            }
-        }
     }
 }
