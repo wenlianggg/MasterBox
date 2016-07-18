@@ -32,7 +32,7 @@ namespace MasterBox.Auth {
 		private string _aesKey;
 		private string _aesIV;
 
-		public static User GetUser(int userid) {
+		internal static User GetUser(int userid) {
 			User target;
 			if (UserList == null) {
 				UserList = new Dictionary<int, User>();
@@ -51,11 +51,11 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public static User GetUser(string username) {
+		internal static User GetUser(string username) {
 			return GetUser(User.ConvertToId(username));
 		}
 
-		public static User CreateUser(string username, string password, string firstname, string lastname,
+		internal static User CreateUser(string username, string password, string firstname, string lastname,
 								DateTime birthdate, string email, bool isVerified) {
 			User target;
 			if (Exists(username)) {
@@ -98,14 +98,13 @@ namespace MasterBox.Auth {
 			_mbrType = 1;
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
-			_mbrStart = DateTime.Now;
             _aesKey = UserCrypto.GenerateEntropy(32);
 			_aesIV = UserCrypto.GenerateEntropy(16);
 			UpdateDB();
 			RefreshFields();
 		}
 
-		public bool RefreshFields() {
+		internal bool RefreshFields() {
 			try {
 				using (UserCrypto uc = new UserCrypto(_aesIV)) {
 					using (SqlDataReader sqldr = _da.SqlGetUser(_userid))
@@ -131,7 +130,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public int UpdateDB() {
+		internal int UpdateDB() {
 			// Does not set the ID, this method saves database connections
 			using (UserCrypto uc = new UserCrypto(_aesIV)) {
 				byte[] fNameEnc = uc.Encrypt(_fName);
@@ -147,7 +146,7 @@ namespace MasterBox.Auth {
 		}
 
 
-		public static DateTime StringToDateTime(string dateString) {
+		internal static DateTime StringToDateTime(string dateString) {
 			IFormatProvider culture = new System.Globalization.CultureInfo("en-SG", true);
 			DateTime dateTime  = DateTime.Parse(dateString, culture, System.Globalization.DateTimeStyles.AssumeLocal);
 			return dateTime;
@@ -211,21 +210,18 @@ namespace MasterBox.Auth {
 			get { RefreshFields(); return _username; }
 		}
 
-		protected internal DateTime LastLogin {
-			get { RefreshFields(); return _lastlogin; }
-		}
-
+	
 		protected internal void Login() {
 			RefreshFields();
 			_lastlogin = DateTime.Now;
 			UpdateDB();
 		}
 
-		public int UserId {
+		protected internal int UserId {
 			get { return _userid; }
 		}
 
-		public string FirstName {
+		protected internal string FirstName {
 			get { RefreshFields(); return _fName; }
 			set {
 				using (UserCrypto uc = new UserCrypto(_aesIV))
@@ -234,7 +230,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public string LastName {
+		protected internal string LastName {
 			get { RefreshFields(); return _lName; }
 			set {
 				using (UserCrypto uc = new UserCrypto(_aesIV))
@@ -251,37 +247,44 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		public DateTime Birthdate {
+		protected internal DateTime LastLogin {
+			get { RefreshFields(); return _lastlogin; }
+			set {
+				UpdateValue("lastlogin", value, SqlDbType.DateTime, 7);
+				RefreshFields();
+			}
+		}
+
+		protected internal DateTime Birthdate {
 			get { RefreshFields(); return _dob; }
 			set { UpdateValue("dob", value, SqlDbType.Date, 0); RefreshFields(); }
 		}
 
-		public bool IsVerified {
+		protected internal bool IsVerified {
 			get { RefreshFields(); return _verified; }
 			set { UpdateValue("verified", value, SqlDbType.Bit, 0); RefreshFields(); }
 		}
 
-		public int MbrType {
+		protected internal int MbrType {
 			get { RefreshFields(); return _mbrType; }
 			set { UpdateValue("mbrType", value, SqlDbType.Int, 0); RefreshFields(); }
 		}
 
-		public DateTime MbrStart {
+		protected internal DateTime MbrStart {
 			get { RefreshFields(); return _mbrStart; }
 			set { UpdateValue("mbrStart", value, SqlDbType.DateTime2, 7); RefreshFields(); }
 		}
 
-		public DateTime MbrExpiry {
+		protected internal DateTime MbrExpiry {
 			get { RefreshFields(); return _mbrExpiry; }
 			set { UpdateValue("mbrExpiry", value, SqlDbType.DateTime2, 7); RefreshFields(); }
 		}
 
-		public DateTime RegStamp {
+		protected internal DateTime RegStamp {
 			get { RefreshFields(); return _regStamp; }
-			set { UpdateValue("regStamp", value, SqlDbType.DateTime2, 7); RefreshFields(); }
 		}
 
-		public string AesKey {
+		protected internal string AesKey {
 			get { RefreshFields(); return _aesKey; }
 			set {
 				using (UserCrypto uc = new UserCrypto(_aesIV))
@@ -289,7 +292,7 @@ namespace MasterBox.Auth {
 				RefreshFields(); }
 		}
 
-		public string AesIV {
+		protected internal string AesIV {
 			get { RefreshFields(); return _aesIV; }
 			set {
 				UpdateValue("aesIV", value, SqlDbType.VarChar, 40);
@@ -303,7 +306,7 @@ namespace MasterBox.Auth {
 				RefreshFields(); }
 		}
 
-        public bool IsAdmin {
+		protected internal bool IsAdmin {
             get {
                 if (_mbrType == -1) return true;
                 else return false;

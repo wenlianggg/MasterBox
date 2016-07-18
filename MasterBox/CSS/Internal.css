@@ -1,4 +1,9 @@
-﻿/*Custom Context Menu*/
+﻿/* Remove link outline*/
+a, a:active {
+   outline: 0;
+}
+
+/*Custom Context Menu*/
 .custom-menu {
     display: none;
     z-index: 1000;

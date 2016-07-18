@@ -1,4 +1,9 @@
-﻿/* To make use of full height of page*/
+﻿/* Remove anchor outline */
+a, a:active {
+   outline: 0;
+}
+
+/* To make use of full height of page*/
 html {
     min-height: 100vh;
     margin: 0;

@@ -181,6 +181,7 @@ namespace MasterBox.Auth {
 	
 		internal void LoginSuccess(User usr, bool persistlogin) {
             AuthLogger.Instance.SuccessfulLogin(usr.UserId);
+			usr.LastLogin = DateTime.Now;
 			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
 		}
 
