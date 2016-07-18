@@ -14,7 +14,7 @@ namespace MasterBox.Prefs {
                 if (!IsPostBack) {
 					if (MBProvider.Instance.IsTotpEnabled(Context.User.Identity.Name)) {
 						ExistingOTP.Visible = true;
-						OTPVal.Text = "Reconfigure 2FA";
+						OTPSubmitBtn.Text = "Reconfigure 2FA";
 					}
                     using (OTPTool ot = new OTPTool()) {
                         ViewState["TOTPKey"] = ot.generateSecret();
