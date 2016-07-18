@@ -245,21 +245,22 @@ namespace MasterBox.mbox
 
         public static bool UploadFileToFolder(MBFile file, string foldername)
         {
-
+            try
+            {
                 // Get Folder ID
                 MBFolder folder = MBFolder.GetFolder(file.fileusername, foldername);
-                System.Diagnostics.Debug.WriteLine("Name: "+folder.folderName);
+                System.Diagnostics.Debug.WriteLine("Name: " + folder.folderName);
                 System.Diagnostics.Debug.WriteLine("Key: " + folder.folderBlowFishKey);
                 System.Diagnostics.Debug.WriteLine("IV: " + folder.folderBlowFishIV);
                 // Get User ID
                 User user = User.GetUser(file.fileusername);
                 int userid = (int)user.UserId;
-        
+
                 // Encryption With Blowfish if there is a password
                 string key = folder.folderBlowFishKey;
                 string iv = folder.folderBlowFishIV;
                 file.filecontent = EncryptionBlowfishFileFolder(file.filecontent, key, iv);
-          
+
                 // Insert Database into database
                 SqlCommand cmd = new SqlCommand(
                     "INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
@@ -279,10 +280,16 @@ namespace MasterBox.mbox
                 cmd.Parameters["@data"].Value = file.filecontent;
 
                 cmd.ExecuteNonQuery();
+                
+                // Debug
                 System.Diagnostics.Debug.WriteLine("Pass");
 
                 return true;
-
+            }
+            catch
+            {
+                return false;
+            }
           
         }
 
@@ -367,6 +374,9 @@ namespace MasterBox.mbox
                 cmd.Parameters["@key"].Value = blowkeystring;
                 cmd.Parameters["@iv"].Value = blowivstring;
                 cmd.ExecuteNonQuery();
+
+                // Log the entry for folder creation
+                FileLogger.Instance.FolderCreated(user.UserId, folder.folderName);
 
                 return true;
             }
