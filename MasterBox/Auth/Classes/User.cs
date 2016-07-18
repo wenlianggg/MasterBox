@@ -98,7 +98,6 @@ namespace MasterBox.Auth {
 			_mbrType = 1;
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
-			_mbrStart = DateTime.Now;
             _aesKey = UserCrypto.GenerateEntropy(32);
 			_aesIV = UserCrypto.GenerateEntropy(16);
 			UpdateDB();
