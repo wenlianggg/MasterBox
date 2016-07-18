@@ -94,6 +94,25 @@ namespace MasterBox.mbox
             return passwordlocationList;
         }
 
+        // Check Folder name
+        public static bool CheckFolderName(string foldername,string username)
+        {
+            //Get UserID
+            User user = User.GetUser(username);
+
+            SqlCommand cmd = new SqlCommand("SELECT foldername FROM mb_folder WHERE userid=@userid", SQLGetMBoxConnection());
+            cmd.Parameters.AddWithValue("@userid", user.UserId);
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            while (sqldr.Read())
+            {
+                if(foldername == sqldr["foldername"].ToString())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         // Download File From Folder
         public static MBFile RetrieveFolderFile(string username, long fileid, long folderid)

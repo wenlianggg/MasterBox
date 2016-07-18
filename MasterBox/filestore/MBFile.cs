@@ -167,8 +167,8 @@ namespace MasterBox.mbox
         public static SqlDataReader GetFileFromFolderToDisplay(string username, int folderid)
         {
             User user = User.GetUser(username);
-            System.Diagnostics.Debug.WriteLine(folderid);
-            System.Diagnostics.Debug.WriteLine(user.UserId);
+            System.Diagnostics.Debug.WriteLine("Folder ID: "+folderid);
+            System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
