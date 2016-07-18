@@ -282,7 +282,6 @@ namespace MasterBox.Auth {
 
 		protected internal DateTime RegStamp {
 			get { RefreshFields(); return _regStamp; }
-			set { UpdateValue("regStamp", value, SqlDbType.DateTime2, 7); RefreshFields(); }
 		}
 
 		protected internal string AesKey {
