@@ -54,11 +54,15 @@
                 font-weight: 300;
             }
 
-				.currentpage {
+				.SettingsPanel ul li a.currentpage {
 					border-right:20px solid #cde5ff;
 					background-color: #2d6aa5;
-					color: white !important;
+					color: white;
 				}
+
+                .currentpage:hover {
+                    color:white;
+                }
 
              .SettingsPanel ul li a:hover {
                 background-color: #2d6aa5;

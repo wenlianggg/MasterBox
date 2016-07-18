@@ -27,9 +27,10 @@ namespace MasterBox.Auth {
 
 		/// <summary> Creates a UserCrypto instance. </summary>
 		/// <param name="initVector"> Per-user initialization vector </param>
-		internal UserCrypto(string initVector) {
+		internal UserCrypto(string initVector = null) {
 			_globalKey = Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["GlobalUserCryptKey"]);
-			_initVector = Encoding.UTF8.GetBytes(initVector);
+			if (initVector != null)
+				_initVector = Encoding.UTF8.GetBytes(initVector);
 		}
 
 		~ UserCrypto() {
