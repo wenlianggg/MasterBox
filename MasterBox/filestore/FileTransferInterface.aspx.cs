@@ -157,7 +157,7 @@ namespace MasterBox
                         // File cannot be uploaded
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail" + "')</script>");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
                     }
                 }
                 else
@@ -179,7 +179,7 @@ namespace MasterBox
                     }
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail" + "')</script>");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
                     }
 
                 }
