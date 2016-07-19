@@ -49,13 +49,13 @@ namespace MasterBox.Prefs {
         protected global::System.Web.UI.WebControls.TextBox NewPassword;
         
         /// <summary>
-        /// NewPasswordValidation control.
+        /// NewPasswordValid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewPasswordValidation;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator NewPasswordValid;
         
         /// <summary>
         /// NewFolderCfmPasswordLabel control.
@@ -157,13 +157,13 @@ namespace MasterBox.Prefs {
         protected global::System.Web.UI.WebControls.TextBox ChangeNewPassword;
         
         /// <summary>
-        /// NewPassValid control.
+        /// ChangeNewPassValid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator NewPassValid;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ChangeNewPassValid;
         
         /// <summary>
         /// FolderCfmPassword control.

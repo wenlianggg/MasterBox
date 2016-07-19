@@ -33,7 +33,7 @@ a, a:active {
 
 .FileContainer {   
     background:linear-gradient(90deg,#111213,#080c10);
-    background-image:url(../images/bg/outlets.png);
+    background-image:url(../images/bg/black_linen_v2.png);
     color:white;
     position: relative;
     min-height: 1px;
@@ -85,7 +85,7 @@ a, a:active {
     padding-left: 2.2%;
 }
 
-/*Table Styling*/
+/*Table for Preview Styling*/
 .datagrid
 {
     width: 100%;
@@ -111,10 +111,7 @@ a, a:active {
 	color: #000;
 	height: 25px;
 	text-align: left;
+    padding:2px 5px 2px;
 	border: none 0px transparent;
-}
-.datagridRows:hover
-{
-	background:linear-gradient(90deg,#b7cbe1,#93b1d2);
 }
 
