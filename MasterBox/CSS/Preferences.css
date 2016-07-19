@@ -6,8 +6,8 @@
     float: left;
 	padding:0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: linear-gradient(90deg, #272c40, #0d191d);
-    background-color: #5a5a5a;
+    background: black;
+    background-image: url("../images/bg/lodyasbg.png");
     -webkit-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
     -moz-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
     box-shadow: 6px -3px 3px -4px rgba(0,0,0,0.35);
@@ -78,21 +78,14 @@
 .SettingSelectionPanel {
     height: 100%;
 	position: absolute;
-	overflow: scroll;
+	overflow: auto;
     padding: 0 2% 0 2%;
     width:80%;
     left:20%;
     float: left;
-    background-color: #f7ffff;
+    background-image: url("../images/bg/blizzard.png");
 }
 
-.Setting_Profile {
-    height: 100%;
-    width: 100%;
-    float:left;
-    padding: 0 2% 1% 2%;
-    overflow: scroll;
-}
 
 .prof_icon {
     border: 1px solid red;
