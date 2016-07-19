@@ -155,6 +155,7 @@ namespace MasterBox
                         // File cannot be uploaded
                     else
                     {
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "spaceAlert()");
                     }
                 }
                 else
@@ -175,6 +176,7 @@ namespace MasterBox
                     }
                     else
                     {
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "spaceAlert()");
                     }
 
                 }

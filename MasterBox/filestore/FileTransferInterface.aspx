@@ -2,7 +2,7 @@
 
 <asp:Content ID="FileTransferNavBar" ContentPlaceHolderID="NavBar" runat="server">
     <li><a runat="server" id="FBItem" href="~/prefs/prefgeneral.aspx">
-	<asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
+        <asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
 </asp:Content>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
@@ -231,14 +231,15 @@
             </asp:GridView>
 
         </div>
+     </div>
 
-    <script>
-        // Toggle for encryption option
-        function encryptionChk(val) {
-            if (val == "no") {
-                $(".pwdfield").attr('readonly', "readonly");
-                $(".pwdfield").attr('disabled', "disabled");
-                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false);
+        <script>
+            // Toggle for encryption option
+            function encryptionChk(val) {
+                if (val == "no") {
+                    $(".pwdfield").attr('readonly', "readonly");
+                    $(".pwdfield").attr('disabled', "disabled");
+                    ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false);
             } else {
                 $(".pwdfield").removeAttr('readonly');
                 $(".pwdfield").removeAttr('disabled');
@@ -270,5 +271,19 @@
 
             });
         });
-    </script>
+        </script>
+        <!-- JS dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+
+        <!-- bootbox code -->
+        <script src="bootbox.min.js"></script>
+        <script type="text/JavaScript">
+            function spaceAlert() {
+                bootbox.alert("The file exceeds your maximum storage space!", function () {
+                }
+       )
+            };
+
+        </script>
 </asp:Content>
