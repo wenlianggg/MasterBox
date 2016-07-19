@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox {
+namespace MasterBox.Prefs {
     public partial class FileSetting_Profile : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
 			User CurrentUser = Auth.User.GetUser(Context.User.Identity.Name);

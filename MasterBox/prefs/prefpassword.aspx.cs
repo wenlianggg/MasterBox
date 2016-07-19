@@ -7,7 +7,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox {
+namespace MasterBox.Prefs {
 	public partial class ChangePw : System.Web.UI.Page {
 
 		protected void Page_Load(object sender, EventArgs e) {
@@ -19,7 +19,6 @@ namespace MasterBox {
 		}
 
 		protected void ChangePassClick(object sender, EventArgs e) {
-			// TODO: Check if the passwords match
 			if (NewUserPass.Text.Equals(NewUserPassCfm.Text)) {
 				try {
 					if (MBProvider.Instance.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {

@@ -1,7 +1,6 @@
-﻿<%@ Page Title="User Dashboard" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefgeneral.aspx.cs" Inherits="MasterBox.mbox.FileSetting_General" %>
+﻿<%@ Page Title="User Dashboard" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefgeneral.aspx.cs" Inherits="MasterBox.Prefs.FileSetting_General" %>
 
 <asp:Content ID="SetGeneral" ContentPlaceHolderID="Preferences" runat="server">
-    <div class="Setting_Profile">
 		<div class="page-header">
 			<h1><%: Page.Title %>
 			</h1>
@@ -12,15 +11,11 @@
 			<li class="active"><%: Page.Title %></li>
 		</ol>
         <div class="row">
-            <div class="SettingsRow">
             <h4 class="SettingHr">Storage Space</h4>
             <div class="progress">
                 <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width: 20%">
                     2.7MB
-                </div>
-                </div>
-                    <a CssClass="btn btn-primary" runat="server" href="~/Auth/changepw.aspx">Change Password</a>
                 </div>
             <hr class="aboutRowHR" />
             <div class="SettingsRow">

@@ -34,6 +34,8 @@
             <li>Facial recognition features</li>
             <li>Complete registration features</li>
         </ol>
+	<asp:Button runat="server" OnClick="btnEncrypt_Click" Text="Encrypt" />
+	<asp:Button runat="server" OnClick="btnDecrypt_Click" Text="Decrypt" />
     </div>
     </form>
 </body>

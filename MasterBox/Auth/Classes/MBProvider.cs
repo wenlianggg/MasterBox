@@ -62,38 +62,33 @@ namespace MasterBox.Auth {
 					// Get byte array from database SHA512 string
 					string storedHash = sqldr["hash"].ToString();
 					byte[] saltBytes = Convert.FromBase64String(sqldr["salt"].ToString());
-					byte[] userInputBytes = Encoding.UTF8.GetBytes(password);
-
-					// Get both byte arrays and combine them together
-					byte[] combinedBytes = new byte[userInputBytes.Length + saltBytes.Length];
-					userInputBytes.CopyTo(combinedBytes, 0);
-					saltBytes.CopyTo(combinedBytes, userInputBytes.Length);
-
+					
 					// Get SHA512 value from user input
 					string userHash;
-					using (SHA512 shaCalc = new SHA512Managed()) {
-						userHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+					using (UserCrypto uc = new UserCrypto()) {
+						userHash = uc.CalculateHash(password, saltBytes);
 					}
+
 					if (userHash.Equals(storedHash)) {
-						// Empty out strings and sensitive data arrays
-						ClearSensitiveData(userInputBytes, combinedBytes, password, userHash);
+							// Empty out strings and sensitive data arrays
+							ClearSensitiveData(userHash, password, userHash);
 
-						// Password correct
-						return true;
+							// Password correct
+							return true;
 					} else {
-						// Debug information
-						System.Diagnostics.Debug.WriteLine("Salt Value:" + sqldr["salt"].ToString());
-						System.Diagnostics.Debug.WriteLine("Input Hash:" + userHash);
-						System.Diagnostics.Debug.WriteLine(storedHash);
+							// Debug information
+							System.Diagnostics.Debug.WriteLine("Salt Value:" + sqldr["salt"].ToString());
+							System.Diagnostics.Debug.WriteLine("Input Hash:" + userHash);
+							System.Diagnostics.Debug.WriteLine(storedHash);
 
-						// Empty out strings and sensitive data arrays
-						ClearSensitiveData(userInputBytes, combinedBytes, password, userHash);
+							// Empty out strings and sensitive data arrays
+							ClearSensitiveData(userHash, password, userHash);
 
-						// Call the logger to log a failed verification attempt
-						Logger.Instance.FailedLoginAttempt(User.ConvertToId(username));
+							// Call the logger to log a failed verification attempt
+							AuthLogger.Instance.FailedLoginAttempt(User.ConvertToId(username));
 						
-						// Password incorrect
-						return false;
+							// Password incorrect
+							return false;
 					}
 				} else {
 					throw new UserNotFoundException();
@@ -110,36 +105,27 @@ namespace MasterBox.Auth {
 					// New salt generation
 					byte[] newSaltB = GenerateSalt();
 
+					string newHash;
+					using (UserCrypto uc = new UserCrypto()) {
+						newHash = uc.CalculateHash(newPassword, newSaltB);
+					}
+
 					// Convert salt to string
 					string newSalt = Convert.ToBase64String(newSaltB);
 
-					// Convert new password to byte array
-					var newPasswordBytes = Encoding.UTF8.GetBytes(newPassword);
-
-					// Join two arrays
-					byte[] combinedBytes = new byte[newPasswordBytes.Length + newSaltB.Length];
-					newPasswordBytes.CopyTo(combinedBytes, 0);
-					newSaltB.CopyTo(combinedBytes, newPasswordBytes.Length);
-
-					// Hash combined arrays
-					string newHash;
-					using (SHA512 shaCalc = new SHA512Managed()) {
-						newHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
-					}
-
 					// Update database values
 					da.SqlUpdateHashSalt(username, newHash, newSalt);
-					Logger.Instance.UserPassChanged(User.ConvertToId(username));
+					AuthLogger.Instance.UserPassChanged(User.ConvertToId(username));
 
 					// Clean up all sensitive information
-					ClearSensitiveData(oldPassword, newPassword, combinedBytes, newPasswordBytes);
+					ClearSensitiveData(oldPassword, newPassword, newSalt);
 				}
 
 				return true;
 
 			} else {
-				// Existing password is wrong
-				Logger.Instance.UserPassChangeFailed(User.ConvertToId(username));
+                // Existing password is wrong
+                AuthLogger.Instance.UserPassChangeFailed(User.ConvertToId(username));
 				return false;
 			}
 		}
@@ -185,9 +171,17 @@ namespace MasterBox.Auth {
 				}
 			}
 		}
+
+        internal bool SetTotpSecret(string username, string secret) {
+            int userid = User.ConvertToId(username);
+            using (DataAccess da = new DataAccess()) {
+                return da.SqlUpdateUserValue(userid, "totpsecret", secret, SqlDbType.VarChar, 16);
+            }
+        }
 	
 		internal void LoginSuccess(User usr, bool persistlogin) {
-			Logger.Instance.SuccessfulLogin(usr.UserId);
+            AuthLogger.Instance.SuccessfulLogin(usr.UserId);
+			usr.LastLogin = DateTime.Now;
 			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
 		}
 

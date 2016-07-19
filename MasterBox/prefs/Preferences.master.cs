@@ -6,10 +6,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox.mbox {
+namespace MasterBox.Prefs {
     public partial class Prefs : System.Web.UI.MasterPage {
         protected void Page_Load(object sender, EventArgs e) {
-			System.Diagnostics.Debug.WriteLine(Path.GetFileName(Request.Url.ToString()));
 			switch (Path.GetFileName(Request.Url.ToString())) {
 				case "prefgeneral":
 					prefgeneral.Attributes.Add("class", "currentpage");

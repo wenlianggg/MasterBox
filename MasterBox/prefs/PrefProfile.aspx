@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.FileSetting_Profile" %>
+﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.Prefs.FileSetting_Profile" %>
 
 <asp:Content ID="SetProfile" ContentPlaceHolderID="Preferences" runat="server">
 	<div class="Setting_Profile">
@@ -35,6 +35,7 @@
 						</tr>
 					</table>
 				</div>
+                </div>
 				<div class="row">
 					<h4 class="SettingHr">Preference</h4>
 					<h5>Email Notifications</h5>
@@ -83,7 +84,6 @@
 		<div class="row">
 			<button type="submit">Update</button>
 		</div>
-	</div>
 
 </asp:Content>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefpassword.aspx.cs" Inherits="MasterBox.ChangePw" %>
+﻿<%@ Page Title="Change Password" Language="C#" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefpassword.aspx.cs" Inherits="MasterBox.Prefs.ChangePw" %>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="Preferences" runat="server">
         <div class="page-header">

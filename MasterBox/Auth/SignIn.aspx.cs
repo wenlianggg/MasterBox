@@ -16,7 +16,7 @@ namespace MasterBox.Auth {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if (Logger.Instance.IsLoginBlocked()) {
+			if (AuthLogger.Instance.IsLoginBlocked()) {
 				Msg.Text = "Your IP has been blocked for too many failed logins, please contact us.";
 				return;
 			}
@@ -28,7 +28,7 @@ namespace MasterBox.Auth {
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
 					if (MBProvider.Instance.IsTotpEnabled(usr.UserName)) {
-						Server.Execute("~/Auth/otpverify.aspx", false);
+						Response.Redirect("~/Auth/otpverify.aspx", false);
 					} else {
 						MBProvider.Instance.LoginSuccess(usr, Persist.Checked);
 					}

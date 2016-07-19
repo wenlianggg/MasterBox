@@ -1,136 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace MasterBox.Auth {
 
+    internal enum LogLevel { Normal, Security, Changed, Error, Global }
 
-	public class Logger {
+    /*
+    * Log Levels
+    * 0 - Normal login logging
+    * 1 - Security related access
+    * 2 - Something was changed
+    * 3 - Client error occured
+    * 4 - Server error occured
+    */
 
-		public enum LogLevel {Normal, Security, Changed, Error, Global}
-		/*
-		 * Log Levels
-		 * 0 - Normal login logging
-		 * 1 - Security related access
-		 * 2 - Something was changed
-		 * 3 - Client error occured
-		 * 4 - Server error occured
-		 */
+    public abstract class Logger {
 
-		private DataAccess _da;
-		private bool disposed = false;
-		private static volatile Logger _instance;
-		private static object syncRoot = new object();
+        private static volatile Logger _instance;
+        private static object syncRoot = new object();
 
-		private Logger() { }
+        protected Logger() { }
 
-		public static Logger Instance {
-			get {
-				if (_instance == null) {
-					lock (syncRoot)
-						if (_instance == null)
-							_instance = new Logger();
-				}
-				return _instance;
-			}
-		}
+        internal void LogAuthEntry(int userid, string ipaddress, string description, LogLevel loglevel) {
+            using (DataAccess da = new DataAccess()) {
+                da.SqlInsertLogEntry(userid, ipaddress, description, (int) loglevel, 0);
+            }
+        }
 
-		internal Logger(DataAccess customDataAccess = null) { // Optional Parameter customDataAccess
-			if (customDataAccess == null || _da == null) {
-				_da = new DataAccess();
-			}
-		}
+        internal void LogFileEntry(int userid, string ipaddress, string description, LogLevel loglevel) {
+            using (DataAccess da = new DataAccess()) {
+                da.SqlInsertLogEntry(userid, ipaddress, description, (int)loglevel, 1);
+            }
+        }
 
-		protected void Dispose(bool disposing) {
-			if (disposed)
-				throw new ObjectDisposedException("Logger");
-			if (disposing) {
-				_da.Dispose();
-				disposed = true;
-			}
-		}
+        internal void LogTransactEntry(int userid, string ipaddress, string description, LogLevel loglevel) {
+            using (DataAccess da = new DataAccess()) {
+                da.SqlInsertLogEntry(userid, ipaddress, description, (int)loglevel, 2);
+            }
+        }
 
-		internal void FailedLoginAttempt(int userid) {
-			string description = "Unsuccessful login attempt";
-			string ipaddress = GetIP();
-			TriggerFailedLogin();
-			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Security);
-			}
-		}
+        internal DataTable GetUserLogs(int userid, int logtype) {
+            DataTable dt = new DataTable();
+            using (DataAccess da = new DataAccess())
+                dt.Load(da.SqlGetUserLogs(userid, logtype));
+            dt.Columns["logdesc"].ColumnName = "Log Description";
+            dt.Columns["logip"].ColumnName = "Logged IP";
+            dt.Columns["loglevel"].ColumnName = "Severity";
+            dt.Columns["logtime"].ColumnName = "Time";
+            return dt;
+        }
 
-		internal void FailedTOTPAttempt(int userid) {
-			string description = "Unsuccessful 2FA (TOTP) attempt";
-			string ipaddress = GetIP();
-			TriggerFailedLogin();
-			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Security);
-			}
-		}
+        protected string GetIP() {
+            HttpContext context = HttpContext.Current;
+            HttpBrowserCapabilities browser = HttpContext.Current.Request.Browser;
+            string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            string userIp = "NIL";
 
-		internal bool IsLoginBlocked() {
-			string ip = GetIP();
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip))
-				if (MBProvider.Instance.failedlogins[ip] > 3)
-					return true;
-				else
-					return false;
-			else
-				return false;
-		}
+            if (!string.IsNullOrEmpty(ipAddress)) {
+                string[] addresses = ipAddress.Split(',');
+                if (addresses.Length != 0) {
+                    userIp = addresses[0];
+                }
+            } else {
+                userIp = context.Request.ServerVariables["REMOTE_ADDR"];
+            }
 
-		private void TriggerFailedLogin() {
-			string ip = GetIP();
-			System.Diagnostics.Debug.WriteLine("Logged failed login");
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip)) {
-				MBProvider.Instance.failedlogins[ip]++;
-			} else {
-				MBProvider.Instance.failedlogins.Add(ip, 0);
-			}
-		}
+            if (userIp.Equals("::1")) {
+                userIp = "127.0.0.1";
+            }
 
-
-		internal void UserPassChanged(int userid) {
-			string description = "User password was changed";
-			string ipaddress = GetIP();
-			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Changed);
-			}
-		}
-
-		internal void UserPassChangeFailed(int userid) {
-			string description = "Unsuccessful password changing attempt";
-			string ipaddress = GetIP();
-			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Error);
-			}
-		}
-
-		internal void SuccessfulLogin(int userid) {
-			string description = "Login was successful";
-			string ipaddress = GetIP();
-			using (DataAccess da = new DataAccess()) {
-				da.SqlInsertLogEntry(userid, ipaddress, description, LogLevel.Normal);
-			}
-		}
-
-
-
-		private string GetIP() {
-			HttpContext context = HttpContext.Current;
-			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-			if (!string.IsNullOrEmpty(ipAddress)) {
-				string[] addresses = ipAddress.Split(',');
-				if (addresses.Length != 0) {
-					return addresses[0];
-				}
-			}
-
-			return context.Request.ServerVariables["REMOTE_ADDR"];
-		}
-
-	}
+            return browser.Type + " FROM " + userIp;
+        }
+    }
 }

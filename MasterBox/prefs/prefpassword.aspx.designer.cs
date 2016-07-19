@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox {
+namespace MasterBox.Prefs {
     
     
     public partial class ChangePw {

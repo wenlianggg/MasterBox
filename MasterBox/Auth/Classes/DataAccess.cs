@@ -39,36 +39,54 @@ namespace MasterBox.Auth {
 		 *  STORED FUNCTIONS FOR UPDATING DATABASE
 		 */
 		
-		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, Logger.LogLevel loglevel) {
+		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, int loglevel, int logtype) {
 			// Update database values
 			SqlCommand cmd = new SqlCommand(
-				"INSERT INTO mb_logs (userid, logip, logdesc, loglevel) VALUES (@userid, @logip, @logdesc, @loglevel)", sqlConn);
+				"INSERT INTO mb_logs (userid, logip, logdesc, loglevel, logtype) VALUES (@userid, @logip, @logdesc, @loglevel, @logtype)", sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
 			cmd.Parameters.Add(new SqlParameter("@logip", SqlDbType.VarChar, 45));
 			cmd.Parameters.Add(new SqlParameter("@logdesc", SqlDbType.VarChar, 255));
 			cmd.Parameters.Add(new SqlParameter("@loglevel", SqlDbType.Int, 0));
-			cmd.Prepare();
+            cmd.Parameters.Add(new SqlParameter("@logtype", SqlDbType.TinyInt, 0));
+            cmd.Prepare();
 
 			cmd.Parameters["@userid"].Value = userid;
 			cmd.Parameters["@logip"].Value = ipaddress;
 			cmd.Parameters["@logdesc"].Value = description;
-			cmd.Parameters["@loglevel"].Value = (int)loglevel;
-			return cmd.ExecuteNonQuery();
+			cmd.Parameters["@loglevel"].Value = loglevel;
+            cmd.Parameters["@logtype"].Value = logtype;
+
+            return cmd.ExecuteNonQuery();
 		}
 
-		internal int SqlUpdateHashSalt(string username, string hash, string salt, bool useDefaultDA = true) {
-			// Update database values
-			SqlCommand cmd = new SqlCommand(
-				"INSERT INTO mb_users (username, hash, salt) VALUES (@uname, @newHash, @newSalt)", sqlConn);
-			cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
-			cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
-			cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
-			cmd.Prepare();
+        internal int SqlUpdateHashSalt(string username, string hash, string salt) {
+            if (User.Exists(username)) {
+                // Update database values
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE mb_users SET hash = @newHash, salt = @newSalt WHERE username = @uname", sqlConn);
+                cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+                cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
+                cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+                cmd.Prepare();
 
-			cmd.Parameters["@uname"].Value = username;
-			cmd.Parameters["@newHash"].Value = hash;
-			cmd.Parameters["@newSalt"].Value = salt;
-			return cmd.ExecuteNonQuery();
+                cmd.Parameters["@uname"].Value = username;
+                cmd.Parameters["@newHash"].Value = hash;
+                cmd.Parameters["@newSalt"].Value = salt;
+                return cmd.ExecuteNonQuery();
+            } else {
+                // Update database values
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO mb_users (username, hash, salt) VALUES (@uname, @newHash, @newSalt)", sqlConn);
+                cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+                cmd.Parameters.Add(new SqlParameter("@newHash", SqlDbType.VarChar, 88));
+                cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
+                cmd.Prepare();
+
+                cmd.Parameters["@uname"].Value = username;
+                cmd.Parameters["@newHash"].Value = hash;
+                cmd.Parameters["@newSalt"].Value = salt;
+                return cmd.ExecuteNonQuery();
+            }
 		}
 
 		internal bool SqlUpdateUserValue(int userid, string fieldName, object fieldValue, SqlDbType sdb, int length) {
@@ -78,7 +96,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 0));
 			cmd.Prepare();
 
-			cmd.Parameters["@fieldValue"].Value = fieldValue;
+			cmd.Parameters["@fieldValue"].Value = (fieldValue != null) ? fieldValue : DBNull.Value;
 			cmd.Parameters["@uid"].Value = userid;
 			if (cmd.ExecuteNonQuery() == 1) {
 				return true;
@@ -155,20 +173,16 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
-		internal DataTable SqlGetUserLogs(int userid) {
+		internal SqlDataReader SqlGetUserLogs(int userid, int type) {
 			SqlCommand cmd = new SqlCommand(
-				"SELECT logdesc, logip, loglevel, logtime FROM mb_logs WHERE userid = @userid ORDER BY logtime DESC",
+				"SELECT logdesc, logip, loglevel, logtime FROM mb_logs WHERE userid = @userid AND logtype = @type ORDER BY logtime DESC",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
-			cmd.Prepare();
+            cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.TinyInt, 0));
+            cmd.Prepare();
 			cmd.Parameters["@userid"].Value = userid;
-			DataTable data = new DataTable();
-			data.Load(cmd.ExecuteReader());
-			data.Columns["logdesc"].ColumnName = "Log Description";
-			data.Columns["logip"].ColumnName = "Logged IP";
-			data.Columns["loglevel"].ColumnName = "Severity";
-			data.Columns["logtime"].ColumnName = "Time";
-			return data;
+            cmd.Parameters["@type"].Value = type;
+			return cmd.ExecuteReader();
 		}
 
 		internal DataTable SqlGetServerLogs() {

@@ -235,6 +235,8 @@
     <Content Include="images\Check.svg.png" />
     <Content Include="images\Logistic_shipping_delivery_service_transportation_transport-07-512.png" />
     <Content Include="images\shield_and_swords-512.png" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Internal.js" />
@@ -297,8 +299,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\Classes\DataAccess.cs" />
+    <Compile Include="Auth\Classes\TransactLogger.cs" />
     <Compile Include="Auth\Classes\Logger.cs" />
+    <Compile Include="Auth\Classes\DataAccess.cs" />
+    <Compile Include="Auth\Classes\AuthLogger.cs" />
+    <Compile Include="Auth\Classes\Stegano.cs" />
     <Compile Include="Auth\Classes\UMBProvider.cs" />
     <Compile Include="Auth\DEBUG.aspx.cs">
       <DependentUpon>DEBUG.aspx</DependentUpon>
@@ -310,6 +315,7 @@
     <Compile Include="Auth\Classes\UserCrypto.cs" />
     <Compile Include="Auth\Classes\reCAPTCHA.cs" />
     <Compile Include="Auth\Classes\MBProvider.cs" />
+    <Compile Include="Auth\Classes\FileLogger.cs" />
     <Compile Include="prefs\prefotpsetup.aspx.cs">
       <DependentUpon>prefotpsetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
