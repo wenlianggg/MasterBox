@@ -7,28 +7,55 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox.Auth {
+namespace MasterBox.Prefs {
     
     
     public partial class AccessLog {
         
         /// <summary>
-        /// LogsTable control.
+        /// RefreshAuth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LogsTable;
+        protected global::System.Web.UI.WebControls.Button RefreshAuth;
         
         /// <summary>
-        /// RefreshButton control.
+        /// RefreshFiles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RefreshButton;
+        protected global::System.Web.UI.WebControls.Button RefreshFiles;
+        
+        /// <summary>
+        /// RefreshTransact control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button RefreshTransact;
+        
+        /// <summary>
+        /// LogTypeName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LogTypeName;
+        
+        /// <summary>
+        /// LogTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView LogTable;
         
         /// <summary>
         /// Msg control.

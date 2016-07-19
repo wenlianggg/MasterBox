@@ -6,8 +6,8 @@
     float: left;
 	padding:0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: linear-gradient(90deg, #272c40, #0d191d);
-    background-color: #5a5a5a;
+    background: black;
+    background-image: url("../images/bg/lodyasbg.png");
     -webkit-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
     -moz-box-shadow: 6px -3px 4px -4px rgba(0,0,0,0.35);
     box-shadow: 6px -3px 3px -4px rgba(0,0,0,0.35);
@@ -27,18 +27,17 @@
         margin: 0;
 		width:100%;
     }
-
-
+    
 
         .SettingsPanel ul li:first-child {
-			 border-top: 1px solid #8b8b8b;
+			 border-top: 1px solid #e5e5e5;
         }
 
 
         .SettingsPanel ul li {
-            border-bottom: 1px solid #8b8b8b;
-            border-left: 1px solid #8b8b8b;
-            border-right: 1px solid #8b8b8b;
+            border-bottom: 1px solid #e5e5e5;
+            border-left: 1px solid #e5e5e5;
+            border-right: 1px solid #e5e5e5;
 			font-size: 15px;
             margin: 0 auto;
             text-align: center;
@@ -55,11 +54,15 @@
                 font-weight: 300;
             }
 
-				.currentpage {
-					border-right:20px solid black;
+				.SettingsPanel ul li a.currentpage {
+					border-right:20px solid #cde5ff;
 					background-color: #2d6aa5;
-					color: white !important;
+					color: white;
 				}
+
+                .currentpage:hover {
+                    color:white;
+                }
 
              .SettingsPanel ul li a:hover {
                 background-color: #2d6aa5;
@@ -75,21 +78,14 @@
 .SettingSelectionPanel {
     height: 100%;
 	position: absolute;
-	overflow: scroll;
+	overflow: auto;
     padding: 0 2% 0 2%;
     width:80%;
     left:20%;
     float: left;
-    background-color: #f7ffff;
+    background-image: url("../images/bg/blizzard.png");
 }
 
-.Setting_Profile {
-    height: 100%;
-    width: 100%;
-    float:left;
-    padding: 0 2% 1% 2%;
-    overflow: scroll;
-}
 
 .prof_icon {
     border: 1px solid red;

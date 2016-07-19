@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox.mbox
+namespace MasterBox.Prefs
 {
     public partial class FileSetting_General : System.Web.UI.Page
     {

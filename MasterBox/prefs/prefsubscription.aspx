@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Expand Storage" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.mbox.PrefSubscription" %>
+﻿<%@ Page Title="Expand Storage" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsubscription.aspx.cs" Inherits="MasterBox.Prefs.PrefSubscription" %>
 
 <asp:Content ID="SetGeneral" ContentPlaceHolderID="Preferences" runat="server">
     <div class="Setting_Profile">
@@ -30,6 +30,8 @@
             <div class="panel-body">
                 <p runat="server" id="FreeSpace"></p>
                 <p runat="server" id="Additional"></p>
+                <p runat="server" id="SubscriptionStart"></p>
+                <p runat="server" id="SubscriptionEnd"></p>
                 <asp:Button runat="server" CssClass="btn btn-info" Text="Purchase Space" OnClick="GoToPrices" />
             </div>
         </div>

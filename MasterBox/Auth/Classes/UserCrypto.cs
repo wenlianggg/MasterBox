@@ -27,9 +27,10 @@ namespace MasterBox.Auth {
 
 		/// <summary> Creates a UserCrypto instance. </summary>
 		/// <param name="initVector"> Per-user initialization vector </param>
-		internal UserCrypto(string initVector) {
+		internal UserCrypto(string initVector = null) {
 			_globalKey = Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["GlobalUserCryptKey"]);
-			_initVector = Encoding.UTF8.GetBytes(initVector);
+			if (initVector != null)
+				_initVector = Encoding.UTF8.GetBytes(initVector);
 		}
 
 		~ UserCrypto() {
@@ -90,6 +91,30 @@ namespace MasterBox.Auth {
 				}
 			}
 		}
+
+        public string CalculateHash(string plaintext, byte[] salt = null) {
+            // Obtain base variables
+            byte[] ptBytes = Encoding.UTF8.GetBytes(plaintext);
+            byte[] combinedBytes;
+            string newHash;
+
+            // Calculate length of combinedbytes
+            if (salt == null) {
+                combinedBytes = new byte[ptBytes.Length];
+                ptBytes.CopyTo(combinedBytes, 0);
+            } else {
+                combinedBytes = new byte[ptBytes.Length + salt.Length];
+                ptBytes.CopyTo(combinedBytes, 0);
+                salt.CopyTo(combinedBytes, ptBytes.Length);
+            }
+
+			using (SHA512 shaCalc = new SHA512Managed()) {
+				newHash = Convert.ToBase64String(shaCalc.ComputeHash(combinedBytes));
+			}
+
+			return newHash;
+
+        }
 
 		//
 		// Utilities for encryption and decryption

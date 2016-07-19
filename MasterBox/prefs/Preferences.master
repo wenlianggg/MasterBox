@@ -1,4 +1,4 @@
-﻿<%@ Master  Language="C#" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.mbox.Prefs" %>
+﻿<%@ Master  Language="C#" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="Preferences.master.cs" Inherits="MasterBox.Prefs.Prefs" %>
 
 <asp:Content ID="PrefCss" ContentPlaceHolderID="HeadContent" runat="server">
 	<link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />

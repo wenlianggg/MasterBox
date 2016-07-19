@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Folder Encryption" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsecurity.aspx.cs" Inherits="MasterBox.mbox.FileSetting_Security" %>
+﻿<%@ Page Title="Folder Encryption" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsecurity.aspx.cs" Inherits="MasterBox.Prefs.FileSetting_Security" %>
 
 <asp:Content ID="SetSecurity" ContentPlaceHolderID="Preferences" runat="server">
 
@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-body">
                     <asp:Label ID="NewFolderPasswordOptionLabel" runat="server" Text="Choose Folder: "></asp:Label>
-                    <asp:DropDownList ID="NewFolderPasswordOption" runat="server">
+                    <asp:DropDownList ID="NewFolderPasswordOption" CssClass="form-control" runat="server">
                     </asp:DropDownList>
                     <br />
                     <br />
@@ -53,7 +53,7 @@
                 </div>
                 <div class="modal-body">
                     <asp:Label ID="ChangeFolderPasswordOptionLabel" runat="server" Text="Choose Folder: "></asp:Label>
-                    <asp:DropDownList ID="ChangeFolderPasswordOption" runat="server">
+                    <asp:DropDownList ID="ChangeFolderPasswordOption" CssClass="form-control" runat="server">
                     </asp:DropDownList>
                     <br />
                     <br />
@@ -97,6 +97,7 @@
     <div class="Setting_Profile">
 		<div class="page-header">
 			<h1><%: Page.Title %>
+                <small>Secure files using our industry-grade encryption</small>
 			</h1>
 		</div>
 		<ol class="breadcrumb" style="margin-bottom: 5px;">
@@ -107,16 +108,19 @@
 			<li class="active"><%: Page.Title %></li>
 		</ol>
         <div class="row">
-            <div class="SettingsRow">
-                <h4 class="SettingHr">Folder Password Settings</h4>
-                <a class="btn btn-default" data-toggle="modal" data-target="#FolderNewPass" data-backdrop="static">New Password</a>
+            </div>
+        <div class="panel panel-primary">
+		    <div class="panel-heading">
+			    <h3 class="panel-title">
+                    Folder and Files Security
+			    </h3>
+		    </div>
+		    <div class="panel-body">
+                <a class="btn btn-default" data-toggle="modal" data-target="#FolderNewPass" data-backdrop="static">Set New Password</a>
                 <a class="btn btn-default" data-toggle="modal" data-target="#FolderChangePass" data-backdrop="static">Change Password</a>
                 <a class="btn btn-default" data-toggle="modal" data-target="#FolderDeletePass" data-backdrop="static">Delete Password</a>
-
-            </div>
+		    </div>
         </div>
-
-
     </div>
 <script>
     // To validate New Confirm Password

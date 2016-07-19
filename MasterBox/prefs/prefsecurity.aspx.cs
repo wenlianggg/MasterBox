@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MasterBox.mbox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MasterBox.mbox
+namespace MasterBox.Prefs
 {
     public partial class FileSetting_Security : System.Web.UI.Page
     {
@@ -35,6 +36,8 @@ namespace MasterBox.mbox
 
         protected void ChangeFolderPassword_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("Hello World");
+
 
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name,ChangeFolderPasswordOption.SelectedValue);
             string oldpassword = CurrentPassword.Text;

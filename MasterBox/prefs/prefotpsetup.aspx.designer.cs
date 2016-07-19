@@ -7,46 +7,73 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox.Auth {
+namespace MasterBox.Prefs {
     
     
     public partial class prefotpsetup {
         
         /// <summary>
-        /// setupValue control.
+        /// ExistingOTP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox setupValue;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ExistingOTP;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// GeneratedSecret control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.Label GeneratedSecret;
         
         /// <summary>
-        /// OTPLogin control.
+        /// CurrPw control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OTPLogin;
+        protected global::System.Web.UI.WebControls.TextBox CurrPw;
         
         /// <summary>
-        /// OTPCancel control.
+        /// OTPVal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OTPCancel;
+        protected global::System.Web.UI.WebControls.TextBox OTPVal;
+        
+        /// <summary>
+        /// Msg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Msg;
+        
+        /// <summary>
+        /// OTPSubmitBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OTPSubmitBtn;
+        
+        /// <summary>
+        /// OTPCancelBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OTPCancelBtn;
         
         /// <summary>
         /// QRCodeHolder control.
@@ -56,5 +83,14 @@ namespace MasterBox.Auth {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl QRCodeHolder;
+        
+        /// <summary>
+        /// OTPQrCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image OTPQrCode;
     }
 }
