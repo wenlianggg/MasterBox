@@ -32,7 +32,9 @@ a, a:active {
     }
 
 .FileContainer {   
-    background:linear-gradient(90deg,#d5d9de,#c9d8e8,#b7cbe1,#93b1d2);
+    background-image:;
+    background:linear-gradient(90deg,#111213,#080c10);
+    color:white;
     position: relative;
     min-height: 1px;
     padding-right: 15px;
