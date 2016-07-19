@@ -2,132 +2,159 @@
 
 <asp:Content ID="FileTransferNavBar" ContentPlaceHolderID="NavBar" runat="server">
     <li><a runat="server" id="FBItem" href="~/prefs/prefgeneral.aspx">
-	<asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
+        <asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
 </asp:Content>
 
-    <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
-<!--Upload Modal -->
-        <div id="uploadModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+<asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+    <!--Upload Modal -->
+    <div id="uploadModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Upload a File</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>Choose a file to upload:</span>
-                        <asp:FileUpload ID="FileUpload" runat="server" />
-                        <asp:RequiredFieldValidator ID="FildUploadValidator" runat="server"
-                            ValidationGroup="UploadFileValidation"
-                            ValidateEmptyText="true"
-                            ControlToValidate="FileUpload"
-                            ErrorMessage="Please select a file"
-                            ForeColor="Red">
-                        </asp:RequiredFieldValidator>
-                        <br />
-                        <span>Choose Location: </span>
-                        <asp:DropDownList ID="UploadLocation" runat="server"
-                            AutoEventWireup="true" EnableViewState="true">
-                        </asp:DropDownList>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="NewUploadFile" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true" />
-                    </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload a File</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Choose a file to upload:</span>
+                    <asp:FileUpload ID="FileUpload" runat="server" />
+                    <asp:RequiredFieldValidator ID="FildUploadValidator" runat="server"
+                        ValidationGroup="UploadFileValidation"
+                        ValidateEmptyText="true"
+                        ControlToValidate="FileUpload"
+                        ErrorMessage="Please select a file"
+                        ForeColor="Red">
+                    </asp:RequiredFieldValidator>
+                    <br />
+                    <span>Choose Location: </span>
+                    <asp:DropDownList ID="UploadLocation" runat="server"
+                        AutoEventWireup="true" EnableViewState="true">
+                    </asp:DropDownList>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="NewUploadFile" CssClass="btn btn-default" runat="server" Text="Upload" OnClick="NewUploadFile_Click" ValidationGroup="UploadFileValidation" AutoPostBack="true" />
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!--Folder Modal -->
-        <div id="folderModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+    <!--Folder Modal -->
+    <div id="folderModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New Folder</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>Folder Name:</span>
-                        <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" />
-                        <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
-                            ValidationGroup="NewFolder"
-                            ControlToValidate="FolderName"
-                            ErrorMessage="Please Enter A Folder Name"
-                            ForeColor="Red">
-                        </asp:RequiredFieldValidator>
-                        <br />
-                        <span>Personal Encryption: </span>
-                        <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Yes" Value="yes" Selected="True" />
-                            <asp:ListItem Text="No" Value="no" />
-                        </asp:RadioButtonList>
-
-                        <asp:RequiredFieldValidator ID="EncryptionOptionValidator" runat="server"
-                            ValidationGroup="NewFolder"
-                            ControlToValidate="encryptionOption"
-                            ErrorMessage="Please select encryption option"
-                            ForeColor="Red">
-                        </asp:RequiredFieldValidator>
-                        <br />
-                        <span>Password: </span>
-                        <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" />
-                        <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
-                            ValidationGroup="NewFolder"
-                            ControlToValidate="encryptionPass"
-                            ErrorMessage="Please Enter a password"
-                            ForeColor="Red" Enabled="true">
-                        </asp:RequiredFieldValidator>
-                        <br />
-                        <span>Confirm-Password: </span>
-                        <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
-                            TextMode="Password" runat="server" onchange="validateCfmPassword(this)" />
-                        <asp:RequiredFieldValidator ID="CfmPasswordValidator" runat="server"
-                            ValidationGroup="NewFolder"
-                            ControlToValidate="encryptionPassCfm"
-                            ErrorMessage="Password does not match"
-                            ForeColor="Red" Enabled="false">
-                        </asp:RequiredFieldValidator>
-                        <asp:Label ID="Test" runat="server"></asp:Label>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="NewFolder" runat="server" Text="Create" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
-                    </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">New Folder</h4>
                 </div>
+                <div class="modal-body">
+                    <span>Folder Name:</span>
+                    <asp:TextBox ID="FolderName" runat="server" CssClass="form-control" />
+                    <asp:RequiredFieldValidator ID="FolderNameValidator" runat="server"
+                        ValidationGroup="NewFolder"
+                        ControlToValidate="FolderName"
+                        ErrorMessage="Please Enter A Folder Name"
+                        ForeColor="Red">
+                    </asp:RequiredFieldValidator>
+                    <br />
+                    <span>Personal Encryption: </span>
+                    <asp:RadioButtonList ID="encryptionOption" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="Yes" Value="yes" Selected="True" />
+                        <asp:ListItem Text="No" Value="no" />
+                    </asp:RadioButtonList>
 
-            </div>
-        </div>
-
-        <!--Shared Folder Modal -->
-        <div id="sharefolderModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New Shared Folder</h4>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="Delete" runat="server" Text="Delete" OnClick="Delete_Click" ValidationGroup="DeleteValidation" />
-                    </div>
+                    <asp:RequiredFieldValidator ID="EncryptionOptionValidator" runat="server"
+                        ValidationGroup="NewFolder"
+                        ControlToValidate="encryptionOption"
+                        ErrorMessage="Please select encryption option"
+                        ForeColor="Red">
+                    </asp:RequiredFieldValidator>
+                    <br />
+                    <span>Password: </span>
+                    <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
+                        TextMode="Password" runat="server" />
+                    <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
+                        ValidationGroup="NewFolder"
+                        ControlToValidate="encryptionPass"
+                        ErrorMessage="Please Enter a password"
+                        ForeColor="Red" Enabled="true">
+                    </asp:RequiredFieldValidator>
+                    <br />
+                    <span>Confirm-Password: </span>
+                    <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
+                        TextMode="Password" runat="server" onchange="validateCfmPassword(this)" />
+                    <asp:RequiredFieldValidator ID="CfmPasswordValidator" runat="server"
+                        ValidationGroup="NewFolder"
+                        ControlToValidate="encryptionPassCfm"
+                        ErrorMessage="Password does not match"
+                        ForeColor="Red" Enabled="false">
+                    </asp:RequiredFieldValidator>
+                    <asp:Label ID="Test" runat="server"></asp:Label>
                 </div>
-
+                <div class="modal-footer">
+                    <asp:Button ID="NewFolder" runat="server" CssClass="btn btn-default" Text="Create" OnClick="CreateNewFolder_Click" ValidationGroup="NewFolder" AutoPostBack="true" />
+                </div>
             </div>
+
         </div>
-       
+    </div>
+
+    <!--Shared Folder Modal -->
+    <div id="sharefolderModel" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">New Shared Folder</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Pop Up Option Modal-->
+    <div id="PopUp" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">File</h4>
+                </div>
+                <div class="modal-body">
+                    <span>File ID: </span><asp:Label id="FileID" runat="server"></asp:Label>
+                    <br />
+                    <span>File Name: </span><asp:Label id="FileName" Text="" runat="server"></asp:Label>
+                    <br />
+                    <span>File Size: </span><asp:Label id="FileSize" Text="" runat="server"></asp:Label>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="DownloadSelectFile" runat="server" CssClass="btn btn-default" Text="Download"/>
+                    <asp:Button ID="DeleteSelectFile" runat="server" CssClass="btn btn-default" Text="Delete" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 
     <div class="MainContent">
-        
+
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#sharefolderModel">
+                <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#PopUp">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
                 </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewFolder" runat="server" data-toggle="modal" data-target="#folderModel" data-backdrop="static">
@@ -141,21 +168,23 @@
 
         <div class="FileContainer">
             <div class="page-header">
-			    <h1>Files</h1>
-		    </div>
+                <h1>Files</h1>
+            </div>
+
+
             <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FileLinkButton" runat="server" OnClick="DownloadFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FileLinkButton" OnClick="DownloadFile"  runat="server"  Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>                
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
             <br />
-            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server"  AutoGenerateColumns="False" DataKeyNames="foldername">
+            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
                 <Columns>
-                    <asp:TemplateField HeaderText="Folders" >
+                    <asp:TemplateField HeaderText="Folders">
                         <ItemTemplate>
                             <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                         </ItemTemplate>
@@ -168,7 +197,7 @@
         <div class="FileTreeContainer">
             <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
-            <asp:GridView ID="GridView1"  CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
+            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
                 <Columns>
                     <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
@@ -184,7 +213,7 @@
             </asp:GridView>
 
         </div>
-      </div>
+    </div>
     <script>
         // Toggle for encryption option
         function encryptionChk(val) {
@@ -223,5 +252,7 @@
 
             });
         });
+
+
     </script>
 </asp:Content>
