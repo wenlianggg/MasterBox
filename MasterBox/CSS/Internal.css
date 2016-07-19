@@ -32,8 +32,8 @@ a, a:active {
     }
 
 .FileContainer {   
-    background-image:;
     background:linear-gradient(90deg,#111213,#080c10);
+    background-image:url(../images/bg/outlets.png);
     color:white;
     position: relative;
     min-height: 1px;
@@ -67,6 +67,7 @@ a, a:active {
 
 .FileTreeContainer {
     background-color:#f7ffff;
+    background-image:url(../images/bg/blizzard.png);
     position: relative;
     min-height: 1px;
     padding-right: 15px;
@@ -85,15 +86,17 @@ a, a:active {
 }
 
 /*Table Styling*/
-.datagrid{
+.datagrid
+{
     width: 100%;
 }
-.datagrid th,td{
+.datagrid th,td
+{
     padding:5px;
 }
 .datagridHeader
 {
-	background:linear-gradient(90deg, #272c40, #252f33);
+	background-color:#263e5a;
 	font-family: Arial;
 	color: White;
 	border: none 0px transparent;

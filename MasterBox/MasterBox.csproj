@@ -170,6 +170,7 @@
     <Content Include="images\bg\linedpaper.png" />
     <Content Include="images\bg\lodyasbg.png" />
     <Content Include="images\bg\grungebg.png" />
+    <Content Include="images\bg\outlets.png" />
     <Content Include="images\bg\prefsidebarbg.jpg" />
     <Content Include="prefs\prefotpsetup.aspx" />
     <Content Include="prefs\prefpassword.aspx" />
