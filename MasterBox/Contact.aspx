@@ -37,6 +37,7 @@
     <div class="col-md-5">
         <h2>For any other enquiries</h2><br />
         Please submit the following form and a MasterBox representative will get in touch with you<br /><br />
+        <!--
         <div class="form-horizontal">
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
@@ -62,5 +63,33 @@
                 </div>
             </div>
         </div>
+        -->
+        <table>      
+            <tr>
+                <td> To </td>
+                <td> <asp:TextBox ID="txtToMail" runat="server" /> </td>
+            </tr>
+            <tr>
+                <td> Subject </td>
+                <td> <asp:TextBox ID="txtSubject" runat="server" Width="400" /> </td>
+            </tr>
+            <tr>
+                <td> Message </td>
+                <td> <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine"
+                                    Width="400px" Height="200px" /></td>
+            </tr>
+            <tr>
+                <td> &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" > <asp:Button ID="btnSubmit" runat="server"
+                                       OnClick="btnSubmit_Click" Text="Send" /> </td>
+            </tr>
+            <tr>
+            <td colspan="2"><asp:Label ID="lblMsg" runat="server" /> </td>
+            </tr>                 
+        </table>
     </div>
 </asp:Content>

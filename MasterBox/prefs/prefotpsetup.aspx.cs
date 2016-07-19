@@ -12,8 +12,10 @@ namespace MasterBox.Prefs {
         protected void Page_Load(object sender, EventArgs e) {
             try {
                 if (!IsPostBack) {
-                    if (MBProvider.Instance.IsTotpEnabled(Context.User.Identity.Name))
-                        ExistingOTP.Visible = true;
+					if (MBProvider.Instance.IsTotpEnabled(Context.User.Identity.Name)) {
+						ExistingOTP.Visible = true;
+						OTPSubmitBtn.Text = "Reconfigure 2FA";
+					}
                     using (OTPTool ot = new OTPTool()) {
                         ViewState["TOTPKey"] = ot.generateSecret();
                         OTPQrCode.ImageUrl = ot.QRCodeUrl;

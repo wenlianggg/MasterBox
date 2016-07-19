@@ -42,8 +42,8 @@
                     </table>
 					<br />
                     <asp:Label runat="server" ID="Msg" ForeColor="Red" /><br>
-					<asp:Button ID="OTPValue" runat="server" Text="Enable 2FA" CssClass="btn btn-success otpEnable" OnClick="VerifyOTP_Button" />
-					<asp:Button ID="OTPCancel" runat="server" Text="Disable 2FA" CssClass="btn btn-danger otpCancelSetup" OnClick="DisableTOTP_Button" />
+					<asp:Button ID="OTPSubmitBtn" runat="server" Text="Enable 2FA" CssClass="btn btn-success otpEnable" OnClick="VerifyOTP_Button" />
+					<asp:Button ID="OTPCancelBtn" runat="server" Text="Disable 2FA" CssClass="btn btn-danger otpCancelSetup" OnClick="DisableTOTP_Button" />
 				</div>
 				<div class="setupRowRight" runat="server" id="QRCodeHolder">
                     <asp:Image ID="OTPQrCode" runat="server" AlternateText="QR Code Not Available" height="300px" Width="300px"/>

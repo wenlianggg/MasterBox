@@ -29,9 +29,7 @@ namespace MasterBox.Auth {
 		}
 
 		protected virtual void Dispose(bool disposing) {
-			if (disposing) {
-				if (sqlConn != null)
-					sqlConn.Dispose();
+			if (disposing) { 
 			}
 		}
 

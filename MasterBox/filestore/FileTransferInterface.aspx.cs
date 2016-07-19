@@ -30,8 +30,6 @@ namespace MasterBox
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
                 
-                DeleteLocation.DataSource=MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
-                DeleteLocation.DataBind();
 
             }
             
@@ -68,6 +66,7 @@ namespace MasterBox
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
             int folderid = Int32.Parse(lnk.Attributes["FolderID"]);
+
             string foldername = lnk.Text;
             FolderHeader.Text = foldername;
             FillFileDataFolder(folderid);
@@ -84,6 +83,10 @@ namespace MasterBox
             if (dtFolderFile.Rows.Count > 0)
             {
                 GridView1.DataSource = dtFolderFile;
+                GridView1.DataBind();
+            }else
+            {
+                GridView1.DataSource = null;
                 GridView1.DataBind();
             }
         }
@@ -131,9 +134,7 @@ namespace MasterBox
 
         // Upload a new file
         protected void NewUploadFile_Click(object sender, EventArgs e)
-        {
-            
-
+        {           
             if (FileUpload.HasFile)
             {
                 if (UploadLocation.SelectedValue == "==Master Folder==")
@@ -149,13 +150,14 @@ namespace MasterBox
                         bool uploadStatus = MBFile.UploadNewFile(file);
                         if (uploadStatus == true)
                         {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(),"Upload Status","<script language='javascript'>alert('"+"Upload Success"+"')</script>");
                             // Update the file table
                             FillDataFile();
-                    }
+                        }
                         // File cannot be uploaded
                     else
                     {
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "spaceAlert()");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail" + "')</script>");
                     }
                 }
                 else
@@ -172,11 +174,12 @@ namespace MasterBox
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file,foldername);
                         if (uploadfiletofolderstatus == true)
                         {
-                            FillDataFile();
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
+                        
                     }
                     else
                     {
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", "spaceAlert()");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail" + "')</script>");
                     }
 
                 }
@@ -189,26 +192,27 @@ namespace MasterBox
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
 
-
-
             bool folderCreation;
-            //bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
-            //if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
-            //{
+            bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
+            if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
+            {
                 System.Diagnostics.Debug.WriteLine("Password:" + encryptionPass.Text);
                     MBFolder folder = new MBFolder();
                     folder.folderName = FolderName.Text;
                     folder.folderusername = Context.User.Identity.Name;
-                    folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text); 
-                         
-            //}
-            //else
-            //{
+                    folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder Created" + "')</script>");
+                FillDataFolder();
+            }
+            else
+            {
+
                 // Pop up box
-                
-            //}
-            // Reset the form fields
-            Response.Redirect(Request.RawUrl);
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder name exist" + "')</script>");
+
+            }
+
+            // Needs to reset manually
 
         }
 
@@ -217,22 +221,5 @@ namespace MasterBox
 
         }
 
-        protected void DeleteLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // To test out if i get the value
-            e.ToString();
-
-            Testing.Text = "Working Status";
-
-            dtDelete = new DataTable();
-            SqlDataReader reader = MBFile.GetFileToDisplay(Context.User.Identity.Name);
-            dtDelete.Load(reader);
-
-            if (dtDelete.Rows.Count > 0)
-            {
-                GridView2.DataSource = dtFile;
-                GridView2.DataBind();
-            }
-        }
     }
 }

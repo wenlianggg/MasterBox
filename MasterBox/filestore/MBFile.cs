@@ -33,7 +33,6 @@ namespace MasterBox.mbox
                     file.fileiv = user.AesIV;
                     file.filecontent = MBFile.EncryptAES256File(file);
 
-
                     // Storing of File
                     SqlCommand cmd = new SqlCommand(
                         "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
@@ -51,6 +50,9 @@ namespace MasterBox.mbox
                     cmd.Parameters["@data"].Value = file.filecontent;
 
                     cmd.ExecuteNonQuery();
+
+                    // Loggin for file upload
+                    FileLogger.Instance.FileUploaded(user.UserId, file.fileName);
 
                     // Clear Sensitive Data
                     file.fileName = "";
@@ -165,8 +167,8 @@ namespace MasterBox.mbox
         public static SqlDataReader GetFileFromFolderToDisplay(string username, int folderid)
         {
             User user = User.GetUser(username);
-            System.Diagnostics.Debug.WriteLine(folderid);
-            System.Diagnostics.Debug.WriteLine(user.UserId);
+            System.Diagnostics.Debug.WriteLine("Folder ID: "+folderid);
+            System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
