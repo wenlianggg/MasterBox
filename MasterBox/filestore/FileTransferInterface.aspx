@@ -14,7 +14,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Upload a File</h4>
+                    <h3 class="modal-title">Upload a File</h3>
                 </div>
                 <div class="modal-body">
                     <span>Choose a file to upload:</span>
@@ -76,12 +76,20 @@
                     <span>Password: </span>
                     <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
                         TextMode="Password" runat="server" />
+                    <!--
                     <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
                         ValidationGroup="NewFolder"
                         ControlToValidate="encryptionPass"
-                        ErrorMessage="Please Enter a password"
+                        ErrorMessage="Password must contain: Minimum 8 characters atleast 1 Alphabet and 1 Number"
                         ForeColor="Red" Enabled="true">
                     </asp:RequiredFieldValidator>
+                    -->
+                    <asp:RegularExpressionValidator ID="PassValid" runat="server" 
+                        ControlToValidate="encryptionPass" 
+                        ValidationGroup="NewFolder" Enabled="true"
+                         ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                        ErrorMessage="Password must contain: Minimum 8 characters atleast 1 Alphabet and 1 Number" 
+                        ForeColor="Red" />
                     <br />
                     <span>Confirm-Password: </span>
                     <asp:TextBox ID="encryptionPassCfm" CssClass="pwdfield form-control"
@@ -211,7 +219,6 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-
         </div>
     </div>
     <script>
@@ -220,11 +227,13 @@
             if (val == "no") {
                 $(".pwdfield").attr('readonly', "readonly");
                 $(".pwdfield").attr('disabled', "disabled");
-                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false);
+                <%= PassValid.ClientID %>.enabled = "False";
+               // ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false); 
             } else {
                 $(".pwdfield").removeAttr('readonly');
                 $(".pwdfield").removeAttr('disabled');
-                ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
+                <%= PassValid.ClientID %>.enabled = "True";
+                // ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
 
             }
 
