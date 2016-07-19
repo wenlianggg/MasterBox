@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" Title="Profile Preferences" MasterPageFile="~/prefs/Preferences.Master" AutoEventWireup="true" CodeBehind="prefprofile.aspx.cs" Inherits="MasterBox.Prefs.FileSetting_Profile" %>
 
 <asp:Content ID="SetProfile" ContentPlaceHolderID="Preferences" runat="server">
-	<div class="Setting_Profile">
 		<div class="page-header">
 			<h1><%: Page.Title %>
 			</h1>
@@ -80,7 +79,6 @@
 				<input type="file" />
 
 			</div>
-		</div>
 		<div class="row">
 			<button type="submit">Update</button>
 		</div>
