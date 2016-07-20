@@ -33,8 +33,8 @@ namespace MasterBox.Auth {
 
 		protected virtual void Dispose(bool disposing) {
 			if (disposing) {
-				sqlConn.Close();
-				sqlConn.Dispose();
+				_sqlConn.Close();
+				_sqlConn.Dispose();
 			}
 		}
 
