@@ -33,8 +33,8 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		internal void TransactionFailed(int userid, int megs) {
-			string description = "Transaction attempt failed for " + megs + "MB";
+		internal void TransactionFailed(int userid) {
+			string description = "Transaction attempt failed for when attempting to purchase subscription";
 			using (DataAccess da = new DataAccess()) {
                 LogTransactEntry(userid, GetIP(), description, LogLevel.Error);
 			}
