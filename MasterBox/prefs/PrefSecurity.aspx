@@ -18,13 +18,12 @@
                     <br />
                     <asp:Label ID="NewFolderPasswordLabel" runat="server" Text="New Password: "></asp:Label>
                     <asp:TextBox ID="NewPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="NewPasswordValidation" runat="server" 
+                    <asp:RegularExpressionValidator ID="NewPasswordValid" runat="server" 
+                        ControlToValidate="NewPassword" 
                         ValidationGroup="NewFolderPasswordChangeValidation"
-                        ValidateEmptyText="true"
-                        ControlToValidate="NewPassword"
-                        ErrorMessage="Cannot be empty"
-                        ForeColor="Red">
-                    </asp:RequiredFieldValidator>
+                         ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                        ErrorMessage="Password must contain: Minimum 8 characters at least 1 Alphabet and 1 Number" 
+                        ForeColor="Red" />
                     <br />
                     <asp:Label ID="NewFolderCfmPasswordLabel" runat="server" Text="Confirm Password: "></asp:Label>                    
                     <asp:TextBox ID="NewCfmPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
@@ -69,13 +68,12 @@
                     <br />
                     <asp:Label ID="FolderNewPassword" runat="server" Text="New Password: "></asp:Label>
                     <asp:TextBox ID="ChangeNewPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="NewPassValid" runat="server" 
+                    <asp:RegularExpressionValidator ID="ChangeNewPassValid" runat="server" 
+                        ControlToValidate="ChangeNewPassword" 
                         ValidationGroup="FolderPasswordChangeValidation"
-                        ValidateEmptyText="true"
-                        ControlToValidate="ChangeNewPassword"
-                        ErrorMessage="Cannot be empty"
-                        ForeColor="Red">
-                    </asp:RequiredFieldValidator>
+                         ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                        ErrorMessage="Password must contain: Minimum 8 characters at least 1 Alphabet and 1 Number" 
+                        ForeColor="Red" />
                     <br />
                     <asp:Label ID="FolderCfmPassword" runat="server" Text="Confirm Password: "></asp:Label>                    
                     <asp:TextBox ID="ChangeCfmPassword" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
