@@ -73,6 +73,25 @@ namespace MasterBox.Auth {
 							// Empty out strings and sensitive data arrays
 							ClearSensitiveData(userHash, password, userHash);
 
+                            // Check for subscription expiries // 
+
+                            // Retrieve current user
+                            SqlDataReader exp = da.SqlGetUser(username);
+                            exp.Read();
+                            
+                            // Retrieve expiry date of plan
+                            DateTime expDate = (DateTime)exp["mbrExpiry"];
+                            int userid = (int)exp["userid"];
+
+                            // Check if exceed expiry date
+                            if(expDate > DateTime.Now)
+                            {
+                                 da.SqlUpdateMbrType(userid, 1);
+                                 TransactLogger.Instance.SubscriptionExpired(userid);
+                            }
+
+                            // End check for subscription expiries //
+
 							// Password correct
 							return true;
 					} else {

@@ -157,6 +157,17 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteNonQuery();
 		}
 
+        internal int SqlUpdateMbrType(int userid, int mbrType)
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE mb_users SET mbrType = @mbrType WHERE userid = @userid", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+            cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.Int, 8));
+            cmd.Parameters["@userid"].Value = userid;
+            cmd.Parameters["@mbrType"].Value = mbrType;
+
+            return cmd.ExecuteNonQuery();
+        }
+
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */

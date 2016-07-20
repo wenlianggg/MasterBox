@@ -24,6 +24,7 @@ namespace MasterBox
 
             //Paypal doesnt work with TLS1 anymore
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            
             //Post back to either sandbox
             string strSandbox = "https://www.sandbox.paypal.com/cgi-bin/webscr";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(strSandbox);
@@ -71,7 +72,7 @@ namespace MasterBox
                         {
                             currUser.MbrType = storageBought / 5;
                             currUser.MbrStart = DateTime.Now;
-                            currUser.MbrStart = DateTime.Now.AddMonths(1);
+                            currUser.MbrExpiry = DateTime.Now.AddMonths(1);
                         }
                         // Add months to current storage plan
                         else if (currUser.MbrType == (storageBought / 5))
