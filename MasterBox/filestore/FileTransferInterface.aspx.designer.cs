@@ -121,6 +121,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordValidator;
         
         /// <summary>
+        /// PassValid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PassValid;
+        
+        /// <summary>
         /// encryptionPassCfm control.
         /// </summary>
         /// <remarks>
@@ -157,13 +166,49 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button NewFolder;
         
         /// <summary>
-        /// Delete control.
+        /// FileID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Delete;
+        protected global::System.Web.UI.WebControls.Label FileID;
+        
+        /// <summary>
+        /// FileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FileName;
+        
+        /// <summary>
+        /// FileSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FileSize;
+        
+        /// <summary>
+        /// DownloadSelectFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DownloadSelectFile;
+        
+        /// <summary>
+        /// DeleteSelectFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteSelectFile;
         
         /// <summary>
         /// CreateNewSharedFolder control.
