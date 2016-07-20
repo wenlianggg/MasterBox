@@ -110,17 +110,20 @@ namespace MasterBox.Auth {
 					using (SqlDataReader sqldr = _da.SqlGetUser(_userid))
 					if (sqldr.Read()) {
 						_username = sqldr["username"].ToString();
-						_fName = uc.Decrypt((byte[]) sqldr["fNameEnc"]);
-						_lName = uc.Decrypt((byte[]) sqldr["lNameEnc"]);
-						_email = uc.Decrypt((byte[]) sqldr["emailEnc"]);
-						_aesKey = uc.Decrypt((byte[]) sqldr["aesKey"]);
+						if (sqldr["fNameEnc"] != DBNull.Value)
+							_fName = uc.Decrypt((byte[]) sqldr["fNameEnc"]);
+						if (sqldr["lNameEnc"] != DBNull.Value)
+							_lName = uc.Decrypt((byte[]) sqldr["lNameEnc"]);
+						if (sqldr["emailEnc"] != DBNull.Value)
+							_email = uc.Decrypt((byte[]) sqldr["emailEnc"]);
 						_dob = (DateTime) sqldr["dob"];
 						_verified = (bool) sqldr["verified"];
 						_mbrType = (int) sqldr["mbrType"];
 						_mbrStart = (DateTime) sqldr["mbrStart"];
 						_mbrExpiry = (DateTime) sqldr["mbrExpiry"];
 						_regStamp = (DateTime) sqldr["regStamp"];
-                        _aesKey = uc.Decrypt((byte[]) sqldr["aesKey"]);
+						if (sqldr["aesKey"] != DBNull.Value)
+							_aesKey = uc.Decrypt((byte[]) sqldr["aesKey"]);
 						_aesIV = sqldr["aesIV"].ToString();
 					}
 				}
