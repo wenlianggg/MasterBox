@@ -16,8 +16,13 @@ namespace MasterBox.Auth {
 
 		private SqlConnection sqlConn {
 			get {
+				if (_sqlConn.State == ConnectionState.Open) {
+					_sqlConn.Close();
+				}
+
 				_sqlConn = new SqlConnection(connString);
 				_sqlConn.Open();
+
 				return _sqlConn;
 			}
 		}
@@ -28,7 +33,6 @@ namespace MasterBox.Auth {
 
 		public void Dispose() {
 			Dispose(true);
-
 		}
 
 		protected virtual void Dispose(bool disposing) {
