@@ -73,11 +73,15 @@ namespace MasterBox
                             currUser.MbrType = storageBought / 5;
                             currUser.MbrStart = DateTime.Now;
                             currUser.MbrExpiry = DateTime.Now.AddMonths(1);
+
+                            TransactLogger.Instance.TransactionCompleted(currUser.UserId, storageBought);
                         }
-                        // Add months to current storage plan
+                        // Renewal of storage plan
                         else if (currUser.MbrType == (storageBought / 5))
                         {
                             currUser.MbrExpiry = currUser.MbrExpiry.AddMonths(1);
+                            // Log for renewal
+                            TransactLogger.Instance.SubscriptionRenewed(currUser.UserId);
                         }
                         // Upgrade from current plan
                         else if (currUser.MbrType < (storageBought / 5))
@@ -89,9 +93,12 @@ namespace MasterBox
                             currUser.MbrType = storageBought / 5;
                             currUser.MbrStart = DateTime.Now;
                             currUser.MbrExpiry = DateTime.Now.AddDays(addDays).AddMonths(1);
+
+                            // Log for upgrade
+                            TransactLogger.Instance.SubscriptionUpgraded(currUser.UserId, storageBought);
                         }
                         // Downgrade from current plan
-                        else if (currUser.MbrType > (storageBought / 5))
+                        else if (currUser.MbrType > (storageBought / 5));
                         {
                             int daysleft = DateTime.Compare(currUser.MbrStart, currUser.MbrExpiry);
                             int mbDays = daysleft * (currUser.MbrType * 5);
@@ -100,15 +107,21 @@ namespace MasterBox
                             currUser.MbrType = storageBought / 5;
                             currUser.MbrStart = DateTime.Now;
                             currUser.MbrExpiry = DateTime.Now.AddDays(addDays).AddMonths(1);
+
+                            // Log for downgrade
+                            TransactLogger.Instance.SubscriptionDowngraded(currUser.UserId, storageBought);
                         }
+
                         TransactLogger.Instance.TransactionCompleted(currUser.UserId, storageBought);
                     }
+
                     // // End execution of updates // //
                 }
                 else if (line == "FAIL")
                 {
                     // Log for manual investigation
                     Response.Write("Unable to retrive transaction detail");
+                    TransactLogger.Instance.TransactionFailed(currUser.UserId);
                 }
             }
             else
