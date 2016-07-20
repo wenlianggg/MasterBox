@@ -41,6 +41,34 @@ namespace MasterBox.Auth {
 		/*
 		 *  STORED FUNCTIONS FOR UPDATING DATABASE
 		 */
+
+		internal int SqlInsertBlockEntry(IPBlockEntry ipbe) {
+			SqlCommand cmd = new SqlCommand(
+				"INSERT INTO mb_ipblock (userid, address, expiry, reason) VALUES (@userid, @address, @expiry, @reason)", sqlConn);
+			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 0));
+			cmd.Parameters.Add(new SqlParameter("@address", SqlDbType.VarChar, 50));
+			cmd.Parameters.Add(new SqlParameter("@expiry", SqlDbType.DateTime2, 7));
+			cmd.Parameters.Add(new SqlParameter("@reason", SqlDbType.VarChar, 255));
+			cmd.Prepare();
+
+			cmd.Parameters["@userid"].Value = ipbe.UserID;
+			if (ipbe.IPAddress != null)
+				cmd.Parameters["@address"].Value = ipbe.IPAddress;
+			else
+				cmd.Parameters["@address"].Value = DBNull.Value;
+
+			if (ipbe.Expiry != null)
+				cmd.Parameters["@expiry"].Value = ipbe.Expiry;
+			else
+				cmd.Parameters["@expiry"].Value = DBNull.Value;
+
+			if (ipbe.Reason != null)
+				cmd.Parameters["@reason"].Value = ipbe.Reason;
+			else
+				cmd.Parameters["@reason"].Value = DBNull.Value;
+
+			return cmd.ExecuteNonQuery();
+		}
 		
 		internal int SqlInsertLogEntry(int userid, string ipaddress, string description, int loglevel, int logtype) {
 			// Update database values
@@ -176,6 +204,13 @@ namespace MasterBox.Auth {
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
+
+		internal SqlDataReader SqlGetBlockList() {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT * from mb_ipblock", sqlConn);
+			cmd.Prepare();
+			return cmd.ExecuteReader();
+		}
 
 		internal SqlDataReader SqlGetAuth(string username) {
 			SqlCommand cmd = new SqlCommand(
