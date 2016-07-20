@@ -159,6 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin\ipblocking.aspx" />
+    <Content Include="admin\sendmail.aspx" />
+    <Content Include="admin\usermgmt.aspx" />
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -321,6 +323,20 @@
     </Compile>
     <Compile Include="admin\ipblocking.aspx.designer.cs">
       <DependentUpon>ipblocking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\sendmail.aspx.cs">
+      <DependentUpon>sendmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\sendmail.aspx.designer.cs">
+      <DependentUpon>sendmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\usermgmt.aspx.cs">
+      <DependentUpon>usermgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\usermgmt.aspx.designer.cs">
+      <DependentUpon>usermgmt.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Classes\TransactLogger.cs" />
     <Compile Include="Auth\Classes\Logger.cs" />

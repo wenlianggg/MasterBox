@@ -1,4 +1,4 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="MasterBox.admin.NestedMasterPage1" %>
 <asp:Content ID="AdminPanelContent" ContentPlaceHolderID="Preferences" runat="server">
-    
+    <asp:ContentPlaceHolder ID="AdminPanelContentPH" runat="server"/>
 </asp:Content>
