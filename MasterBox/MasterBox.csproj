@@ -158,6 +158,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\ipblocking.aspx" />
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -235,6 +236,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="admin\Admin.master" />
     <None Include="Packages.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -306,6 +308,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="admin\Admin.master.cs">
+      <DependentUpon>Admin.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Admin.master.designer.cs">
+      <DependentUpon>Admin.master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\ipblocking.aspx.cs">
+      <DependentUpon>ipblocking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ipblocking.aspx.designer.cs">
+      <DependentUpon>ipblocking.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Auth\Classes\TransactLogger.cs" />
     <Compile Include="Auth\Classes\Logger.cs" />
     <Compile Include="Auth\Classes\DataAccess.cs" />

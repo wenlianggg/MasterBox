@@ -12,11 +12,14 @@ using System.Web;
 namespace MasterBox.Auth {
 	internal class DataAccess : IDisposable {
 		private static string connString = ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString;
-		private SqlConnection sqlConn;
+		private SqlConnection _sqlConn;
 
-		internal DataAccess() { // DataAccess constructor
-			sqlConn = new SqlConnection(connString);
-			sqlConn.Open();
+		private SqlConnection sqlConn {
+			get {
+				_sqlConn = new SqlConnection(connString);
+				_sqlConn.Open();
+				return _sqlConn;
+			}
 		}
 
 		~ DataAccess() { // DataAccess destructor
@@ -29,7 +32,9 @@ namespace MasterBox.Auth {
 		}
 
 		protected virtual void Dispose(bool disposing) {
-			if (disposing) { 
+			if (disposing) {
+				sqlConn.Close();
+				sqlConn.Dispose();
 			}
 		}
 
