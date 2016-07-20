@@ -52,7 +52,7 @@ namespace MasterBox.Auth {
 		}
 
 		internal static User GetUser(string username) {
-			return GetUser(User.ConvertToId(username));
+			return GetUser(ConvertToId(username));
 		}
 
 		internal static User CreateUser(string username, string password, string firstname, string lastname,

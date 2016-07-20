@@ -45,6 +45,18 @@ namespace MasterBox.Auth {
 			private set { _expiry = value; }
 		}
 
+		internal bool Valid {
+			get {
+				if (_expiry > DateTime.Now) {
+					// Has not expired
+					return true;
+				} else {
+					// IP block entry expired
+					return false;
+				}
+			}
+		}
+
 		internal string Reason {
 			get { return _reason; }
 			private set {

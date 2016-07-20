@@ -21,6 +21,7 @@ namespace MasterBox.Auth {
 		private IPBlock() {
 			using (DataAccess da = new DataAccess()) {
 				SqlDataReader sqldr = da.SqlGetBlockList();
+				_blocklist = new List<IPBlockEntry>();
 				while (sqldr.Read()) {
 					if ((DateTime) sqldr["expiry"] > DateTime.Now) {
 						IPBlockEntry ipbe = new IPBlockEntry(
@@ -34,7 +35,32 @@ namespace MasterBox.Auth {
 			}
 		}
 
-		// TODO: Checking against blocklist
+		// Username and IP combination block check
+		internal bool Check(int userid, string ip) {
+			foreach (IPBlockEntry ipbe in _blocklist) {
+				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress.Equals(ip))
+					return true;
+			}
+			return false;
+		}
+
+		// Username only block check
+		internal bool Check(int userid) {
+			foreach (IPBlockEntry ipbe in _blocklist) {
+				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress == null)
+					return true;
+			}
+			return false;
+		}
+
+		// IP only block check
+		internal bool Check(string ip) {
+			foreach (IPBlockEntry ipbe in _blocklist) {
+				if (ipbe.IPAddress.Equals(ip) && ipbe.UserID == 0)
+					return true;
+			}
+			return false;
+		}
 
 		// TODO: Adding to blocklist
 

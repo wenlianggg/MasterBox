@@ -11,6 +11,13 @@ namespace MasterBox.Prefs {
     public partial class Prefs : System.Web.UI.MasterPage {
         protected void Page_Load(object sender, EventArgs e) {
 
+			if (Auth.User.GetUser(Context.User.Identity.Name).IsAdmin) {
+				adminpanel.Visible = true;
+			} else {
+				adminpanel.Visible = true;
+				adminpanel.InnerText = "ACP Inaccessible!";
+			}
+
 			switch (Path.GetFileName(Request.Url.ToString())) {
 				case "prefgeneral":
 					prefgeneral.Attributes.Add("class", "currentpage");
@@ -44,16 +51,6 @@ namespace MasterBox.Prefs {
 
 			}
 
-			new Thread(() => {
-				Thread.CurrentThread.IsBackground = true;
-				/* run your code here */
-				if (Auth.User.GetUser(Context.User.Identity.Name).IsAdmin) {
-					adminpanel.Visible = true;
-				} else {
-					adminpanel.Visible = true;
-					adminpanel.InnerText = "You're Not An Admin!";
-				}
-			}).Start();
 
 		}
     }
