@@ -16,7 +16,7 @@ namespace MasterBox.Auth {
 
 		private SqlConnection sqlConn {
 			get {
-				if (_sqlConn.State == ConnectionState.Open) {
+				if (_sqlConn != null && _sqlConn.State == ConnectionState.Open) {
 					_sqlConn.Close();
 				}
 
