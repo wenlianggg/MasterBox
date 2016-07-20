@@ -34,5 +34,11 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		// TODO: Checking against blocklist
+
+		// TODO: Adding to blocklist
+
+		// TODO: Removing from blocklist
+
 	}
 }
