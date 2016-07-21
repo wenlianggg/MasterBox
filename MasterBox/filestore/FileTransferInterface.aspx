@@ -148,6 +148,7 @@
     </div>
     -->
 
+
     <div id="myModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -158,6 +159,23 @@
                     <div class="modal-body">
                         <asp:Button ID="Button1" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
                         <asp:Button ID="Button2" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+     </div>
+
+    <div id="folderPasswordModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        
+                    </div>
+                    <div class="modal-body">
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

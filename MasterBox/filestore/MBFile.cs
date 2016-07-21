@@ -74,6 +74,31 @@ namespace MasterBox.mbox
             }
         }
 
+        // Delete File
+        private static bool DeleteFile(int fileid,int userid)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(
+                   "DELETE FROM mb_file WHERE fileid=@fileid and userid=@userid", SQLGetMBoxConnection());
+                   cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+                   cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+                   cmd.Prepare();
+
+                   cmd.Parameters["@fileid"].Value = fileid;
+                   cmd.Parameters["@userid"].Value = userid;
+                   cmd.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+                      
+        }
+
+
         // To generate Key and IV
         public static string FileKeyIvGenerator(int length)
         {
@@ -96,7 +121,6 @@ namespace MasterBox.mbox
         // AES256 Encryption for file
         private static byte[] EncryptAES256File(MBFile file)
         {
-
             // Convert PT to byte
             byte[] plainbyte = file.filecontent;
 

@@ -198,6 +198,7 @@ namespace MasterBox
 
         }
 
+
         // Creating a folder
         protected void CreateNewFolder_Click(object sender, EventArgs e)
         {
