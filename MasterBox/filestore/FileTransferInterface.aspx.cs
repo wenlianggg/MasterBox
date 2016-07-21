@@ -19,15 +19,13 @@ namespace MasterBox
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            
             if (!IsPostBack)
             {
 
                 // Fill up file and folder data on the display
                 FillDataFile();                             
                 FillDataFolder();
-
-                
+               
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
@@ -105,10 +103,6 @@ namespace MasterBox
 
             LinkButton lnk = (LinkButton)sender;
             GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-
-            FileID.Text = "test";
-            FileName.Text = "test";
-            
 
             DownloadFileContent(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
         }
@@ -232,11 +226,29 @@ namespace MasterBox
 
         }
 
-        protected void Delete_Click(object sender, EventArgs e)
+
+        protected void File_Command(object sender, CommandEventArgs e)
         {
+            string command = e.CommandName;
+            string fileId = Session["fileid"] as string;
+            System.Diagnostics.Debug.WriteLine("Hello if this is running: " +fileId);
+            switch (command)
+            {
+                case "ShowPopup":
+                    System.Diagnostics.Debug.WriteLine("This is for pop Up");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    break;
 
+                case "Delete":
+                    System.Diagnostics.Debug.WriteLine("This is for delete: ");
+                    //Your delete logic...
+                    break;
+
+                case "Download":
+                    System.Diagnostics.Debug.WriteLine("This is for download: ");
+                    //Your download logic...
+                    break;
+            }
         }
-
-
     }
 }

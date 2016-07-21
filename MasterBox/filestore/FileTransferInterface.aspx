@@ -76,14 +76,6 @@
                     <span>Password: </span>
                     <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
                         TextMode="Password" runat="server" />
-                    <!--
-                    <asp:RequiredFieldValidator ID="PasswordValidator" runat="server"
-                        ValidationGroup="NewFolder"
-                        ControlToValidate="encryptionPass"
-                        ErrorMessage="Password must contain: Minimum 8 characters atleast 1 Alphabet and 1 Number"
-                        ForeColor="Red" Enabled="true">
-                    </asp:RequiredFieldValidator>
-                    -->
                     <asp:RegularExpressionValidator ID="PassValid" runat="server" 
                         ControlToValidate="encryptionPass" 
                         ValidationGroup="NewFolder" Enabled="true"
@@ -131,10 +123,9 @@
     </div>
 
     <!--Pop Up Option Modal-->
+    <!--
     <div id="PopUp" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -148,15 +139,32 @@
                     <span>File Size: </span><asp:Label id="FileSize" Text="" runat="server"></asp:Label>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="DownloadSelectFile" runat="server" CssClass="btn btn-default" Text="Download"/>
-                    <asp:Button ID="DeleteSelectFile" runat="server" CssClass="btn btn-default" Text="Delete" />
+                    <asp:Button ID="btnDelete" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
+                    <asp:Button ID="btnDownload" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
                 </div>
             </div>
 
         </div>
     </div>
+    -->
 
-
+    <div id="myModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Delete or download?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Button ID="Button1" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
+                        <asp:Button ID="Button2" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+     </div>
 
     <div class="MainContent">
 
@@ -179,22 +187,23 @@
                 <h1>Files</h1>
             </div>
 
-
             <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FileLinkButton" OnClick="DownloadFile"  runat="server"  Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>'></asp:LinkButton>                
+                            <asp:LinkButton ID="FileLinkButton" CommandName="ShowPopup" OnCommand="File_Command"  CommandArgument='<%# Eval("fileid") %>' runat="server" Text='<%# Eval("filename") %>'></asp:LinkButton>                
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+
             <br />
+
             <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
                 <Columns>
                     <asp:TemplateField HeaderText="Folders">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FolderLinkButton" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FolderLinkButton" OnClientClick="return confirm('Are you sure?');" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -227,14 +236,11 @@
             if (val == "no") {
                 $(".pwdfield").attr('readonly', "readonly");
                 $(".pwdfield").attr('disabled', "disabled");
-                <%= PassValid.ClientID %>.enabled = "False";
-               // ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), false); 
+                <%= PassValid.ClientID %>.enabled = "False";           
             } else {
                 $(".pwdfield").removeAttr('readonly');
                 $(".pwdfield").removeAttr('disabled');
                 <%= PassValid.ClientID %>.enabled = "True";
-                // ValidatorEnable(document.getElementById('<%=PasswordValidator.ClientID%>'), true);
-
             }
 
         }
@@ -258,10 +264,7 @@
                 } else {
                     return true;
                 }
-
             });
-        });
-
-
+        });      
     </script>
 </asp:Content>
