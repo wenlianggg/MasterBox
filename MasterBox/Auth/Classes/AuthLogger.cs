@@ -42,6 +42,30 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		internal void FailedTotpChangeAttempt(int userid) {
+			string description = "Unsuccessful 2FA (TOTP) change attempt";
+			TriggerFailedLogin();
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
+			}
+		}
+
+		internal void TotpDisabled(int userid) {
+			string description = "Unsuccessful 2FA (TOTP) disabled";
+			TriggerFailedLogin();
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
+			}
+		}
+
+		internal void UserTotpChanged(int userid) {
+			string description = "2FA (TOTP) key was changed";
+			TriggerFailedLogin();
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Changed);
+			}
+		}
+
         internal void UserPassChanged(int userid) {
             string description = "User password was changed";
             using (DataAccess da = new DataAccess()) {

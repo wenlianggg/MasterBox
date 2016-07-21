@@ -3,11 +3,13 @@
 <asp:Content ID="PrefCss" ContentPlaceHolderID="HeadContent" runat="server">
 	<link runat="server" href="../../CSS/Preferences.css" rel="stylesheet" />
     <link runat="server" href="../../CSS/LoginStyle.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="AdminHeadContent" runat="server" />
 </asp:Content>
 
-<asp:Content ID="Header" ContentPlaceHolderID="NavBar" runat="server">
+<asp:Content ID="PrefNavBar" ContentPlaceHolderID="NavBar" runat="server">
 	<li><a runat="server" id="FBItem" href="~/filestore/FileTransferInterface.aspx">
 	<asp:Label ID="FileBrowser" runat="server" Text="File Browser" /></a></li>
+    <asp:ContentPlaceHolder ID="AdminNavBar" runat="server" />
 </asp:Content>
 
 <asp:Content ID="Setting" ContentPlaceHolderID="InternalContent" runat="server">
@@ -22,6 +24,7 @@
                 <li><a runat="server" ID="prefsecurity" href="prefsecurity.aspx">Folder Encryption <i class="fa fa-lock" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsubscription" href="prefsubscription.aspx">Expand Storage <i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="preflogs" href="preflogs.aspx">Access Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="adminpanel" visible="false" href="~/admin/ipblocking.aspx">Admin Panel<i class="fa fa-list" aria-hidden="true"></i></a></li>
             </ul>
         </div>
         <div class="SettingSelectionPanel">

