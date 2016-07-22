@@ -149,8 +149,8 @@
                         <br />                       
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="BtnDownload" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command"  />
-                        <asp:Button ID="BtnDelete" CommandName="Delete" runat="server" Text="Delete" OnCommand="File_Command" />
+                        <asp:Button ID="BtnDownload" CssClass="btn btn-default" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command"  />
+                        <asp:Button ID="BtnDelete" CssClass="btn btn-default" OnClientClick="return confirm('Are you sure?');" CommandName="Delete" runat="server" Text="Delete" OnCommand="File_Command" />
                     </div>
                 </div>
             </div>
@@ -164,10 +164,13 @@
                         
                     </div>
                     <div class="modal-body">
-                        
+                        <span>Folder Name: </span><asp:Label ID="LblFolderName" runat="server"></asp:Label>
+                        <span>Password: </span>
+                        <asp:TextBox ID="TxtBoxPassword" runat="server"></asp:TextBox>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                       <asp:Button ID="BtnCheckPasswordFolder" runat="server" CssClass="btn btn-default" Text="Enter"/>
                     </div>
                 </div>
             </div>
@@ -210,7 +213,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Folders">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FolderLinkButton" OnClientClick="return confirm('Are you sure?');" runat="server" OnClick="OpenFolder" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FolderLinkButton" OnClick="FolderLinkButton_Command" runat="server" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

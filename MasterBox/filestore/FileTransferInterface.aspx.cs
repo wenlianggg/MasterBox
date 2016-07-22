@@ -33,7 +33,6 @@ namespace MasterBox
 
             }
             
-
         }
         private void FillDataFile()
         {
@@ -70,8 +69,6 @@ namespace MasterBox
             string foldername = lnk.Text;
             FolderHeader.Text = foldername;
             FillFileDataFolder(folderid);
-
-
         }
 
         private void FillFileDataFolder(int folderid)
@@ -115,6 +112,7 @@ namespace MasterBox
             DownloadFolderFile(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]), Int32.Parse(lnk.Attributes["FolderID"]));
 
         }
+
         private void DownloadFolderFile(string username, int id,int folderid)
         {
             MBFile mbf = MBFolder.RetrieveFolderFile(username, id, folderid);
@@ -248,5 +246,11 @@ namespace MasterBox
             }
         }
 
+        protected void FolderLinkButton_Command(object sender,EventArgs e)
+        {
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopup();", true);
+
+        }
     }
 }
