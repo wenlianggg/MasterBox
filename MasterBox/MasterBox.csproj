@@ -367,6 +367,7 @@
     <Compile Include="admin\usermgmt.aspx.designer.cs">
       <DependentUpon>usermgmt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Auth\Classes\FileLogger.cs" />
     <Compile Include="Auth\Classes\IPBlock.cs" />
     <Compile Include="Auth\Classes\IPBlockEntry.cs" />
     <Compile Include="Auth\Classes\TransactLogger.cs" />
