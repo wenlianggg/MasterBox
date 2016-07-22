@@ -131,30 +131,6 @@
         </div>
     </div>
 
-    <!--Pop Up Option Modal-->
-    <!--
-    <div id="PopUp" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">File</h4>
-                </div>
-                <div class="modal-body">
-                    <br />
-                    <span>File Size: </span><asp:Label id="FileSize" Text="" runat="server"></asp:Label>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnDelete" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
-                    <asp:Button ID="btnDownload" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
-                </div>
-            </div>
-
-        </div>
-    </div>
-    -->
-
-
     <div id="myModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -165,12 +141,16 @@
                     <div class="modal-body">
                         <span>File ID: </span><asp:Label id="LblFileID" runat="server"></asp:Label>
                         <br />
-                        <span>File Name: </span><asp:Label id="LblFileName" Text="" runat="server"></asp:Label>
-                        <asp:Button ID="Button1" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
-                        <asp:Button ID="Button2" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
+                        <span>File Name: </span><asp:Label id="LblFileName" runat="server"></asp:Label>
+                        <br />
+                        <span>File Type: </span><asp:Label id="LblFileType" runat="server"></asp:Label>
+                        <br />
+                        <span>File Size: </span><asp:Label id="LblFileSize" runat="server"></asp:Label>
+                        <br />                       
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <asp:Button ID="BtnDownload" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command"  />
+                        <asp:Button ID="BtnDelete" CommandName="Delete" runat="server" Text="Delete" OnCommand="File_Command" />
                     </div>
                 </div>
             </div>

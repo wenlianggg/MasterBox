@@ -91,26 +91,12 @@ namespace MasterBox
             }
         }
 
-        // Pop Up option
 
+        // Download Files from Master Folder     
 
-
-        // Download Files from Master Folder
-        
-        protected void DownloadFile(object sender, EventArgs e)
+        private void DownloadFileContent(string username, long fileid)
         {
-           //Fire Data toggle?
-
-            LinkButton lnk = (LinkButton)sender;
-            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-
-            DownloadFileContent(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]));
-        }
-        
-
-        private void DownloadFileContent(string username, int id)
-        {
-			MBFile mbf = MBFile.RetrieveFile(username, id);
+			MBFile mbf = MBFile.RetrieveFile(username, fileid);
 			Response.ClearContent();
 			Response.ContentType = mbf.fileType;
 			Response.AddHeader("Content-Disposition", "attachment;filename=\"" + mbf.fileName + "\"");
@@ -230,28 +216,37 @@ namespace MasterBox
 
         protected void File_Command(object sender, CommandEventArgs e)
         {
-			LinkButton lnk = (LinkButton)sender;
 			string command = e.CommandName;
-			string fileid = e.CommandArgument.ToString();
-			LblFileID.Text = fileid;
+            MBFile file;
 
             switch (command)
             {
                 case "ShowPopup":
-                    System.Diagnostics.Debug.WriteLine("This is for pop up: ");
+                    System.Diagnostics.Debug.WriteLine("Running");
+                    long fileid = Convert.ToInt64(e.CommandArgument.ToString());
+                    System.Diagnostics.Debug.WriteLine("FileID: " + fileid);
+                    file = MBFile.RetrieveFile(Context.User.Identity.Name, fileid);
+                    LblFileID.Text = fileid.ToString();
+                    LblFileName.Text = file.fileName;
+                    LblFileType.Text = file.fileType;
+                    LblFileSize.Text = file.fileSize.ToString();
+
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
 					break;
 
                 case "Delete":
-                    System.Diagnostics.Debug.WriteLine("This is for delete: ");
-                    //Your delete logic...
+                    System.Diagnostics.Debug.WriteLine("Deleting");
+                    MBFile.DeleteFile(Context.User.Identity.Name, Convert.ToInt64(LblFileID.Text));
+                   
                     break;
 
                 case "Download":
-                    System.Diagnostics.Debug.WriteLine("This is for download: ");
-                    //Your download logic...
+                    System.Diagnostics.Debug.WriteLine("Downloading");
+                    DownloadFileContent(Context.User.Identity.Name, Convert.ToInt64(LblFileID.Text));
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted" + "')</script>");
                     break;
             }
         }
+
     }
 }

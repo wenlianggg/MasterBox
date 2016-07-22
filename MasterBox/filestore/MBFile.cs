@@ -75,10 +75,9 @@ namespace MasterBox.mbox
         }
 
         // Delete File
-        private static bool DeleteFile(int fileid,int userid)
+        public static void DeleteFile(string username, long fileid)
         {
-            try
-            {
+            User user = User.GetUser(username);
                 SqlCommand cmd = new SqlCommand(
                    "DELETE FROM mb_file WHERE fileid=@fileid and userid=@userid", SQLGetMBoxConnection());
                    cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
@@ -86,16 +85,9 @@ namespace MasterBox.mbox
                    cmd.Prepare();
 
                    cmd.Parameters["@fileid"].Value = fileid;
-                   cmd.Parameters["@userid"].Value = userid;
-                   cmd.ExecuteNonQuery();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-                      
+                   cmd.Parameters["@userid"].Value = user.UserId;
+                   cmd.ExecuteNonQuery();      
+                            
         }
 
 
