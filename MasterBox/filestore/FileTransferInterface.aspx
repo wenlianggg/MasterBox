@@ -1,5 +1,14 @@
 ﻿<%@ Page Language="C#" Title="" MasterPageFile="~/Internal.Master" AutoEventWireup="true" CodeBehind="FileTransferInterface.aspx.cs" Inherits="MasterBox.FileTransferInterface" %>
 
+
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server" ID="FileTrfPH">
+    <script type="text/javascript">
+        function showPopup() {
+            $('#myModal').modal('show');
+        }
+    </script>
+</asp:Content>
+
 <asp:Content ID="FileTransferNavBar" ContentPlaceHolderID="NavBar" runat="server">
     <li><a runat="server" id="FBItem" href="~/prefs/prefgeneral.aspx">
         <asp:Label ID="Preferences" runat="server" Text="Preferences" /></a></li>
@@ -132,9 +141,6 @@
                     <h4 class="modal-title">File</h4>
                 </div>
                 <div class="modal-body">
-                    <span>File ID: </span><asp:Label id="FileID" runat="server"></asp:Label>
-                    <br />
-                    <span>File Name: </span><asp:Label id="FileName" Text="" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span><asp:Label id="FileSize" Text="" runat="server"></asp:Label>
                 </div>
@@ -157,6 +163,9 @@
                         <h4 class="modal-title" id="myModalLabel">Delete or download?</h4>
                     </div>
                     <div class="modal-body">
+                        <span>File ID: </span><asp:Label id="LblFileID" runat="server"></asp:Label>
+                        <br />
+                        <span>File Name: </span><asp:Label id="LblFileName" Text="" runat="server"></asp:Label>
                         <asp:Button ID="Button1" CommandName="Delete" CommandArgument="" runat="server" Text="Delete" OnCommand="File_Command"  />
                         <asp:Button ID="Button2" CommandName="Download" CommandArgument="" runat="server" Text="Download" OnCommand="File_Command" />
                     </div>
@@ -209,7 +218,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FileLinkButton" CommandName="ShowPopup" OnCommand="File_Command"  CommandArgument='<%# Eval("fileid") %>' runat="server" Text='<%# Eval("filename") %>'></asp:LinkButton>                
+                            <asp:LinkButton ID="FileLinkButton" CommandName="ShowPopup" OnCommand="File_Command" CommandArgument='<%# Eval("fileid") %>' runat="server" Text='<%# Eval("filename") %>'></asp:LinkButton>                
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -232,7 +241,7 @@
         <div class="FileTreeContainer">
             <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
-            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename,filesize">
+            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid,filename,filesize">
                 <Columns>
                     <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>

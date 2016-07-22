@@ -98,7 +98,7 @@ namespace MasterBox
                             TransactLogger.Instance.SubscriptionUpgraded(currUser.UserId, storageBought);
                         }
                         // Downgrade from current plan
-                        else if (currUser.MbrType > (storageBought / 5));
+                        else if (currUser.MbrType > (storageBought / 5))
                         {
                             int daysleft = DateTime.Compare(currUser.MbrStart, currUser.MbrExpiry);
                             int mbDays = daysleft * (currUser.MbrType * 5);

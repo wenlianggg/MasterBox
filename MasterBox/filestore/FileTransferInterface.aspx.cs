@@ -230,15 +230,17 @@ namespace MasterBox
 
         protected void File_Command(object sender, CommandEventArgs e)
         {
-            string command = e.CommandName;
-            string fileId = Session["fileid"] as string;
-            System.Diagnostics.Debug.WriteLine("Hello if this is running: " +fileId);
+			LinkButton lnk = (LinkButton)sender;
+			string command = e.CommandName;
+			string fileid = e.CommandArgument.ToString();
+			LblFileID.Text = fileid;
+
             switch (command)
             {
                 case "ShowPopup":
-                    System.Diagnostics.Debug.WriteLine("This is for pop Up");
+                    System.Diagnostics.Debug.WriteLine("This is for pop up: ");
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
-                    break;
+					break;
 
                 case "Delete":
                     System.Diagnostics.Debug.WriteLine("This is for delete: ");
