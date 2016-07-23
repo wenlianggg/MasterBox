@@ -185,7 +185,7 @@
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnOpenFolder" CssClass="btn btn-default" runat="server" Text="Open" />
-                    <asp:Button ID="BtnDeleteFolder" CssClass="btn btn-default" runat="server" Text="Delete" />
+                    <asp:Button ID="BtnDeleteFolder" OnClick="BtnDeleteFolderWithPassw_Click" CssClass="btn btn-default" runat="server" Text="Delete" />
                 </div>
             </div>
         </div>
@@ -203,9 +203,9 @@
                     <span>Folder Name: </span>
                     <asp:Label ID="LblFolderNamePass" runat="server"></asp:Label>
                     <br />
-                    <br />
                     <span>Password: </span>
-                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>
+                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>\
+                    <br />
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnCheckPasswordFolder"  OnClick="BtnCheckPasswordFolder_Click" runat="server" CssClass="btn btn-default" Text="Open" />

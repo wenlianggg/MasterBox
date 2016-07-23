@@ -264,13 +264,14 @@ namespace MasterBox
                 FillFileDataFolder(folder.folderName, folder.folderid);
             }else
             {
-
+            
             }
         }
 
         protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
         {
-
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
+            MBFolder.DeleteFolder(folder.folderid);
         }
     }
 }

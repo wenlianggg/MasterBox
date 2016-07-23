@@ -406,6 +406,19 @@ namespace MasterBox.mbox
             }
         }
 
+        // Delete Folder
+        public static void DeleteFolder(long folderid)
+        {
+            SqlCommand cmd = new SqlCommand(
+                   "DELETE FROM mb_folder WHERE folderid=@folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.ExecuteNonQuery();
+        }
+
+
         // Validate Folder Password
         public bool ValidateFolderPassword(MBFolder folder, string folderpassword)
         {
