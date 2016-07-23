@@ -59,20 +59,11 @@ namespace MasterBox
                 FolderTableView.DataBind();
             }
         }
-        protected void OpenFolder(object sender, EventArgs e)
-        {
-            // Get Folder id
-            LinkButton lnk = (LinkButton)sender;
-            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-            int folderid = Int32.Parse(lnk.Attributes["FolderID"]);
 
-            string foldername = lnk.Text;
+        private void FillFileDataFolder(string foldername,long folderid)
+        {
             FolderHeader.Text = foldername;
-            FillFileDataFolder(folderid);
-        }
 
-        private void FillFileDataFolder(int folderid)
-        {
             dtFolderFile = new DataTable();
             SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name,folderid);
             dtFolderFile.Load(reader);
@@ -90,7 +81,6 @@ namespace MasterBox
 
 
         // Download Files from Master Folder     
-
         private void DownloadFileContent(string username, long fileid)
         {
 			MBFile mbf = MBFile.RetrieveFile(username, fileid);
@@ -207,8 +197,6 @@ namespace MasterBox
 
             }
 
-            // Needs to reset manually
-
         }
 
 
@@ -246,10 +234,42 @@ namespace MasterBox
             }
         }
 
-        protected void FolderLinkButton_Command(object sender,EventArgs e)
+        protected void FolderLinkButton_Command(object sender, CommandEventArgs e)
         {
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopup();", true);
+            LinkButton lnk = (LinkButton)sender;
+            bool pass= Convert.ToBoolean(lnk.Attributes["FolderEncryption"]);
+
+            string foldername = lnk.Text;
+            long folderid = Convert.ToInt64(e.CommandArgument.ToString());
+            System.Diagnostics.Debug.WriteLine("Checking: "+pass);
+            if (pass)
+            {                    
+                 MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
+                 LblFolderNamePass.Text = folder.folderName;
+                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
+             
+            }else
+            {
+                FillFileDataFolder(foldername,folderid);
+            }
+        }
+
+        protected void BtnCheckPasswordFolder_Click(object sender, EventArgs e)
+        {
+           MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);         
+           string folderchkingpassword=TxtBoxPassword.Text;
+            if (folder.ValidateFolderPassword(folder, folderchkingpassword))
+            {
+                FillFileDataFolder(folder.folderName, folder.folderid);
+            }else
+            {
+
+            }
+        }
+
+        protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
+        {
 
         }
     }

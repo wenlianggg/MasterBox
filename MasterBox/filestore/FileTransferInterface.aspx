@@ -4,7 +4,13 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server" ID="FileTrfPH">
     <script type="text/javascript">
         function showPopup() {
-            $('#myModal').modal('show');
+            $('#fileModal').modal('show');
+        }   
+        function showPopupFolder(){
+            $('#folderModal').modal('show');
+        }
+        function showPopupPassword() {
+            $('#folderPasswordModal').modal('show');
         }
     </script>
 </asp:Content>
@@ -85,11 +91,11 @@
                     <span>Password: </span>
                     <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
                         TextMode="Password" runat="server" />
-                    <asp:RegularExpressionValidator ID="PassValid" runat="server" 
-                        ControlToValidate="encryptionPass" 
+                    <asp:RegularExpressionValidator ID="PassValid" runat="server"
+                        ControlToValidate="encryptionPass"
                         ValidationGroup="NewFolder" Enabled="true"
-                         ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
-                        ErrorMessage="Password must contain: Minimum 8 characters atleast 1 Alphabet and 1 Number" 
+                        ValidationExpression="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                        ErrorMessage="Password must contain: Minimum 8 characters atleast 1 Alphabet and 1 Number"
                         ForeColor="Red" />
                     <br />
                     <span>Confirm-Password: </span>
@@ -124,60 +130,92 @@
                 <div class="modal-body">
                 </div>
                 <div class="modal-footer">
-                  
                 </div>
             </div>
 
         </div>
     </div>
 
-    <div id="myModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Delete or download?</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>File ID: </span><asp:Label id="LblFileID" runat="server"></asp:Label>
-                        <br />
-                        <span>File Name: </span><asp:Label id="LblFileName" runat="server"></asp:Label>
-                        <br />
-                        <span>File Type: </span><asp:Label id="LblFileType" runat="server"></asp:Label>
-                        <br />
-                        <span>File Size: </span><asp:Label id="LblFileSize" runat="server"></asp:Label>
-                        <br />                       
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="BtnDownload" CssClass="btn btn-default" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command"  />
-                        <asp:Button ID="BtnDelete" CssClass="btn btn-default" OnClientClick="return confirm('Are you sure?');" CommandName="Delete" runat="server" Text="Delete" OnCommand="File_Command" />
-                    </div>
+    <!--Open File Modal -->
+    <div id="fileModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete or download?</h4>
+                </div>
+                <div class="modal-body">
+                    <span>File ID: </span>
+                    <asp:Label ID="LblFileID" runat="server"></asp:Label>
+                    <br />
+                    <span>File Name: </span>
+                    <asp:Label ID="LblFileName" runat="server"></asp:Label>
+                    <br />
+                    <span>File Type: </span>
+                    <asp:Label ID="LblFileType" runat="server"></asp:Label>
+                    <br />
+                    <span>File Size: </span>
+                    <asp:Label ID="LblFileSize" runat="server"></asp:Label>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnDownload" CssClass="btn btn-default" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command" />
+                    <asp:Button ID="BtnDelete" CssClass="btn btn-default" OnClientClick="return confirm('Are you sure?');" CommandName="Delete" runat="server" Text="Delete" OnCommand="File_Command" />
                 </div>
             </div>
-     </div>
+        </div>
+    </div>
 
+
+    <!--Open Folder without password Modal -->
+    <div id="folderModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Folder</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Folder ID: </span>
+                    <asp:Label ID="LblFolderId" runat="server"></asp:Label>
+                    <br />
+                    <span>Folder Name: </span>
+                    <asp:Label ID="LblFolderName" runat="server"></asp:Label>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnOpenFolder" CssClass="btn btn-default" runat="server" Text="Open" />
+                    <asp:Button ID="BtnDeleteFolder" CssClass="btn btn-default" runat="server" Text="Delete" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Open Folder with password Modal -->
     <div id="folderPasswordModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        
-                    </div>
-                    <div class="modal-body">
-                        <span>Folder Name: </span><asp:Label ID="LblFolderName" runat="server"></asp:Label>
-                        <span>Password: </span>
-                        <asp:TextBox ID="TxtBoxPassword" runat="server"></asp:TextBox>
-
-                    </div>
-                    <div class="modal-footer">
-                       <asp:Button ID="BtnCheckPasswordFolder" runat="server" CssClass="btn btn-default" Text="Enter"/>
-                    </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Folder</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Folder Name: </span>
+                    <asp:Label ID="LblFolderNamePass" runat="server"></asp:Label>
+                    <br />
+                    <br />
+                    <span>Password: </span>
+                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnCheckPasswordFolder"  OnClick="BtnCheckPasswordFolder_Click" runat="server" CssClass="btn btn-default" Text="Open" />
+                    <asp:Button ID="BtnDeleteFolderWithPassw" OnClick="BtnDeleteFolderWithPassw_Click" runat="server" CssClass="btn btn-default" Text="Delete" />
                 </div>
             </div>
-     </div>
+        </div>
+    </div>
 
     <div class="MainContent">
-
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
                 <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#PopUp">
@@ -201,19 +239,18 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FileLinkButton" CommandName="ShowPopup" OnCommand="File_Command" CommandArgument='<%# Eval("fileid") %>' runat="server" Text='<%# Eval("filename") %>'></asp:LinkButton>                
+                            <asp:LinkButton ID="FileLinkButton" CommandName="ShowPopup" OnCommand="File_Command" CommandArgument='<%# Eval("fileid") %>' runat="server" Text='<%# Eval("filename") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-
             <br />
 
-            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername">
+            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername,folderencryption">
                 <Columns>
                     <asp:TemplateField HeaderText="Folders">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FolderLinkButton" OnClick="FolderLinkButton_Command" runat="server" Text='<%# Eval("foldername") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FolderLinkButton" OnCommand="FolderLinkButton_Command" runat="server" CommandArgument='<%# Eval("folderid") %>' FolderEncryption='<%# Eval("folderencryption") %>' Text='<%# Eval("foldername") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

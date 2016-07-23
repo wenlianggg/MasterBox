@@ -91,6 +91,7 @@ namespace MasterBox.mbox
         }
 
 
+
         // To generate Key and IV
         public static string FileKeyIvGenerator(int length)
         {
@@ -180,7 +181,7 @@ namespace MasterBox.mbox
         }
 
         // Retrieve to display file from folder
-        public static SqlDataReader GetFileFromFolderToDisplay(string username, int folderid)
+        public static SqlDataReader GetFileFromFolderToDisplay(string username, long folderid)
         {
             User user = User.GetUser(username);
             System.Diagnostics.Debug.WriteLine("Folder ID: "+folderid);

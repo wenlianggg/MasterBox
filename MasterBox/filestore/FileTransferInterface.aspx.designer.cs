@@ -211,6 +211,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnDelete;
         
         /// <summary>
+        /// LblFolderId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderId;
+        
+        /// <summary>
         /// LblFolderName control.
         /// </summary>
         /// <remarks>
@@ -218,6 +227,33 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblFolderName;
+        
+        /// <summary>
+        /// BtnOpenFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnOpenFolder;
+        
+        /// <summary>
+        /// BtnDeleteFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDeleteFolder;
+        
+        /// <summary>
+        /// LblFolderNamePass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderNamePass;
         
         /// <summary>
         /// TxtBoxPassword control.
@@ -236,6 +272,15 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnCheckPasswordFolder;
+        
+        /// <summary>
+        /// BtnDeleteFolderWithPassw control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDeleteFolderWithPassw;
         
         /// <summary>
         /// CreateNewSharedFolder control.
