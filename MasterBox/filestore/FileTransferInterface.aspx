@@ -204,7 +204,7 @@
                     <asp:Label ID="LblFolderNamePass" runat="server"></asp:Label>
                     <br />
                     <span>Password: </span>
-                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>\
+                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>
                     <br />
                 </div>
                 <div class="modal-footer">
