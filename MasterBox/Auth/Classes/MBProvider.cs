@@ -13,8 +13,6 @@ using System.Collections.Generic;
 namespace MasterBox.Auth {
 	public sealed partial class MBProvider : MembershipProvider {
 
-		internal Dictionary<string, int> failedlogins = new Dictionary<string, int>();
-
 		internal int CreateUser(string username, string password) {
 
 			// New salt generation
@@ -42,10 +40,6 @@ namespace MasterBox.Auth {
 			// Clean up all sensitive information
 			ClearSensitiveData();
 			return User.ConvertToId(username);
-		}
-
-		internal bool HasOtp(string username) {
-			throw new NotImplementedException();
 		}
 
 		public override void UpdateUser(MembershipUser user) {
