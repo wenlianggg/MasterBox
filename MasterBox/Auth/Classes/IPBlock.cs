@@ -29,23 +29,23 @@ namespace MasterBox.Auth {
 			return Instance;
 		}
 
-		public void FailedLoginAttempt(string username) {
+		public void FailedLoginAttempt(int userid) {
 			if (_ipFailedLogins == null)
 				_ipFailedLogins = new Dictionary<string, int>();
 			int failedlogins;
 			string ipaddress = GetIP();
 			if (_ipFailedLogins.TryGetValue(ipaddress, out failedlogins)) {
 				// Has entry in IP block list
-				if (failedlogins < 5) {
+				if (_ipFailedLogins[ipaddress] < 5) {
 					// Less the 5 failed login attempts, increment
 					_ipFailedLogins[GetIP()]++;
-				} else if (failedlogins >= 5 && failedlogins < 10) {
+				} else if (_ipFailedLogins[ipaddress] >= 5 && _ipFailedLogins[ipaddress] <= 10) {
 					// More than 5 attempts, ban IP address and name combination, then increment
 					_ipFailedLogins[GetIP()]++;
-					Instance.Create(User.ConvertToId(username), ipaddress, TimeSpan.FromMinutes(15), "IP-User combination blocked for too many failed attempts");
+					Instance.Create(userid, ipaddress, TimeSpan.FromMinutes(15), "You may not login to this user from this IP");
 				} else {
 					// More than 10 attempts, ban IP address entirely, then increment;
-					Instance.Create(ipaddress, TimeSpan.FromHours(1), "IP-User combination blocked for too many failed attempts");
+					Instance.Create(ipaddress, TimeSpan.FromHours(1), "IP blocked for too many failed attempts");
 				}
 			} else {
 				// Add entry to failed login attempts
@@ -146,7 +146,7 @@ namespace MasterBox.Auth {
 				expiry = DateTime.Now.Add(ts.Value);
 			else
 				expiry = DateTime.Now.AddYears(99);
-			IPBlockEntry newipbe = new IPBlockEntry(0, ipaddress, expiry, reason);
+			IPBlockEntry newipbe = new IPBlockEntry(userid, ipaddress, expiry, reason);
 			using (DataAccess da = new DataAccess()) {
 				da.SqlInsertBlockEntry(newipbe);
 			}
@@ -156,7 +156,6 @@ namespace MasterBox.Auth {
 		// TODO: Blocklist removal
 		internal string GetIP() {
 			HttpContext context = HttpContext.Current;
-			HttpBrowserCapabilities browser = HttpContext.Current.Request.Browser;
 			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 			string userIp = "NIL";
 
@@ -173,7 +172,7 @@ namespace MasterBox.Auth {
 				userIp = "127.0.0.1";
 			}
 
-			return browser.Type + " FROM " + userIp;
+			return userIp;
 		}
 	}
 }

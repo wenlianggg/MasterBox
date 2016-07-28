@@ -28,7 +28,7 @@ namespace MasterBox.Auth {
 
 		internal void FailedLoginAttempt(int userid) {
 			string description = "Unsuccessful login attempt";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
                 LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
 			}
@@ -36,7 +36,7 @@ namespace MasterBox.Auth {
 
 		internal void FailedTotpAttempt(int userid) {
 			string description = "Unsuccessful 2FA (TOTP) attempt";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
                 LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
 			}
@@ -44,7 +44,7 @@ namespace MasterBox.Auth {
 
 		internal void FailedTotpChangeAttempt(int userid) {
 			string description = "Unsuccessful 2FA (TOTP) change attempt";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
 				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
 			}
@@ -52,7 +52,7 @@ namespace MasterBox.Auth {
 
 		internal void TotpDisabled(int userid) {
 			string description = "Unsuccessful 2FA (TOTP) disabled";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
 				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
 			}
@@ -60,7 +60,7 @@ namespace MasterBox.Auth {
 
 		internal void UserTotpChanged(int userid) {
 			string description = "2FA (TOTP) key was changed";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
 				LogAuthEntry(userid, GetIP(), description, LogLevel.Changed);
 			}
@@ -88,8 +88,8 @@ namespace MasterBox.Auth {
         }
 
 
-		private void TriggerFailedLogin() {
-			IPBlock.Instance.FailedLoginAttempt(HttpContext.Current.User.Identity.Name);
+		private void TriggerFailedLogin(int userid) {
+			IPBlock.Instance.FailedLoginAttempt(userid);
 		}
 
         internal DataTable GetUserLogs(int userid) {
