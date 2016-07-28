@@ -7,15 +7,63 @@ using System.Web;
 namespace MasterBox.Auth {
 	public class IPBlock {
 
-		private IPBlock _instance;
+		private static volatile IPBlock _instance;
+		private static object syncRoot = new object();
 		private List<IPBlockEntry> bList;
 
-		public IPBlock Instance {
+		private static Dictionary<string, int> _ipFailedLogins;
+
+		public static IPBlock Instance {
 			get {
-				if (_instance == null)
-					_instance = new IPBlock();
+				if (_instance == null) {
+					lock (syncRoot)
+						if (_instance == null)
+							_instance = new IPBlock();
+				}
 				return _instance;
 			}
+		}
+
+		private static IPBlock RefreshInstance() {
+			_instance = null;
+			return Instance;
+		}
+
+		public void FailedLoginAttempt(string username) {
+			if (_ipFailedLogins == null)
+				_ipFailedLogins = new Dictionary<string, int>();
+			int failedlogins;
+			string ipaddress = GetIP();
+			if (_ipFailedLogins.TryGetValue(ipaddress, out failedlogins)) {
+				// Has entry in IP block list
+				if (failedlogins < 5) {
+					// Less the 5 failed login attempts, increment
+					_ipFailedLogins[GetIP()]++;
+				} else if (failedlogins >= 5 && failedlogins < 10) {
+					// More than 5 attempts, ban IP address and name combination, then increment
+					_ipFailedLogins[GetIP()]++;
+					Instance.Create(User.ConvertToId(username), ipaddress, TimeSpan.FromMinutes(15), "IP-User combination blocked for too many failed attempts");
+				} else {
+					// More than 10 attempts, ban IP address entirely, then increment;
+					Instance.Create(ipaddress, TimeSpan.FromHours(1), "IP-User combination blocked for too many failed attempts");
+				}
+			} else {
+				// Add entry to failed login attempts
+				_ipFailedLogins.Add(ipaddress, 1);
+			}
+		}
+
+		// Interface for checking if user is blocked
+		public string CheckUser(string username) {
+			IPBlock ipb = RefreshInstance();
+			if (ipb.Check(GetIP()) != null) {
+				return ipb.Check(GetIP());
+			} else if (ipb.Check(User.ConvertToId(username), GetIP()) != null) {
+				return ipb.Check(User.ConvertToId(username), GetIP());
+			} else if (ipb.Check(User.ConvertToId(username)) != null) {
+				return ipb.Check(User.ConvertToId(username));
+			}
+			return null;
 		}
 
 
@@ -37,30 +85,30 @@ namespace MasterBox.Auth {
 		}
 
 		// Username and IP combination block check
-		internal bool Check(int userid, string ip) {
+		internal string Check(int userid, string ip) {
 			foreach (IPBlockEntry ipbe in bList) {
 				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress.Equals(ip))
-					return true;
+					return ipbe.Reason;
 			}
-			return false;
+			return null;
 		}
 
 		// Username only block check
-		internal bool Check(int userid) {
+		internal string Check(int userid) {
 			foreach (IPBlockEntry ipbe in bList) {
 				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress == null)
-					return true;
+					return ipbe.Reason;
 			}
-			return false;
+			return null;
 		}
 
 		// IP only block check
-		internal bool Check(string ip) {
+		internal string Check(string ip) {
 			foreach (IPBlockEntry ipbe in bList) {
 				if (ipbe.IPAddress.Equals(ip) && ipbe.UserID == 0)
-					return true;
+					return ipbe.Reason;
 			}
-			return false;
+			return null;
 		}
 
 		// Adding to blocklist (IP Address Only)
@@ -71,7 +119,10 @@ namespace MasterBox.Auth {
 			else
 				expiry = DateTime.Now.AddYears(99);
 			IPBlockEntry newipbe = new IPBlockEntry(0, ip, expiry, reason);
-			
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertBlockEntry(newipbe);
+			}
+			RefreshInstance();
 		}
 
 		// Adding to blocklist (User ID Only)
@@ -82,6 +133,10 @@ namespace MasterBox.Auth {
 			else
 				expiry = DateTime.Now.AddYears(99);
 			IPBlockEntry newipbe = new IPBlockEntry(0, expiry: expiry, reason: reason);
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertBlockEntry(newipbe);
+			}
+			RefreshInstance();
 		}
 
 		// Adding to blocklist (User ID and IP address combination)
@@ -92,9 +147,33 @@ namespace MasterBox.Auth {
 			else
 				expiry = DateTime.Now.AddYears(99);
 			IPBlockEntry newipbe = new IPBlockEntry(0, ipaddress, expiry, reason);
+			using (DataAccess da = new DataAccess()) {
+				da.SqlInsertBlockEntry(newipbe);
+			}
+			RefreshInstance();
 		}
-		
-		// TODO: Blocklist removal
 
+		// TODO: Blocklist removal
+		internal string GetIP() {
+			HttpContext context = HttpContext.Current;
+			HttpBrowserCapabilities browser = HttpContext.Current.Request.Browser;
+			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+			string userIp = "NIL";
+
+			if (!string.IsNullOrEmpty(ipAddress)) {
+				string[] addresses = ipAddress.Split(',');
+				if (addresses.Length != 0) {
+					userIp = addresses[0];
+				}
+			} else {
+				userIp = context.Request.ServerVariables["REMOTE_ADDR"];
+			}
+
+			if (userIp.Equals("::1")) {
+				userIp = "127.0.0.1";
+			}
+
+			return browser.Type + " FROM " + userIp;
+		}
 	}
 }

@@ -87,25 +87,9 @@ namespace MasterBox.Auth {
             }
         }
 
-        internal bool IsLoginBlocked() {
-			string ip = GetIP();
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip))
-				if (MBProvider.Instance.failedlogins[ip] > 3)
-					return true;
-				else
-					return false;
-			else
-				return false;
-		}
 
 		private void TriggerFailedLogin() {
-			string ip = GetIP();
-			System.Diagnostics.Debug.WriteLine("Logged failed login");
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip)) {
-				MBProvider.Instance.failedlogins[ip]++;
-			} else {
-				MBProvider.Instance.failedlogins.Add(ip, 0);
-			}
+			IPBlock.Instance.FailedLoginAttempt(HttpContext.Current.User.Identity.Name);
 		}
 
         internal DataTable GetUserLogs(int userid) {
