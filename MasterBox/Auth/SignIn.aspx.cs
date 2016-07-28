@@ -16,8 +16,8 @@ namespace MasterBox.Auth {
 			}
 		}
 		protected void logonClick(object sender, EventArgs e) {
-			if (AuthLogger.Instance.IsLoginBlocked()) {
-				Msg.Text = "Your IP has been blocked for too many failed logins, please contact us.";
+			if (IPBlock.Instance.CheckUser(UserName.Text) != null) {
+				Msg.Text = IPBlock.Instance.CheckUser(UserName.Text);
 				return;
 			}
 			MBProvider mbp = MBProvider.Instance;
@@ -32,7 +32,6 @@ namespace MasterBox.Auth {
 					} else {
 						MBProvider.Instance.LoginSuccess(usr, Persist.Checked);
 					}
-
 				} else {
 					Msg.Text = "Invalid credentials, please try again!";
 				}
