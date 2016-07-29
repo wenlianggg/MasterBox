@@ -200,5 +200,86 @@ namespace MasterBox.Prefs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ChangeFolderPassword;
+        
+        /// <summary>
+        /// DeleteFolderPasswordOptionLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DeleteFolderPasswordOptionLbl;
+        
+        /// <summary>
+        /// DeleteFolderPasswordOption control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DeleteFolderPasswordOption;
+        
+        /// <summary>
+        /// FolderCurrentDeletePasswordLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FolderCurrentDeletePasswordLbl;
+        
+        /// <summary>
+        /// FolderCurrentDeleteTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FolderCurrentDeleteTxtBox;
+        
+        /// <summary>
+        /// CurrentDeleteValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CurrentDeleteValidator;
+        
+        /// <summary>
+        /// CfmCurrentDeleteLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CfmCurrentDeleteLbl;
+        
+        /// <summary>
+        /// CfmCurrentDeleteTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CfmCurrentDeleteTxtBox;
+        
+        /// <summary>
+        /// CurrentCfmDeleteValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CurrentCfmDeleteValidator;
+        
+        /// <summary>
+        /// DeleteFolderPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteFolderPassword;
     }
 }
