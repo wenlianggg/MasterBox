@@ -28,7 +28,7 @@ namespace MasterBox.Auth {
 
 		internal void FailedLoginAttempt(int userid) {
 			string description = "Unsuccessful login attempt";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
                 LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
 			}
@@ -36,9 +36,33 @@ namespace MasterBox.Auth {
 
 		internal void FailedTotpAttempt(int userid) {
 			string description = "Unsuccessful 2FA (TOTP) attempt";
-			TriggerFailedLogin();
+			TriggerFailedLogin(userid);
 			using (DataAccess da = new DataAccess()) {
                 LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
+			}
+		}
+
+		internal void FailedTotpChangeAttempt(int userid) {
+			string description = "Unsuccessful 2FA (TOTP) change attempt";
+			TriggerFailedLogin(userid);
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
+			}
+		}
+
+		internal void TotpDisabled(int userid) {
+			string description = "Unsuccessful 2FA (TOTP) disabled";
+			TriggerFailedLogin(userid);
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Security);
+			}
+		}
+
+		internal void UserTotpChanged(int userid) {
+			string description = "2FA (TOTP) key was changed";
+			TriggerFailedLogin(userid);
+			using (DataAccess da = new DataAccess()) {
+				LogAuthEntry(userid, GetIP(), description, LogLevel.Changed);
 			}
 		}
 
@@ -63,25 +87,9 @@ namespace MasterBox.Auth {
             }
         }
 
-        internal bool IsLoginBlocked() {
-			string ip = GetIP();
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip))
-				if (MBProvider.Instance.failedlogins[ip] > 3)
-					return true;
-				else
-					return false;
-			else
-				return false;
-		}
 
-		private void TriggerFailedLogin() {
-			string ip = GetIP();
-			System.Diagnostics.Debug.WriteLine("Logged failed login");
-			if (MBProvider.Instance.failedlogins.ContainsKey(ip)) {
-				MBProvider.Instance.failedlogins[ip]++;
-			} else {
-				MBProvider.Instance.failedlogins.Add(ip, 0);
-			}
+		private void TriggerFailedLogin(int userid) {
+			IPBlock.Instance.FailedLoginAttempt(userid);
 		}
 
         internal DataTable GetUserLogs(int userid) {

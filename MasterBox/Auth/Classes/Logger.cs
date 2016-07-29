@@ -51,7 +51,11 @@ namespace MasterBox.Auth {
             dt.Columns["logip"].ColumnName = "Logged IP";
             dt.Columns["loglevel"].ColumnName = "Severity";
             dt.Columns["logtime"].ColumnName = "Time";
-            return dt;
+			foreach (DataRow dr in dt.Rows) {
+				string newlogtime = ((DateTime) dr["Time"]).ToLocalTime().ToString("d MMM yyyy HH:mm");
+				dr["Time"] = newlogtime;
+			}
+			return dt;
         }
 
         protected string GetIP() {

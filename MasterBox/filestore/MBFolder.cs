@@ -156,6 +156,7 @@ namespace MasterBox.mbox
         {
             // Get User ID
             User user = User.GetUser(oldfolder.folderusername);
+
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid = @folderid", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
@@ -404,6 +405,19 @@ namespace MasterBox.mbox
                 return false;
             }
         }
+
+        // Delete Folder
+        public static void DeleteFolder(long folderid)
+        {
+            SqlCommand cmd = new SqlCommand(
+                   "DELETE FROM mb_folder WHERE folderid=@folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.ExecuteNonQuery();
+        }
+
 
         // Validate Folder Password
         public bool ValidateFolderPassword(MBFolder folder, string folderpassword)

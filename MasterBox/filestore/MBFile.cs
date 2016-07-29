@@ -74,6 +74,24 @@ namespace MasterBox.mbox
             }
         }
 
+        // Delete File
+        public static void DeleteFile(string username, long fileid)
+        {
+            User user = User.GetUser(username);
+                SqlCommand cmd = new SqlCommand(
+                   "DELETE FROM mb_file WHERE fileid=@fileid and userid=@userid", SQLGetMBoxConnection());
+                   cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+                   cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+                   cmd.Prepare();
+
+                   cmd.Parameters["@fileid"].Value = fileid;
+                   cmd.Parameters["@userid"].Value = user.UserId;
+                   cmd.ExecuteNonQuery();      
+                            
+        }
+
+
+
         // To generate Key and IV
         public static string FileKeyIvGenerator(int length)
         {
@@ -96,9 +114,11 @@ namespace MasterBox.mbox
         // AES256 Encryption for file
         private static byte[] EncryptAES256File(MBFile file)
         {
-
             // Convert PT to byte
             byte[] plainbyte = file.filecontent;
+
+            System.Diagnostics.Debug.WriteLine("DB Key: " + file.filekey);
+            System.Diagnostics.Debug.WriteLine("DB IV: " + file.fileiv);
 
             AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
             aes.BlockSize = 128;
@@ -164,7 +184,7 @@ namespace MasterBox.mbox
         }
 
         // Retrieve to display file from folder
-        public static SqlDataReader GetFileFromFolderToDisplay(string username, int folderid)
+        public static SqlDataReader GetFileFromFolderToDisplay(string username, long folderid)
         {
             User user = User.GetUser(username);
             System.Diagnostics.Debug.WriteLine("Folder ID: "+folderid);

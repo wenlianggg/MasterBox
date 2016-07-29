@@ -34,7 +34,6 @@ namespace MasterBox.Prefs {
         }
 
         protected void VerifyOTP_Button(object sender, EventArgs e) {
-            // TODO: Logging OTP and password checks
             int input;
             using (OTPTool ot = new OTPTool((string)ViewState["TOTPKey"]))
                 if (MBProvider.Instance.ValidateUser(Context.User.Identity.Name, CurrPw.Text)) {
@@ -42,29 +41,31 @@ namespace MasterBox.Prefs {
                         if (OTPCheck(input, ot)) {
                             MBProvider.Instance.SetTotpSecret(Context.User.Identity.Name, ot.SecretBase32);
                             Msg.ForeColor = System.Drawing.Color.Green;
-                            Msg.Text = "2nd Factor Authentication has been enabled";
+                            Msg.Text = "2nd Factor Authentication has been enabled/changed ";
                             Response.Redirect(Request.RawUrl);
                         }
                         else {
+							AuthLogger.Instance.FailedTotpAttempt(Auth.User.ConvertToId(Context.User.Identity.Name));
                             Msg.Text = "Invalid OTP Entered, please try again.";
                             OTPVal.Text = "";
                         }
                     }
-                }
-                else {
-                    Msg.Text = "Current password is incorrect.";
+                } else {
+					AuthLogger.Instance.FailedTotpChangeAttempt(Auth.User.ConvertToId(Context.User.Identity.Name));
+					Msg.Text = "Current password is incorrect.";
                     CurrPw.Text = "";
                 }
         }
 
         protected void DisableTOTP_Button(object sender, EventArgs e) {
-            // TODO: Logging OTP and password checks
             if (MBProvider.Instance.ValidateUser(Context.User.Identity.Name, CurrPw.Text)) {
                 MBProvider.Instance.SetTotpSecret(Context.User.Identity.Name, null);
-                Msg.Text = "2nd Factor Authentication has been disabled";
+				AuthLogger.Instance.TotpDisabled(Auth.User.ConvertToId(Context.User.Identity.Name));
+				Msg.Text = "2nd Factor Authentication has been disabled";
                 Response.Redirect(Request.RawUrl);
             } else {
-                Msg.Text = "Current password is incorrect";
+				AuthLogger.Instance.FailedTotpChangeAttempt(Auth.User.ConvertToId(Context.User.Identity.Name));
+				Msg.Text = "Current password is incorrect";
                 CurrPw.Text = "";
             }
         }

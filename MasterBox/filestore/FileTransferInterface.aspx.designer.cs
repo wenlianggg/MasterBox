@@ -112,15 +112,6 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox encryptionPass;
         
         /// <summary>
-        /// PasswordValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordValidator;
-        
-        /// <summary>
         /// PassValid control.
         /// </summary>
         /// <remarks>
@@ -166,49 +157,130 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button NewFolder;
         
         /// <summary>
-        /// FileID control.
+        /// LblFileID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FileID;
+        protected global::System.Web.UI.WebControls.Label LblFileID;
         
         /// <summary>
-        /// FileName control.
+        /// LblFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FileName;
+        protected global::System.Web.UI.WebControls.Label LblFileName;
         
         /// <summary>
-        /// FileSize control.
+        /// LblFileType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FileSize;
+        protected global::System.Web.UI.WebControls.Label LblFileType;
         
         /// <summary>
-        /// DownloadSelectFile control.
+        /// LblFileSize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DownloadSelectFile;
+        protected global::System.Web.UI.WebControls.Label LblFileSize;
         
         /// <summary>
-        /// DeleteSelectFile control.
+        /// BtnDownload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DeleteSelectFile;
+        protected global::System.Web.UI.WebControls.Button BtnDownload;
+        
+        /// <summary>
+        /// BtnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDelete;
+        
+        /// <summary>
+        /// LblFolderId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderId;
+        
+        /// <summary>
+        /// LblFolderName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderName;
+        
+        /// <summary>
+        /// BtnOpenFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnOpenFolder;
+        
+        /// <summary>
+        /// BtnDeleteFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDeleteFolder;
+        
+        /// <summary>
+        /// LblFolderNamePass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderNamePass;
+        
+        /// <summary>
+        /// TxtBoxPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtBoxPassword;
+        
+        /// <summary>
+        /// BtnCheckPasswordFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCheckPasswordFolder;
+        
+        /// <summary>
+        /// BtnDeleteFolderWithPassw control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDeleteFolderWithPassw;
         
         /// <summary>
         /// CreateNewSharedFolder control.

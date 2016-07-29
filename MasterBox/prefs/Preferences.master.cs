@@ -5,10 +5,19 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Threading;
 
 namespace MasterBox.Prefs {
     public partial class Prefs : System.Web.UI.MasterPage {
         protected void Page_Load(object sender, EventArgs e) {
+
+			if (Auth.User.GetUser(Context.User.Identity.Name).IsAdmin) {
+				adminpanel.Visible = true;
+			} else {
+				adminpanel.Visible = true;
+				adminpanel.InnerText = "ACP Inaccessible!";
+			}
+
 			switch (Path.GetFileName(Request.Url.ToString())) {
 				case "prefgeneral":
 					prefgeneral.Attributes.Add("class", "currentpage");
@@ -31,9 +40,17 @@ namespace MasterBox.Prefs {
 				case "preflogs":
 					preflogs.Attributes.Add("class", "currentpage");
 					break;
+				case "ipblocking":
+				case "usermgmt":
+				case "sendmail":
+					adminpanel.Attributes.Add("class", "currentpage");
+					break;
 				default:
 					break;
+
+
 			}
+
 
 		}
     }
