@@ -95,7 +95,7 @@
                     <asp:Label runat="server" ID="itemId"></asp:Label>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button runat="server" class="btn btn-default" Text="Buy"/>
+                    <asp:Button runat="server" class="btn btn-default" Text="Submit" OnClick="SubmitOTP"/>
                 </div>
             </div>
 

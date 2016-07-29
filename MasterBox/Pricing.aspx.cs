@@ -48,6 +48,7 @@ namespace MasterBox
             itemAmount.Text ="20";
             currencyCode.Text = "SGD";
             itemId.Text = buttonclicked.Attributes["ItemID"];
+
             /*
             int storageOpted;
             if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
@@ -70,6 +71,11 @@ namespace MasterBox
                // Response.Redirect(ppHref.ToString(), true);
             }
             */
+        }
+
+        protected void SubmitOTP(object sender, EventArgs e)
+        {
+
         }
     }
  }
