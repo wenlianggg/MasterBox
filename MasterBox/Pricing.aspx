@@ -31,8 +31,10 @@
                                 ItemSize="10"
                                 ItemID="UK3FFRB96SXZJ"
                                 runat="server"
-                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click"/></td>
+                                ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" 
+                                CommandName="PopUpModal"
+                                OnCommand="PayPalBtn10MB_Command"
+                               /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
                             <a id="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
@@ -42,7 +44,7 @@
                                 ItemID="VDDFG6SSMYVLC"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td>
+                                /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
                             <a id="LoginLink3" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
@@ -52,7 +54,7 @@
                                 ItemID="M66YBRV8N2NBU"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td>
+                                /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
                             <a id="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
@@ -62,7 +64,7 @@
                                 ItemID="E3SP9YWU962SQ"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" />
+                                 />
                         </td>
                     </tr>
                 </table>
@@ -82,20 +84,19 @@
                 </div>
                 <div class="modal-body">
                     <asp:TextBox runat="server" class="OTPValue"></asp:TextBox>
+                    <br />                    
+                    <asp:Label runat="server" ID="businesslbl"></asp:Label>
                     <br />
-                    
-                    <asp:Label runat="server" ID="business"></asp:Label>
+                    <asp:Label runat="server" ID="itemNamelbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="itemName"></asp:Label>
+                    <asp:Label runat="server" ID="itemAmountlbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="itemAmount"></asp:Label>
+                    <asp:Label runat="server" ID="currencyCodelbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="currencyCode"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" ID="itemId"></asp:Label>
+                    <asp:Label runat="server" ID="itemIdlbl"></asp:Label>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button runat="server" class="btn btn-default" Text="Submit" OnClick="SubmitOTP"/>
+                    <asp:Button runat="server" class="btn btn-default" Text="Submit" OnCommand="PayPalBtn10MB_Command" CommandName="PayForMember"/>
                 </div>
             </div>
 

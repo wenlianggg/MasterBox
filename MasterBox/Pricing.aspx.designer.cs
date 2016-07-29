@@ -85,48 +85,48 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.ImageButton PayPalBtn30MB;
         
         /// <summary>
-        /// business control.
+        /// businesslbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label business;
+        protected global::System.Web.UI.WebControls.Label businesslbl;
         
         /// <summary>
-        /// itemName control.
+        /// itemNamelbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label itemName;
+        protected global::System.Web.UI.WebControls.Label itemNamelbl;
         
         /// <summary>
-        /// itemAmount control.
+        /// itemAmountlbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label itemAmount;
+        protected global::System.Web.UI.WebControls.Label itemAmountlbl;
         
         /// <summary>
-        /// currencyCode control.
+        /// currencyCodelbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label currencyCode;
+        protected global::System.Web.UI.WebControls.Label currencyCodelbl;
         
         /// <summary>
-        /// itemId control.
+        /// itemIdlbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label itemId;
+        protected global::System.Web.UI.WebControls.Label itemIdlbl;
     }
 }
