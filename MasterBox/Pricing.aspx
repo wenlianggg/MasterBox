@@ -26,7 +26,9 @@
                                 ItemID="UK3FFRB96SXZJ"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td>
+                                OnClick="PayPalBtn_Click"
+                                data-toggle="modal" 
+                                data-target="#myModal"/></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
                         <a ID="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                           <asp:ImageButton
