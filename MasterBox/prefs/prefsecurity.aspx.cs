@@ -37,7 +37,15 @@ namespace MasterBox.Prefs
             if (folder.FolderPasswordSettings(folder, folderpassword,true))
             {
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password has been created!" + "')</script>");
-                
+                // Refresh list of folders
+                NewFolderPasswordOption.DataSource = MBFolder.GenerateUnencryptedFolderLocation(Context.User.Identity.Name);
+                NewFolderPasswordOption.DataBind();
+
+                ChangeFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                ChangeFolderPasswordOption.DataBind();
+
+                DeleteFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                DeleteFolderPasswordOption.DataBind();
             } else
             {
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password creation failed!" + "')</script>");
@@ -56,6 +64,15 @@ namespace MasterBox.Prefs
                if(folder.FolderPasswordSettings(folder, newpassword,true))
                 {
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password has been changed!" + "')</script>");
+                    // Refresh list of folders
+                    NewFolderPasswordOption.DataSource = MBFolder.GenerateUnencryptedFolderLocation(Context.User.Identity.Name);
+                    NewFolderPasswordOption.DataBind();
+
+                    ChangeFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                    ChangeFolderPasswordOption.DataBind();
+
+                    DeleteFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                    DeleteFolderPasswordOption.DataBind();
                 }
                 else
                 {
@@ -70,6 +87,31 @@ namespace MasterBox.Prefs
         protected void DeleteFolderPassword_Click(object sender, EventArgs e)
         {
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, ChangeFolderPasswordOption.SelectedValue);
+            string oldpassword = FolderCurrentDeleteTxtBox.Text;
+            if (folder.ValidateFolderPassword(folder, oldpassword))
+            {
+                if (folder.FolderPasswordSettings(folder, "", true))
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password has been changed!" + "')</script>");
+                    // Refresh list of folders
+                    NewFolderPasswordOption.DataSource = MBFolder.GenerateUnencryptedFolderLocation(Context.User.Identity.Name);
+                    NewFolderPasswordOption.DataBind();
+
+                    ChangeFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                    ChangeFolderPasswordOption.DataBind();
+
+                    DeleteFolderPasswordOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(Context.User.Identity.Name);
+                    DeleteFolderPasswordOption.DataBind();
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password change failed!" + "')</script>");
+                }
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Wrong password, try again!" + "')</script>");
+            }
         }
     }
 }
