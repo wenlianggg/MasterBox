@@ -40,9 +40,15 @@ namespace MasterBox
 
         protected void PayPalBtn_Click(object sender, ImageClickEventArgs e)
         {
-             ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
-
-           /* ImageButton buttonclicked = (ImageButton)sender;
+            ImageButton buttonclicked = (ImageButton)sender;
+            System.Diagnostics.Debug.WriteLine("Hello this is running");
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+            business.Text = "VY34CAC6JZ6LU";
+            itemName.Text = 100 + " MB";
+            itemAmount.Text ="20";
+            currencyCode.Text = "SGD";
+            itemId.Text = buttonclicked.Attributes["ItemID"];
+            /*
             int storageOpted;
             if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
             {

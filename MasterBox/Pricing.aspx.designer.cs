@@ -85,12 +85,48 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.ImageButton PayPalBtn30MB;
         
         /// <summary>
-        /// values control.
+        /// business control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label values;
+        protected global::System.Web.UI.WebControls.Label business;
+        
+        /// <summary>
+        /// itemName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemName;
+        
+        /// <summary>
+        /// itemAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemAmount;
+        
+        /// <summary>
+        /// currencyCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label currencyCode;
+        
+        /// <summary>
+        /// itemId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label itemId;
     }
 }

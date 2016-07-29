@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         function showPopup() {
-            $('#mymodal').modal('show');
+            $('#myModal').modal('show');
         }
     </script>
     <div class="aboutHeadline">
@@ -82,11 +82,19 @@
                 </div>
                 <div class="modal-body">
                     <asp:TextBox runat="server" class="OTPValue"></asp:TextBox>
-                    <asp:Label runat="server" ID="values"></asp:Label>
+                    <br />
+                    <asp:Label runat="server" ID="business"></asp:Label>
+                    <br />
+                    <asp:Label runat="server" ID="itemName"></asp:Label>
+                    <br />
+                    <asp:Label runat="server" ID="itemAmount"></asp:Label>
+                    <br />
+                    <asp:Label runat="server" ID="currencyCode"></asp:Label>
+                    <br />
+                    <asp:Label runat="server" ID="itemId"></asp:Label>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button runat="server" class="btn btn-default" data-dismiss="modal" Text = "Close"/>
-                    <asp:Button runat="server" class="btn btn-default" data-submit="modal" Text = "Open"/>
+                    <asp:Button runat="server" class="btn btn-default" Text="Buy"/>
                 </div>
             </div>
 
