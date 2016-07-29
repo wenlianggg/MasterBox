@@ -11,7 +11,7 @@ namespace MasterBox
 {
     public partial class Pricing : Page
     {
-    
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Context.User.Identity.IsAuthenticated)
@@ -40,9 +40,12 @@ namespace MasterBox
 
         protected void PayPalBtn_Click(object sender, ImageClickEventArgs e)
         {
-            ImageButton buttonclicked = (ImageButton)sender;
+             ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+
+           /* ImageButton buttonclicked = (ImageButton)sender;
             int storageOpted;
-            if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted)) {
+            if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
+            {
                 string business = "VY34CAC6JZ6LU";
                 string itemName = storageOpted + " MB";
                 double itemAmount = 20.00 * storageOpted;
@@ -58,10 +61,9 @@ namespace MasterBox
                 ppHref.Append("&currency_code=" + currencyCode);
                 ppHref.Append("&item_id=" + itemId);
 
-                Response.Redirect(ppHref.ToString(), true);
+               // Response.Redirect(ppHref.ToString(), true);
             }
+            */
         }
-
-       
     }
-}
+ }

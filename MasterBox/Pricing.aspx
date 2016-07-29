@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="MasterBox Pricing" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pricing.aspx.cs" Inherits="MasterBox.Pricing" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script>
+        function showPopup() {
+            $('#mymodal').modal('show');
+        }
+    </script>
     <div class="aboutHeadline">
         <h1 class="seizure">Pricing Plans</h1>
         <hr class="aboutHR" />
@@ -18,36 +23,40 @@
                         <th>30MB</th>
                     </tr>
                     <tr class="tableData">
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
-                        <a id="ThisLogin" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
-                          <asp:ImageButton
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                            <br />
+                            <a id="ThisLogin" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                            <asp:ImageButton
                                 ID="PayPalBtn10MB"
                                 ItemSize="10"
                                 ItemID="UK3FFRB96SXZJ"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                OnClick="PayPalBtn_Click" /></td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
-                        <a ID="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
-                          <asp:ImageButton
+                                OnClick="PayPalBtn_Click"/></td>
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                            <br />
+                            <a id="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                            <asp:ImageButton
                                 ID="PayPalBtn15MB"
                                 ItemSize="15"
                                 ItemID="VDDFG6SSMYVLC"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
                                 OnClick="PayPalBtn_Click" /></td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
-                          <a ID="LoginLink3" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
-                          <asp:ImageButton
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                            <br />
+                            <a id="LoginLink3" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                            <asp:ImageButton
                                 ID="PayPalBtn20MB"
                                 ItemSize="20"
                                 ItemID="M66YBRV8N2NBU"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
                                 OnClick="PayPalBtn_Click" /></td>
-                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br /><br />
-                        <a ID="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
-                        <asp:ImageButton
+                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                            <br />
+                            <a id="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
+                            <asp:ImageButton
                                 ID="PayPalBtn30MB"
                                 ItemSize="30"
                                 ItemID="E3SP9YWU962SQ"
@@ -59,5 +68,28 @@
                 </table>
             </div>
         </div>
-    </div>          
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Please enter your OTP to continue</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:TextBox runat="server" class="OTPValue"></asp:TextBox>
+                    <asp:Label runat="server" ID="values"></asp:Label>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button runat="server" class="btn btn-default" data-dismiss="modal" Text = "Close"/>
+                    <asp:Button runat="server" class="btn btn-default" data-submit="modal" Text = "Open"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </asp:Content>
