@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="MasterBox Pricing" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pricing.aspx.cs" Inherits="MasterBox.Pricing" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script>
+        function showPopup() {
+            $('#mymodal').modal('show');
+        }
+    </script>
     <div class="aboutHeadline">
         <h1 class="seizure">Pricing Plans</h1>
         <hr class="aboutHR" />
@@ -27,8 +32,7 @@
                                 ItemID="UK3FFRB96SXZJ"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
-                                data-toggle="modal"
-                                data-target="#myModal"/></td>
+                                OnClick="PayPalBtn_Click"/></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
                             <a id="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
@@ -78,10 +82,11 @@
                 </div>
                 <div class="modal-body">
                     <asp:TextBox runat="server" class="OTPValue"></asp:TextBox>
+                    <asp:Label runat="server" ID="values"></asp:Label>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-default" data-submit="modal">Submit</button>
+                    <asp:Button runat="server" class="btn btn-default" data-dismiss="modal" Text = "Close"/>
+                    <asp:Button runat="server" class="btn btn-default" data-submit="modal" Text = "Open"/>
                 </div>
             </div>
 
