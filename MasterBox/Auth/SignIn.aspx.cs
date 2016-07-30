@@ -14,7 +14,6 @@ namespace MasterBox.Auth {
 			if (User.Identity.IsAuthenticated) {
 				Response.Redirect("~/Default.aspx");
 			}
-			Msg.Text = "Please Login...";
 		}
 		protected void logonClick(object sender, EventArgs e) {
 			if (IPBlock.Instance.CheckUser(UserName.Text) != null) {

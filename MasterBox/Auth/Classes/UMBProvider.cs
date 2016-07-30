@@ -9,24 +9,8 @@ using System.Web.Security;
 namespace MasterBox.Auth {
 
 	public sealed partial class MBProvider : MembershipProvider {
-		
-		// Unimplemented methods and Singleton Design Pattern
-		private static volatile MBProvider _instance;
-		private static object syncRoot = new object();
-
-		private MBProvider() { }
-
-		public static MBProvider Instance {
-			get {
-				if (_instance == null) {
-					lock (syncRoot)
-						if (_instance == null)
-							_instance = new MBProvider();
-				}
-				return _instance;
-			}
-		}
-
+	
+		// Non fully implemented methods
 		public override string ApplicationName {
 			get { return "MasterBox"; }
 			set { return; }

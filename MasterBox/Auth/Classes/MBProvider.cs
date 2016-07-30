@@ -13,6 +13,22 @@ using System.Collections.Generic;
 namespace MasterBox.Auth {
 	public sealed partial class MBProvider : MembershipProvider {
 
+		private static volatile MBProvider _instance;
+		private static object syncRoot = new object();
+
+		private MBProvider() { }
+
+		public static MBProvider Instance {
+			get {
+				if (_instance == null) {
+					lock (syncRoot)
+						if (_instance == null)
+							_instance = new MBProvider();
+				}
+				return _instance;
+			}
+		}
+
 		internal int CreateUser(string username, string password) {
 
 			// New salt generation
@@ -48,8 +64,8 @@ namespace MasterBox.Auth {
 		}
 
 		public override bool ValidateUser(string username, string password) {
-			if (username.Equals("bypass")) // If is without SQL connection
-				return true;
+			// if (username.Equals("bypass")) // If is without SQL connection
+			// 	return true;
 			using (DataAccess da = new DataAccess())
 			using (SqlDataReader sqldr = da.SqlGetAuth(username))
 				if (sqldr.Read()) {
