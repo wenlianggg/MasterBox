@@ -11,7 +11,7 @@ namespace MasterBox
 {
     public partial class Pricing : Page
     {
-    
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Context.User.Identity.IsAuthenticated)
@@ -38,30 +38,44 @@ namespace MasterBox
             }
         }
 
-        protected void PayPalBtn_Click(object sender, ImageClickEventArgs e)
+        protected void PayPalBtn10MB_Command(object sender, CommandEventArgs e)
         {
             ImageButton buttonclicked = (ImageButton)sender;
-            int storageOpted;
-            if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted)) {
-                string business = "VY34CAC6JZ6LU";
-                string itemName = storageOpted + " MB";
-                double itemAmount = 20.00 * storageOpted;
-                string currencyCode = "SGD";
-                string itemId = buttonclicked.Attributes["ItemID"];
+            businesslbl.Text = "VY34CAC6JZ6LU";
+            itemNamelbl.Text = 100 + " MB";
+            itemAmountlbl.Text = "20";
+            currencyCodelbl.Text = "SGD";
+            itemIdlbl.Text = buttonclicked.Attributes["ItemID"];
 
-                StringBuilder ppHref = new StringBuilder();
+            switch (e.CommandName)
+            {
+                case "PopUpModal":
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    break;
+                case "PayForMember":
+                    int storageOpted;
+                    if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
+                    {
+                        string business = businesslbl.Text;
+                        string itemName = itemNamelbl.Text;
+                        double itemAmount = 20;
+                        string currencyCode = currencyCodelbl.Text;
+                        string itemId = itemIdlbl.Text;
 
-                ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-                ppHref.Append("&business=" + business);
-                ppHref.Append("&item_name=" + itemName);
-                ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-                ppHref.Append("&currency_code=" + currencyCode);
-                ppHref.Append("&item_id=" + itemId);
+                        StringBuilder ppHref = new StringBuilder();
 
-                Response.Redirect(ppHref.ToString(), true);
+                        ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
+                        ppHref.Append("&business=" + business);
+                        ppHref.Append("&item_name=" + itemName);
+                        ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
+                        ppHref.Append("&currency_code=" + currencyCode);
+                        ppHref.Append("&item_id=" + itemId);
+
+                        // Response.Redirect(ppHref.ToString(), true);
+                    }
+                    break;
+
             }
         }
-
-       
     }
-}
+ }

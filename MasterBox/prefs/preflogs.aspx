@@ -31,7 +31,7 @@
             <asp:Button ID="RefreshTransact"
             Text="Transaction Logs"
             CssClass="btn btn-default"
-            OnClick="RefreshFilesTable"
+            OnClick="RefreshTransactTable"
             runat="server" />
         </div>
     </div>

@@ -117,6 +117,9 @@ namespace MasterBox.mbox
             // Convert PT to byte
             byte[] plainbyte = file.filecontent;
 
+            System.Diagnostics.Debug.WriteLine("DB Key: " + file.filekey);
+            System.Diagnostics.Debug.WriteLine("DB IV: " + file.fileiv);
+
             AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
             aes.BlockSize = 128;
             aes.KeySize = 256;

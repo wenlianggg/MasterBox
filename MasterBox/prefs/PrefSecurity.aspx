@@ -92,6 +92,47 @@
         </div>
     </div>
 
+     <div id="FolderDeletePass" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete Folder Password Option</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:Label ID="DeleteFolderPasswordOptionLbl" runat="server" Text="Choose Folder: "></asp:Label>
+                    <asp:DropDownList ID="DeleteFolderPasswordOption" CssClass="form-control" runat="server">
+                    </asp:DropDownList>
+                    <br />
+                    <br />
+                    <asp:Label ID="FolderCurrentDeletePasswordLbl" runat="server" Text="Current Password: "></asp:Label>
+                    <asp:TextBox ID="FolderCurrentDeleteTxtBox" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="CurrentDeleteValidator" runat="server"
+                            ValidationGroup="FolderPasswordDeleteValidation"
+                            ValidateEmptyText="true"
+                            ControlToValidate="FolderCurrentDeleteTxtBox"
+                            ErrorMessage="Cannot be empty"
+                            ForeColor="Red">
+                        </asp:RequiredFieldValidator>
+                    <br />
+                    <asp:Label ID="CfmCurrentDeleteLbl" runat="server" Text="Confirm Password: "></asp:Label>                    
+                    <asp:TextBox ID="CfmCurrentDeleteTxtBox" TextMode="Password" runat="server" CssClass="pwdfield form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="CurrentCfmDeleteValidator" runat="server"
+                        ValidationGroup="FolderPasswordDeleteValidation"
+                        ValidateEmptyText="true"
+                        ControlToValidate="CfmCurrentDeleteTxtBox"
+                        ErrorMessage="Cannot be empty"
+                        ForeColor="Red" >
+                    </asp:RequiredFieldValidator>
+                </div>
+                <div class="modal-footer">
+                 <asp:Button ID="DeleteFolderPassword" runat="server" ValidationGroup="FolderPasswordDeleteValidation" Text="Change Password" OnClick="DeleteFolderPassword_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="Setting_Profile">
 		<div class="page-header">
 			<h1><%: Page.Title %>
