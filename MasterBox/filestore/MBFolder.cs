@@ -214,7 +214,7 @@ namespace MasterBox.mbox
         }
 
         // Files in folder Blowfish448 Decryption
-        private static byte[] DecryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
+        public static byte[] DecryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
             // Declare Blowfish
             BlowFish b = new BlowFish(key);

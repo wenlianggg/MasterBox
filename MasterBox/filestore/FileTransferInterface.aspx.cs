@@ -21,7 +21,6 @@ namespace MasterBox
 
             if (!IsPostBack)
             {
-
                 // Fill up file and folder data on the display
                 FillDataFile();
                 FillDataFolder();
@@ -29,8 +28,6 @@ namespace MasterBox
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
-
-
             }
 
         }
@@ -65,7 +62,6 @@ namespace MasterBox
             SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
             dtFolderFile.Load(reader);
 
-
             GridView1.DataSource = dtFolderFile;
             GridView1.DataBind();
 
@@ -73,7 +69,7 @@ namespace MasterBox
 
 
         // Download Files from Master Folder     
-        private void DownloadFileContent(string username, long fileid)
+        private void DownloadFileContent(string username, long fileid,long folderid=0)
         {
             MBFile mbf = MBFile.RetrieveFile(username, fileid);
             Response.ClearContent();
@@ -86,16 +82,8 @@ namespace MasterBox
             Response.Close();
         }
 
-        // Download file from folders
-        protected void DownloadFolderFile(object sender, EventArgs e)
-        {
-            LinkButton lnk = (LinkButton)sender;
-            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
-            DownloadFolderFile(Context.User.Identity.Name, Int32.Parse(lnk.Attributes["FileID"]), Int32.Parse(lnk.Attributes["FolderID"]));
 
-        }
-
-        private void DownloadFolderFile(string username, int id, int folderid)
+        private void DownloadFolderFile(string username, long id, long folderid)
         {
             MBFile mbf = MBFolder.RetrieveFolderFile(username, id, folderid);
             Response.ClearContent();
@@ -196,20 +184,24 @@ namespace MasterBox
         {
             string command = e.CommandName;
             MBFile file;
-
+            
             switch (command)
             {
+
                 case "ShowPopup":
-                    System.Diagnostics.Debug.WriteLine("Running");
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
-                    System.Diagnostics.Debug.WriteLine("FileID: " + fileid);
                     file = MBFile.RetrieveFile(Context.User.Identity.Name, fileid);
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
                     LblFileSize.Text = file.fileSize.ToString();
 
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
+                    break;
+
+                case "Download":
+                    System.Diagnostics.Debug.WriteLine("Downloading");
+                    DownloadFileContent(Context.User.Identity.Name, Convert.ToInt64(LblFileID.Text));
                     break;
 
                 case "Delete":
@@ -218,15 +210,92 @@ namespace MasterBox
                     FillDataFile();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted!" + "')</script>");
                     break;
+                
+            }
+        }
 
-                case "Download":
-                    System.Diagnostics.Debug.WriteLine("Downloading");
-                    DownloadFileContent(Context.User.Identity.Name, Convert.ToInt64(LblFileID.Text));
-
+        protected void FileFolder_Command(object sender, CommandEventArgs e)
+        {
+            string command = e.CommandName;
+            long folderid = Convert.ToInt64(LblFolderID.Text);
+            
+            MBFile file;
+            MBFolder folder=MBFolder.GetFolder(Context.User.Identity.Name,folderid);
+            switch (command)
+            {
+                
+                case "OpenFolderFile":
+                    long fileid = Convert.ToInt64(e.CommandArgument.ToString());
+                    System.Diagnostics.Debug.WriteLine("File ID: "+fileid);
+                    file = MBFolder.RetrieveFolderFile(Context.User.Identity.Name, fileid,folderid);
+                    LblFolderFileId.Text = fileid.ToString();
+                    LblFolderFileName.Text = file.fileName;
+                    LblFolderFileType.Text = file.fileType;
+                    LblFolderFileSize.Text = file.fileSize.ToString();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfileModal", "showPopupFolderFile();", true);
+                    break;
+                case "DownloadFolderFile":                   
+                    DownloadFolderFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text), folder.folderid);
+                    break;
+                case "DeleteFolderFile":
+                    MBFile.DeleteFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text));
+                    FillFileDataFolder(folder.folderName,folder.folderid);
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted!" + "')</script>");
                     break;
             }
         }
 
+        protected void BtnFolderWithoutPass_Command(object sender, CommandEventArgs e)
+        {
+            string command = e.CommandName;
+            string foldername = LblFolderName.Text;
+            long folderid = Convert.ToInt64(LblFolderID.Text);
+
+            switch (command)
+            {
+                case "OpenFolder":
+                    FillFileDataFolder(foldername,folderid);
+                    break;
+                case "DeleteFolder":
+                    System.Diagnostics.Debug.WriteLine("Delete folder");
+                    
+                    break;
+            }
+        }
+        protected void BtnFolderWithPass_Command(object sender, CommandEventArgs e)
+        {
+            string command = e.CommandName;
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
+            string folderchkingpassword = TxtBoxPassword.Text;
+            switch (command)
+            {
+                case "OpenFolder":                  
+                    if (folder.ValidateFolderPassword(folder, folderchkingpassword))
+                    {
+                        // Update data table
+                        FillFileDataFolder(folder.folderName, folder.folderid);
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Password Status", "<script language='javascript'>alert('" + "Wrong Password, try again!" + "')</script>");
+
+                    }
+                    break;
+                case "DeleteFolder":
+                    if (folder.ValidateFolderPassword(folder, folderchkingpassword))
+                    {
+                        //delete folder
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Password Status", "<script language='javascript'>alert('" + "Wrong Password, try again!" + "')</script>");
+
+                    }
+                    break;
+            }
+        }
+
+       
         protected void FolderLinkButton_Command(object sender, CommandEventArgs e)
         {
 
@@ -235,39 +304,29 @@ namespace MasterBox
 
             string foldername = lnk.Text;
             long folderid = Convert.ToInt64(e.CommandArgument.ToString());
-            System.Diagnostics.Debug.WriteLine("Checking: " + pass);
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             if (pass)
-            {
-                MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
+            {                
                 LblFolderNamePass.Text = folder.folderName;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
 
             }
             else
             {
-                FillFileDataFolder(foldername, folderid);
+                LblFolderName.Text= folder.folderName;
+                LblFolderID.Text = folderid.ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderModal", "showPopupFolder();", true);
             }
         }
 
-        protected void BtnCheckPasswordFolder_Click(object sender, EventArgs e)
-        {
-            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
-            string folderchkingpassword = TxtBoxPassword.Text;
-            if (folder.ValidateFolderPassword(folder, folderchkingpassword))
-            {
-                FillFileDataFolder(folder.folderName, folder.folderid);
-            }
-            else
-            {
-                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Password Status", "<script language='javascript'>alert('" + "Wrong Password, try again!" + "')</script>");
-
-            }
-        }
+    
 
         protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
         {
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
             MBFolder.DeleteFolder(folder.folderid);
         }
+
+       
     }
 }
