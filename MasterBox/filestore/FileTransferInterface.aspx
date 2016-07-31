@@ -235,7 +235,7 @@
                 <h1>Files</h1>
             </div>
 
-            <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
+            <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename" ShowHeaderWhenEmpty="True">
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
