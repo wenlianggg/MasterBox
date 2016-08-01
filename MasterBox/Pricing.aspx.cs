@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -38,44 +39,55 @@ namespace MasterBox
             }
         }
 
-        protected void PayPalBtn10MB_Command(object sender, CommandEventArgs e)
+        protected void PayPalBtn_Command(object sender, CommandEventArgs e)
         {
-            ImageButton buttonclicked = (ImageButton)sender;
-            businesslbl.Text = "VY34CAC6JZ6LU";
-            itemNamelbl.Text = 100 + " MB";
-            itemAmountlbl.Text = "20";
-            currencyCodelbl.Text = "SGD";
-            itemIdlbl.Text = buttonclicked.Attributes["ItemID"];
-
             switch (e.CommandName)
             {
                 case "PopUpModal":
+                    int storageOpted;
+                    ImageButton buttonclicked = (ImageButton)sender;
+                    if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
+                    {
+                        string business = "VY34CAC6JZ6LU";
+                        string itemName = Convert.ToString(storageOpted);
+                        int itemAmount = 20 * storageOpted;
+                        string itemId = buttonclicked.Attributes["ItemID"];
+
+                        businesslbl.Text = business;
+                        itemNamelbl.Text = itemName + " MB";
+                        itemAmountlbl.Text = Convert.ToString(itemAmount);
+                        itemIdlbl.Text = itemId;
+                    }
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
                     break;
                 case "PayForMember":
-                    int storageOpted;
-                    if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
+                    User usr = Auth.User.GetUser(Context.User.Identity.Name);
+                    if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text).Equals(true))
                     {
-                        string business = businesslbl.Text;
-                        string itemName = itemNamelbl.Text;
-                        double itemAmount = 20;
-                        string currencyCode = currencyCodelbl.Text;
-                        string itemId = itemIdlbl.Text;
-
                         StringBuilder ppHref = new StringBuilder();
+                        int itemAmount = Convert.ToInt32(itemAmountlbl.Text);
+                        string currencyCode = "SGD";
 
+                        //Build Link
                         ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-                        ppHref.Append("&business=" + business);
-                        ppHref.Append("&item_name=" + itemName);
+                        ppHref.Append("&business=" + businesslbl.Text);
+                        ppHref.Append("&item_name=" + itemNamelbl.Text);
                         ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
                         ppHref.Append("&currency_code=" + currencyCode);
-                        ppHref.Append("&item_id=" + itemId);
+                        ppHref.Append("&item_id=" + itemIdlbl.Text);
 
-                        // Response.Redirect(ppHref.ToString(), true);
+                        //Redirect user to payment 
+                        Response.Redirect(ppHref.ToString(), true);
+
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "OTP Entered is Incorrect!" + "')</script>");
+                        Msg.Text = "Entered OTP is incorrect!";
                     }
                     break;
-
             }
         }
+
     }
- }
+}
