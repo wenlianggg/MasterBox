@@ -19,8 +19,8 @@ namespace MasterBox.Auth {
             Random rnd = new Random();
             int iterations = GenerateInt(30, 200, rnd);
             for (int i = 0; i < iterations; i++) {
-                int xcoord = GenerateInt(0, (int) rf.Height, rnd);
-                int ycoord = GenerateInt(0, (int) rf.Width, rnd);
+                int xcoord = GenerateInt(0, (int) rf.Width, rnd);
+                int ycoord = GenerateInt(0, (int) rf.Height, rnd);
                 Color clr = bmp.GetPixel(xcoord, ycoord);
                 Color newclr = Color.FromArgb(clr.R, clr.G, clr.B);
                 bmp.SetPixel(xcoord, ycoord, GetNearRgb(clr.R, clr.B, clr.G, rnd));
@@ -40,7 +40,8 @@ namespace MasterBox.Auth {
                 toBeHashed = ms.ToArray();
             }
             using (SHA512 sha = new SHA512Managed()) {
-                return Convert.ToBase64String(toBeHashed);
+				byte[] hashresult = sha.ComputeHash(toBeHashed);
+                return Convert.ToBase64String(hashresult);
             }
         }
 
