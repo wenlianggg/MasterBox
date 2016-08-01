@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <!--Open File Modal -->
+    <!--Open File in MasterFolder Modal -->
     <div id="fileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -178,7 +178,7 @@
         </div>
     </div>
 
-    <!--Open Folder File Modal -->
+    <!--Open File in Folder Modal -->
     <div id="folderfileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -210,7 +210,7 @@
         </div>
     </div>
 
-     <!--Open File Name Modal -->
+     <!--Open Checking of File Name Modal -->
      <div id="filenameModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">

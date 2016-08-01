@@ -127,7 +127,8 @@ namespace MasterBox
                         }
                     }
                     else
-                    {                     
+                    {     
+                        // Same file name                
                         LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
@@ -136,6 +137,7 @@ namespace MasterBox
                 }
                 else
                 {
+                    
                     string foldername = UploadLocation.SelectedValue;
                     MBFile file = new MBFile();
                     file.fileusername = Context.User.Identity.Name;
@@ -145,15 +147,21 @@ namespace MasterBox
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
                     file.fileSize = FileUpload.PostedFile.ContentLength;
-                    bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
-                    if (uploadfiletofolderstatus == true)
-                    {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
+                    if (MBFile.FilenameCheck(file.fileusername,file.fileName, foldername)) {
+                        bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
+                        if (uploadfiletofolderstatus == true)
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
 
-                    }
-                    else
+                        }
+                        else
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
+                        }
+                    }else
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
+
+
                     }
 
                 }
