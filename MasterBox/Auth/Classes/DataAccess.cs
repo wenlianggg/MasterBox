@@ -218,6 +218,20 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
+        internal List<int> SqlGetAllUserIds() {
+            SqlCommand cmd = new SqlCommand(
+                "SELECT userid FROM mb_users",
+                sqlConn);
+            cmd.Prepare();
+            using (SqlDataReader sqldr = cmd.ExecuteReader()) {
+                List<int> idlist = new List<int>();
+                while(sqldr.Read()) {
+                    idlist.Add((int) sqldr[0]);
+                }
+                return idlist;
+            }
+        }
+
 		internal SqlDataReader SqlGetAuth(string username) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT userid, username, hash, salt, totpsecret, totpbackup FROM mb_users WHERE username = @uname",
