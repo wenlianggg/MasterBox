@@ -13,7 +13,9 @@
 	}
 
 	void Signout_Click(object sender, EventArgs e) {
-
+        FormsAuthentication.SignOut();
+		Session.Abandon();
+		Response.Redirect("~/Auth/signin.aspx");
 	}
 </script>
 

@@ -6,9 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MasterBox.Admin {
-	public partial class SendMail : System.Web.UI.Page {
-		protected void Page_Load(object sender, EventArgs e) {
+    public partial class FileMgmt : System.Web.UI.Page {
+        protected void Page_Load(object sender, EventArgs e) {
 
-		}
-	}
+        }
+    }
 }
