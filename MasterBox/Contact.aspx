@@ -64,31 +64,32 @@
             </div>
         </div>
         -->
-        <table>      
+        <table class="table table-hover table-condensed">     
+            
+            <tr>
+                <td> From </td>
+                <td> <asp:TextBox ID="txtFrom" runat="server" style="Width:100%; border-width:3px;"/> </td>
+            </tr>
+
             <tr>
                 <td> To </td>
-                <td> <asp:TextBox ID="txtToMail" runat="server" /> </td>
+                <td> <asp:TextBox ID="txtToMail" runat="server" style="Width:100%; border-width:3px;" /> </td>
             </tr>
             <tr>
                 <td> Subject </td>
-                <td> <asp:TextBox ID="txtSubject" runat="server" Width="400" /> </td>
+                <td> <asp:TextBox ID="txtSubject" runat="server" style="Width:100%; border-width:3px;" /> </td>
             </tr>
             <tr>
                 <td> Message </td>
-                <td> <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine"
-                                    Width="400px" Height="200px" /></td>
+                <td> <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine" style="Height:200px; Width:100%; border-width:3px;" /></td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" > <asp:Button class="btn btn-default" ID="btnSubmit" runat="server"
+                                       OnClick="btnSubmit_Click" Text="Send" style="Width:20%;"/> </td>
             </tr>
             <tr>
-                <td> &nbsp;</td>
-                <td>
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="2" > <asp:Button ID="btnSubmit" runat="server"
-                                       OnClick="btnSubmit_Click" Text="Send" /> </td>
-            </tr>
-            <tr>
-            <td colspan="2"><asp:Label ID="lblMsg" runat="server" /> </td>
+            <td colspan="2"><asp:Label ID="lblMsg" runat="server" />  </td>
             </tr>                 
         </table>
     </div>
