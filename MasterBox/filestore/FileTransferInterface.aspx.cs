@@ -14,6 +14,7 @@ namespace MasterBox
         DataTable dtFile;
         DataTable dtFolder;
         DataTable dtFolderFile;
+        MBFile tempFile;
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -82,7 +83,7 @@ namespace MasterBox
             Response.Close();
         }
 
-
+        // Download Files from Folder
         private void DownloadFolderFile(string username, long id, long folderid)
         {
             MBFile mbf = MBFolder.RetrieveFolderFile(username, id, folderid);
@@ -110,19 +111,30 @@ namespace MasterBox
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
-                    file.fileSize = FileUpload.PostedFile.ContentLength;
-                    bool uploadStatus = MBFile.UploadNewFile(file);
-                    if (uploadStatus == true)
+                    file.fileSize = FileUpload.PostedFile.ContentLength;                  
+                    if (MBFile.FilenameCheck(Context.User.Identity.Name, Path.GetFileName(FileUpload.FileName)))
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
-                        // Update the file table
-                        FillDataFile();
+                        bool uploadStatus = MBFile.UploadNewFile(file);
+                        if (uploadStatus == true)
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
+                            // Update the file table
+                            FillDataFile();
+                        }
+                        // File cannot be uploaded
+                        else
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
+                        }
                     }
-                    // File cannot be uploaded
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
+                        tempFile = file;
+                        LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
+                        TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
                     }
+                   
                 }
                 else
                 {
@@ -171,12 +183,38 @@ namespace MasterBox
             }
             else
             {
-
-                // Pop up box
+                // Pop up box to ask the person to change
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder name exist" + "')</script>");
 
             }
 
+        }
+
+        // Check file name
+        protected void BtnUploadFolderFile_Click(object sender, EventArgs e)
+        {
+            string value = RdBtnFileName.SelectedValue;
+            if (value == "change")
+            {
+                string currect = LblFileNameCheck.Text;
+                string changed = TxtBoxFileNameCheck.Text;
+                if (currect == changed)
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Please change the name" + "')</script>");
+
+                }
+                else
+                {
+                    //store
+                    tempFile.fileName = TxtBoxFileNameCheck.Text;
+                    MBFile.UploadNewFile(tempFile);
+
+                }
+            }
+            else
+            {
+
+            }
         }
 
         // File Options
@@ -327,6 +365,5 @@ namespace MasterBox
             MBFolder.DeleteFolder(folder.folderid);
         }
 
-       
     }
 }

@@ -256,22 +256,58 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label LblFolderFileSize;
         
         /// <summary>
-        /// Button1 control.
+        /// BtnDownloadFileFolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button BtnDownloadFileFolder;
         
         /// <summary>
-        /// Button2 control.
+        /// BtnDeleteFileFolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button BtnDeleteFileFolder;
+        
+        /// <summary>
+        /// RdBtnFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RdBtnFileName;
+        
+        /// <summary>
+        /// LblFileNameCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileNameCheck;
+        
+        /// <summary>
+        /// TxtBoxFileNameCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtBoxFileNameCheck;
+        
+        /// <summary>
+        /// BtnUploadFolderFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnUploadFolderFile;
         
         /// <summary>
         /// LblFolderID control.

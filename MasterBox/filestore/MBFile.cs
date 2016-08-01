@@ -74,6 +74,50 @@ namespace MasterBox.mbox
             }
         }
 
+        // Override File
+        public static bool OverrideFile(MBFile file)
+        {
+            if (SufficientSpace(file).Equals(true))
+            {
+                try
+                {
+                    // Get User ID
+                    User user = User.GetUser(file.fileusername);
+
+                    file.filekey = user.AesKey;
+                    file.fileiv = user.AesIV;
+                    file.filecontent = MBFile.EncryptAES256File(file);
+
+                    SqlCommand cmd = new SqlCommand(
+                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent@filecontent WHERE filename=@filename", SQLGetMBoxConnection());
+                    cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filetype", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filesize", SqlDbType.Int, 4));
+                    cmd.Parameters.Add(new SqlParameter("@filecontent", SqlDbType.VarBinary, -1));
+                    cmd.Prepare();
+
+                    cmd.Parameters["@filename"].Value = file.fileName;
+                    cmd.Parameters["@filetype"].Value = file.fileType;
+                    cmd.Parameters["@filesize"].Value = file.fileSize;
+                    cmd.Parameters["@filecontent"].Value = file.filecontent;
+                    cmd.ExecuteNonQuery();
+
+
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+                    
+        }
+
         // Delete File
         public static void DeleteFile(string username, long fileid)
         {
@@ -90,6 +134,30 @@ namespace MasterBox.mbox
                             
         }
 
+        // Check file name
+        public static bool FilenameCheck(string username,string filename)
+        {
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+                   "SELECT filename FROM mb_file WHERE userid=@userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = user.UserId;
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            while (sqldr.Read())
+            {
+                System.Diagnostics.Debug.WriteLine("Db File: "+ sqldr["filename"].ToString());
+                System.Diagnostics.Debug.WriteLine("File Name: "+ filename);
+                if (sqldr["filename"].ToString() == filename)
+                {
+                    System.Diagnostics.Debug.WriteLine("Same name");
+                    return false;
+                }
+                
+            }
+            return true;
+        }
 
 
         // To generate Key and IV
