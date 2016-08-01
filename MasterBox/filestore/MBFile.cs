@@ -90,6 +90,30 @@ namespace MasterBox.mbox
                             
         }
 
+        // Check file name
+        public static bool FilenameCheck(string username,string filename)
+        {
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+                   "SELECT filename FROM mb_file WHERE userid=@userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = user.UserId;
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            while (sqldr.Read())
+            {
+                System.Diagnostics.Debug.WriteLine("Db File: "+ sqldr["filename"].ToString());
+                System.Diagnostics.Debug.WriteLine("File Name: "+ filename);
+                if (sqldr["filename"].ToString() == filename)
+                {
+                    System.Diagnostics.Debug.WriteLine("Same name");
+                    return false;
+                }
+                
+            }
+            return true;
+        }
 
 
         // To generate Key and IV

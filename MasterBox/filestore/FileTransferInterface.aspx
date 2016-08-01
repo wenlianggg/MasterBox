@@ -6,6 +6,9 @@
         function showPopupFile() {
             $('#fileModal').modal('show');
         }   
+        function showPopupFileName(){
+            $('#filenameModal').modal('show');
+        }
         function showPopupFolderFile(){
             $('#folderfileModal').modal('show');
         }
@@ -15,6 +18,7 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+
     </script>
 </asp:Content>
 
@@ -90,6 +94,7 @@
                         ErrorMessage="Please select encryption option"
                         ForeColor="Red">
                     </asp:RequiredFieldValidator>
+
                     <br />
                     <span>Password: </span>
                     <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
@@ -194,12 +199,39 @@
                     <br />
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="Button1" CssClass="btn btn-default" CommandName="DownloadFolderFile" OnCommand="FileFolder_Command"  runat="server" Text="Download"  />
-                    <asp:Button ID="Button2" CssClass="btn btn-default" CommandName="DeleteFolderFile"  OnCommand="FileFolder_Command" OnClientClick="return confirm('Are you sure?');" runat="server" Text="Delete"/>
+                    <asp:Button ID="BtnDownloadFileFolder" CssClass="btn btn-default" CommandName="DownloadFolderFile" OnCommand="FileFolder_Command"  runat="server" Text="Download"  />
+                    <asp:Button ID="BtnDeleteFileFolder" CssClass="btn btn-default" CommandName="DeleteFolderFile"  OnCommand="FileFolder_Command" OnClientClick="return confirm('Are you sure?');" runat="server" Text="Delete"/>
                 </div>
             </div>
         </div>
     </div>
+
+     <!--Open File Name Modal -->
+     <div id="filenameModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <p>File upload already exist, do you wish to override it or rename?</p>
+                    <asp:RadioButtonList ID="RdBtnFileName" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="Change" Value="change" Selected="True" />
+                        <asp:ListItem Text="Override" Value="override" />
+                    </asp:RadioButtonList>
+                    <span>Current file name: </span>
+                    <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <span>New file name: </span>
+                    <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnUploadFolderFile" OnClick="BtnUploadFolderFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--Open Folder without password Modal -->
     <div id="folderModal" class="modal fade">
@@ -321,8 +353,8 @@
                 $(".pwdfield").removeAttr('disabled');
                 <%= PassValid.ClientID %>.enabled = "True";
             }
-
         }
+
         $(function () {
             $("input[type='radio']").on('click', function (e) {
                 getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
@@ -331,6 +363,8 @@
         function getCheckedRadio(group, item, value) {
             encryptionChk(item);
         }
+
+
 
         // To validate Confirm Password
         $(document).ready(function () {
