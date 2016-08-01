@@ -14,7 +14,6 @@ namespace MasterBox
         DataTable dtFile;
         DataTable dtFolder;
         DataTable dtFolderFile;
-        MBFile tempFile;
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -128,8 +127,7 @@ namespace MasterBox
                         }
                     }
                     else
-                    {
-                        tempFile = file;
+                    {                     
                         LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
@@ -193,27 +191,28 @@ namespace MasterBox
         // Check file name
         protected void BtnUploadFolderFile_Click(object sender, EventArgs e)
         {
+            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, LblFileNameCheck.Text);
+            System.Diagnostics.Debug.WriteLine("File name: " + checkfile);
             string value = RdBtnFileName.SelectedValue;
             if (value == "change")
             {
                 string currect = LblFileNameCheck.Text;
                 string changed = TxtBoxFileNameCheck.Text;
-                if (currect == changed)
+                if (currect == changed || !MBFile.FilenameCheck(Context.User.Identity.Name,TxtBoxFileNameCheck.Text))
                 {
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Please change the name" + "')</script>");
-
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Name specified in use, please try again." + "')</script>");
                 }
                 else
                 {
-                    //store
-                    tempFile.fileName = TxtBoxFileNameCheck.Text;
-                    MBFile.UploadNewFile(tempFile);
-
+                    checkfile.fileName = TxtBoxFileNameCheck.Text;
+                    MBFile.UploadNewFile(checkfile);
+                    FillDataFile();
                 }
             }
             else
             {
-
+                MBFile.OverrideFile(checkfile);
+                FillDataFile();
             }
         }
 

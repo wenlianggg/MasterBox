@@ -18,6 +18,9 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+        function checkFileName(){
+            alert("File name exist!, please try again.");
+        }
 
     </script>
 </asp:Content>
@@ -28,6 +31,7 @@
 </asp:Content>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+
     <!--Upload Modal -->
     <div id="uploadModel" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -220,8 +224,10 @@
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
                         <asp:ListItem Text="Override" Value="override" />
                     </asp:RadioButtonList>
+                    <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
                     <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <br />
                     <span>New file name: </span>
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
                 </div>
@@ -378,6 +384,7 @@
                     return true;
                 }
             });
-        });      
+        });  
+        
     </script>
 </asp:Content>

@@ -81,6 +81,7 @@ namespace MasterBox.mbox
             {
                 try
                 {
+                    System.Diagnostics.Debug.WriteLine("Testing if this has any values in it"+file.fileusername);
                     // Get User ID
                     User user = User.GetUser(file.fileusername);
 
@@ -294,12 +295,42 @@ namespace MasterBox.mbox
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
+                mbf.fileusername = user.UserName;
             }
             if (mbf.fileSize == 0)
                 return null;
             return mbf;
         }
-     
+
+        public static MBFile RetrieveFile(string username, string filename)
+        {
+            // Get User ID
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE userid = @userid AND filename = @filename AND folderid is NULL", SQLGetMBoxConnection());
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
+            SqlParameter fileidParam = new SqlParameter("@filename", SqlDbType.NVarChar, -1);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Parameters["@filename"].Value = filename;
+            cmd.Prepare();
+
+            // File Retrieval
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            MBFile mbf = new MBFile();
+            if (sqldr.Read())
+            {
+                mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"], user.AesKey, user.AesIV);
+                mbf.fileName = sqldr["filename"].ToString();
+                mbf.fileSize = (int)sqldr["filesize"];
+                mbf.fileType = sqldr["filetype"].ToString();
+                mbf.fileusername = user.UserName;
+            }
+            if (mbf.fileSize == 0)
+                return null;
+            return mbf;
+        }
 
         public static int GetTotalFileStorage(string username)
         {
