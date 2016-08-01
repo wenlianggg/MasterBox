@@ -1,4 +1,13 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="MasterBox.admin.NestedMasterPage1" %>
 <asp:Content ID="AdminPanelContent" ContentPlaceHolderID="Preferences" runat="server">
+    <div class="page-header">
+        <h1>MasterBox Administration Panel <small>Choose an item to configure</small></h1>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+        <a runat="server" href="~/admin/usermgmt.aspx" class="btn btn-default">Accounts Management</a>
+        <a runat="server" href="~/admin/filemgmt.aspx" class="btn btn-default">Files Management</a>
+        <a runat="server" href="~/admin/ipblocking.aspx" class="btn btn-default">IP Blocklist</a>
+        <a runat="server" href="~/admin/sendmail.aspx" class="btn btn-default">Email Sending</a>
+    </div>
     <asp:ContentPlaceHolder ID="AdminPanelContentPH" runat="server"/>
 </asp:Content>
