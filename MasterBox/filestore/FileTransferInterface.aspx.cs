@@ -14,6 +14,7 @@ namespace MasterBox
         DataTable dtFile;
         DataTable dtFolder;
         DataTable dtFolderFile;
+        MBFile tempFile;
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -128,6 +129,7 @@ namespace MasterBox
                     }
                     else
                     {
+                        tempFile = file;
                         LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
@@ -194,8 +196,22 @@ namespace MasterBox
             string value = RdBtnFileName.SelectedValue;
             if (value == "change")
             {
+                string currect = LblFileNameCheck.Text;
+                string changed = TxtBoxFileNameCheck.Text;
+                if (currect == changed)
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Please change the name" + "')</script>");
 
-            }else
+                }
+                else
+                {
+                    //store
+                    tempFile.fileName = TxtBoxFileNameCheck.Text;
+                    MBFile.UploadNewFile(tempFile);
+
+                }
+            }
+            else
             {
 
             }

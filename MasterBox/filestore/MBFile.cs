@@ -74,6 +74,50 @@ namespace MasterBox.mbox
             }
         }
 
+        // Override File
+        public static bool OverrideFile(MBFile file)
+        {
+            if (SufficientSpace(file).Equals(true))
+            {
+                try
+                {
+                    // Get User ID
+                    User user = User.GetUser(file.fileusername);
+
+                    file.filekey = user.AesKey;
+                    file.fileiv = user.AesIV;
+                    file.filecontent = MBFile.EncryptAES256File(file);
+
+                    SqlCommand cmd = new SqlCommand(
+                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent@filecontent WHERE filename=@filename", SQLGetMBoxConnection());
+                    cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filetype", SqlDbType.NVarChar, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filesize", SqlDbType.Int, 4));
+                    cmd.Parameters.Add(new SqlParameter("@filecontent", SqlDbType.VarBinary, -1));
+                    cmd.Prepare();
+
+                    cmd.Parameters["@filename"].Value = file.fileName;
+                    cmd.Parameters["@filetype"].Value = file.fileType;
+                    cmd.Parameters["@filesize"].Value = file.fileSize;
+                    cmd.Parameters["@filecontent"].Value = file.filecontent;
+                    cmd.ExecuteNonQuery();
+
+
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+                    
+        }
+
         // Delete File
         public static void DeleteFile(string username, long fileid)
         {
