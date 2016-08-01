@@ -136,7 +136,7 @@ namespace MasterBox.mbox
         }
 
         // Check file name
-        public static bool FilenameCheck(string username,string filename)
+        public static bool FilenameCheck(string username, string filename)
         {
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
@@ -156,6 +156,34 @@ namespace MasterBox.mbox
                     return false;
                 }
                 
+            }
+            return true;
+        }
+
+        // Check file name in folder
+        public static bool FilenameCheck(string username, string filename,string foldername)
+        {
+            User user = User.GetUser(username);
+            MBFolder folder = MBFolder.GetFolder(username, foldername);
+
+            SqlCommand cmd = new SqlCommand(
+                   "SELECT filename FROM mb_file WHERE userid=@userid and folderid=@folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Parameters["@folderid"].Value = folder.folderid;
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            while (sqldr.Read())
+            {
+                System.Diagnostics.Debug.WriteLine("Db File: " + sqldr["filename"].ToString());
+                System.Diagnostics.Debug.WriteLine("File Name: " + filename);
+                if (sqldr["filename"].ToString() == filename)
+                {
+                    System.Diagnostics.Debug.WriteLine("Same name");
+                    return false;
+                }
+
             }
             return true;
         }
