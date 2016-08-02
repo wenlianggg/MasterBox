@@ -241,6 +241,19 @@ namespace MasterBox.Auth {
 
         }
 
+        internal int SqlAddCoupon(string couponvalue, int days)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO mb_coupon (couponcode, freedays, stat) VALUES (@couponcode, @freedays, 0)", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters.Add(new SqlParameter("@freedays", SqlDbType.Int, 2));
+            cmd.Prepare();
+
+            cmd.Parameters["@couponcode"].Value = couponvalue;
+            cmd.Parameters["@freedays"].Value = days;
+
+            return cmd.ExecuteNonQuery();
+        }
+
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
@@ -361,6 +374,18 @@ namespace MasterBox.Auth {
                 return sqldr["steghash"].ToString();
             }
             return null;
+        }
+
+        internal DataTable SqlGetAllCoupons()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_coupon", sqlConn);
+            cmd.Prepare();
+            DataTable data = new DataTable();
+            data.Load(cmd.ExecuteReader());
+            data.Columns["couponcode"].ColumnName = "Coupon Code";
+            data.Columns["freedays"].ColumnName = "Days Given";
+            data.Columns["stat"].ColumnName = "Redeemed?";
+            return data;
         }
 
     }
