@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mail;
 
 namespace MasterBox.fileshare
 {
@@ -11,9 +12,10 @@ namespace MasterBox.fileshare
         public DateTime dt { get; set; }
         public FileAccess fa { get; set; }
         
-        public LinkShare()
+        public LinkShare(string link)
         {
-
+            this.link = link;
+            RetrieveLinkShare();
         }
 
         public LinkShare(string link, DateTime dt, FileAccess fa)
@@ -28,11 +30,11 @@ namespace MasterBox.fileshare
             this.link = link;
             this.fa = fa;
         }
-        public LinkShare(string link, DateTime dt, long userid, long folderid, bool download, bool upload, bool delete)
+        public LinkShare(string link, DateTime dt, long userid, long folderid, bool download, bool upload, bool deleter)
         {
             this.link = link;
             this.dt = dt;
-            fa = new FileAccess(userid, folderid, download, upload, delete);
+            fa = new FileAccess(userid, folderid, download, upload, deleter);
         }
 
         private static SqlConnection SQLGetMBoxConnection()
@@ -42,43 +44,43 @@ namespace MasterBox.fileshare
             return sqlConnection;
         }
 
-        public LinkShare RetrieveLinkShare(string link)
+        public void RetrieveLinkShare()
         {
-            LinkShare ls = new LinkShare();
-
             SqlCommand cmd = new SqlCommand(
-                "SELECT * FROM linkshare WHERE link = @link", SQLGetMBoxConnection());
+                "SELECT * FROM mb_linkshare WHERE link = @link", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@link", SqlDbType.VarChar, 16));
             cmd.Prepare();
-            cmd.Parameters["@link"].Value = link;
+            cmd.Parameters["@link"].Value = this.link;
             SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
             {
-                DateTime dt = (DateTime)reader["dt"]; ;
+                dt = (DateTime)reader["dt"]; ;
                 long userid = (long)reader["userid"];
                 long folderid = (long)reader["folderid"];
                 bool download = (bool)reader["download"];
                 bool upload = (bool)reader["upload"];
-                bool delete = (bool)reader["delete"];
-                ls = new LinkShare(link, dt, userid, folderid, download, upload, delete);
+                bool deleter = (bool)reader["deleter"];
+                fa = new FileAccess(userid, folderid, download, upload, deleter);
             }
-
-            return ls;
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Link doesn't exist.");
+            }
         }
 
         public void UploadLinkShare()
         {
             SqlCommand cmd = new SqlCommand(
-                "INSERT INTO linkshare(link, dt, userid, folderid, download, upload, delete) VALUES(@link, NOW(), @userid, @folderid, @download, @upload, @delete", SQLGetMBoxConnection());
+                "INSERT INTO mb_linkshare(link, CURRENT_TIMESTAMP, userid, folderid, download, upload, deleter) VALUES(@link, NOW(), @userid, @folderid, @download, @upload, @deleter", SQLGetMBoxConnection());
             cmd.Parameters.AddWithValue("@link", link);
             cmd.Parameters.AddWithValue("@userid", fa.userid);
             cmd.Parameters.AddWithValue("@folderid", fa.folderid);
             cmd.Parameters.AddWithValue("@download", fa.download);
             cmd.Parameters.AddWithValue("@upload", fa.upload);
-            cmd.Parameters.AddWithValue("@delete", fa.delete);
+            cmd.Parameters.AddWithValue("@deleter", fa.deleter);
 
-            //SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = cmd.ExecuteReader();
 
             System.Diagnostics.Debug.WriteLine("LinkShare created.");
         }
@@ -86,14 +88,14 @@ namespace MasterBox.fileshare
         public void CreateFileAccess()
         {
             SqlCommand cmd = new SqlCommand(
-                "INSERT INTO fileaccess(userid, folderid, download, upload, delete) VALUES(@link, NOW(), @userid, @folderid, @download, @upload, @delete", SQLGetMBoxConnection());
+                "INSERT INTO mb_fileaccess(userid, folderid, download, upload, deleter) VALUES(@userid, @folderid, @download, @upload, @deleter)", SQLGetMBoxConnection());
             cmd.Parameters.AddWithValue("@userid", fa.userid);
             cmd.Parameters.AddWithValue("@folderid", fa.folderid);
             cmd.Parameters.AddWithValue("@download", fa.download);
             cmd.Parameters.AddWithValue("@upload", fa.upload);
-            cmd.Parameters.AddWithValue("@delete", fa.delete);
+            cmd.Parameters.AddWithValue("@deleter", fa.deleter);
 
-            //SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = cmd.ExecuteReader();
 
             System.Diagnostics.Debug.WriteLine("FileAccess created.");
         }
@@ -105,10 +107,12 @@ namespace MasterBox.fileshare
             {
                str += "You are not the intended recipient of this invitation link. ";
             }
-            
+
+
+            System.Diagnostics.Debug.WriteLine("Run CheckDate;");
+
             if (!CheckDate())
             {
-                System.Diagnostics.Debug.WriteLine("Run CheckDate;");
                 str += "Invitation link has timed out.";
             }
             return str;

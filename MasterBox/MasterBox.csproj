@@ -248,6 +248,7 @@
     <Content Include="images\bg\grungebg.png" />
     <Content Include="images\bg\outlets.png" />
     <Content Include="images\bg\prefsidebarbg.jpg" />
+    <Content Include="inv.aspx" />
     <Content Include="prefs\prefotpsetup.aspx" />
     <Content Include="prefs\prefpassword.aspx" />
     <Content Include="CSS\Preferences.css" />
@@ -449,6 +450,13 @@
     </Compile>
     <Compile Include="filestore\FileAccess.cs" />
     <Compile Include="filestore\LinkShare.cs" />
+    <Compile Include="inv.aspx.cs">
+      <DependentUpon>inv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inv.aspx.designer.cs">
+      <DependentUpon>inv.aspx</DependentUpon>
+    </Compile>
     <Compile Include="prefs\prefotpsetup.aspx.cs">
       <DependentUpon>prefotpsetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
