@@ -57,13 +57,12 @@ namespace MasterBox.Auth {
 			return GetUser(ConvertToId(username, memberName));
 		}
 
-		internal static User CreateUser(string username, string password, string firstname, string lastname,
-								DateTime birthdate, string email, bool isVerified) {
+		internal static User CreateUser(string username, string password, string firstname, string lastname, string email, bool isVerified) {
 			User target;
 			if (Exists(username)) {
 				throw new UserAlreadyExistsException();
 			} else {
-				target = new User(username, password, firstname, lastname, birthdate, email, isVerified);
+				target = new User(username, password, firstname, lastname, email, isVerified);
 				if (UserList == null) {
 					UserList = new Dictionary<int, User>();
 				}
@@ -83,8 +82,7 @@ namespace MasterBox.Auth {
 
 
 
-		private User(string username, string password, string firstname, string lastname,
-						DateTime birthdate, string email, bool isVerified) {
+		private User(string username, string password, string firstname, string lastname, string email, bool isVerified) {
 			int _userId = MBProvider.Instance.CreateUser(username, password);
 			if (_userId == 0)
 				throw new UserNotFoundException();
@@ -92,7 +90,6 @@ namespace MasterBox.Auth {
 			_username = username;
 			_fName = firstname;
 			_lName = lastname;
-			_dob = birthdate;
 			_email = email;
 			_verified = false;
 			_mbrType = 1;
