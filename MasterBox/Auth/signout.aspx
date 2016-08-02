@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" %>
+﻿<%@ Page Language="C#" CodeBehind="signout.aspx.cs" Inherits="MasterBox.Auth.SignOut" %>
 
 <html>
 <head>
@@ -13,7 +13,9 @@
 	}
 
 	void Signout_Click(object sender, EventArgs e) {
-
+        FormsAuthentication.SignOut();
+		Session.Abandon();
+		Response.Redirect("~/Auth/signin.aspx");
 	}
 </script>
 

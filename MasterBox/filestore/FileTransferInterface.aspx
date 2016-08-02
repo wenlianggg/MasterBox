@@ -3,15 +3,22 @@
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server" ID="FileTrfPH">
     <script type="text/javascript">
-        function showPopup() {
+        function showPopupFile() {
             $('#fileModal').modal('show');
         }   
+        function showPopupFileName(){
+            $('#filenameModal').modal('show');
+        }
+        function showPopupFolderFile(){
+            $('#folderfileModal').modal('show');
+        }
         function showPopupFolder(){
             $('#folderModal').modal('show');
         }
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+
     </script>
 </asp:Content>
 
@@ -21,6 +28,7 @@
 </asp:Content>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+
     <!--Upload Modal -->
     <div id="uploadModel" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -87,6 +95,7 @@
                         ErrorMessage="Please select encryption option"
                         ForeColor="Red">
                     </asp:RequiredFieldValidator>
+
                     <br />
                     <span>Password: </span>
                     <asp:TextBox ID="encryptionPass" CssClass="pwdfield form-control"
@@ -136,13 +145,13 @@
         </div>
     </div>
 
-    <!--Open File Modal -->
+    <!--Open File in MasterFolder Modal -->
     <div id="fileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Delete or download?</h4>
+                    <h4 class="modal-title">Delete or download?</h4>
                 </div>
                 <div class="modal-body">
                     <span>File ID: </span>
@@ -166,6 +175,66 @@
         </div>
     </div>
 
+    <!--Open File in Folder Modal -->
+    <div id="folderfileModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete or download?</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Folder Name: </span>
+                    <asp:Label ID="LblFileFolderName" runat="server"></asp:Label>
+                    <span>File ID: </span>
+                    <asp:Label ID="LblFolderFileId" runat="server"></asp:Label>
+                    <br />
+                    <span>File Name: </span>
+                    <asp:Label ID="LblFolderFileName" runat="server"></asp:Label>
+                    <br />
+                    <span>File Type: </span>
+                    <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
+                    <br />
+                    <span>File Size: </span>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnDownloadFileFolder" CssClass="btn btn-default" CommandName="DownloadFolderFile" OnCommand="FileFolder_Command"  runat="server" Text="Download"  />
+                    <asp:Button ID="BtnDeleteFileFolder" CssClass="btn btn-default" CommandName="DeleteFolderFile"  OnCommand="FileFolder_Command" OnClientClick="return confirm('Are you sure?');" runat="server" Text="Delete"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!--Open Checking of File Name Modal -->
+     <div id="filenameModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <p>File upload already exist, do you wish to override it or rename?</p>
+                    <asp:RadioButtonList ID="RdBtnFileName" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="Change" Value="change" Selected="True" />
+                        <asp:ListItem Text="Override" Value="override" />
+                    </asp:RadioButtonList>
+                    <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
+                    <span>Current file name: </span>
+                    <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <br />
+                    <span>New file name: </span>
+                    <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnUploadFolderFile" OnClick="BtnUploadFolderFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--Open Folder without password Modal -->
     <div id="folderModal" class="modal fade">
@@ -176,16 +245,14 @@
                     <h4>Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Folder ID: </span>
-                    <asp:Label ID="LblFolderId" runat="server"></asp:Label>
-                    <br />
+                    <asp:Label ID="LblFolderID" runat="server" Visible="False"></asp:Label>
                     <span>Folder Name: </span>
                     <asp:Label ID="LblFolderName" runat="server"></asp:Label>
                     <br />
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnOpenFolder" CssClass="btn btn-default" runat="server" Text="Open" />
-                    <asp:Button ID="BtnDeleteFolder" OnClick="BtnDeleteFolderWithPassw_Click" CssClass="btn btn-default" runat="server" Text="Delete" />
+                    <asp:Button ID="BtnOpenFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithoutPass_Command" CssClass="btn btn-default" runat="server" Text="Open" />
+                    <asp:Button ID="BtnDeleteFolder" CommandName="DeleteFolder" OnCommand="BtnFolderWithoutPass_Command" OnClientClick="return confirm('Are you sure?');" CssClass="btn btn-default" runat="server" Text="Delete" />
                 </div>
             </div>
         </div>
@@ -208,8 +275,8 @@
                     <br />
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnCheckPasswordFolder"  OnClick="BtnCheckPasswordFolder_Click" runat="server" CssClass="btn btn-default" Text="Open" />
-                    <asp:Button ID="BtnDeleteFolderWithPassw" OnClick="BtnDeleteFolderWithPassw_Click" runat="server" CssClass="btn btn-default" Text="Delete" />
+                    <asp:Button ID="BtnCheckPasswordFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithPass_Command" runat="server" CssClass="btn btn-default" Text="Open" />
+                    <asp:Button ID="BtnDeleteFolderWithPassw" CommandName="DeleteFolder" OnCommand="BtnFolderWithPass_Command"  runat="server" CssClass="btn btn-default" Text="Delete" />
                 </div>
             </div>
         </div>
@@ -235,7 +302,7 @@
                 <h1>Files</h1>
             </div>
 
-            <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename">
+            <asp:GridView ID="FileTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid, filename" ShowHeaderWhenEmpty="True">
                 <Columns>
                     <asp:TemplateField HeaderText="Master Folder">
                         <ItemTemplate>
@@ -246,7 +313,7 @@
             </asp:GridView>
             <br />
 
-            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername,folderencryption">
+            <asp:GridView ID="FolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername,folderencryption" ShowHeaderWhenEmpty="True">
                 <Columns>
                     <asp:TemplateField HeaderText="Folders">
                         <ItemTemplate>
@@ -261,16 +328,16 @@
         <div class="FileTreeContainer">
             <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
-            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid,filename,filesize">
+            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid,filename,filesize" ShowHeaderWhenEmpty="True">
                 <Columns>
                     <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton3" runat="server" OnClick="DownloadFolderFile" Text='<%# Eval("filename") %>' FileID='<%# Eval("fileid") %>' FolderID='<%# Eval("folderid") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="LnkFolderFile" CommandName="OpenFolderFile" OnCommand="FileFolder_Command" CommandArgument='<%# Eval("fileid") %>' Text='<%# Eval("filename") %>' FolderID='<%# Eval("folderid") %>' runat="server" ></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="File-Size" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:LinkButton ID="LinkButton4" runat="server" Text='<%# Eval("filesize") %>' FileID='<%# Eval("fileid") %>' Enabled="False" EnableTheming="False" EnableViewState="False"></asp:LinkButton>
+                            <asp:Label ID="LblFilesize" runat="server" Text='<%# Eval("filesize") %>'></asp:Label>                          
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -289,8 +356,8 @@
                 $(".pwdfield").removeAttr('disabled');
                 <%= PassValid.ClientID %>.enabled = "True";
             }
-
         }
+
         $(function () {
             $("input[type='radio']").on('click', function (e) {
                 getCheckedRadio($(this).attr("name"), $(this).val(), this.checked);
@@ -299,6 +366,8 @@
         function getCheckedRadio(group, item, value) {
             encryptionChk(item);
         }
+
+
 
         // To validate Confirm Password
         $(document).ready(function () {
@@ -312,6 +381,7 @@
                     return true;
                 }
             });
-        });      
+        });  
+        
     </script>
 </asp:Content>

@@ -18,16 +18,17 @@ namespace MasterBox
         {
             System.Diagnostics.Debug.WriteLine("I AM CLICKED");
             MailMessage Msg = new MailMessage();
-            Msg.From = new MailAddress("jefferyballstester@gmail.com");
+            Msg.From = new MailAddress("masterboxnoreply@gmail.com");
             Msg.To.Add(txtToMail.Text);
-            Msg.Subject = txtSubject.Text;
+            Msg.Subject = txtSubject.Text + "  ( From: " + txtFrom.Text + " ) ";
+            //Msg.Subject = txtSubject.Text;
             Msg.Body = txtMessage.Text;
             Msg.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            NetworkCred.UserName = "jefferyballstester@gmail.com";
+            NetworkCred.UserName = "masterboxnoreply@gmail.com";
             NetworkCred.Password = "N0tasmurf!";
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
@@ -35,7 +36,8 @@ namespace MasterBox
             smtp.Port = 587;
             smtp.EnableSsl = true;
             smtp.Send(Msg);
-            lblMsg.Text = "Email has been successfully sent..!!";
+            lblMsg.Text = "Email has been successfully sent";
+            //lblMsg.Text = "Email has been successfully sent..!!";
         }
     }
 }

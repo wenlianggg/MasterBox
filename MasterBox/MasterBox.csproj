@@ -186,9 +186,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admin\ipblocking.aspx" />
-    <Content Include="admin\sendmail.aspx" />
-    <Content Include="admin\usermgmt.aspx" />
+    <Content Include="Admin\filemgmt.aspx" />
+    <Content Include="Admin\ipblocking.aspx" />
+    <Content Include="Admin\sendmail.aspx" />
+    <Content Include="Admin\subsmgmt.aspx" />
+    <Content Include="Admin\usermgmt.aspx" />
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -261,6 +263,7 @@
     <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
     <Content Include="images\work_in_progress.jpg" />
+    <Content Include="prefs\prefsteg.aspx" />
     <Content Include="prefs\prefsubscription.aspx" />
     <Content Include="prefs\prefgeneral.aspx" />
     <Content Include="prefs\prefprofile.aspx" />
@@ -300,7 +303,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="admin\Admin.master" />
+    <Content Include="Admin\Admin.master" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -377,32 +380,46 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="admin\Admin.master.cs">
+    <Compile Include="Admin\Admin.master.cs">
       <DependentUpon>Admin.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admin\Admin.master.designer.cs">
+    <Compile Include="Admin\Admin.master.designer.cs">
       <DependentUpon>Admin.master</DependentUpon>
     </Compile>
-    <Compile Include="admin\ipblocking.aspx.cs">
+    <Compile Include="Admin\filemgmt.aspx.cs">
+      <DependentUpon>filemgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\filemgmt.aspx.designer.cs">
+      <DependentUpon>filemgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ipblocking.aspx.cs">
       <DependentUpon>ipblocking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admin\ipblocking.aspx.designer.cs">
+    <Compile Include="Admin\ipblocking.aspx.designer.cs">
       <DependentUpon>ipblocking.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\sendmail.aspx.cs">
+    <Compile Include="Admin\sendmail.aspx.cs">
       <DependentUpon>sendmail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admin\sendmail.aspx.designer.cs">
+    <Compile Include="Admin\sendmail.aspx.designer.cs">
       <DependentUpon>sendmail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\usermgmt.aspx.cs">
+    <Compile Include="Admin\subsmgmt.aspx.cs">
+      <DependentUpon>subsmgmt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\subsmgmt.aspx.designer.cs">
+      <DependentUpon>subsmgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\usermgmt.aspx.cs">
       <DependentUpon>usermgmt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admin\usermgmt.aspx.designer.cs">
+    <Compile Include="Admin\usermgmt.aspx.designer.cs">
       <DependentUpon>usermgmt.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Classes\FileLogger.cs" />
@@ -494,6 +511,13 @@
     </Compile>
     <Compile Include="Auth\Classes\Exceptions.cs" />
     <Compile Include="filestore\blowfish.cs" />
+    <Compile Include="prefs\prefsteg.aspx.cs">
+      <DependentUpon>prefsteg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prefs\prefsteg.aspx.designer.cs">
+      <DependentUpon>prefsteg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="prefs\prefsubscription.aspx.cs">
       <DependentUpon>prefsubscription.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

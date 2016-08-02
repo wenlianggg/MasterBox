@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Auth;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace MasterBox
 {
     public partial class Pricing : Page
     {
-    
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Context.User.Identity.IsAuthenticated)
@@ -38,30 +39,55 @@ namespace MasterBox
             }
         }
 
-        protected void PayPalBtn_Click(object sender, ImageClickEventArgs e)
+        protected void PayPalBtn_Command(object sender, CommandEventArgs e)
         {
-            ImageButton buttonclicked = (ImageButton)sender;
-            int storageOpted;
-            if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted)) {
-                string business = "VY34CAC6JZ6LU";
-                string itemName = storageOpted + " MB";
-                double itemAmount = 20.00 * storageOpted;
-                string currencyCode = "SGD";
-                string itemId = buttonclicked.Attributes["ItemID"];
+            switch (e.CommandName)
+            {
+                case "PopUpModal":
+                    int storageOpted;
+                    ImageButton buttonclicked = (ImageButton)sender;
+                    if (Int32.TryParse(buttonclicked.Attributes["ItemSize"], out storageOpted))
+                    {
+                        string business = "VY34CAC6JZ6LU";
+                        string itemName = Convert.ToString(storageOpted);
+                        int itemAmount = 20 * storageOpted;
+                        string itemId = buttonclicked.Attributes["ItemID"];
 
-                StringBuilder ppHref = new StringBuilder();
+                        businesslbl.Text = business;
+                        itemNamelbl.Text = itemName + " MB";
+                        itemAmountlbl.Text = Convert.ToString(itemAmount);
+                        itemIdlbl.Text = itemId;
+                    }
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    break;
+                case "PayForMember":
+                    User usr = Auth.User.GetUser(Context.User.Identity.Name);
+                    if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text).Equals(true))
+                    {
+                        StringBuilder ppHref = new StringBuilder();
+                        int itemAmount = Convert.ToInt32(itemAmountlbl.Text);
+                        string currencyCode = "SGD";
 
-                ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
-                ppHref.Append("&business=" + business);
-                ppHref.Append("&item_name=" + itemName);
-                ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
-                ppHref.Append("&currency_code=" + currencyCode);
-                ppHref.Append("&item_id=" + itemId);
+                        //Build Link
+                        ppHref.Append("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick");
+                        ppHref.Append("&business=" + businesslbl.Text);
+                        ppHref.Append("&item_name=" + itemNamelbl.Text);
+                        ppHref.Append("&amount=" + itemAmount.ToString("#.00"));
+                        ppHref.Append("&currency_code=" + currencyCode);
+                        ppHref.Append("&item_id=" + itemIdlbl.Text);
 
-                Response.Redirect(ppHref.ToString(), true);
+                        //Redirect user to payment 
+                        Response.Redirect(ppHref.ToString(), true);
+
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "OTP Entered is Incorrect!" + "')</script>");
+                        Msg.Text = "Entered OTP is incorrect!";
+                    }
+                    break;
             }
         }
 
-       
     }
 }

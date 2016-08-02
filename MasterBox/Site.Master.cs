@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 namespace MasterBox {
 	public partial class SiteMaster : MasterPage {
 		protected void Page_Load(object sender, EventArgs e) {
-			IPAddr.Text = "Your IP address (" + GetIPAddress() + ") will be logged for security";
+			IPAddr.Text = "Your IP address (" + GetIP() + ") will be logged for security";
 			if (Context.User.Identity.IsAuthenticated) {
 				User usr = User.GetUser(Context.User.Identity.Name);
 				NavRightLink1.Visible = false;
@@ -27,15 +27,26 @@ namespace MasterBox {
 			}
 		}
 
-		protected string GetIPAddress() {
-			string IPAddr = Context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-			if (!string.IsNullOrEmpty(IPAddr)) {
-				string[] addresses = IPAddr.Split(',');
+		protected string GetIP() {
+			HttpRequest thisrequest = HttpContext.Current.Request;
+			HttpBrowserCapabilities browser = thisrequest.Browser;
+			string ipAddress = thisrequest.ServerVariables["HTTP_X_FORWARDED_FOR"];
+			string userIp = "NIL";
+
+			if (!string.IsNullOrEmpty(ipAddress)) {
+				string[] addresses = ipAddress.Split(',');
 				if (addresses.Length != 0) {
-					return addresses[0];
+					userIp = addresses[0];
 				}
+			} else {
+				userIp = thisrequest.ServerVariables["REMOTE_ADDR"];
 			}
-			return Context.Request.ServerVariables["REMOTE_ADDR"];
+
+			if (userIp.Equals("::1")) {
+				userIp = "127.0.0.1";
+			}
+
+			return userIp + " on " + browser.Type;
 		}
 	}
 

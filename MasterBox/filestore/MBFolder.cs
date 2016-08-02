@@ -214,7 +214,7 @@ namespace MasterBox.mbox
         }
 
         // Files in folder Blowfish448 Decryption
-        private static byte[] DecryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
+        public static byte[] DecryptionBlowfishFileFolder(byte[] filecontent, string key, string iv)
         {
             // Declare Blowfish
             BlowFish b = new BlowFish(key);
@@ -474,11 +474,10 @@ namespace MasterBox.mbox
         }
 
         // Folder Password Settings
-        public bool FolderPasswordSettings(MBFolder folder, string folderpassword)
+        public bool FolderPasswordSettings(MBFolder folder, string folderpassword,bool personalEncryption)
         {
             
             MBFolder oldFolder = folder;
-            System.Diagnostics.Debug.WriteLine("UName: " +oldFolder.folderusername);
             MBFolder newFolder = new MBFolder();
             newFolder.folderName = oldFolder.folderName;
 
@@ -490,8 +489,16 @@ namespace MasterBox.mbox
             byte[] newFolderSalt = GenerateSaltFunction();
             newFolder.foldersalt= Convert.ToBase64String(newFolderSalt);
 
-            // Convert new password to byte array
-            var newPwBytes = Encoding.UTF8.GetBytes(folderpassword);
+            byte[] newPwBytes;
+            if (folderpassword!="")
+            {
+                // Convert new password to byte array
+                 newPwBytes = Encoding.UTF8.GetBytes(folderpassword);
+            }else
+            {
+                // Make a password for them
+                newPwBytes = Encoding.UTF8.GetBytes(RandomPasswordGeneration(16));
+            }
 
             // Join two arrays
             byte[] combinedBytes = new byte[newPwBytes.Length + newFolderSalt.Length];
@@ -520,13 +527,14 @@ namespace MasterBox.mbox
             {
                 // Create Folder entry in database
                 SqlCommand cmd = new SqlCommand(
-                           "UPDATE mb_folder SET folderpassword = @newfolderpass , foldersaltfunction = @newSalt, folderkey=@folderkey, folderiv=@folderiv WHERE foldername = @foldername and userid= @userid",
+                           "UPDATE mb_folder SET folderpassword = @newfolderpass , foldersaltfunction = @newSalt, folderkey=@folderkey, folderiv=@folderiv,folderencryption=@folderencryption WHERE foldername = @foldername and userid= @userid",
                            SQLGetMBoxConnection());
                 cmd.Parameters.Add(new SqlParameter("@newfolderpass", SqlDbType.VarChar, 88));
                 cmd.Parameters.Add(new SqlParameter("@newSalt", SqlDbType.VarChar, 24));
                 cmd.Parameters.Add(new SqlParameter("@folderkey", SqlDbType.VarChar, 64));
                 cmd.Parameters.Add(new SqlParameter("@folderiv", SqlDbType.VarChar, 32));
                 cmd.Parameters.Add(new SqlParameter("@foldername", SqlDbType.VarChar, 50));
+                cmd.Parameters.Add(new SqlParameter("@folderencryption", SqlDbType.Bit,1));
                 cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
                 cmd.Prepare();
 
@@ -535,6 +543,7 @@ namespace MasterBox.mbox
                 cmd.Parameters["@folderkey"].Value = newFolder.folderBlowFishKey;
                 cmd.Parameters["@folderiv"].Value = newFolder.folderBlowFishIV;
                 cmd.Parameters["@foldername"].Value = newFolder.folderName;
+                cmd.Parameters["@folderencryption"].Value = personalEncryption;
                 cmd.Parameters["@userid"].Value = userid;
                 cmd.ExecuteNonQuery();
 
