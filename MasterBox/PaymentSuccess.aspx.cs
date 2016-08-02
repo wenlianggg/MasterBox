@@ -111,8 +111,6 @@ namespace MasterBox
                             // Log for downgrade
                             TransactLogger.Instance.SubscriptionDowngraded(currUser.UserId, storageBought);
                         }
-
-                        TransactLogger.Instance.TransactionCompleted(currUser.UserId, storageBought);
                     }
 
                     // // End execution of updates // //

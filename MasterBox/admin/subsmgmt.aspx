@@ -1,16 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="subsmgmt.aspx.cs" Inherits="MasterBox.Admin.SubsMgmt" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
-    
-    </div>
-    </form>
-</body>
-</html>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/Admin.master" AutoEventWireup="true" CodeBehind="subsmgmt.aspx.cs" Inherits="MasterBox.Admin.UserMgmt" %>
+<asp:Content ID="SubsMgmtContent" ContentPlaceHolderID="AdminPanelContentPH" runat="server">
+  
+</asp:Content>
