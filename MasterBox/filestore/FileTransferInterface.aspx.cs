@@ -131,7 +131,7 @@ namespace MasterBox
                         // Same file name                
                         LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Name specified in use, please try again!" + "')</script>");
                     }
                    
                 }
@@ -147,7 +147,7 @@ namespace MasterBox
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
                     file.fileSize = FileUpload.PostedFile.ContentLength;
-                    if (MBFile.FilenameCheck(file.fileusername,file.fileName, foldername)) {
+                    if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername)) {
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
                         if (uploadfiletofolderstatus == true)
                         {

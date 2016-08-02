@@ -18,9 +18,6 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
-        function checkFileName(){
-            alert("File name exist!, please try again.");
-        }
 
     </script>
 </asp:Content>
