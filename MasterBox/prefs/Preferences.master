@@ -25,7 +25,7 @@
 				<li><a runat="server" ID="prefsteg" href="prefsteg.aspx">Image Key <i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsubscription" href="prefsubscription.aspx">Expand Storage <i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="preflogs" href="preflogs.aspx">Access Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
-                <li><a runat="server" ID="adminpanel" href="~/admin/usermgmt.aspx" visible="false">Admin Panel<i class="fa fa-list" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="adminpanel" href="~/admin/usermgmt.aspx" visible="false">Admin CP <i class="fa fa-cogs" aria-hidden="true"></i></a></li>
             </ul>
         </div>
         <div class="SettingSelectionPanel">

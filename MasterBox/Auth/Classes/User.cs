@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
+using System.Web;
 using System.Web.Security;
 
 /// Author: Goh Wen Liang (154473G) 
@@ -110,7 +111,7 @@ namespace MasterBox.Auth {
                 using (UserCrypto uc = new UserCrypto(_aesIV)) {
                     using (SqlDataReader sqldr = da.SqlGetUser(_userid))
                         if (sqldr.Read()) {
-                            _username = sqldr["username"].ToString();
+                            _username = sqldr["username"] as string;
                             if (sqldr["fNameEnc"] != DBNull.Value)
                                 _fName = uc.Decrypt((byte[])sqldr["fNameEnc"]);
                             if (sqldr["lNameEnc"] != DBNull.Value)
@@ -164,9 +165,15 @@ namespace MasterBox.Auth {
 		// ======================
 
 		protected internal static int ConvertToId(string username, [CallerMemberName]string memberName = "") {
-			using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
-				return da.SqlGetUserId(username);
+			try {
+				using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
+					return da.SqlGetUserId(username);
+				}
+			} catch (UserNotFoundException) {
+				if (HttpContext.Current != null)
+					HttpContext.Current.Response.Redirect("~/Auth/signin.aspx");
 			}
+			return 0;
 		}
 
 		protected internal bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
@@ -305,10 +312,12 @@ namespace MasterBox.Auth {
 
 		protected internal bool IsAdmin {
 			get {
+				RefreshFields();
 				return _isAdmin;
 			}
 			set {
-				_isAdmin = value;
+				UpdateValue("isAdmin", value, SqlDbType.Bit, 0);
+				RefreshFields();
 			}
 		}
 

@@ -14,8 +14,7 @@ namespace MasterBox.Prefs {
 			if (Auth.User.GetUser(Context.User.Identity.Name).IsAdmin) {
 				adminpanel.Visible = true;
 			} else {
-				adminpanel.Visible = true;
-				adminpanel.InnerText = "ACP Inaccessible!";
+				adminpanel.Visible = false;
 			}
 
 			switch (Path.GetFileName(Request.Url.ToString())) {
