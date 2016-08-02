@@ -180,7 +180,7 @@ namespace MasterBox.Auth {
 				"regStamp = @regStamp, " +
                 "aesKey = @aesKey, " + 
 				"aesIV = @aesIV, " +
-				"isAdmin = @isAdmin" +
+				"isAdmin = @isAdmin " +
 				"WHERE userid = @userid;",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@fNameEnc", SqlDbType.VarBinary, 200));

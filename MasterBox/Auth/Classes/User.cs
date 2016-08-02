@@ -162,15 +162,9 @@ namespace MasterBox.Auth {
 		// ======================
 
 		protected internal static int ConvertToId(string username, [CallerMemberName]string memberName = "") {
-			try {
-				using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
-					return da.SqlGetUserId(username);
-				}
-			} catch (UserNotFoundException) {
-				if (HttpContext.Current != null)
-					HttpContext.Current.Response.Redirect("~/Auth/signin.aspx");
+			using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
+				return da.SqlGetUserId(username);
 			}
-			return 0;
 		}
 
 		protected internal bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
