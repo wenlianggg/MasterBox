@@ -16,15 +16,15 @@ namespace MasterBox.fileshare
         public long folderid { get; set; }
         public bool download { get; set; }
         public bool upload { get; set; }
-        public bool delete { get; set; }
+        public bool deleter { get; set; }
 
-        public FileAccess(long userid, long folderid, bool download, bool upload, bool delete)
+        public FileAccess(long userid, long folderid, bool download, bool upload, bool deleter)
         {
             this.userid = userid;
             this.folderid = folderid;
             this.download = download;
             this.upload = upload;
-            this.delete = delete;
+            this.deleter = deleter;
         }
 
         private static SqlConnection SQLGetMBoxConnection()
@@ -40,7 +40,7 @@ namespace MasterBox.fileshare
             User user = User.GetUser(username);
 
             SqlCommand cmd = new SqlCommand(
-                "SELECT * FROM fileaccess WHERE folderid in (SELECT folderid FROM fileaccess WHERE userid = @userid) GROUP BY folderid HAVING COUNT(folderid) = 1", SQLGetMBoxConnection());
+                "SELECT * FROM mb_fileaccess WHERE folderid in (SELECT folderid FROM fileaccess WHERE userid = @userid) GROUP BY folderid HAVING COUNT(folderid) = 1", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
@@ -55,8 +55,8 @@ namespace MasterBox.fileshare
                     long folderid = (long)accessReader["folderid"];
                     bool download = (bool)accessReader["download"];
                     bool upload = (bool)accessReader["upload"];
-                    bool delete = (bool)accessReader["delete"];
-                    accessList.Add(new FileAccess(userid, folderid, download, upload, delete));
+                    bool deleter = (bool)accessReader["deleter"];
+                    accessList.Add(new FileAccess(userid, folderid, download, upload, deleter));
                 }
                 accessReader.NextResult();
             }
@@ -70,7 +70,7 @@ namespace MasterBox.fileshare
             User user = User.GetUser(username);
 
             SqlCommand cmd = new SqlCommand(
-                "SELECT * FROM fileaccess WHERE folderid in (SELECT folderid FROM fileaccess WHERE userid = @userid) GROUP BY folderid HAVING COUNT(folderid) > 1", SQLGetMBoxConnection());
+                "SELECT * FROM mb_fileaccess WHERE folderid in (SELECT folderid FROM fileaccess WHERE userid = @userid) GROUP BY folderid HAVING COUNT(folderid) > 1", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
@@ -85,8 +85,8 @@ namespace MasterBox.fileshare
                     long folderid = (long)accessReader["folderid"];
                     bool download = (bool)accessReader["download"];
                     bool upload = (bool)accessReader["upload"];
-                    bool delete = (bool)accessReader["delete"];
-                    accessList.Add(new FileAccess(userid, folderid, download, upload, delete));
+                    bool deleter = (bool)accessReader["deleter"];
+                    accessList.Add(new FileAccess(userid, folderid, download, upload, deleter));
                 }
                 accessReader.NextResult();
             }
@@ -99,7 +99,7 @@ namespace MasterBox.fileshare
             User user = User.GetUser(username);
 
             SqlCommand cmd = new SqlCommand(
-                "DELETE * FROM fileaccess WHERE folderid = @folderid AND userid = @userid", SQLGetMBoxConnection());
+                "DELETE * FROM mb_fileaccess WHERE folderid = @folderid AND userid = @userid", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();

@@ -248,6 +248,7 @@
     <Content Include="images\bg\grungebg.png" />
     <Content Include="images\bg\outlets.png" />
     <Content Include="images\bg\prefsidebarbg.jpg" />
+    <Content Include="inv.aspx" />
     <Content Include="prefs\prefotpsetup.aspx" />
     <Content Include="prefs\prefpassword.aspx" />
     <Content Include="CSS\Preferences.css" />
@@ -262,6 +263,7 @@
     <Content Include="CSS\Internal.css" />
     <Content Include="CSS\Styling.css" />
     <Content Include="images\work_in_progress.jpg" />
+    <Content Include="prefs\prefsteg.aspx" />
     <Content Include="prefs\prefsubscription.aspx" />
     <Content Include="prefs\prefgeneral.aspx" />
     <Content Include="prefs\prefprofile.aspx" />
@@ -448,6 +450,13 @@
     </Compile>
     <Compile Include="filestore\FileAccess.cs" />
     <Compile Include="filestore\LinkShare.cs" />
+    <Compile Include="inv.aspx.cs">
+      <DependentUpon>inv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inv.aspx.designer.cs">
+      <DependentUpon>inv.aspx</DependentUpon>
+    </Compile>
     <Compile Include="prefs\prefotpsetup.aspx.cs">
       <DependentUpon>prefotpsetup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -502,6 +511,13 @@
     </Compile>
     <Compile Include="Auth\Classes\Exceptions.cs" />
     <Compile Include="filestore\blowfish.cs" />
+    <Compile Include="prefs\prefsteg.aspx.cs">
+      <DependentUpon>prefsteg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="prefs\prefsteg.aspx.designer.cs">
+      <DependentUpon>prefsteg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="prefs\prefsubscription.aspx.cs">
       <DependentUpon>prefsubscription.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

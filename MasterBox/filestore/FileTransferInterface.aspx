@@ -28,6 +28,7 @@
 </asp:Content>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+
     <!--Upload Modal -->
     <div id="uploadModel" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -144,7 +145,7 @@
         </div>
     </div>
 
-    <!--Open File Modal -->
+    <!--Open File in MasterFolder Modal -->
     <div id="fileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -163,7 +164,7 @@
                     <asp:Label ID="LblFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFileSize" runat="server"></asp:Label>
+                    <asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -174,7 +175,7 @@
         </div>
     </div>
 
-    <!--Open Folder File Modal -->
+    <!--Open File in Folder Modal -->
     <div id="folderfileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -195,7 +196,7 @@
                     <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> KB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -206,7 +207,7 @@
         </div>
     </div>
 
-     <!--Open File Name Modal -->
+     <!--Open Checking of File Name Modal -->
      <div id="filenameModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -215,18 +216,21 @@
                     <h4 class="modal-title">Upload</h4>
                 </div>
                 <div class="modal-body">
-                    <p>File upload already exist, do you wish to override it or rename?</p>
+                    <p>File upload already exist, do you wish to overwrite it or upload new?</p>
                     <asp:RadioButtonList ID="RdBtnFileName" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
-                        <asp:ListItem Text="Override" Value="override" />
+                        <asp:ListItem Text="Override" Value="overwrite" />
                     </asp:RadioButtonList>
+                    <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
-                    <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <asp:TextBox ID="TxtBoxCurrentFileName" runat="server" Enabled="false"></asp:TextBox>
+                    <br />
+                    <br />
                     <span>New file name: </span>
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnUploadFolderFile" OnClick="BtnUploadFolderFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                    <asp:Button ID="BtnUploadFile" OnClick="BtnUploadFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
                 </div>
             </div>
         </div>
@@ -378,6 +382,21 @@
                     return true;
                 }
             });
-        });      
+        });  
+
+        // To validate file name used
+        $(document).ready(function () {
+            $('#<%=BtnUploadFile.ClientID %>').click(function (event) {
+                var currentName = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
+                var changeName = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value
+                if (currentName == changeName) {
+                    alert("Name specified in use, please try again");
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        });
+        
     </script>
 </asp:Content>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" %>
+﻿<%@ Page Language="C#" CodeBehind="signout.aspx.cs" Inherits="MasterBox.Auth.SignOut" %>
 
 <html>
 <head>
