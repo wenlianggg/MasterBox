@@ -6,6 +6,7 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Web.UI;
+using System.Web.Services;
 
 namespace MasterBox
 {
@@ -129,7 +130,7 @@ namespace MasterBox
                     else
                     {
                         // Same file name                
-                        LblFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
+                        TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
 
@@ -201,9 +202,9 @@ namespace MasterBox
         }
 
         // Check file name
-        protected void BtnUploadFolderFile_Click(object sender, EventArgs e)
+        protected void BtnUploadFile_Click(object sender, EventArgs e)
         {
-            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, LblFileNameCheck.Text);
+            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, TxtBoxCurrentFileName.Text);
             System.Diagnostics.Debug.WriteLine("File name: " + checkfile);
             string value = RdBtnFileName.SelectedValue;
             if (value == "change")

@@ -223,14 +223,14 @@
                     </asp:RadioButtonList>
                     <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
-                    <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <asp:TextBox ID="TxtBoxCurrentFileName" runat="server" Enabled="false"></asp:TextBox>
                     <br />
                     <br />
                     <span>New file name: </span>
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnUploadFolderFile" OnClick="BtnUploadFolderFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                    <asp:Button ID="BtnUploadFile" OnClick="BtnUploadFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
                 </div>
             </div>
         </div>
@@ -386,9 +386,8 @@
 
         // To validate file name used
         $(document).ready(function () {
-            $('#<%=BtnUploadFolderFile.ClientID %>').click(function (event) {
-                alert("Hello");
-                var currentName = document.getElementById('<%=LblFileNameCheck.ClientID%>').value;
+            $('#<%=BtnUploadFile.ClientID %>').click(function (event) {
+                var currentName = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
                 var changeName = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value
                 if (currentName == changeName) {
                     alert("Name specified in use, please try again");

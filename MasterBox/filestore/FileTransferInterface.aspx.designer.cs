@@ -292,13 +292,13 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label LblFileIDCheck;
         
         /// <summary>
-        /// LblFileNameCheck control.
+        /// TxtBoxCurrentFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblFileNameCheck;
+        protected global::System.Web.UI.WebControls.TextBox TxtBoxCurrentFileName;
         
         /// <summary>
         /// TxtBoxFileNameCheck control.
@@ -310,13 +310,13 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.TextBox TxtBoxFileNameCheck;
         
         /// <summary>
-        /// BtnUploadFolderFile control.
+        /// BtnUploadFile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnUploadFolderFile;
+        protected global::System.Web.UI.WebControls.Button BtnUploadFile;
         
         /// <summary>
         /// LblFolderID control.
