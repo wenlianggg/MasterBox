@@ -57,8 +57,7 @@ namespace MasterBox.Auth {
 			return GetUser(ConvertToId(username, memberName));
 		}
 
-		internal static User CreateUser(string username, string password, string firstname, string lastname,
-								DateTime birthdate, string email, bool isVerified) {
+		internal static User CreateUser(string username, string password, string firstname, string lastname, string email, bool isVerified) {
 			User target;
 			if (Exists(username)) {
 				throw new UserAlreadyExistsException();
