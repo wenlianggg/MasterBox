@@ -388,5 +388,13 @@ namespace MasterBox.Auth {
             return data;
         }
 
+        internal SqlDataReader SqlGetCouponReader()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_coupon", sqlConn);
+            cmd.Prepare();
+            SqlDataReader sldr = cmd.ExecuteReader();
+            return sldr;
+        }
+
     }
 }

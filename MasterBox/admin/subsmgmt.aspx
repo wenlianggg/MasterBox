@@ -10,14 +10,13 @@
     <div class="panel panel-info">
         <div class="panel-heading">Coupons Management</div>
         <div class="panel-body">
-            <asp:GridView runat="server" ID="CouponTable" CssClass="table" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="Selected">
+            <asp:GridView runat="server" ID="CouponTable" CssClass="table" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="Selected" EnablePersistedSelection="false">
                    <selectedrowstyle backcolor="LightCyan" forecolor="DarkBlue" font-bold="true"/>
                 <Columns>
                     <asp:CommandField ShowSelectButton="true" HeaderText="Select Coupon" SelectText="Select"/>
                 </Columns>
             </asp:GridView>
-            <asp:Label ID="Couponval" runat="server"></asp:Label>
-            <asp:TextBox ID="CouponValue" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:TextBox ID="CouponValue" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
              <asp:DropDownList ID="Days" CssClass="form-control" runat="server">
                 <asp:ListItem Value="0">No. Of Days</asp:ListItem>
                 <asp:ListItem>1</asp:ListItem>
@@ -46,8 +45,9 @@
                 <asp:ListItem>24</asp:ListItem>
                 <asp:ListItem>25</asp:ListItem>
             </asp:DropDownList>
+            <asp:Label ID="Couponlbl" runat="server" CssClass="label label-danger"></asp:Label>
             <br />
-            <asp:Button runat="server" ID="Generate" Text="Generate A Coupon Code" CssClass="btn btn-default-blue" OnClick="GenerateCode" CausesValidation="false"/>
+            <asp:Button runat="server" ID="Generate" Text="Generate A Coupon Code" CssClass="btn btn-default-blue" OnClick="GenerateCode" CausesValidation="false" Style="margin-top: 5px; margin-bottom: 5px;"/>
             <div class="CancelAdd" style="margin-top: 5px; margin-bottom: 5px;">
                 <asp:Button runat="server" ID="Add" Text="Add Coupon!" CssClass="btn btn-success" OnClick="AddCoupon"/>
                 <asp:Button runat="server" ID="Cancel" Text="Delete Coupon!" CssClass="btn btn-danger" CausesValidation="false"/>
