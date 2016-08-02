@@ -22,8 +22,9 @@ namespace MasterBox.Auth {
 
         protected void ConfirmOTP(object sender, EventArgs e)  {
 			if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text)) {
-				Session.Abandon();
-				MBProvider.Instance.LoginSuccess(usr, (bool) Session["StayLoggedIn"]);
+                Session["IsPasswordAuthorized"] = null;
+                Session["UserEntity"] = null;
+                MBProvider.Instance.LoginSuccess(usr, (bool) Session["StayLoggedIn"]);
 			} else {
 				Msg.Text = "Incorrect OTP entered!";
 			}

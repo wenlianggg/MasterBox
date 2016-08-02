@@ -18,6 +18,9 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+        function checkFileName(){
+            alert("File name exist!, please try again.");
+        }
 
     </script>
 </asp:Content>
@@ -28,6 +31,7 @@
 </asp:Content>
 
 <asp:Content ID="LoginIn" ContentPlaceHolderID="InternalContent" runat="server">
+
     <!--Upload Modal -->
     <div id="uploadModel" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -144,7 +148,7 @@
         </div>
     </div>
 
-    <!--Open File Modal -->
+    <!--Open File in MasterFolder Modal -->
     <div id="fileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,7 +178,7 @@
         </div>
     </div>
 
-    <!--Open Folder File Modal -->
+    <!--Open File in Folder Modal -->
     <div id="folderfileModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -206,7 +210,7 @@
         </div>
     </div>
 
-     <!--Open File Name Modal -->
+     <!--Open Checking of File Name Modal -->
      <div id="filenameModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -220,8 +224,10 @@
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
                         <asp:ListItem Text="Override" Value="override" />
                     </asp:RadioButtonList>
+                    <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
                     <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <br />
                     <span>New file name: </span>
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
                 </div>
@@ -378,6 +384,7 @@
                     return true;
                 }
             });
-        });      
+        });  
+        
     </script>
 </asp:Content>

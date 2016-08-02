@@ -33,7 +33,8 @@
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif" 
                                 CommandName="PopUpModal"
-                                OnCommand="PayPalBtn10MB_Command"
+                                OnCommand="PayPalBtn_Command"
+                                CausesValidation="false"
                                /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
@@ -44,6 +45,9 @@
                                 ItemID="VDDFG6SSMYVLC"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                CommandName="PopUpModal"
+                                OnCommand="PayPalBtn_Command"
+                                CausesValidation="false"
                                 /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
@@ -54,6 +58,9 @@
                                 ItemID="M66YBRV8N2NBU"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                CommandName="PopUpModal"
+                                OnCommand="PayPalBtn_Command"
+                                CausesValidation="false"
                                 /></td>
                         <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
                             <br />
@@ -64,6 +71,9 @@
                                 ItemID="E3SP9YWU962SQ"
                                 runat="server"
                                 ImageUrl="https://www.paypalobjects.com/en_GB/i/btn/btn_buynow_LG.gif"
+                                CommandName="PopUpModal"
+                                OnCommand="PayPalBtn_Command"
+                                CausesValidation="false"
                                  />
                         </td>
                     </tr>
@@ -83,20 +93,27 @@
                     <h4 class="modal-title">Please enter your OTP to continue</h4>
                 </div>
                 <div class="modal-body">
-                    <asp:TextBox runat="server" class="OTPValue"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="OTPValue" CssClass="form-control"></asp:TextBox>
                     <br />                    
-                    <asp:Label runat="server" ID="businesslbl"></asp:Label>
+                    <asp:Label runat="server">Business ID: </asp:Label><asp:Label runat="server" ID="businesslbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="itemNamelbl"></asp:Label>
+                    <asp:Label runat="server">Item Selected in MBs: </asp:Label><asp:Label runat="server" ID="itemNamelbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="itemAmountlbl"></asp:Label>
+                    <asp:Label runat="server">Item Price (SGD): </asp:Label><asp:Label runat="server" ID="itemAmountlbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="currencyCodelbl"></asp:Label>
+                    <asp:Label runat="server">Item ID: </asp:Label><asp:Label runat="server" ID="itemIdlbl"></asp:Label>
                     <br />
-                    <asp:Label runat="server" ID="itemIdlbl"></asp:Label>
+                    <asp:Label ID="Msg" ForeColor="red" runat="server" />
+                    <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server"
+							ControlToValidate="OTPValue"
+							ValidatorGroup="valGroup1"
+							ErrorMessage="Please ensure your OTP is entered."
+							ForeColor="Red">
+						</asp:RequiredFieldValidator>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button runat="server" class="btn btn-default" Text="Submit" OnCommand="PayPalBtn10MB_Command" CommandName="PayForMember"/>
+                    <asp:Button ID="cancel" runat="server" class="btn btn-warning" Text="Cancel" data-dismiss="modal" CausesValidation="false"/>
+                    <asp:Button runat="server" class="btn btn-success" Text="Submit" OnCommand="PayPalBtn_Command" CommandName="PayForMember"/>
                 </div>
             </div>
 
