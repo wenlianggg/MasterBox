@@ -16,8 +16,8 @@
 			</p>
 			<strong>Select an image to be uploaded:</strong><br />
 			<asp:FileUpload ID="UploadControl"  runat="server" AllowMultiple="false" accept="image/jpeg, image/png, image/bmp, image/gif" /><br />
-			<asp:Button CssClass="btn btn-success" ID="Submit" Text="Upload" OnClick="SubmitFile" runat="server" />
-
+			<asp:Button CssClass="btn btn-primary" ID="Submit" Text="Upload" OnClick="SubmitFile" runat="server" />
+			<asp:Button CssClass="btn btn-success" ID="Download" Text="Download" OnClick="DownloadImage" runat="server" />
 			<br />
             <asp:Label ID="Msg" runat="server" ForeColor="red"/><br />
             <asp:Label ID="HashMsg" runat="server" ForeColor="green"/>

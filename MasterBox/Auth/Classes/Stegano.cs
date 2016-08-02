@@ -12,27 +12,27 @@ namespace MasterBox.Auth {
     public class Stegano : IDisposable {
 
         private Bitmap _bmp;
-        private GraphicsUnit unit = GraphicsUnit.Pixel;
-        private string _format;
+        private GraphicsUnit Unit = GraphicsUnit.Pixel;
+        public string Format { get; set; }
 
         // Constructor
         internal Stegano(Stream imgstream, string format) {
             Image img = Image.FromStream(imgstream);
             Bitmap bmp = new Bitmap(img);
             _bmp = bmp;
-            _format = format;
+			Format = format;
         }
 
         internal MemoryStream ImageData {
             get {
                 MemoryStream stream = new MemoryStream();
-                if (_format == "image/jpeg") {
+                if (Format == "image/jpeg") {
                     _bmp.Save(stream, ImageFormat.Jpeg);
-                } else if (_format == "image/png") {
+                } else if (Format == "image/png") {
                     _bmp.Save(stream, ImageFormat.Png);
-                } else if (_format == "image/gif") {
+                } else if (Format == "image/gif") {
                     _bmp.Save(stream, ImageFormat.Gif);
-                } else if (_format == "image/bmp") {
+                } else if (Format == "image/bmp") {
                     _bmp.Save(stream, ImageFormat.Bmp);
                 }
                 stream.Position = 0;
@@ -43,8 +43,10 @@ namespace MasterBox.Auth {
 
         // Instance methods
         internal string JumblePixels() {
-            ScaleImage(3840, 2160); // Max size 4K image
-            RectangleF rf = _bmp.GetBounds(ref unit);
+			RectangleF rf = _bmp.GetBounds(ref Unit);
+			if (rf.Height > 1080 || rf.Width > 1920)
+				ScaleImage(1920, 1080); // Make sure all images are no more than 1080p
+            rf = _bmp.GetBounds(ref Unit);
             Random rnd = new Random();
             int iterations = GenerateInt(30, 200, rnd);
             for (int i = 0; i < iterations; i++) {
@@ -53,17 +55,15 @@ namespace MasterBox.Auth {
                 Color clr = _bmp.GetPixel(xcoord, ycoord);
                 Color newclr = Color.FromArgb(clr.R, clr.G, clr.B);
                 _bmp.SetPixel(xcoord, ycoord, GetNearRgb(clr.R, clr.B, clr.G, rnd));
-            }
-            return BitmapGetHash(_bmp);
+			}
+            return BitmapGetHash();
         }
 
-        internal string BitmapGetHash(Bitmap img) {
+        internal string BitmapGetHash() {
             byte[] toBeHashed;
-            if (img == null)
-                return "";
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream()) {
-                bf.Serialize(ms, img);
+                bf.Serialize(ms, _bmp);
                 toBeHashed = ms.ToArray();
             }
             using (SHA512 sha = new SHA512Managed()) {
