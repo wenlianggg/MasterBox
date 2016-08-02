@@ -164,7 +164,7 @@
                     <asp:Label ID="LblFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFileSize" runat="server"></asp:Label>
+                    <asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -196,7 +196,7 @@
                     <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> KB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -216,14 +216,15 @@
                     <h4 class="modal-title">Upload</h4>
                 </div>
                 <div class="modal-body">
-                    <p>File upload already exist, do you wish to override it or rename?</p>
+                    <p>File upload already exist, do you wish to overwrite it or upload new?</p>
                     <asp:RadioButtonList ID="RdBtnFileName" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
-                        <asp:ListItem Text="Override" Value="override" />
+                        <asp:ListItem Text="Override" Value="overwrite" />
                     </asp:RadioButtonList>
                     <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
                     <asp:Label ID="LblFileNameCheck" runat="server"></asp:Label>
+                    <br />
                     <br />
                     <span>New file name: </span>
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
@@ -382,6 +383,21 @@
                 }
             });
         });  
+
+        // To validate file name used
+        $(document).ready(function () {
+            $('#<%=BtnUploadFolderFile.ClientID %>').click(function (event) {
+                alert("Hello");
+                var currentName = document.getElementById('<%=LblFileNameCheck.ClientID%>').value;
+                var changeName = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value
+                if (currentName == changeName) {
+                    alert("Name specified in use, please try again");
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        });
         
     </script>
 </asp:Content>
