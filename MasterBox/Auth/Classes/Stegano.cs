@@ -9,7 +9,8 @@ using System.IO;
 using System.Drawing.Imaging;
 
 namespace MasterBox.Auth {
-    public class Stegano : IDisposable {
+	[Serializable]
+	public class Stegano : IDisposable {
 
         private Bitmap _bmp;
         private GraphicsUnit Unit = GraphicsUnit.Pixel;
@@ -26,13 +27,13 @@ namespace MasterBox.Auth {
         internal MemoryStream ImageData {
             get {
                 MemoryStream stream = new MemoryStream();
-                if (Format == "image/jpeg") {
+                if (Format.Equals("image/jpeg")) {
                     _bmp.Save(stream, ImageFormat.Jpeg);
-                } else if (Format == "image/png") {
+                } else if (Format.Equals("image/png")) {
                     _bmp.Save(stream, ImageFormat.Png);
-                } else if (Format == "image/gif") {
+                } else if (Format.Equals("image/gif")) {
                     _bmp.Save(stream, ImageFormat.Gif);
-                } else if (Format == "image/bmp") {
+                } else if (Format.Equals("image/bmp")) {
                     _bmp.Save(stream, ImageFormat.Bmp);
                 }
                 stream.Position = 0;
@@ -83,6 +84,7 @@ namespace MasterBox.Auth {
             B = GetNearSingleColor(B, rnd);
            return Color.FromArgb(R, G, B);
         }
+
         private void ScaleImage(int maxWidth, int maxHeight) {
             // Reference: https://stackoverflow.com/questions/6501797/resize-image-proportionally-with-maxheight-and-maxwidth-constraints
             var ratioX = (double)maxWidth / _bmp.Width;

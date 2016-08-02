@@ -23,6 +23,7 @@ namespace MasterBox.Prefs {
 					string filename = Path.GetFileName(UploadControl.FileName);
 					string hashvalue = steg.BitmapGetHash();
 					ViewState["filename"] = filename;
+					ViewState["steg"] = steg;
 					HashMsg.Text = hashvalue;
 					Msg.ForeColor = Color.Green;
 					Msg.Text = "Upload status: File uploaded!";
