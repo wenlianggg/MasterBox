@@ -1,6 +1,7 @@
 ﻿using MasterBox.Auth;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,8 +14,10 @@ namespace MasterBox.Admin {
 
         protected void Page_Load(object sender, EventArgs e) {
             // Load in coupon table
+            if (!IsPostBack) { 
             CouponTable.DataSource = da.SqlGetAllCoupons();
             CouponTable.DataBind();
+            }
         }
 
         protected void GenerateCode(object sender, EventArgs e)
@@ -66,20 +69,41 @@ namespace MasterBox.Admin {
         protected void Selected(object sender, EventArgs e)
         {
             GridViewRow row = CouponTable.SelectedRow;
-            Couponval.Text = row.Cells[1].Text;
+            Couponlbl.Text = "Selected Coupon Number: " + row.Cells[1].Text;
         }
 
         protected void AddCoupon(object sender, EventArgs e)
-        {
+        {      
             if (Convert.ToInt32(Days.SelectedItem.Value) != 0)
             {
-                da.SqlAddCoupon(CouponValue.Text, Convert.ToInt32(Days.SelectedItem.Value));
-                CouponTable.DataSource = da.SqlGetAllCoupons();
-                CouponTable.DataBind();
+                if (DuplicateCode().Equals(false))
+                {
+                    da.SqlAddCoupon(CouponValue.Text, Convert.ToInt32(Days.SelectedItem.Value));
+                    CouponTable.DataSource = da.SqlGetAllCoupons();
+                    CouponTable.DataBind();
+                }
+                else
+                {
+                    Couponlbl.Text = "Duplicate coupon detected! Please generate a new coupon code!";
+                }
             }else
             {
-                Couponval.Text = "Number of days has not been added!";
+                Couponlbl.Text = "Number of days to be given has not been chosen!";
             }
+        }
+
+        protected bool DuplicateCode()
+        {
+            SqlDataReader rs = da.SqlGetCouponReader();
+            while (rs.Read())
+            {
+                if (rs["couponcode"].Equals(CouponValue.Text))
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
     }
 }
