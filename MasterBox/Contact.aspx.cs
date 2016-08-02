@@ -20,7 +20,7 @@ namespace MasterBox
             MailMessage Msg = new MailMessage();
             Msg.From = new MailAddress("masterboxnoreply@gmail.com");
             Msg.To.Add(txtToMail.Text);
-            Msg.Subject = txtSubject.Text + "(From: " + txtFrom.Text + ")";
+            Msg.Subject = txtSubject.Text + "  ( From: " + txtFrom.Text + " ) ";
             //Msg.Subject = txtSubject.Text;
             Msg.Body = txtMessage.Text;
             Msg.IsBodyHtml = true;
