@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
+using System.Web;
 using System.Web.Security;
 
 /// Author: Goh Wen Liang (154473G) 
@@ -31,6 +32,7 @@ namespace MasterBox.Auth {
 		private DateTime _regStamp;
 		private string _aesKey;
 		private string _aesIV;
+		private bool _isAdmin;
 
 		internal static User GetUser(int userid) {
 			User target;
@@ -98,6 +100,7 @@ namespace MasterBox.Auth {
 			_mbrExpiry = DateTime.Today.AddYears(100);
             _aesKey = UserCrypto.GenerateEntropy(32);
 			_aesIV = UserCrypto.GenerateEntropy(16);
+			_isAdmin = false;
 			UpdateDB();
 			RefreshFields();
 		}
@@ -108,7 +111,7 @@ namespace MasterBox.Auth {
                 using (UserCrypto uc = new UserCrypto(_aesIV)) {
                     using (SqlDataReader sqldr = da.SqlGetUser(_userid))
                         if (sqldr.Read()) {
-                            _username = sqldr["username"].ToString();
+                            _username = sqldr["username"] as string;
                             if (sqldr["fNameEnc"] != DBNull.Value)
                                 _fName = uc.Decrypt((byte[])sqldr["fNameEnc"]);
                             if (sqldr["lNameEnc"] != DBNull.Value)
@@ -124,6 +127,7 @@ namespace MasterBox.Auth {
                             if (sqldr["aesKey"] != DBNull.Value)
                                 _aesKey = uc.Decrypt((byte[])sqldr["aesKey"]);
                             _aesIV = sqldr["aesIV"].ToString();
+							_isAdmin = (bool) sqldr["isAdmin"];
                         }
                 }
 				return true;
@@ -144,7 +148,7 @@ namespace MasterBox.Auth {
                 return da.SqlUpdateAllUserValues(userid: _userid, username: _username,
                     fNameEnc: fNameEnc, lNameEnc: lNameEnc, dob: _dob, emailEnc: emailEnc,
                     verified: _verified, mbrType: _mbrType, mbrStart: _mbrStart, mbrExpiry: _mbrExpiry,
-                    regStamp: _regStamp, aesKeyEnc: aesKeyEnc, aesIV: _aesIV);
+                    regStamp: _regStamp, aesKeyEnc: aesKeyEnc, aesIV: _aesIV, isAdmin: _isAdmin);
             }
 		}
 
@@ -161,19 +165,15 @@ namespace MasterBox.Auth {
 		// ======================
 
 		protected internal static int ConvertToId(string username, [CallerMemberName]string memberName = "") {
-			using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
-				return da.SqlGetUserId(username);
+			try {
+				using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
+					return da.SqlGetUserId(username);
+				}
+			} catch (UserNotFoundException) {
+				if (HttpContext.Current != null)
+					HttpContext.Current.Response.Redirect("~/Auth/signin.aspx");
 			}
-		}
-
-		protected internal static string ConvertToUname(string username) {
-			using (DataAccess da = new DataAccess()) {
-				SqlDataReader sqldr = da.SqlGetUser(username);
-				if (sqldr.Read())
-					return sqldr["username"].ToString();
-				else
-					return "";
-			}
+			return 0;
 		}
 
 		protected internal bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
@@ -311,11 +311,17 @@ namespace MasterBox.Auth {
 		}
 
 		protected internal bool IsAdmin {
-            get {
-                if (_mbrType == -1) return true;
-                else return false;
-            }
-        }
+			get {
+				RefreshFields();
+				return _isAdmin;
+			}
+			set {
+				UpdateValue("isAdmin", value, SqlDbType.Bit, 0);
+				RefreshFields();
+			}
+		}
+
+
 	}
 
 }

@@ -1,26 +1,50 @@
-﻿<%@ Page Title="Image Based Key" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsteg.aspx.cs" Inherits="MasterBox.Prefs.Steg" %>
+﻿<%@ Page Title="Image Key" Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="prefsteg.aspx.cs" Inherits="MasterBox.Prefs.Steg" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="Preferences" runat="server">
 	<div class="page-header">
-          <h1><%: Page.Title %>
-              <small>Use an image based key for resetting passwords</small>
-          </h1>
-    </div>
-	<div class="panel panel-primary">
+		<h1><%: Page.Title %>
+			<small>Use an image based key for resetting passwords</small>
+		</h1>
+	</div>
+	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h3 class="panel-title">Image Based Key for Password Resetting <i class="fa fa-picture-o" aria-hidden="true"></i></h3>
+			<h3 class="panel-title"><i class="fa fa-picture-o" aria-hidden="true"></i> Image Based Key for Password Resetting</h3>
 		</div>
 		<div class="panel-body">
-			<strong>Description</strong><br />
-			<p>Imaged based key uses an image and modifies it to become your password reset key.<br />
-				With your password reset image, you can then reset your password with a new password sent to your email.
-			</p>
-			<strong>Select an image to be uploaded:</strong><br />
-			<asp:FileUpload ID="UploadControl"  runat="server" AllowMultiple="false" accept="image/jpeg, image/png, image/bmp, image/gif" /><br />
-			<asp:Button CssClass="btn btn-primary" ID="Submit" Text="Upload" OnClick="SubmitFile" runat="server" />
-			<asp:Button CssClass="btn btn-success" ID="Download" Text="Download" OnClick="DownloadImage" runat="server" />
+			<strong>Use an image as your backup password reset key</strong><br />
+			<ol>
+				<li>Upload an image to be modified randomly, but look exactly the same.</li>
+				<li>Download the image and save it in a safe location.</li>
+				<li>Upload the modified image and set it as your Image Key.</li>
+				<li>Use the Image Key in case you forget your password, 2FA will still be required.</li>
+				<li>Verify that your Image Key is valid using our verification tool.</li>
+			</ol>
 			<br />
-            <asp:Label ID="Msg" runat="server" ForeColor="red"/><br />
-            <asp:Label ID="HashMsg" runat="server" ForeColor="green"/>
+			<strong>Select an image to be uploaded:</strong><br />
+			<asp:FileUpload ID="UploadControl" runat="server" AllowMultiple="false" accept="image/jpeg, image/png, image/bmp, image/gif" />
+			<br />
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Key Setup</h3>
+				</div>
+				<div class="panel-body">
+					<asp:Button CssClass="btn btn-default" ID="SubmitForStegSetKey" Text="Upload, Set as Key" OnClick="UploadDoStegSetKey" runat="server" />
+					<asp:Button CssClass="btn btn-primary" ID="DownloadFromSteg" Text="Download Image Key" OnClick="DownloadImage" Visible="false" runat="server" />
+				</div>
+			</div>
+
+			<div class="panel panel-default" runat="server" ID="HasExisting">
+				<div class="panel-heading">
+					<h3 class="panel-title">Verify or Disable</h3>
+				</div>
+				<div class="panel-body">
+					<asp:Button CssClass="btn btn-success" ID="VerifyWithKey" Text="Verify with Key" OnClick="SubmitValidateImg" runat="server" />
+					<asp:Button CssClass="btn btn-warning" ID="DisableKey" Text="Disable Image Key" OnClick="DisableImageKey" runat="server" />
+				</div>
+			</div>
+			<asp:Label ID="Msg" runat="server" ForeColor="red" /><br />
+			<asp:Label ID="HashMsg1" runat="server" ForeColor="green" /><br />
+			<asp:Label ID="HashMsg2" runat="server" ForeColor="green" />
 		</div>
 	</div>
 </asp:Content>
