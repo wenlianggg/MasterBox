@@ -7,7 +7,7 @@
     </div>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">Image Based Key for Password Resetting</h3>
+			<h3 class="panel-title">Image Based Key for Password Resetting <i class="fa fa-picture-o" aria-hidden="true"></i></h3>
 		</div>
 		<div class="panel-body">
 			<strong>Description</strong><br />
@@ -18,7 +18,9 @@
 			<asp:FileUpload ID="UploadControl"  runat="server" AllowMultiple="false" accept="image/jpeg, image/png, image/bmp, image/gif" /><br />
 			<asp:Button CssClass="btn btn-success" ID="Submit" Text="Upload" OnClick="SubmitFile" runat="server" />
 
-			<br /><asp:Label ID="Msg" runat="server" ForeColor="red"/><br />
+			<br />
+            <asp:Label ID="Msg" runat="server" ForeColor="red"/><br />
+            <asp:Label ID="HashMsg" runat="server" ForeColor="green"/>
 		</div>
 	</div>
 </asp:Content>

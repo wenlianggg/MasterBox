@@ -20,13 +20,24 @@ namespace MasterBox.Prefs {
 							UploadControl.PostedFile.ContentType == "image/png" ||
 							UploadControl.PostedFile.ContentType == "image/bmp" ||
 							UploadControl.PostedFile.ContentType == "image/gif") {
-							if (UploadControl.PostedFile.ContentLength < 1024000) {
-								string filename = Path.GetFileName(UploadControl.FileName);
-								Image img = Image.FromStream(UploadControl.FileContent);
-								string hashvalue;
-								Stegano.JumblePixels(img, out hashvalue);
-								Msg.ForeColor = Color.Green;
-								Msg.Text = "Upload status: File uploaded! " + hashvalue;
+							if (UploadControl.PostedFile.ContentLength < 10240000) {
+                                using (Stegano steg = new Stegano(UploadControl.FileContent,
+                                                                  UploadControl.PostedFile.ContentType)) {
+                                    string filename = Path.GetFileName(UploadControl.FileName);
+                                    string hashvalue = steg.JumblePixels();
+                                    HashMsg.Text = hashvalue;
+                                    Response.ClearContent();
+                                    Response.ContentType = UploadControl.PostedFile.ContentType;
+                                    Response.AddHeader("Content-Disposition", "attachment;filename=\"" + filename + "\"");
+                                    Response.AddHeader("Content-Length", steg.ImageData.ToArray().Length.ToString());
+                                    Response.BinaryWrite(steg.ImageData.ToArray());
+                                    Response.Flush();
+                                    Response.Close();
+                                    Msg.ForeColor = Color.Green;
+                                    Msg.Text = "Upload status: File uploaded!";
+                                    HashMsg.Text = hashvalue;
+
+                            }
 							} else
 								Msg.Text = "Upload status: The file has to be less than 1MB!";
 						} else

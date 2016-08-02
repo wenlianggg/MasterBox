@@ -39,9 +39,10 @@ namespace MasterBox.Auth {
 
 		public void Dispose() {
 			Dispose(true);
-		}
+            GC.SuppressFinalize(this);
+        }
 
-		protected virtual void Dispose(bool disposing) {
+        protected virtual void Dispose(bool disposing) {
 			_globalKey = null;
 		}
 
