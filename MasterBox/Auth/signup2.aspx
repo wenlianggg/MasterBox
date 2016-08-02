@@ -20,11 +20,7 @@
 			<h3 class="panel-title">Registration Successful</h3>
 		</div>
 	</div>
-			<div class="alert alert-info" role="alert">
-			Please verify your email address!
-			<br />An email has been sent to your email at ______@______.___
-			<br />Verification email will only be valid for 24 hours
-		</div>
+
 	<p>
 		<asp:Label ID="Msg" ForeColor="red" runat="server" />
 	</p>
