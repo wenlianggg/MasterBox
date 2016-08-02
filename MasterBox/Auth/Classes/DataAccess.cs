@@ -162,7 +162,8 @@ namespace MasterBox.Auth {
 											DateTime dob, byte[] emailEnc,
 											bool verified, int mbrType,
 											DateTime mbrStart, DateTime mbrExpiry,
-											DateTime regStamp, byte[] aesKeyEnc, string aesIV
+											DateTime regStamp, byte[] aesKeyEnc,
+											string aesIV, bool isAdmin
 											) {
 			if (userid == 0) userid = SqlGetUserId(username);
 
@@ -178,7 +179,8 @@ namespace MasterBox.Auth {
 				"mbrExpiry = @mbrExpiry," +
 				"regStamp = @regStamp, " +
                 "aesKey = @aesKey, " + 
-				"aesIV = @aesIV " +
+				"aesIV = @aesIV, " +
+				"isAdmin = @isAdmin" +
 				"WHERE userid = @userid;",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@fNameEnc", SqlDbType.VarBinary, 200));
@@ -193,6 +195,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@aesIV", SqlDbType.VarChar, 40));
 			cmd.Parameters.Add(new SqlParameter("@aesKey", SqlDbType.VarBinary, 100));
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+			cmd.Parameters.Add(new SqlParameter("@isAdmin", SqlDbType.Bit, 0));
 			cmd.Prepare();
 
 			cmd.Parameters["@fNameEnc"].Value = fNameEnc;
@@ -206,6 +209,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@regStamp"].Value = regStamp;
 			cmd.Parameters["@aesKey"].Value = aesKeyEnc;
 			cmd.Parameters["@aesIV"].Value = aesIV;
+			cmd.Parameters["@isAdmin"].Value = isAdmin;
 			cmd.Parameters["@userid"].Value = userid;
 
 			return cmd.ExecuteNonQuery();
@@ -228,8 +232,11 @@ namespace MasterBox.Auth {
                 cmd.Parameters.Add(new SqlParameter("@steghash", SqlDbType.VarChar, 88));
                 cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
                 cmd.Prepare();
-                cmd.Parameters["@steghash"].Value = hash;
-                cmd.Parameters["@userid"].Value = userid;
+				if (hash != null)
+					cmd.Parameters["@steghash"].Value = hash;
+				else
+					cmd.Parameters["@steghash"].Value = DBNull.Value;
+				cmd.Parameters["@userid"].Value = userid;
 
                 return cmd.ExecuteNonQuery();
             } else {

@@ -16,6 +16,22 @@ namespace MasterBox.Auth {
         private GraphicsUnit Unit = GraphicsUnit.Pixel;
         public string Format { get; set; }
 
+		public ImageFormat ImgFormat {
+			get {
+				if (Format.Equals("image/jpeg")) {
+					return ImageFormat.Jpeg;
+				} else if (Format.Equals("image/png")) {
+					return ImageFormat.Png;
+				} else if (Format.Equals("image/gif")) {
+					return ImageFormat.Gif;
+				} else if (Format.Equals("image/bmp")) {
+					return ImageFormat.Bmp;
+				} else {
+					return null;
+				}
+			}
+		}
+
         // Constructor
         internal Stegano(Stream imgstream, string format) {
             Image img = Image.FromStream(imgstream);
@@ -27,16 +43,8 @@ namespace MasterBox.Auth {
         internal MemoryStream ImageData {
             get {
                 MemoryStream stream = new MemoryStream();
-                if (Format.Equals("image/jpeg")) {
-                    _bmp.Save(stream, ImageFormat.Jpeg);
-                } else if (Format.Equals("image/png")) {
-                    _bmp.Save(stream, ImageFormat.Png);
-                } else if (Format.Equals("image/gif")) {
-                    _bmp.Save(stream, ImageFormat.Gif);
-                } else if (Format.Equals("image/bmp")) {
-                    _bmp.Save(stream, ImageFormat.Bmp);
-                }
-                stream.Position = 0;
+				_bmp.Save(stream, ImgFormat);
+				stream.Position = 0;
                 return stream;
             }
         }
@@ -55,20 +63,37 @@ namespace MasterBox.Auth {
                 int ycoord = GenerateInt(0, (int) rf.Height, rnd);
                 Color clr = _bmp.GetPixel(xcoord, ycoord);
                 Color newclr = Color.FromArgb(clr.R, clr.G, clr.B);
+                //_bmp.SetPixel(xcoord, ycoord, Color.White);
                 _bmp.SetPixel(xcoord, ycoord, GetNearRgb(clr.R, clr.B, clr.G, rnd));
 			}
             return BitmapGetHash();
         }
 
-        internal string BitmapGetHash() {
-            byte[] toBeHashed;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream()) {
-                bf.Serialize(ms, _bmp);
-                toBeHashed = ms.ToArray();
-            }
+		internal bool ValidateHash(int userid) {
+			using (DataAccess da = new DataAccess()) {
+				string dbhash = da.SqlGetImageHash(userid);
+				System.Diagnostics.Debug.WriteLine("\n" + dbhash);
+				System.Diagnostics.Debug.WriteLine(BitmapGetHash());
+				if (dbhash.Equals(BitmapGetHash())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		internal bool SetForUser(int userid) {
+			using (DataAccess da = new DataAccess()) {
+				if (da.SqlSetImageHash(userid, BitmapGetHash()) == 1)
+					return true;
+				else
+					return false;
+			}
+		}
+
+		internal string BitmapGetHash() {
             using (SHA512 sha = new SHA512Managed()) {
-				byte[] hashresult = sha.ComputeHash(toBeHashed);
+				byte[] hashresult = sha.ComputeHash(ImageData);
                 return Convert.ToBase64String(hashresult);
             }
         }
@@ -104,7 +129,7 @@ namespace MasterBox.Auth {
             } else if (val > 244) {
                 val += GenerateInt(-15, 0, rnd);
             } else {
-                val += GenerateInt(10, 10, rnd);
+                val += GenerateInt(-10, 10, rnd);
             }
             return val;
         }

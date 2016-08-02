@@ -47,11 +47,7 @@ namespace MasterBox.Prefs {
 					break;
 				default:
 					break;
-
-
 			}
-
-
 		}
     }
 }

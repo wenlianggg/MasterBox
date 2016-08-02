@@ -31,6 +31,7 @@ namespace MasterBox.Auth {
 		private DateTime _regStamp;
 		private string _aesKey;
 		private string _aesIV;
+		private bool _isAdmin;
 
 		internal static User GetUser(int userid) {
 			User target;
@@ -98,6 +99,7 @@ namespace MasterBox.Auth {
 			_mbrExpiry = DateTime.Today.AddYears(100);
             _aesKey = UserCrypto.GenerateEntropy(32);
 			_aesIV = UserCrypto.GenerateEntropy(16);
+			_isAdmin = false;
 			UpdateDB();
 			RefreshFields();
 		}
@@ -124,6 +126,7 @@ namespace MasterBox.Auth {
                             if (sqldr["aesKey"] != DBNull.Value)
                                 _aesKey = uc.Decrypt((byte[])sqldr["aesKey"]);
                             _aesIV = sqldr["aesIV"].ToString();
+							_isAdmin = (bool) sqldr["isAdmin"];
                         }
                 }
 				return true;
@@ -144,7 +147,7 @@ namespace MasterBox.Auth {
                 return da.SqlUpdateAllUserValues(userid: _userid, username: _username,
                     fNameEnc: fNameEnc, lNameEnc: lNameEnc, dob: _dob, emailEnc: emailEnc,
                     verified: _verified, mbrType: _mbrType, mbrStart: _mbrStart, mbrExpiry: _mbrExpiry,
-                    regStamp: _regStamp, aesKeyEnc: aesKeyEnc, aesIV: _aesIV);
+                    regStamp: _regStamp, aesKeyEnc: aesKeyEnc, aesIV: _aesIV, isAdmin: _isAdmin);
             }
 		}
 
@@ -163,16 +166,6 @@ namespace MasterBox.Auth {
 		protected internal static int ConvertToId(string username, [CallerMemberName]string memberName = "") {
 			using (DataAccess da = new DataAccess("ConvertToId from " + memberName)) {
 				return da.SqlGetUserId(username);
-			}
-		}
-
-		protected internal static string ConvertToUname(string username) {
-			using (DataAccess da = new DataAccess()) {
-				SqlDataReader sqldr = da.SqlGetUser(username);
-				if (sqldr.Read())
-					return sqldr["username"].ToString();
-				else
-					return "";
 			}
 		}
 
@@ -311,11 +304,15 @@ namespace MasterBox.Auth {
 		}
 
 		protected internal bool IsAdmin {
-            get {
-                if (_mbrType == -1) return true;
-                else return false;
-            }
-        }
+			get {
+				return _isAdmin;
+			}
+			set {
+				_isAdmin = value;
+			}
+		}
+
+
 	}
 
 }

@@ -22,10 +22,10 @@
                 <li><a runat="server" ID="prefpassword" href="prefpassword.aspx">Change Password <i class="fa fa-key" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefotpsetup" href="prefotpsetup.aspx">2FA Settings <i class="fa fa-th" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsecurity" href="prefsecurity.aspx">Folder Encryption <i class="fa fa-lock" aria-hidden="true"></i></a></li>
-				<li><a runat="server" ID="prefsteg" href="prefsteg.aspx">Picture Key <i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+				<li><a runat="server" ID="prefsteg" href="prefsteg.aspx">Image Key <i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsubscription" href="prefsubscription.aspx">Expand Storage <i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="preflogs" href="preflogs.aspx">Access Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
-                <li><a runat="server" ID="adminpanel" visible="false" href="~/admin/usermgmt.aspx">Admin Panel<i class="fa fa-list" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="adminpanel" href="~/admin/usermgmt.aspx" visible="false">Admin Panel<i class="fa fa-list" aria-hidden="true"></i></a></li>
             </ul>
         </div>
         <div class="SettingSelectionPanel">
