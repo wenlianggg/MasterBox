@@ -18,13 +18,13 @@
             <h3>Preferences <i class="fa fa-sliders" aria-hidden="true"></i></h3>
             <ul class="navLink">
                 <li><a runat="server" ID="prefgeneral" href="prefgeneral.aspx">Dashboard</a></li>
-                <li><a runat="server" ID="prefprofile" href="prefprofile.aspx">Profile Preferences <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="prefprofile" href="prefprofile.aspx">Profile Details <i class="fa fa-user" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefpassword" href="prefpassword.aspx">Change Password <i class="fa fa-key" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefotpsetup" href="prefotpsetup.aspx">2FA Settings <i class="fa fa-th" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsecurity" href="prefsecurity.aspx">Folder Encryption <i class="fa fa-lock" aria-hidden="true"></i></a></li>
 				<li><a runat="server" ID="prefsteg" href="prefsteg.aspx">Image Key <i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="prefsubscription" href="prefsubscription.aspx">Expand Storage <i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
-                <li><a runat="server" ID="preflogs" href="preflogs.aspx">Access Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
+                <li><a runat="server" ID="preflogs" href="preflogs.aspx">Audit Logs <i class="fa fa-list" aria-hidden="true"></i></a></li>
                 <li><a runat="server" ID="adminpanel" href="~/admin/usermgmt.aspx" visible="false">Admin CP <i class="fa fa-cogs" aria-hidden="true"></i></a></li>
             </ul>
         </div>

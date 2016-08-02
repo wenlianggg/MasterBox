@@ -82,6 +82,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
+
 		internal bool SetForUser(int userid) {
 			using (DataAccess da = new DataAccess()) {
 				if (da.SqlSetImageHash(userid, BitmapGetHash()) == 1)

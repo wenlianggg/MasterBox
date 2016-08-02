@@ -10,6 +10,16 @@ using System.Web.UI;
 namespace MasterBox.Prefs {
 	public partial class Steg : Page {
 		protected void Page_Load(object sender, EventArgs e) {
+			if (HasImageKey()) {
+				HasExisting.Visible = true;
+				if (ViewState["Steg"] != null) {
+					DownloadFromSteg.Visible = true;
+				} else {
+					DownloadFromSteg.Visible = false;
+				}
+			} else {
+				HasExisting.Visible = false;
+			}
 		}
 
 		protected void UploadDoSteg(object sender, EventArgs e) {
@@ -56,6 +66,12 @@ namespace MasterBox.Prefs {
 		protected void DisableImageKey(object sender, EventArgs e) {
 			using (DataAccess da = new DataAccess()) {
 				da.SqlSetImageHash(Auth.User.ConvertToId(Context.User.Identity.Name), null);
+			}
+		}
+
+		protected bool HasImageKey() {
+			using (DataAccess da = new DataAccess()) {
+				return (da.SqlGetImageHash(Auth.User.ConvertToId(Context.User.Identity.Name)) != null);
 			}
 		}
 

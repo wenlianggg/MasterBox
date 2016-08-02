@@ -227,21 +227,18 @@ namespace MasterBox.Auth {
         }
 
         internal int SqlSetImageHash(int userid, string hash) {
-            if (hash.Length == 88) {
-                SqlCommand cmd = new SqlCommand("UPDATE mb_users SET steghash = @steghash WHERE userid = @userid", sqlConn);
-                cmd.Parameters.Add(new SqlParameter("@steghash", SqlDbType.VarChar, 88));
-                cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
-                cmd.Prepare();
-				if (hash != null)
-					cmd.Parameters["@steghash"].Value = hash;
-				else
-					cmd.Parameters["@steghash"].Value = DBNull.Value;
-				cmd.Parameters["@userid"].Value = userid;
+            SqlCommand cmd = new SqlCommand("UPDATE mb_users SET steghash = @steghash WHERE userid = @userid", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@steghash", SqlDbType.VarChar, 88));
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+            cmd.Prepare();
+			if (hash != null && hash.Length == 88)
+				cmd.Parameters["@steghash"].Value = hash;
+			else
+				cmd.Parameters["@steghash"].Value = DBNull.Value;
+			cmd.Parameters["@userid"].Value = userid;
 
-                return cmd.ExecuteNonQuery();
-            } else {
-                return 0;
-            }
+            return cmd.ExecuteNonQuery();
+
         }
 
 		/*

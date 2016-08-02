@@ -82,13 +82,15 @@
 								<span class="caret"></span></a>
 
 								<ul class="dropdown-menu">
-									<li runat="server" id="Username"><a runat="server" href="#">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
+									<li runat="server" id="Username"><a runat="server" href="~/prefs/prefgeneral.aspx">Username: <asp:Label ID="UnameDropdown" runat="server" /></a></li>
 										<li role="separator" class="divider"></li>
-									<li runat="server" id="Subscriptions"><a runat="server" href="~/prefs/prefsubscription.aspx">Subscriptions</a></li>
-									<li runat="server" id="ChangePW"><a runat="server" href="~/prefs/preflogs.aspx">Change Password</a></li>
-									<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotpsetup.aspx">Configure 2FA</a></li>
-									<li runat="server" id="Setting"><a runat="server" href="~/prefs/prefprofile.aspx">Profile Settings</a></li>
-									<li runat="server" id="UserLogs"><a runat="server" href="~/prefs/preflogs.aspx">Account Logs</a></li>
+									<li runat="server" id="Dashboard"><a runat="server" href="~/prefs/prefprofile.aspx">Profile Details</a></li>
+									<li runat="server" id="ChangePW"><a runat="server" href="~/prefs/prefpassword.aspx">Change Password</a></li>
+									<li runat="server" id="Subscriptions"><a runat="server" href="~/prefs/prefsubscription.aspx">Expand Storage</a></li>
+									<li runat="server" id="OTPConf"><a runat="server" href="~/prefs/prefotpsetup.aspx">2FA Settings</a></li>
+									<li runat="server" id="FolderEnc"><a runat="server" href="~/prefs/prefsecurity.aspx">Folder Encryption</a></li>
+									<li runat="server" id="ImageKey"><a runat="server" href="~/prefs/prefsteg.aspx">Image Key</a></li>
+									<li runat="server" id="UserLogs"><a runat="server" href="~/prefs/preflogs.aspx">Audit Logs</a></li>
 										<li role="separator" class="divider"></li>
 									<li runat="server" id="SignOutLink"><a runat="server" href="~/Auth/signout.aspx">Sign Out</a></li>
 								</ul>

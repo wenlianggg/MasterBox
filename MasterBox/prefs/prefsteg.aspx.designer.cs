@@ -40,6 +40,15 @@ namespace MasterBox.Prefs {
         protected global::System.Web.UI.WebControls.Button DownloadFromSteg;
         
         /// <summary>
+        /// HasExisting control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HasExisting;
+        
+        /// <summary>
         /// VerifyWithKey control.
         /// </summary>
         /// <remarks>
@@ -56,15 +65,6 @@ namespace MasterBox.Prefs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button DisableKey;
-        
-        /// <summary>
-        /// HasExisting control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HasExisting;
         
         /// <summary>
         /// Msg control.

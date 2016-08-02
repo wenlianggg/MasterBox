@@ -29,21 +29,18 @@
 				</div>
 				<div class="panel-body">
 					<asp:Button CssClass="btn btn-default" ID="SubmitForStegSetKey" Text="Upload, Set as Key" OnClick="UploadDoStegSetKey" runat="server" />
-					<asp:Button CssClass="btn btn-primary" ID="DownloadFromSteg" Text="Download Image Key" OnClick="DownloadImage" runat="server" />
+					<asp:Button CssClass="btn btn-primary" ID="DownloadFromSteg" Text="Download Image Key" OnClick="DownloadImage" Visible="false" runat="server" />
 				</div>
 			</div>
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" runat="server" ID="HasExisting">
 				<div class="panel-heading">
 					<h3 class="panel-title">Verify or Disable</h3>
 				</div>
 				<div class="panel-body">
-					<asp:Button CssClass="btn btn-danger" ID="VerifyWithKey" Text="Verify with Key" OnClick="SubmitValidateImg" runat="server" />
-					<asp:Button CssClass="btn btn-danger" ID="DisableKey" Text="Disable Image Key" OnClick="DisableImageKey" runat="server" />
+					<asp:Button CssClass="btn btn-success" ID="VerifyWithKey" Text="Verify with Key" OnClick="SubmitValidateImg" runat="server" />
+					<asp:Button CssClass="btn btn-warning" ID="DisableKey" Text="Disable Image Key" OnClick="DisableImageKey" runat="server" />
 				</div>
-			</div>
-
-			<div id="HasExisting" runat="server">
 			</div>
 			<asp:Label ID="Msg" runat="server" ForeColor="red" /><br />
 			<asp:Label ID="HashMsg1" runat="server" ForeColor="green" /><br />
