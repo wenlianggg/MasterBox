@@ -56,7 +56,7 @@ namespace MasterBox.Prefs {
 		}
 
 		protected void GoToFiles(object sender, EventArgs e) {
-			Response.Redirect("~/mbox/FileTransferInterface.aspx");
+			Response.Redirect("~/filestore/FileTransferInterface.aspx");
 		}
 
 		protected void GoToPrices(object sender, EventArgs e) {

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web;
 
@@ -12,6 +13,8 @@ using System.Web;
 namespace MasterBox.Auth {
 	internal class DataAccess : IDisposable {
 		private static string connString = ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString;
+        private static long queriescounter = 0;
+        private static System.Diagnostics.Stopwatch sw;
 		private SqlConnection _sqlConn;
 
 		private SqlConnection sqlConn {
@@ -22,7 +25,7 @@ namespace MasterBox.Auth {
 
 				_sqlConn = new SqlConnection(connString);
 				_sqlConn.Open();
-
+                queriescounter++;
 				return _sqlConn;
 			}
 		}
@@ -33,16 +36,28 @@ namespace MasterBox.Auth {
 
 		public void Dispose() {
 			Dispose(true);
-		}
+            GC.SuppressFinalize(this);
+        }
 
-		protected virtual void Dispose(bool disposing) {
+        protected virtual void Dispose(bool disposing) {
 			if (disposing) {
-				if (_sqlConn != null) {
+                sw.Stop();
+                System.Diagnostics.Debug.Write("...done! (Took " + sw.ElapsedMilliseconds + "ms)");
+                if (_sqlConn != null) {
 					_sqlConn.Close();
 					_sqlConn.Dispose();
 				}
 			}
 		}
+        /*
+         *  CONSTRUCTOR
+         */
+
+        internal DataAccess([CallerMemberName]string memberName = "") {
+            // Print out caller class
+            sw = System.Diagnostics.Stopwatch.StartNew();
+            System.Diagnostics.Debug.Write("\n" + queriescounter + ". DataAccess Entity Created From: " + memberName);
+        }
 
 		/*
 		 *  STORED FUNCTIONS FOR UPDATING DATABASE
@@ -147,7 +162,8 @@ namespace MasterBox.Auth {
 											DateTime dob, byte[] emailEnc,
 											bool verified, int mbrType,
 											DateTime mbrStart, DateTime mbrExpiry,
-											DateTime regStamp, byte[] aesKeyEnc, string aesIV
+											DateTime regStamp, byte[] aesKeyEnc,
+											string aesIV, bool isAdmin
 											) {
 			if (userid == 0) userid = SqlGetUserId(username);
 
@@ -163,7 +179,8 @@ namespace MasterBox.Auth {
 				"mbrExpiry = @mbrExpiry," +
 				"regStamp = @regStamp, " +
                 "aesKey = @aesKey, " + 
-				"aesIV = @aesIV " +
+				"aesIV = @aesIV, " +
+				"isAdmin = @isAdmin " +
 				"WHERE userid = @userid;",
 				sqlConn);
 			cmd.Parameters.Add(new SqlParameter("@fNameEnc", SqlDbType.VarBinary, 200));
@@ -178,6 +195,7 @@ namespace MasterBox.Auth {
 			cmd.Parameters.Add(new SqlParameter("@aesIV", SqlDbType.VarChar, 40));
 			cmd.Parameters.Add(new SqlParameter("@aesKey", SqlDbType.VarBinary, 100));
 			cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+			cmd.Parameters.Add(new SqlParameter("@isAdmin", SqlDbType.Bit, 0));
 			cmd.Prepare();
 
 			cmd.Parameters["@fNameEnc"].Value = fNameEnc;
@@ -191,18 +209,47 @@ namespace MasterBox.Auth {
 			cmd.Parameters["@regStamp"].Value = regStamp;
 			cmd.Parameters["@aesKey"].Value = aesKeyEnc;
 			cmd.Parameters["@aesIV"].Value = aesIV;
+			cmd.Parameters["@isAdmin"].Value = isAdmin;
 			cmd.Parameters["@userid"].Value = userid;
 
 			return cmd.ExecuteNonQuery();
 		}
 
-        internal int SqlUpdateMbrType(int userid, int mbrType)
-        {
+        internal int SqlUpdateMbrType(int userid, int mbrType)  {
             SqlCommand cmd = new SqlCommand("UPDATE mb_users SET mbrType = @mbrType WHERE userid = @userid", sqlConn);
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
             cmd.Parameters.Add(new SqlParameter("@mbrType", SqlDbType.Int, 8));
+            cmd.Prepare();
             cmd.Parameters["@userid"].Value = userid;
             cmd.Parameters["@mbrType"].Value = mbrType;
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        internal int SqlSetImageHash(int userid, string hash) {
+            SqlCommand cmd = new SqlCommand("UPDATE mb_users SET steghash = @steghash WHERE userid = @userid", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@steghash", SqlDbType.VarChar, 88));
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+            cmd.Prepare();
+			if (hash != null && hash.Length == 88)
+				cmd.Parameters["@steghash"].Value = hash;
+			else
+				cmd.Parameters["@steghash"].Value = DBNull.Value;
+			cmd.Parameters["@userid"].Value = userid;
+
+            return cmd.ExecuteNonQuery();
+
+        }
+
+        internal int SqlAddCoupon(string couponvalue, int days)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO mb_coupon (couponcode, freedays, stat) VALUES (@couponcode, @freedays, 0)", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters.Add(new SqlParameter("@freedays", SqlDbType.Int, 2));
+            cmd.Prepare();
+
+            cmd.Parameters["@couponcode"].Value = couponvalue;
+            cmd.Parameters["@freedays"].Value = days;
 
             return cmd.ExecuteNonQuery();
         }
@@ -317,5 +364,37 @@ namespace MasterBox.Auth {
 			}
 		}
 
-	}
+        internal string SqlGetImageHash(int userid) {
+            SqlCommand cmd = new SqlCommand("SELECT steghash FROM mb_users WHERE userid = @userid", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.Int, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = userid;
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            if (sqldr.Read()) {
+                return sqldr["steghash"].ToString();
+            }
+            return null;
+        }
+
+        internal DataTable SqlGetAllCoupons()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_coupon", sqlConn);
+            cmd.Prepare();
+            DataTable data = new DataTable();
+            data.Load(cmd.ExecuteReader());
+            data.Columns["couponcode"].ColumnName = "Coupon Code";
+            data.Columns["freedays"].ColumnName = "Days Given";
+            data.Columns["stat"].ColumnName = "Redeemed?";
+            return data;
+        }
+
+        internal SqlDataReader SqlGetCouponReader()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_coupon", sqlConn);
+            cmd.Prepare();
+            SqlDataReader sldr = cmd.ExecuteReader();
+            return sldr;
+        }
+
+    }
 }

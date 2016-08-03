@@ -6,6 +6,7 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Web.UI;
+using System.Web.Services;
 
 namespace MasterBox
 {
@@ -81,7 +82,7 @@ namespace MasterBox
 
 
         // Download Files from Master Folder     
-        private void DownloadFileContent(string username, long fileid,long folderid=0)
+        private void DownloadFileContent(string username, long fileid, long folderid = 0)
         {
             MBFile mbf = MBFile.RetrieveFile(username, fileid);
             Response.ClearContent();
@@ -122,7 +123,7 @@ namespace MasterBox
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
-                    file.fileSize = FileUpload.PostedFile.ContentLength;                  
+                    file.fileSize = FileUpload.PostedFile.ContentLength;
                     if (MBFile.FilenameCheck(Context.User.Identity.Name, Path.GetFileName(FileUpload.FileName)))
                     {
                         bool uploadStatus = MBFile.UploadNewFile(file);
@@ -139,17 +140,19 @@ namespace MasterBox
                         }
                     }
                     else
-                    {     
+                    {
                         // Same file name                
-                        LblFileNameCheck.Text= Path.GetFileName(FileUpload.FileName);
+                        TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Name specified in use, please try again!" + "')</script>");
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
+
+
                     }
-                   
+
                 }
                 else
                 {
-                    
+
                     string foldername = UploadLocation.SelectedValue;
                     MBFile file = new MBFile();
                     file.fileusername = Context.User.Identity.Name;
@@ -159,7 +162,8 @@ namespace MasterBox
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
                     file.fileSize = FileUpload.PostedFile.ContentLength;
-                    if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername)) {
+                    if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
+                    {
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
                         if (uploadfiletofolderstatus == true)
                         {
@@ -170,7 +174,8 @@ namespace MasterBox
                         {
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Fail, you may have exceeded your storage limit!" + "')</script>");
                         }
-                    }else
+                    }
+                    else
                     {
 
 
@@ -209,25 +214,16 @@ namespace MasterBox
         }
 
         // Check file name
-        protected void BtnUploadFolderFile_Click(object sender, EventArgs e)
+        protected void BtnUploadFile_Click(object sender, EventArgs e)
         {
-            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, LblFileNameCheck.Text);
+            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, TxtBoxCurrentFileName.Text);
             System.Diagnostics.Debug.WriteLine("File name: " + checkfile);
             string value = RdBtnFileName.SelectedValue;
             if (value == "change")
             {
-                string currect = LblFileNameCheck.Text;
-                string changed = TxtBoxFileNameCheck.Text;
-                if (currect == changed || !MBFile.FilenameCheck(Context.User.Identity.Name,TxtBoxFileNameCheck.Text))
-                {
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Name specified in use, please try again." + "')</script>");
-                }
-                else
-                {
-                    checkfile.fileName = TxtBoxFileNameCheck.Text;
-                    MBFile.UploadNewFile(checkfile);
-                    FillDataFile();
-                }
+                checkfile.fileName = TxtBoxFileNameCheck.Text;
+                MBFile.UploadNewFile(checkfile);
+                FillDataFile();
             }
             else
             {
@@ -241,7 +237,7 @@ namespace MasterBox
         {
             string command = e.CommandName;
             MBFile file;
-            
+
             switch (command)
             {
 
@@ -267,7 +263,7 @@ namespace MasterBox
                     FillDataFile();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted!" + "')</script>");
                     break;
-                
+
             }
         }
 
@@ -275,28 +271,28 @@ namespace MasterBox
         {
             string command = e.CommandName;
             long folderid = Convert.ToInt64(LblFolderID.Text);
-            
+
             MBFile file;
-            MBFolder folder=MBFolder.GetFolder(Context.User.Identity.Name,folderid);
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             switch (command)
             {
-                
+
                 case "OpenFolderFile":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
-                    System.Diagnostics.Debug.WriteLine("File ID: "+fileid);
-                    file = MBFolder.RetrieveFolderFile(Context.User.Identity.Name, fileid,folderid);
+                    System.Diagnostics.Debug.WriteLine("File ID: " + fileid);
+                    file = MBFolder.RetrieveFolderFile(Context.User.Identity.Name, fileid, folderid);
                     LblFolderFileId.Text = fileid.ToString();
                     LblFolderFileName.Text = file.fileName;
                     LblFolderFileType.Text = file.fileType;
                     LblFolderFileSize.Text = file.fileSize.ToString();
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfileModal", "showPopupFolderFile();", true);
                     break;
-                case "DownloadFolderFile":                   
+                case "DownloadFolderFile":
                     DownloadFolderFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text), folder.folderid);
                     break;
                 case "DeleteFolderFile":
                     MBFile.DeleteFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text));
-                    FillFileDataFolder(folder.folderName,folder.folderid);
+                    FillFileDataFolder(folder.folderName, folder.folderid);
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted!" + "')</script>");
                     break;
             }
@@ -311,11 +307,11 @@ namespace MasterBox
             switch (command)
             {
                 case "OpenFolder":
-                    FillFileDataFolder(foldername,folderid);
+                    FillFileDataFolder(foldername, folderid);
                     break;
                 case "DeleteFolder":
                     System.Diagnostics.Debug.WriteLine("Delete folder");
-                    
+
                     break;
             }
         }
@@ -326,7 +322,7 @@ namespace MasterBox
             string folderchkingpassword = TxtBoxPassword.Text;
             switch (command)
             {
-                case "OpenFolder":                  
+                case "OpenFolder":
                     if (folder.ValidateFolderPassword(folder, folderchkingpassword))
                     {
                         // Update data table
@@ -352,7 +348,7 @@ namespace MasterBox
             }
         }
 
-       
+
         protected void FolderLinkButton_Command(object sender, CommandEventArgs e)
         {
 
@@ -363,20 +359,20 @@ namespace MasterBox
             long folderid = Convert.ToInt64(e.CommandArgument.ToString());
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             if (pass)
-            {                
+            {
                 LblFolderNamePass.Text = folder.folderName;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
 
             }
             else
             {
-                LblFolderName.Text= folder.folderName;
+                LblFolderName.Text = folder.folderName;
                 LblFolderID.Text = folderid.ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderModal", "showPopupFolder();", true);
             }
         }
 
-    
+
 
         protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
         {

@@ -20,18 +20,16 @@ namespace MasterBox.Auth {
 			Msg.Text = string.Empty;
 			string EncodedResponse = Request.Form["g-Recaptcha-Response"];
 			if (reCAPTCHA.Validate(EncodedResponse)) {
-				Msg.Text = "CAPTCHA is valid";
 				Page.Validate();
 				if (Page.IsValid) {
 					try {
-						User newuser = Auth.User.CreateUser(UserName.Text,
-												UserPass.Text,
-												FirstName.Text,
-												LastName.Text,
-												DateTime.Now,
-												UserEmail.Text,
-												false);
-						Msg.Text = newuser.UserId.ToString();
+						User newuser = Auth.User.CreateUser(UserName.Text, UserPass.Text,
+															FirstName.Text, LastName.Text,
+															UserEmail.Text, false);
+						ConfirmSent.Visible = true;
+						EmailAddrSent.Text = newuser.Email;
+						RegFields.Visible = false;
+						// TODO: Send email for confirmation
 					} catch (UserAlreadyExistsException) {
 						Msg.Text = "User already exists";
 						return;

@@ -76,13 +76,13 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label UnameDropdown;
         
         /// <summary>
-        /// Subscriptions control.
+        /// Dashboard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Subscriptions;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Dashboard;
         
         /// <summary>
         /// ChangePW control.
@@ -94,6 +94,15 @@ namespace MasterBox {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ChangePW;
         
         /// <summary>
+        /// Subscriptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Subscriptions;
+        
+        /// <summary>
         /// OTPConf control.
         /// </summary>
         /// <remarks>
@@ -103,13 +112,22 @@ namespace MasterBox {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl OTPConf;
         
         /// <summary>
-        /// Setting control.
+        /// FolderEnc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Setting;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FolderEnc;
+        
+        /// <summary>
+        /// ImageKey control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ImageKey;
         
         /// <summary>
         /// UserLogs control.

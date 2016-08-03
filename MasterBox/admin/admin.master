@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/prefs/Preferences.master" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="MasterBox.admin.NestedMasterPage1" %>
 <asp:Content ID="AdminPanelContent" ContentPlaceHolderID="Preferences" runat="server">
     <div class="page-header">
-        <h1>MasterBox Administration Panel <small>Choose an item to configure</small></h1>
+        <h1>MasterBox Administration Panel <small><%: Page.Title %></small></h1>
     </div>
     <div class="btn-group" role="group" aria-label="...">
         <a runat="server" href="~/admin/usermgmt.aspx" class="btn btn-default">Accounts Management</a>
