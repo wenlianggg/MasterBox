@@ -51,6 +51,8 @@ namespace MasterBox.Admin {
 
             // Deselect selected coupons
             CouponTable.SelectedIndex = -1;
+            Couponlbl.Text = "";
+            InvisCpnLbl.Text = "";
         }
 
         protected void CouponRowDataBound(object sender, GridViewRowEventArgs e)
@@ -95,7 +97,7 @@ namespace MasterBox.Admin {
         {
             GridViewRow row = CouponTable.SelectedRow;
             Couponlbl.Text = "Selected Coupon Number: " + row.Cells[1].Text;
-            InvisCpnLbl.Text = row.Cells[1].Text; ;
+            InvisCpnLbl.Text = row.Cells[1].Text;
         }
 
         protected void AddCoupon(object sender, EventArgs e)
@@ -104,9 +106,16 @@ namespace MasterBox.Admin {
             {
                 if (DuplicateCode().Equals(false))
                 {
+                    // Refresh Table
                     da.SqlAddCoupon(CouponValue.Text, Convert.ToInt32(Days.SelectedItem.Value));
                     CouponTable.DataSource = da.SqlGetAllCoupons();
                     CouponTable.DataBind();
+
+                    // Refresh Dropdown
+                    Unredeemed.DataSource = da.SqlGetUnredeemedCpn();
+                    Unredeemed.DataTextField = "couponcode";
+                    Unredeemed.DataValueField = "couponcode";
+                    Unredeemed.DataBind();
 
                     // Deselect selected coupons
                     CouponTable.SelectedIndex = -1;

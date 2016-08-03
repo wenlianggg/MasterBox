@@ -2,6 +2,7 @@
 
 <asp:Content ID="SubsMgmtContent" ContentPlaceHolderID="AdminPanelContentPH" runat="server">
     <br />
+    <br />
     <div class="panel panel-info">
         <div class="panel-heading"><strong>Manage User Subscriptions</strong></div>
         <div class="panel-body">
@@ -10,7 +11,7 @@
     <div class="panel panel-info">
         <div class="panel-heading"><strong>Coupons Management</strong></div>
         <div class="panel-body">
-            <asp:GridView runat="server" ID="CouponTable" CssClass="table" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="Selected" EnablePersistedSelection="false">
+            <asp:GridView runat="server" ID="CouponTable" class="table table-bordered" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="Selected" EnablePersistedSelection="false">
                 <SelectedRowStyle BackColor="LightCyan" ForeColor="DarkBlue" Font-Bold="true" />
                 <Columns>
                     <asp:CommandField ShowSelectButton="true" HeaderText="Select Coupon" SelectText="Select" />
