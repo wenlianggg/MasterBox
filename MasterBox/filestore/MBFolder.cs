@@ -37,6 +37,20 @@ namespace MasterBox.mbox
             return cmd.ExecuteReader();
         }
 
+        public static SqlDataReader GetSharedFolderToDisplay(string username)
+        {
+            // Get User ID
+            User user = User.GetUser(username);
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE folderid = (SELECT folderid FROM mb_fileaccess WHERE userid = @userid)", SQLGetMBoxConnection());
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.Prepare();
+
+            return cmd.ExecuteReader();
+        }
+
         // Get list of all folder names
         public static ArrayList GenerateFolderLocation(String username)
         {

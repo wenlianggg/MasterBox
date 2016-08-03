@@ -54,6 +54,18 @@ namespace MasterBox
 
         }
 
+        private void FillDataSharedFolder()
+        {
+            dtFolder = new DataTable();
+            SqlDataReader reader = MBFolder.GetSharedFolderToDisplay(Context.User.Identity.Name);
+            dtFolder.Load(reader);
+
+
+            SharedFolderTableView.DataSource = dtFolder;
+            SharedFolderTableView.DataBind();
+
+        }
+
         private void FillFileDataFolder(string foldername, long folderid)
         {
             FolderHeader.Text = foldername;
