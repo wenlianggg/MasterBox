@@ -324,6 +324,17 @@
                 </Columns>
             </asp:GridView>
             <br />
+
+            <asp:GridView ID="SharedFolderTableView" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="foldername,folderencryption" ShowHeaderWhenEmpty="True">
+                <Columns>
+                    <asp:TemplateField HeaderText="Shared Folders">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="FolderLinkButton" OnCommand="FolderLinkButton_Command" runat="server" CommandArgument='<%# Eval("folderid") %>' FolderEncryption='<%# Eval("folderencryption") %>' Text='<%# Eval("foldername") %>'></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+            <br />
         </div>
 
         <div class="FileTreeContainer">

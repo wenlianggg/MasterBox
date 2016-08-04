@@ -67,5 +67,10 @@ namespace MasterBox.Prefs {
         {
             return (bytes / 1024f) / 1024f;
         }
-	}
+
+        protected void RedeemCoupon(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
