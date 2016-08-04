@@ -6,7 +6,6 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Web.UI;
-using System.Web.Services;
 
 namespace MasterBox
 {
@@ -108,6 +107,8 @@ namespace MasterBox
                     file.fileusername = Context.User.Identity.Name;
                     file.fileName = Path.GetFileName(FileUpload.FileName);
                     file.fileType = FileUpload.PostedFile.ContentType;
+                  //This is for testing for chart // file.filetimestamp= DateTime.Now;
+
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);

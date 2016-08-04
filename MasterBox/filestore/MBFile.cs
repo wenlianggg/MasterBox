@@ -16,6 +16,7 @@ namespace MasterBox.mbox
         public string fileType { get; set; }
         public int fileSize { get; set; }
         public byte[] filecontent { get; set; }
+        public DateTime filetimestamp { get; set; }
         private string filekey { get; set; }
         private string fileiv { get; set; }
 
