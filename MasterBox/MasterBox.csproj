@@ -239,6 +239,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="CSS\LoginStyle.css" />
+    <Content Include="emailclass.aspx" />
     <Content Include="FileSharing.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="images\bg\blizzard.png" />
@@ -441,6 +442,13 @@
     <Compile Include="Auth\Classes\UserCrypto.cs" />
     <Compile Include="Auth\Classes\reCAPTCHA.cs" />
     <Compile Include="Auth\Classes\MBProvider.cs" />
+    <Compile Include="emailclass.aspx.cs">
+      <DependentUpon>emailclass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emailclass.aspx.designer.cs">
+      <DependentUpon>emailclass.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FileSharing.aspx.cs">
       <DependentUpon>FileSharing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -193,6 +193,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label LblFileSize;
         
         /// <summary>
+        /// LblFileTimeStamp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileTimeStamp;
+        
+        /// <summary>
         /// BtnDownload control.
         /// </summary>
         /// <remarks>
@@ -436,6 +445,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.GridView FolderTableView;
         
         /// <summary>
+        /// SharedFolderTableView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView SharedFolderTableView;
+        
+        /// <summary>
         /// FolderHeader control.
         /// </summary>
         /// <remarks>
@@ -445,12 +463,12 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label FolderHeader;
         
         /// <summary>
-        /// GridView1 control.
+        /// FolderFileTableView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView FolderFileTableView;
     }
 }

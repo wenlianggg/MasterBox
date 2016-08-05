@@ -254,6 +254,17 @@ namespace MasterBox.Auth {
             return cmd.ExecuteNonQuery();
         }
 
+        internal int SqlDeleteCoupon(string couponvalue)
+        {
+            SqlCommand cmd = new SqlCommand("DELETE FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Prepare();
+
+            cmd.Parameters["@couponcode"].Value = couponvalue;
+
+            return cmd.ExecuteNonQuery();
+        }
+
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
@@ -385,6 +396,7 @@ namespace MasterBox.Auth {
             data.Columns["couponcode"].ColumnName = "Coupon Code";
             data.Columns["freedays"].ColumnName = "Days Given";
             data.Columns["stat"].ColumnName = "Redeemed?";
+            data.Columns["sent"].ColumnName = "Sent?";
             return data;
         }
 
@@ -396,5 +408,30 @@ namespace MasterBox.Auth {
             return sldr;
         }
 
+        internal string SqlGetRandomUsername()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT TOP 1 username FROM mb_users ORDER BY NEWID()", sqlConn);
+            cmd.Prepare();
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return sqldr["username"].ToString();
+            }else
+            {
+                return "NaN";
+            }
+        }
+        
+        internal DataTable SqlGetUnredeemedCpn()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT couponcode FROM mb_coupon WHERE sent = 0", sqlConn);
+            cmd.Prepare();
+
+            DataTable dt = new DataTable();
+            dt.Load(cmd.ExecuteReader());
+
+            return dt;
+        }
     }
 }

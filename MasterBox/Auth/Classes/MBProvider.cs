@@ -94,7 +94,7 @@ namespace MasterBox.Auth {
                             int userid = (int)exp["userid"];
 
                             // Check if exceed expiry date
-                            if(expDate > DateTime.Now)
+                            if(DateTime.Now > expDate)
                             {
                                  da.SqlUpdateMbrType(userid, 1);
                                  TransactLogger.Instance.SubscriptionExpired(userid);

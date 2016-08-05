@@ -6,7 +6,6 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Web.UI;
-using System.Web.Services;
 
 namespace MasterBox
 {
@@ -19,6 +18,7 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+           
 
             if (!IsPostBack)
             {
@@ -29,6 +29,7 @@ namespace MasterBox
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
+                
             }
 
         }
@@ -45,6 +46,7 @@ namespace MasterBox
 
         private void FillDataFolder()
         {
+
             dtFolder = new DataTable();
             SqlDataReader reader = MBFolder.GetFolderToDisplay(Context.User.Identity.Name);
             dtFolder.Load(reader);
@@ -52,6 +54,18 @@ namespace MasterBox
 
             FolderTableView.DataSource = dtFolder;
             FolderTableView.DataBind();
+
+        }
+
+        private void FillDataSharedFolder()
+        {
+            dtFolder = new DataTable();
+            SqlDataReader reader = MBFolder.GetSharedFolderToDisplay(Context.User.Identity.Name);
+            dtFolder.Load(reader);
+
+
+            SharedFolderTableView.DataSource = dtFolder;
+            SharedFolderTableView.DataBind();
 
         }
 
@@ -63,8 +77,8 @@ namespace MasterBox
             SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
             dtFolderFile.Load(reader);
 
-            GridView1.DataSource = dtFolderFile;
-            GridView1.DataBind();
+            FolderFileTableView.DataSource = dtFolderFile;
+            FolderFileTableView.DataBind();
 
         }
 
@@ -108,6 +122,9 @@ namespace MasterBox
                     file.fileusername = Context.User.Identity.Name;
                     file.fileName = Path.GetFileName(FileUpload.FileName);
                     file.fileType = FileUpload.PostedFile.ContentType;
+                      //This is for testing for chart 
+                      file.filetimestamp= DateTime.Now;
+
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
@@ -150,6 +167,7 @@ namespace MasterBox
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
                     file.fileSize = FileUpload.PostedFile.ContentLength;
+                    file.filetimestamp = DateTime.Now;
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
@@ -236,6 +254,7 @@ namespace MasterBox
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
                     LblFileSize.Text = file.fileSize.ToString();
+                    LblFileTimeStamp.Text = file.filetimestamp.ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
                     break;
