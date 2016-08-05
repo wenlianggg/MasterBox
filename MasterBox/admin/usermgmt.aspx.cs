@@ -10,20 +10,24 @@ using System.Web.UI.WebControls;
 namespace MasterBox.Admin {
 	public partial class UserMgmt : System.Web.UI.Page {
 		protected void Page_Load(object sender, EventArgs e) {
-            if (!IsPostBack) {
-                userstable.DataSource = GetUsersTable();
-            }
+			DataTable dt = GetUsersTable();
+			userstable.DataSource = dt;
+			userstable.DataBind();
+			userstable.HeaderRow.TableSection = TableRowSection.TableHeader;
 		}
 
-        protected DataTable GetUsersTable() {
+		protected DataTable GetUsersTable() {
             DataTable dt = new DataTable();
-            dt.Columns.Add("ID");
-            dt.Columns.Add("Username");
-            dt.Columns.Add("Registered");
-            using (DataAccess da = new DataAccess()) {
+            dt.Columns.Add(new DataColumn("ID", typeof(int)));
+            dt.Columns.Add(new DataColumn("Username", typeof(string)));
+			dt.Columns.Add(new DataColumn("First Name", typeof(string)));
+			dt.Columns.Add(new DataColumn("Last Name", typeof(string)));
+			dt.Columns.Add(new DataColumn("Verified", typeof(bool)));
+			dt.Columns.Add(new DataColumn("Registered On", typeof(DateTime)));
+			using (DataAccess da = new DataAccess()) {
                 foreach (int i in da.SqlGetAllUserIds()) {
                     User usr = Auth.User.GetUser(i);
-                    dt.Rows.Add(usr.UserId, usr.UserName, usr.RegStamp);
+                    dt.Rows.Add(usr.UserId, usr.UserName, usr.FirstName, usr.LastName, usr.IsVerified, usr.RegStamp);
                 }
             }
             return dt;
