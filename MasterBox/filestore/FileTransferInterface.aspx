@@ -9,8 +9,11 @@
         function showPopupFileName(){
             $('#filenameModal').modal('show');
         }
+        function showPopupFolderFileName(){
+            $('#folderfilenameModal').modal('show');
+        }
         function showPopupFolderFile(){
-            $('#folderfileModal').modal('show');
+            $('#folderfileModal').modal('show'); 
         }
         function showPopupFolder(){
             $('#folderModal').modal('show');
@@ -18,6 +21,7 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+
 
     </script>
 </asp:Content>
@@ -239,6 +243,34 @@
         </div>
     </div>
 
+    <!--Open Checking of File Name in folder Modal -->
+     <div id="folderfilenameModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <p>File upload already exist, do you wish to overwrite it or upload new?</p>
+                    <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                        <asp:ListItem Text="Change" Value="change" Selected="True" />
+                        <asp:ListItem Text="Override" Value="overwrite" />
+                    </asp:RadioButtonList>
+                    <asp:Label ID="LblFolderFileIDCheck" runat="server" Visible="false"></asp:Label>
+                    <span>Current file name: </span>
+                    <asp:TextBox ID="TxtBoxCurrecntFolderFileName" runat="server" Enabled="false"></asp:TextBox>
+                    <br />
+                    <br />
+                    <span>New file name: </span>
+                    <asp:TextBox ID="TxtBoxFolderFileNameCheck" runat="server"></asp:TextBox>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnUploadFileToFolder" OnClick="BtnUploadFileToFolder_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--Open Folder without password Modal -->
     <div id="folderModal" class="modal fade">
@@ -415,11 +447,14 @@
             $('#<%=BtnUploadFile.ClientID %>').click(function (event) {
                 var currentName = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
                 var changeName = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value
-                if (currentName == changeName) {
-                    alert("Name specified in use, please try again");
-                    return false;
-                } else {
-                    return true;
+                var option=document.getElementById('<%=RdBtnFileName.ClientID%>').value;
+                if(option=="change"){
+                    if (currentName == changeName) {
+                        alert("Name specified in use, please try again");
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             });
         });

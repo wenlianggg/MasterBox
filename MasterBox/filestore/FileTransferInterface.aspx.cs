@@ -18,7 +18,7 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
 
             if (!IsPostBack)
             {
@@ -29,7 +29,7 @@ namespace MasterBox
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
-                
+
             }
 
         }
@@ -116,23 +116,24 @@ namespace MasterBox
         {
             if (FileUpload.HasFile)
             {
-                if (UploadLocation.SelectedValue == "==Master Folder==")
-                {
-                    MBFile file = new MBFile();
-                    file.fileusername = Context.User.Identity.Name;
-                    file.fileName = Path.GetFileName(FileUpload.FileName);
-                    file.fileType = FileUpload.PostedFile.ContentType;
-                      //This is for testing for chart 
-                      file.filetimestamp= DateTime.Now;
+                string foldername = UploadLocation.SelectedValue;
+                MBFile file = new MBFile();
+                file.fileusername = Context.User.Identity.Name;
+                file.fileName = Path.GetFileName(FileUpload.FileName);
+                file.fileType = FileUpload.PostedFile.ContentType;
+                //This is for testing for chart 
+                file.filetimestamp = DateTime.Now;
 
-                    Stream strm = FileUpload.PostedFile.InputStream;
-                    BinaryReader br = new BinaryReader(strm);
-                    file.filecontent = br.ReadBytes((int)strm.Length);
-                    file.fileSize = FileUpload.PostedFile.ContentLength;
+                Stream strm = FileUpload.PostedFile.InputStream;
+                BinaryReader br = new BinaryReader(strm);
+                file.filecontent = br.ReadBytes((int)strm.Length);
+                file.fileSize = FileUpload.PostedFile.ContentLength;
+
+                if (foldername == "==Master Folder==")
+                {
                     if (MBFile.FilenameCheck(Context.User.Identity.Name, Path.GetFileName(FileUpload.FileName)))
                     {
-                        bool uploadStatus = MBFile.UploadNewFile(file);
-                        if (uploadStatus == true)
+                        if (MBFile.UploadNewFile(file))
                         {
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
                             // Update the file table
@@ -150,28 +151,14 @@ namespace MasterBox
                         TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
-
-
                     }
 
                 }
                 else
                 {
-
-                    string foldername = UploadLocation.SelectedValue;
-                    MBFile file = new MBFile();
-                    file.fileusername = Context.User.Identity.Name;
-                    file.fileName = Path.GetFileName(FileUpload.FileName);
-                    file.fileType = FileUpload.PostedFile.ContentType;
-                    Stream strm = FileUpload.PostedFile.InputStream;
-                    BinaryReader br = new BinaryReader(strm);
-                    file.filecontent = br.ReadBytes((int)strm.Length);
-                    file.fileSize = FileUpload.PostedFile.ContentLength;
-                    file.filetimestamp = DateTime.Now;
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
-                        bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
-                        if (uploadfiletofolderstatus == true)
+                        if (MBFolder.UploadFileToFolder(file, foldername))
                         {
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
 
@@ -183,8 +170,10 @@ namespace MasterBox
                     }
                     else
                     {
-
-
+                        // Same file name                
+                        TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
+                        TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
                     }
 
                 }
@@ -199,7 +188,6 @@ namespace MasterBox
         {
 
             bool folderCreation;
-            bool foldernamecheck = MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name);
             if (MBFolder.CheckFolderName(FolderName.Text, Context.User.Identity.Name))
             {
                 System.Diagnostics.Debug.WriteLine("Password:" + encryptionPass.Text);
@@ -213,9 +201,10 @@ namespace MasterBox
             else
             {
                 // Pop up box to ask the person to change
-                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder name exist" + "')</script>");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfilenameModal", "showPopupFolderFileName();", true);
 
             }
+
 
         }
 
@@ -236,6 +225,12 @@ namespace MasterBox
                 MBFile.OverrideFile(checkfile);
                 FillDataFile();
             }
+        }
+
+        // Check File name in folder
+        protected void BtnUploadFileToFolder_Click(object sender, EventArgs e)
+        {
+
         }
 
         // File Options
