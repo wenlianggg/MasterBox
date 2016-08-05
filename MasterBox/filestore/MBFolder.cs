@@ -159,6 +159,7 @@ namespace MasterBox.mbox
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
             }
             if (mbf.fileSize == 0)
                 return null;
@@ -297,14 +298,16 @@ namespace MasterBox.mbox
 
                 // Insert Database into database
                 SqlCommand cmd = new SqlCommand(
-                    "INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent) "
-                    + "values(@folderid,@userid,@name,@type,@size,@data)", SQLGetMBoxConnection());
+                    "INSERT INTO mb_file(folderid,userid,filename,filetype,filesize,filecontent,filetimestamp) "
+                    + "values(@folderid,@userid,@name,@type,@size,@data,@timestamp)", SQLGetMBoxConnection());
                 cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
                 cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
                 cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.VarChar, 50));
                 cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
                 cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
                 cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
+                cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.DateTime2, 7));
+
                 cmd.Prepare();
                 cmd.Parameters["@folderid"].Value = folder.folderid;
                 cmd.Parameters["@userid"].Value = userid;
@@ -312,12 +315,8 @@ namespace MasterBox.mbox
                 cmd.Parameters["@type"].Value = file.fileType;
                 cmd.Parameters["@size"].Value = file.fileSize;
                 cmd.Parameters["@data"].Value = file.filecontent;
-
-                cmd.ExecuteNonQuery();
-                
-                // Debug
-                System.Diagnostics.Debug.WriteLine("Pass");
-
+                cmd.Parameters["@timestamp"].Value = file.filetimestamp;
+                cmd.ExecuteNonQuery();               
                 return true;
             }
             catch

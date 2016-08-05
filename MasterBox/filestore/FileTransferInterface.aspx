@@ -162,9 +162,12 @@
                     <br />
                     <span>File Type: </span>
                     <asp:Label ID="LblFileType" runat="server"></asp:Label>
-                    <br />
+                    <br />                   
                     <span>File Size: </span>
                     <asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span>
+                    <br />
+                    <span>Last Modified: </span>
+                    <asp:Label ID="LblFileTimeStamp" runat="server"></asp:Label>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -340,16 +343,28 @@
         <div class="FileTreeContainer">
             <asp:Label ID="FolderHeader" runat="server" Font-Size="XX-Large"></asp:Label>
             <br />
-            <asp:GridView ID="GridView1" CssClass="datagrid" HeaderStyle-CssClass="datagridHeader" RowStyle-CssClass="datagridRows" runat="server" AutoGenerateColumns="False" DataKeyNames="fileid,filename,filesize" ShowHeaderWhenEmpty="True">
+            <asp:GridView ID="FolderFileTableView" CssClass="datagrid" 
+                HeaderStyle-CssClass="datagridHeader" 
+                RowStyle-CssClass="datagridRows" runat="server" 
+                AutoGenerateColumns="False" 
+                DataKeyNames="fileid,filename,filesize,filetimestamp" 
+                ShowHeaderWhenEmpty="True">
                 <Columns>
                     <asp:TemplateField HeaderText="File-Name" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
                             <asp:LinkButton ID="LnkFolderFile" CommandName="OpenFolderFile" OnCommand="FileFolder_Command" CommandArgument='<%# Eval("fileid") %>' Text='<%# Eval("filename") %>' FolderID='<%# Eval("folderid") %>' runat="server" ></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="File-Size" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
                         <ItemTemplate>
-                            <asp:Label ID="LblFilesize" runat="server" Text='<%# Eval("filesize") %>'></asp:Label>                          
+                            <asp:Label ID="LblFolderFilesize" runat="server" Text='<%# Eval("filesize") %>'></asp:Label> KB                         
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Last Modified" ControlStyle-Font-Size="Medium" HeaderStyle-Font-Size="Large">
+                        <ItemTemplate>
+                            <asp:Label ID="LblFolderFileTimeStamp" runat="server" Text='<%# Eval("filetimestamp") %>'></asp:Label>                          
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

@@ -18,6 +18,7 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
+           
 
             if (!IsPostBack)
             {
@@ -28,6 +29,7 @@ namespace MasterBox
                 // Fill up folder location for upload
                 UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
                 UploadLocation.DataBind();
+                
             }
 
         }
@@ -44,6 +46,7 @@ namespace MasterBox
 
         private void FillDataFolder()
         {
+
             dtFolder = new DataTable();
             SqlDataReader reader = MBFolder.GetFolderToDisplay(Context.User.Identity.Name);
             dtFolder.Load(reader);
@@ -74,8 +77,8 @@ namespace MasterBox
             SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
             dtFolderFile.Load(reader);
 
-            GridView1.DataSource = dtFolderFile;
-            GridView1.DataBind();
+            FolderFileTableView.DataSource = dtFolderFile;
+            FolderFileTableView.DataBind();
 
         }
 
@@ -119,8 +122,8 @@ namespace MasterBox
                     file.fileusername = Context.User.Identity.Name;
                     file.fileName = Path.GetFileName(FileUpload.FileName);
                     file.fileType = FileUpload.PostedFile.ContentType;
-                  //This is for testing for chart // file.filetimestamp= DateTime.Now;
-
+                    //This is for testing for chart 
+                    file.filetimestamp= DateTime.Now;
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
@@ -146,7 +149,6 @@ namespace MasterBox
                         TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
-
 
                     }
 
@@ -245,10 +247,12 @@ namespace MasterBox
                 case "ShowPopup":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
                     file = MBFile.RetrieveFile(Context.User.Identity.Name, fileid);
+                    System.Diagnostics.Debug.WriteLine("Time stamp now: "+file.filetimestamp);
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
                     LblFileSize.Text = file.fileSize.ToString();
+                    LblFileTimeStamp.Text = file.filetimestamp.ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
                     break;

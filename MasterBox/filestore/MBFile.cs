@@ -36,19 +36,22 @@ namespace MasterBox.mbox
 
                     // Storing of File
                     SqlCommand cmd = new SqlCommand(
-                        "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
-                        + "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
+                        "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent,filetimestamp) "
+                        + "values(@user,@name,@type,@size,@data,@timestamp)", SQLGetMBoxConnection());
                     cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
                     cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
                     cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
+                    cmd.Parameters.Add(new SqlParameter("@timestamp", SqlDbType.DateTime2, 7));
                     cmd.Prepare();
                     cmd.Parameters["@user"].Value = user.UserId;
                     cmd.Parameters["@name"].Value = file.fileName;
                     cmd.Parameters["@type"].Value = file.fileType;
                     cmd.Parameters["@size"].Value = file.fileSize;
                     cmd.Parameters["@data"].Value = file.filecontent;
+                    cmd.Parameters["@timestamp"].Value = file.filetimestamp;
+
 
                     cmd.ExecuteNonQuery();
 
@@ -62,6 +65,7 @@ namespace MasterBox.mbox
                     file.filecontent = null;
                     file.filekey = "";
                     file.fileiv = "";
+
                     return true;
                 }
                 catch
@@ -91,17 +95,21 @@ namespace MasterBox.mbox
                     file.filecontent = MBFile.EncryptAES256File(file);
 
                     SqlCommand cmd = new SqlCommand(
-                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent@filecontent WHERE filename=@filename", SQLGetMBoxConnection());
+                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent=@filecontent,filetimestamp=@filetimestamp WHERE filename=@filename", SQLGetMBoxConnection());
                     cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@filetype", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@filesize", SqlDbType.Int, 4));
                     cmd.Parameters.Add(new SqlParameter("@filecontent", SqlDbType.VarBinary, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filetimestamp", SqlDbType.DateTime2, 7));
+
                     cmd.Prepare();
 
                     cmd.Parameters["@filename"].Value = file.fileName;
                     cmd.Parameters["@filetype"].Value = file.fileType;
                     cmd.Parameters["@filesize"].Value = file.fileSize;
                     cmd.Parameters["@filecontent"].Value = file.filecontent;
+                    cmd.Parameters["@filetimestamp"].Value = file.filetimestamp;
+
                     cmd.ExecuteNonQuery();
 
 
@@ -325,6 +333,7 @@ namespace MasterBox.mbox
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
                 mbf.fileusername = user.UserName;
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
             }
             if (mbf.fileSize == 0)
                 return null;
@@ -355,7 +364,9 @@ namespace MasterBox.mbox
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
                 mbf.fileusername = user.UserName;
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
             }
+
             if (mbf.fileSize == 0)
                 return null;
             return mbf;
