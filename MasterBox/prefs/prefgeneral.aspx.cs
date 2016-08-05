@@ -11,7 +11,16 @@ namespace MasterBox.Prefs
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                string[] months = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+                Random rnd = new Random();
+                for (int i = 0; i < 12; i++)
+                {
+                    DataChart.Series["Date"].Points.AddXY(months[i], rnd.Next(1, 100));
+                }
+            }
         }
+
     }
 }
