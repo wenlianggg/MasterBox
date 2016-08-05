@@ -37,6 +37,7 @@
 					<td><strong>Password:</strong></td>
 					<td>
 						<asp:TextBox ID="UserPass" CssClass="pwdfield form-control" TextMode="Password" runat="server" />
+						<a href="lostpw.aspx" runat="server">Forgot your password?</a>
 					</td>
 					<td>
 						<asp:RequiredFieldValidator
