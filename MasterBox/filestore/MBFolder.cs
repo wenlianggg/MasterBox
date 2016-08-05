@@ -306,7 +306,7 @@ namespace MasterBox.mbox
                 cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
                 cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
                 cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
-                cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.DateTime2, 7));
+                cmd.Parameters.Add(new SqlParameter("@timestamp", SqlDbType.DateTime2, 7));
 
                 cmd.Prepare();
                 cmd.Parameters["@folderid"].Value = folder.folderid;

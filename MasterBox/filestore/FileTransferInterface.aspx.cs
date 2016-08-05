@@ -122,8 +122,9 @@ namespace MasterBox
                     file.fileusername = Context.User.Identity.Name;
                     file.fileName = Path.GetFileName(FileUpload.FileName);
                     file.fileType = FileUpload.PostedFile.ContentType;
-                    //This is for testing for chart 
-                    file.filetimestamp= DateTime.Now;
+                      //This is for testing for chart 
+                      file.filetimestamp= DateTime.Now;
+
                     Stream strm = FileUpload.PostedFile.InputStream;
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
@@ -150,6 +151,7 @@ namespace MasterBox
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
 
+
                     }
 
                 }
@@ -165,6 +167,7 @@ namespace MasterBox
                     BinaryReader br = new BinaryReader(strm);
                     file.filecontent = br.ReadBytes((int)strm.Length);
                     file.fileSize = FileUpload.PostedFile.ContentLength;
+                    file.filetimestamp = DateTime.Now;
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
                         bool uploadfiletofolderstatus = MBFolder.UploadFileToFolder(file, foldername);
@@ -247,7 +250,6 @@ namespace MasterBox
                 case "ShowPopup":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
                     file = MBFile.RetrieveFile(Context.User.Identity.Name, fileid);
-                    System.Diagnostics.Debug.WriteLine("Time stamp now: "+file.filetimestamp);
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
