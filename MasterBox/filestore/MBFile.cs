@@ -57,14 +57,9 @@ namespace MasterBox.mbox
 
                     // Loggin for file upload
                     FileLogger.Instance.FileUploaded(user.UserId, file.fileName);
-
-                    // Clear Sensitive Data
-                    file.fileName = "";
-                    file.fileType = "";
-                    file.fileSize = 0;
-                    file.filecontent = null;
-                    file.filekey = "";
-                    file.fileiv = "";
+                    
+                    // Clear all
+                    file = null;
 
                     return true;
                 }
@@ -157,8 +152,6 @@ namespace MasterBox.mbox
             SqlDataReader sqldr = cmd.ExecuteReader();
             while (sqldr.Read())
             {
-                System.Diagnostics.Debug.WriteLine("Db File: "+ sqldr["filename"].ToString());
-                System.Diagnostics.Debug.WriteLine("File Name: "+ filename);
                 if (sqldr["filename"].ToString() == filename)
                 {
                     System.Diagnostics.Debug.WriteLine("Same name");
@@ -185,8 +178,6 @@ namespace MasterBox.mbox
             SqlDataReader sqldr = cmd.ExecuteReader();
             while (sqldr.Read())
             {
-                System.Diagnostics.Debug.WriteLine("Db File: " + sqldr["filename"].ToString());
-                System.Diagnostics.Debug.WriteLine("File Name: " + filename);
                 if (sqldr["filename"].ToString() == filename)
                 {
                     System.Diagnostics.Debug.WriteLine("Same name");
@@ -195,26 +186,6 @@ namespace MasterBox.mbox
 
             }
             return true;
-        }
-
-
-        // To generate Key and IV
-        public static string FileKeyIvGenerator(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            StringBuilder res = new StringBuilder();
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                byte[] uintBuffer = new byte[sizeof(uint)];
-
-                while (length-- > 0)
-                {
-                    rng.GetBytes(uintBuffer);
-                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                    res.Append(valid[(int)(num % (uint)valid.Length)]);
-                }
-            }
-            return res.ToString();
         }
 
         // AES256 Encryption for file
