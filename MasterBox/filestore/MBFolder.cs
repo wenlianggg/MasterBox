@@ -42,7 +42,7 @@ namespace MasterBox.mbox
             // Get User ID
             User user = User.GetUser(username);
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE folderid = (SELECT folderid FROM mb_fileaccess WHERE userid = @userid)", SQLGetMBoxConnection());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE folderid IN (SELECT folderid FROM mb_fileaccess WHERE userid = @userid)", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
             cmd.Parameters.Add(unameParam);
             cmd.Parameters["@userid"].Value = user.UserId;

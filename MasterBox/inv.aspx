@@ -4,6 +4,9 @@
 
     <div>
         <br />
+        <asp:Label runat="server" id="VerificationLabel" ></asp:Label>
+        <br />
+        <asp:Label runat="server" id="CheckLabel"></asp:Label>
     </div>
 
 </asp:Content>
