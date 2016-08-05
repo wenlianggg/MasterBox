@@ -22,12 +22,13 @@ namespace MasterBox.Admin {
             dt.Columns.Add(new DataColumn("Username", typeof(string)));
 			dt.Columns.Add(new DataColumn("First Name", typeof(string)));
 			dt.Columns.Add(new DataColumn("Last Name", typeof(string)));
+			dt.Columns.Add(new DataColumn("Email", typeof(string)));
 			dt.Columns.Add(new DataColumn("Verified", typeof(bool)));
 			dt.Columns.Add(new DataColumn("Registered On", typeof(DateTime)));
 			using (DataAccess da = new DataAccess()) {
                 foreach (int i in da.SqlGetAllUserIds()) {
                     User usr = Auth.User.GetUser(i);
-                    dt.Rows.Add(usr.UserId, usr.UserName, usr.FirstName, usr.LastName, usr.IsVerified, usr.RegStamp);
+                    dt.Rows.Add(usr.UserId, usr.UserName, usr.FirstName, usr.LastName, usr.Email, usr.IsVerified, usr.RegStamp);
                 }
             }
             return dt;
