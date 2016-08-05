@@ -11,7 +11,7 @@
         <h2>Help Corner</h2><br />
         <address>
             <strong>Support: </strong><br />
-            <a href="mailto:support@masterbaux.com">support@masterbaux.com</a><br />
+            <a href="mailto:support@masterbaux.com">masterboxsp@gmail.com</a><br />
         </address>
         <address>
             <strong>Marketing: </strong><br />
@@ -67,13 +67,13 @@
         <table class="table table-hover table-condensed">     
             
             <tr>
-                <td> From </td>
-                <td> <asp:TextBox ID="txtFrom" runat="server" style="Width:100%; border-width:3px;"/> </td>
+                <td> <span title="Your Email Address"> From </span> </td>
+                <td> <asp:TextBox ID="txtFrom" runat="server" type="email" placeholder="YourEmail@example.com" style="Width:100%; border-width:3px;"/> </td>
             </tr>
 
             <tr>
                 <td> To </td>
-                <td> <asp:TextBox ID="txtToMail" runat="server" style="Width:100%; border-width:3px;" /> </td>
+                <td> <asp:TextBox ID="txtToMail" runat="server" type="email" value="masterboxsp@gmail.com" style="Width:100%; border-width:3px;" /> </td>
             </tr>
             <tr>
                 <td> Subject </td>
