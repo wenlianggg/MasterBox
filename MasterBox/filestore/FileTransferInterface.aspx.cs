@@ -145,12 +145,12 @@ namespace MasterBox
                     }
                 }
                 else
-                {                    
+                {
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
                         if (MBFolder.UploadFileToFolder(file, foldername))
                         {
-                            FillFileDataFolder(foldername,MBFolder.GetFolder(Context.User.Identity.Name, foldername).folderid);
+                            FillFileDataFolder(foldername, MBFolder.GetFolder(Context.User.Identity.Name, foldername).folderid);
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
 
                         }
@@ -209,7 +209,7 @@ namespace MasterBox
             {
                 if (MBFile.FilenameCheck(checkfile.fileusername, TxtBoxFileNameCheck.Text))
                 {
-                    checkfile.fileName = TxtBoxFileNameCheck.Text;                    
+                    checkfile.fileName = TxtBoxFileNameCheck.Text;
                     MBFile.UploadNewFile(checkfile);
                     FillDataFile();
                 }
@@ -230,11 +230,11 @@ namespace MasterBox
         protected void BtnUploadFileToFolder_Click(object sender, EventArgs e)
         {
             MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, TxtBoxCurrecntFolderFileName.Text);
-            MBFile fileinuse = MBFolder.RetrieveFolderFile(Context.User.Identity.Name,checkfile.fildid,Convert.ToInt64(LblFileFolderIDCheck.Text));
+            MBFile fileinuse = MBFolder.RetrieveFolderFile(Context.User.Identity.Name, checkfile.fildid, Convert.ToInt64(LblFileFolderIDCheck.Text));
             string value = RdBtnFolderFileName.SelectedValue;
             if (value == "change")
             {
-               if(MBFile.FilenameCheck(Context.User.Identity.Name, TxtBoxFolderFileNameCheck.Text,LblFileFolderNameCheck.Text))
+                if (MBFile.FilenameCheck(Context.User.Identity.Name, TxtBoxFolderFileNameCheck.Text, LblFileFolderNameCheck.Text))
                 {
                     fileinuse.fileName = TxtBoxFolderFileNameCheck.Text;
                     MBFolder.UploadFileToFolder(fileinuse, LblFileFolderNameCheck.Text);
@@ -344,7 +344,6 @@ namespace MasterBox
                     else
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "Password Status", "<script language='javascript'>alert('" + "Wrong Password, try again!" + "')</script>");
-
                     }
                     break;
                 case "DeleteFolder":
@@ -357,7 +356,6 @@ namespace MasterBox
                     else
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "Password Status", "<script language='javascript'>alert('" + "Wrong Password, try again!" + "')</script>");
-
                     }
                     break;
             }

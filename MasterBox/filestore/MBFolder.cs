@@ -59,6 +59,7 @@ namespace MasterBox.mbox
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
+
             SqlDataReader sqldr = cmd.ExecuteReader();
             ArrayList locationList = new ArrayList();
             locationList.Add("==Master Folder==");
@@ -80,6 +81,7 @@ namespace MasterBox.mbox
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
+
             SqlDataReader sqldr = cmd.ExecuteReader();
             ArrayList passwordlocationList = new ArrayList();
             passwordlocationList.Add("==Choose a Folder==");
@@ -101,6 +103,7 @@ namespace MasterBox.mbox
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
+
             SqlDataReader sqldr = cmd.ExecuteReader();
             ArrayList passwordlocationList = new ArrayList();
             passwordlocationList.Add("==Choose a Folder==");

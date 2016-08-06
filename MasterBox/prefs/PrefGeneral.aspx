@@ -22,7 +22,7 @@
             <asp:Chart ID="DataChart" runat="server" Width="1100px" Height="400px"
                 Palette="SemiTransparent" TextAntiAliasingQuality="Normal" ImageStorageMode="UseImageLocation" Visible="True">
                 <Series>
-                    <asp:Series Name="Date" ChartType="Line"></asp:Series>
+                    <asp:Series Name="Date" ChartType="Bar"></asp:Series>
                 </Series>
                 <ChartAreas>
                     <asp:ChartArea Name="ChartArea1" BackColor="Transparent"></asp:ChartArea>
