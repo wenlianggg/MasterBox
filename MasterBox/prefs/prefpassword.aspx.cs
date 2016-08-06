@@ -21,7 +21,7 @@ namespace MasterBox.Prefs {
 		protected void ChangePassClick(object sender, EventArgs e) {
 			if (NewUserPass.Text.Equals(NewUserPassCfm.Text)) {
 				try {
-					if (MBProvider.Instance.ChangePassword(Context.User.Identity.Name, OldUserPass.Text, NewUserPass.Text)) {
+					if (MBProvider.Instance.ChangePassword(Context.User.Identity.Name, NewUserPass.Text, OldUserPass.Text)) {
 						Msg.ForeColor = System.Drawing.Color.LimeGreen;
 						Msg.Text = "Successfully changed password";
 					} else {
