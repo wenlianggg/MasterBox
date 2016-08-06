@@ -153,7 +153,6 @@ namespace MasterBox.Auth {
 			RefreshInstance();
 		}
 
-		// TODO: Blocklist removal
 		internal string GetIP() {
 			HttpContext context = HttpContext.Current;
 			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
