@@ -439,25 +439,6 @@
                     return true;
                 }
             });
-        });
-        
-        // To validate Confirm Password
-        $(document).ready(function () {
-            $('#<%=BtnUploadFile.ClientID %>').click(function (event) {
-                var current = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
-                var change = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value;
-                var option=document.getElementById('<%=RdBtnFileName.ClientID%>').value;
-                if(option=="change"){
-                    if (current == change) {
-                        alert("Please change file name");
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            });
-        }); 
-
-        
+        });                     
     </script>
 </asp:Content>

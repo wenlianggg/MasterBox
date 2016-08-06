@@ -253,7 +253,8 @@ namespace MasterBox
             }
             else
             {
-
+                fileinuse.filetimestamp = DateTime.Now;
+                MBFolder.OverwriteFileToFolder(fileinuse, LblFileFolderNameCheck.Text);
             }
         }
 

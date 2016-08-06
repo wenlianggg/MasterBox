@@ -330,6 +330,53 @@ namespace MasterBox.mbox
           
         }
 
+        public static bool OverwriteFileToFolder(MBFile file, string foldername)
+        {
+            try
+            {
+                // Get Folder ID
+                MBFolder folder = MBFolder.GetFolder(file.fileusername, foldername);
+                System.Diagnostics.Debug.WriteLine("Name: " + folder.folderName);
+                System.Diagnostics.Debug.WriteLine("Key: " + folder.folderBlowFishKey);
+                System.Diagnostics.Debug.WriteLine("IV: " + folder.folderBlowFishIV);
+                // Get User ID
+                User user = User.GetUser(file.fileusername);
+                int userid = (int)user.UserId;
+
+                // Encryption With Blowfish if there is a password
+                string key = folder.folderBlowFishKey;
+                string iv = folder.folderBlowFishIV;
+                file.filecontent = EncryptionBlowfishFileFolder(file.filecontent, key, iv);
+
+                // Insert Database into database
+                SqlCommand cmd = new SqlCommand(
+                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent=@filecontent,filetimestamp=@filetimestamp WHERE filename=@filename AND userid=@userid AND folderid=@folderid", SQLGetMBoxConnection());
+                cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+                cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+                cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.VarChar, 50));
+                cmd.Parameters.Add(new SqlParameter("@filetype", SqlDbType.NVarChar, -1));
+                cmd.Parameters.Add(new SqlParameter("@filesize", SqlDbType.Int, 4));
+                cmd.Parameters.Add(new SqlParameter("@filecontent", SqlDbType.VarBinary, -1));
+                cmd.Parameters.Add(new SqlParameter("@filetimestamp", SqlDbType.DateTime2, 7));
+                cmd.Prepare();
+
+                cmd.Parameters["@folderid"].Value = folder.folderid;
+                cmd.Parameters["@userid"].Value = user.UserId;
+                cmd.Parameters["@filename"].Value = file.fileName;
+                cmd.Parameters["@filetype"].Value = file.fileType;
+                cmd.Parameters["@filesize"].Value = file.fileSize;
+                cmd.Parameters["@filecontent"].Value = file.filecontent;
+                cmd.Parameters["@filetimestamp"].Value = file.filetimestamp;
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool CreateNewFolder(MBFolder folder, string folderpassword)
         {
             try
