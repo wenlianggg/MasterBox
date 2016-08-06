@@ -23,7 +23,7 @@
 	<link href='~/CSS/Site.css' rel="stylesheet" />
 	<link href='~/CSS/Styling.css' rel="stylesheet" />
 	<!--- Favicon --->
-	<link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+	<link href='~/images/newfavicon.png' rel="shortcut icon" type="image/png" />
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server">
 	</asp:ContentPlaceHolder>
 </head>

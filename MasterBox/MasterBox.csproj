@@ -255,6 +255,7 @@
     <Content Include="images\MasterBoxSliderPedestal.png" />
     <Content Include="images\MasterBoxSliderPodium.png" />
     <Content Include="images\MasterBoxSliderWow.png" />
+    <Content Include="images\newfavicon.png" />
     <Content Include="inv.aspx" />
     <Content Include="prefs\prefotpsetup.aspx" />
     <Content Include="prefs\prefpassword.aspx" />
