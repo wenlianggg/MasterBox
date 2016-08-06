@@ -235,7 +235,7 @@
                     <asp:TextBox ID="TxtBoxFileNameCheck" runat="server"></asp:TextBox>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnUploadFile" OnClick="BtnUploadFile_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                    <asp:Button ID="BtnUploadFile" OnClick="BtnUploadFile_Click" CssClass="btn btn-default" runat="server" Text="Upload" ValidationGroup="CheckFileName"  />
                 </div>
             </div>
         </div>
@@ -265,7 +265,7 @@
                     <asp:TextBox ID="TxtBoxFolderFileNameCheck" runat="server"></asp:TextBox>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnUploadFileToFolder" OnClick="BtnUploadFileToFolder_Click" CssClass="btn btn-default" runat="server" Text="Upload"  />
+                    <asp:Button ID="BtnUploadFileToFolder" OnClick="BtnUploadFileToFolder_Click" CssClass="btn btn-default" runat="server" Text="Upload"  ValidationGroup="CheckFolderFileName" />
                 </div>
             </div>
         </div>
@@ -427,8 +427,6 @@
         function getCheckedRadio(group, item, value) {
             encryptionChk(item);
         }
-
-
 
         // To validate Confirm Password
         $(document).ready(function () {

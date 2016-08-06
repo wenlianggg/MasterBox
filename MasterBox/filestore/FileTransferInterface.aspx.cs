@@ -18,8 +18,6 @@ namespace MasterBox
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             if (!IsPostBack)
             {
                 // Fill up file and folder data on the display
@@ -31,7 +29,6 @@ namespace MasterBox
                 UploadLocation.DataBind();
 
             }
-
         }
         private void FillDataFile()
         {
@@ -41,12 +38,10 @@ namespace MasterBox
 
             FileTableView.DataSource = dtFile;
             FileTableView.DataBind();
-
         }
 
         private void FillDataFolder()
         {
-
             dtFolder = new DataTable();
             SqlDataReader reader = MBFolder.GetFolderToDisplay(Context.User.Identity.Name);
             dtFolder.Load(reader);
@@ -54,7 +49,6 @@ namespace MasterBox
 
             FolderTableView.DataSource = dtFolder;
             FolderTableView.DataBind();
-
         }
 
         private void FillDataSharedFolder()
@@ -66,20 +60,17 @@ namespace MasterBox
 
             SharedFolderTableView.DataSource = dtFolder;
             SharedFolderTableView.DataBind();
-
         }
 
         private void FillFileDataFolder(string foldername, long folderid)
         {
             FolderHeader.Text = foldername;
-
             dtFolderFile = new DataTable();
             SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
             dtFolderFile.Load(reader);
 
             FolderFileTableView.DataSource = dtFolderFile;
             FolderFileTableView.DataBind();
-
         }
 
 
@@ -152,11 +143,9 @@ namespace MasterBox
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
                     }
-
                 }
                 else
-                {
-                    
+                {                    
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
                         if (MBFolder.UploadFileToFolder(file, foldername))
@@ -208,10 +197,7 @@ namespace MasterBox
             {
                 // Pop up box to ask the person to change
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfilenameModal", "showPopupFolderFileName();", true);
-
             }
-
-
         }
 
         // Check file name
@@ -266,10 +252,8 @@ namespace MasterBox
         {
             string command = e.CommandName;
             MBFile file;
-
             switch (command)
             {
-
                 case "ShowPopup":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
                     file = MBFile.RetrieveFile(Context.User.Identity.Name, fileid);
@@ -293,7 +277,6 @@ namespace MasterBox
                     FillDataFile();
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Delete Status", "<script language='javascript'>alert('" + "File has been deleted!" + "')</script>");
                     break;
-
             }
         }
 
@@ -306,7 +289,6 @@ namespace MasterBox
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             switch (command)
             {
-
                 case "OpenFolderFile":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
                     System.Diagnostics.Debug.WriteLine("File ID: " + fileid);
@@ -333,7 +315,6 @@ namespace MasterBox
             string command = e.CommandName;
             string foldername = LblFolderName.Text;
             long folderid = Convert.ToInt64(LblFolderID.Text);
-
             switch (command)
             {
                 case "OpenFolder":
@@ -344,7 +325,6 @@ namespace MasterBox
                     MBFolder.DeleteFolder(folderid);
                     FillDataFolder();
                     System.Diagnostics.Debug.WriteLine("Delete folder");
-
                     break;
             }
         }
@@ -386,7 +366,6 @@ namespace MasterBox
 
         protected void FolderLinkButton_Command(object sender, CommandEventArgs e)
         {
-
             LinkButton lnk = (LinkButton)sender;
             bool pass = Convert.ToBoolean(lnk.Attributes["FolderEncryption"]);
 
@@ -397,7 +376,6 @@ namespace MasterBox
             {
                 LblFolderNamePass.Text = folder.folderName;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
-
             }
             else
             {
@@ -408,13 +386,10 @@ namespace MasterBox
             }
         }
 
-
-
         protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
         {
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
             MBFolder.DeleteFolder(folder.folderid);
         }
-
     }
 }

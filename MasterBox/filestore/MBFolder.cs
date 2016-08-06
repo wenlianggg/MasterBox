@@ -573,7 +573,7 @@ namespace MasterBox.mbox
             newFolder.foldersalt= Convert.ToBase64String(newFolderSalt);
 
             byte[] newPwBytes;
-            if (folderpassword!="")
+            if (folderpassword !="")
             {
                 // Convert new password to byte array
                  newPwBytes = Encoding.UTF8.GetBytes(folderpassword);
