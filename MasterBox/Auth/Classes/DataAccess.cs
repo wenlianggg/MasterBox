@@ -361,6 +361,20 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		internal string SqlGetUserName(int uid) {
+			SqlCommand cmd = new SqlCommand(
+				"SELECT DISTINCT username FROM mb_users WHERE userid = @uid", sqlConn);
+			cmd.Parameters.Add(new SqlParameter("@uid", SqlDbType.Int, 0));
+			cmd.Prepare();
+			cmd.Parameters["@uid"].Value = uid;
+			SqlDataReader sqldr = cmd.ExecuteReader();
+			if (sqldr.Read()) {
+				return (string)sqldr[0];
+			} else {
+				return "No user";
+			}
+		}
+
 		internal string SqlGetUserIV(int userid) {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT DISTINCT aesIV FROM mb_users WHERE userid = @uid", sqlConn);

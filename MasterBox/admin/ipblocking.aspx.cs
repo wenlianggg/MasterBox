@@ -11,8 +11,34 @@ using System.Web.UI.WebControls;
 namespace MasterBox.Admin {
 	public partial class IPBlocking : System.Web.UI.Page {
 		protected void Page_Load(object sender, EventArgs e) {
+			BlockDataGrid.DataSource = BlockListTable;
+			BlockDataGrid.DataBind();
+			BlockDataGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
+
 			if (!IsPostBack) {
 				Message.Visible = false;
+			}
+		}
+
+		protected void IPSubmitBtn_Click(object sender, EventArgs e) {
+			string ipaddress = IPAddrTxt.Text;
+			string reason = IPReasonTxt.Text;
+			TimeSpan duration;
+			bool isDurationValid = TimeSpan.TryParse(IPDurationTxt.Text, out duration);
+			if (isDurationValid) {
+				if (isValidIp(ipaddress)) {
+					// All validations passed
+					IPBlock.Instance.Create(ipaddress, duration, reason);
+					Msg.Text = "Blocked " + ipaddress + " for " + duration + ". Reason: " + reason;
+				} else {
+					Message.Visible = true;
+					Message.Attributes["class"] = "alert alert-warning";
+					Msg.Text = "IP Address input invalid";
+				}
+			} else {
+				Message.Visible = true;
+				Message.Attributes["class"] = "alert alert-warning";
+				Msg.Text = "Invalid time input";
 			}
 		}
 
@@ -41,34 +67,14 @@ namespace MasterBox.Admin {
 			}
 		}
 
-		protected void IPSubmitBtn_Click(object sender, EventArgs e) {
-			string ipaddress = IPAddrTxt.Text;
-			string reason = IPReasonTxt.Text;
-			TimeSpan duration;
-			bool isDurationValid = TimeSpan.TryParse(UDurationTxt.Text, out duration);
-			if (isDurationValid) {
-				if (isValidIp(ipaddress)) {
-					// All validations passed
-					IPBlock.Instance.Create(ipaddress, duration, reason);
-					Msg.Text = "Blocked " + ipaddress + " for " + duration + ". Reason: " + reason;
-				} else {
-					Message.Visible = true;
-					Message.Attributes["class"] = "alert alert-warning";
-					Msg.Text = "IP Address input invalid";
-				}
-			} else {
-				Message.Visible = true;
-				Message.Attributes["class"] = "alert alert-warning";
-				Msg.Text = "Invalid time input";
-			}
-		}
+
 
 		protected void IPUSubmitBtn_Click(object sender, EventArgs e) {
 			string username = IPUUserTxt.Text;
 			string ipaddress = IPUIPTxt.Text;
 			string reason = IPUReasonTxt.Text;
 			TimeSpan duration;
-			bool isDurationValid = TimeSpan.TryParse(UDurationTxt.Text, out duration);
+			bool isDurationValid = TimeSpan.TryParse(IPUDurationTxt.Text, out duration);
 			if (isDurationValid) {
 				if (isValidIp(ipaddress)) {
 					if (Auth.User.Exists(username)) {
@@ -101,6 +107,7 @@ namespace MasterBox.Admin {
 		private DataTable BlockListTable {
 			get {
 				DataTable dt = new DataTable();
+				dt.Columns.Add(new DataColumn("Index", typeof(int)));
 				dt.Columns.Add(new DataColumn("Username", typeof(string)));
 				dt.Columns.Add(new DataColumn("IP Address", typeof(string)));
 				dt.Columns.Add(new DataColumn("Expiry", typeof(DateTime)));
@@ -108,7 +115,11 @@ namespace MasterBox.Admin {
 				using (DataAccess da = new DataAccess()) {
 					int ctr = 0;
 					foreach (IPBlockEntry ipbe in IPBlock.Instance.bList) {
-						dt.Rows.Add(++ctr, ipbe.IPAddress, ipbe.Expiry, ipbe.Reason);
+						dt.Rows.Add(++ctr,
+									Auth.User.ConvertToUserName(ipbe.UserID), 
+									ipbe.IPAddress, 
+									ipbe.Expiry, 
+									ipbe.Reason);
 					}
 				}
 				return dt;

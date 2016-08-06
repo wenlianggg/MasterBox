@@ -132,7 +132,7 @@ namespace MasterBox.Auth {
 				expiry = DateTime.Now.Add(ts.Value);
 			else
 				expiry = DateTime.Now.AddYears(99);
-			IPBlockEntry newipbe = new IPBlockEntry(0, expiry: expiry, reason: reason);
+			IPBlockEntry newipbe = new IPBlockEntry(userid, expiry: expiry, reason: reason);
 			using (DataAccess da = new DataAccess()) {
 				da.SqlInsertBlockEntry(newipbe);
 			}
