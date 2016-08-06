@@ -284,6 +284,9 @@
                     <span>Folder Name: </span>
                     <asp:Label ID="LblFolderName" runat="server"></asp:Label>
                     <br />
+                    <span>Folder Created: </span>
+                    <asp:Label ID="LblFolderTimeStamp" runat="server"></asp:Label>
+                    <br />
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnOpenFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithoutPass_Command" CssClass="btn btn-default" runat="server" Text="Open" />
