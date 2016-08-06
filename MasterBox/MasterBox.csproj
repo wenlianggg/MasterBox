@@ -259,7 +259,7 @@
     <Content Include="prefs\preflogs.aspx" />
     <Content Include="Auth\signout.aspx" />
     <Content Include="Auth\signup.aspx" />
-    <Content Include="Auth\signup2.aspx" />
+    <Content Include="Auth\lostpw.aspx" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="CSS\Internal.css" />
@@ -511,12 +511,12 @@
     <Compile Include="Auth\signup.aspx.designer.cs">
       <DependentUpon>signup.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Auth\signup2.aspx.cs">
-      <DependentUpon>signup2.aspx</DependentUpon>
+    <Compile Include="Auth\lostpw.aspx.cs">
+      <DependentUpon>lostpw.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Auth\signup2.aspx.designer.cs">
-      <DependentUpon>signup2.aspx</DependentUpon>
+    <Compile Include="Auth\lostpw.aspx.designer.cs">
+      <DependentUpon>lostpw.aspx</DependentUpon>
     </Compile>
     <Compile Include="Auth\Classes\Exceptions.cs" />
     <Compile Include="filestore\blowfish.cs" />

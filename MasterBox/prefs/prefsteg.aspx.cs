@@ -100,7 +100,7 @@ namespace MasterBox.Prefs {
 						return true;
 					} else {
 						Msg.ForeColor = Color.Red;
-						Msg.Text = "Upload status: The file has to be less than 1MB!";
+						Msg.Text = "Upload status: The file has to be less than 10MB!";
 						return false;
 					}
 				} else {
