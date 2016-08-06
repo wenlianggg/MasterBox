@@ -170,7 +170,10 @@ namespace MasterBox
                     }
                     else
                     {
-                        // Same file name                
+                        // Same file name
+                        MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, foldername);
+                        LblFileFolderNameCheck.Text = folder.folderName;
+                        LblFileFolderIDCheck.Text = folder.folderid.ToString();
                         TxtBoxCurrentFileName.Text = Path.GetFileName(FileUpload.FileName);
                         TxtBoxFileNameCheck.Text = Path.GetFileName(FileUpload.FileName);
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "filenameModal", "showPopupFileName();", true);
@@ -212,17 +215,24 @@ namespace MasterBox
         protected void BtnUploadFile_Click(object sender, EventArgs e)
         {
             MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, TxtBoxCurrentFileName.Text);
-            System.Diagnostics.Debug.WriteLine("File name: " + checkfile);
             string value = RdBtnFileName.SelectedValue;
             if (value == "change")
             {
-                checkfile.fileName = TxtBoxFileNameCheck.Text;
-                MBFile.UploadNewFile(checkfile);
-                FillDataFile();
+                if (MBFile.FilenameCheck(checkfile.fileusername, TxtBoxFileNameCheck.Text))
+                {
+                    checkfile.fileName = TxtBoxFileNameCheck.Text;                    
+                    MBFile.UploadNewFile(checkfile);
+                    FillDataFile();
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Name specified in use, please try again!" + "')</script>");
+                }
             }
             else
             {
-                MBFile.OverrideFile(checkfile);
+                checkfile.filetimestamp = DateTime.Now;
+                MBFile.OverwriteFile(checkfile);
                 FillDataFile();
             }
         }
@@ -230,7 +240,21 @@ namespace MasterBox
         // Check File name in folder
         protected void BtnUploadFileToFolder_Click(object sender, EventArgs e)
         {
+            MBFile checkfile = MBFile.RetrieveFile(Context.User.Identity.Name, TxtBoxCurrecntFolderFileName.Text);
+            MBFile fileinuse = MBFolder.RetrieveFolderFile(Context.User.Identity.Name,checkfile.fildid,Convert.ToInt64(LblFileFolderIDCheck.Text));
+            string value = RdBtnFolderFileName.SelectedValue;
+            if (value == "change")
+            {
+               if(MBFile.FilenameCheck(Context.User.Identity.Name, TxtBoxFolderFileNameCheck.Text,LblFileFolderNameCheck.Text))
+                {
+                    fileinuse.fileName = TxtBoxFolderFileNameCheck.Text;
+                    MBFolder.UploadFileToFolder(fileinuse, LblFileFolderNameCheck.Text);
+                }
+            }
+            else
+            {
 
+            }
         }
 
         // File Options

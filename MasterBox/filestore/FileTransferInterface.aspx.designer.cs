@@ -328,22 +328,31 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnUploadFile;
         
         /// <summary>
-        /// RadioButtonList1 control.
+        /// RdBtnFolderFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
+        protected global::System.Web.UI.WebControls.RadioButtonList RdBtnFolderFileName;
         
         /// <summary>
-        /// LblFolderFileIDCheck control.
+        /// LblFileFolderNameCheck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblFolderFileIDCheck;
+        protected global::System.Web.UI.WebControls.Label LblFileFolderNameCheck;
+        
+        /// <summary>
+        /// LblFileFolderIDCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileFolderIDCheck;
         
         /// <summary>
         /// TxtBoxCurrecntFolderFileName control.

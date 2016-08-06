@@ -136,13 +136,17 @@ namespace MasterBox.mbox
 
             // Get File Data
             SqlCommand cmd = new SqlCommand(
-                "SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid", SQLGetMBoxConnection());
+                "SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid AND folderid=@folderid", SQLGetMBoxConnection());
             SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
             SqlParameter fileidParam = new SqlParameter("@fileid", SqlDbType.BigInt, 8);
+            SqlParameter folderidParam = new SqlParameter("@folderid", SqlDbType.BigInt, 8);
+
             cmd.Parameters.Add(unameParam);
             cmd.Parameters.Add(fileidParam);
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@fileid"].Value = fileid;
+            cmd.Parameters["@folderid"].Value = folderid;
+
             cmd.Prepare();
 
             // Get Folder Key and IV

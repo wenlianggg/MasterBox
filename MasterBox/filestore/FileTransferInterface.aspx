@@ -21,8 +21,6 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
-
-
     </script>
 </asp:Content>
 
@@ -226,7 +224,7 @@
                     <p>File upload already exist, do you wish to overwrite it or upload new?</p>
                     <asp:RadioButtonList ID="RdBtnFileName" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
-                        <asp:ListItem Text="Override" Value="overwrite" />
+                        <asp:ListItem Text="Overwrite" Value="overwrite" />
                     </asp:RadioButtonList>
                     <asp:Label ID="LblFileIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
@@ -253,11 +251,12 @@
                 </div>
                 <div class="modal-body">
                     <p>File upload already exist, do you wish to overwrite it or upload new?</p>
-                    <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal">
+                    <asp:RadioButtonList ID="RdBtnFolderFileName" runat="server" RepeatDirection="Horizontal">
                         <asp:ListItem Text="Change" Value="change" Selected="True" />
-                        <asp:ListItem Text="Override" Value="overwrite" />
+                        <asp:ListItem Text="Overwrite" Value="overwrite" />
                     </asp:RadioButtonList>
-                    <asp:Label ID="LblFolderFileIDCheck" runat="server" Visible="false"></asp:Label>
+                    <asp:Label ID="LblFileFolderNameCheck" runat="server" Visible="false"></asp:Label>
+                    <asp:Label ID="LblFileFolderIDCheck" runat="server" Visible="false"></asp:Label>
                     <span>Current file name: </span>
                     <asp:TextBox ID="TxtBoxCurrecntFolderFileName" runat="server" Enabled="false"></asp:TextBox>
                     <br />
@@ -440,24 +439,25 @@
                     return true;
                 }
             });
-        });  
-
-        // To validate file name used
+        });
+        
+        // To validate Confirm Password
         $(document).ready(function () {
             $('#<%=BtnUploadFile.ClientID %>').click(function (event) {
-                var currentName = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
-                var changeName = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value
+                var current = document.getElementById('<%=TxtBoxCurrentFileName.ClientID%>').value;
+                var change = document.getElementById('<%=TxtBoxFileNameCheck.ClientID%>').value;
                 var option=document.getElementById('<%=RdBtnFileName.ClientID%>').value;
                 if(option=="change"){
-                    if (currentName == changeName) {
-                        alert("Name specified in use, please try again");
+                    if (current == change) {
+                        alert("Please change file name");
                         return false;
                     } else {
                         return true;
                     }
                 }
             });
-        });
+        }); 
+
         
     </script>
 </asp:Content>

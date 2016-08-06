@@ -11,6 +11,7 @@ namespace MasterBox.mbox
 {
     public class MBFile
     {
+        public long fildid { get; set; }
         public string fileusername { get; set; }
         public string fileName { get; set; }
         public string fileType { get; set; }
@@ -75,7 +76,7 @@ namespace MasterBox.mbox
         }
 
         // Override File
-        public static bool OverrideFile(MBFile file)
+        public static bool OverwriteFile(MBFile file)
         {
             if (SufficientSpace(file).Equals(true))
             {
@@ -106,9 +107,6 @@ namespace MasterBox.mbox
                     cmd.Parameters["@filetimestamp"].Value = file.filetimestamp;
 
                     cmd.ExecuteNonQuery();
-
-
-
                     return true;
                 }
                 catch
@@ -180,7 +178,6 @@ namespace MasterBox.mbox
             {
                 if (sqldr["filename"].ToString() == filename)
                 {
-                    System.Diagnostics.Debug.WriteLine("Same name");
                     return false;
                 }
 
@@ -299,6 +296,7 @@ namespace MasterBox.mbox
             MBFile mbf = new MBFile();
             if (sqldr.Read())
             {
+                mbf.fildid = (long)sqldr["fileid"];
                 mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"], user.AesKey, user.AesIV);
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
@@ -330,6 +328,7 @@ namespace MasterBox.mbox
             MBFile mbf = new MBFile();
             if (sqldr.Read())
             {
+                mbf.fildid = (long)sqldr["fileid"];
                 mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"], user.AesKey, user.AesIV);
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
