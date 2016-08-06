@@ -18,13 +18,9 @@ namespace MasterBox.Admin {
         string MailSmtpPassword { get; set; }
         string MailFrom { get; set; }
 
-        //internal string From { get; set; }
-		//internal string To { get; set; }
-		//internal string Subject { get; set; } 
-		//internal string Body { get; set; }
 
-        Mail()
-        {
+
+        public Mail() {
             MailSmtpHost = "Smtp.gmail.com";
             MailSmtpPort = 587;
             MailSmtpUsername = "masterboxnoreply@gmail.com";
@@ -32,8 +28,28 @@ namespace MasterBox.Admin {
             MailFrom = "masterboxnoreply@gmail.com";
         }
 
-        // Constructors, creates mail object
-        /*
+
+
+        public bool SendEmail(string to, string subject, string body) {
+            MailMessage mail = new MailMessage(MailFrom, to, subject, body);
+            var alternameView = AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html"));
+            mail.AlternateViews.Add(alternameView);
+
+            var smtpClient = new SmtpClient(MailSmtpHost, MailSmtpPort);
+			smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential(MailSmtpUsername, MailSmtpPassword);
+            try {
+                smtpClient.Send(mail);
+            } catch (Exception) {
+                //Log errors here
+                return false;
+            }
+
+            return true;
+        }
+
+		// Constructors, creates mail object
+		/*
 		internal Mail(string to, string subject, string body) {
 			From = "masterboxnoreply@gmail.com";
 			To = to;
@@ -43,28 +59,12 @@ namespace MasterBox.Admin {
 		}
         */
 
-        public bool SendEmail(string to, string subject, string body)
-        {
-            MailMessage mail = new MailMessage(MailFrom, to, subject, body);
-            var alternameView = AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html"));
-            mail.AlternateViews.Add(alternameView);
+		//internal string From { get; set; }
+		//internal string To { get; set; }
+		//internal string Subject { get; set; } 
+		//internal string Body { get; set; }
 
-            var smtpClient = new SmtpClient(MailSmtpHost, MailSmtpPort);
-            smtpClient.Credentials = new NetworkCredential(MailSmtpUsername, MailSmtpPassword);
-            try
-            {
-                smtpClient.Send(mail);
-            }
-            catch (Exception e)
-            {
-                //Log errors here
-                return false;
-            }
-
-            return true;
-        }
-
-        /*
+		/*
         // Methods for mail class
         internal bool Send() {
 			// Sends the mail

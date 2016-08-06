@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterBox.Admin;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -26,7 +27,8 @@ namespace MasterBox.Auth {
 					if (steg.ValidateHash(Auth.User.ConvertToId(UserName.Text))) {
 						Message.Visible = true;
 						Message.Attributes.Add("class", "alert alert-success");
-						// TODO: Implement email sending
+						Mail mail = new Mail();
+						mail.SendEmail("wenlianggg@gmail.com", "test", "test");
 						Msg.Text = "Your new password has been sent to your email address.";
 					} else {
 						Message.Visible = true;
