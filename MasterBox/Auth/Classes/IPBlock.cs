@@ -9,7 +9,7 @@ namespace MasterBox.Auth {
 
 		private static volatile IPBlock _instance;
 		private static object syncRoot = new object();
-		private List<IPBlockEntry> bList;
+		internal List<IPBlockEntry> bList;
 
 		private static Dictionary<string, int> _ipFailedLogins;
 

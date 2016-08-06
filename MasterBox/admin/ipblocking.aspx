@@ -62,6 +62,6 @@
 
 	<!--- List of IPBlocked --->
     <div class="col-md-12 col-sm-12">
-
+		<asp:DataGrid runat="server" ID="ipblocktable" CssClass="table table-striped table-bordered"/>
     </div>
 </asp:Content>

@@ -1,6 +1,7 @@
 ﻿using MasterBox.Auth;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -95,6 +96,23 @@ namespace MasterBox.Admin {
 		protected bool isValidIp(string ip) {
 			IPAddress ipobj;
 			return IPAddress.TryParse(ip, out ipobj);
+		}
+
+		private DataTable BlockListTable {
+			get {
+				DataTable dt = new DataTable();
+				dt.Columns.Add(new DataColumn("Username", typeof(string)));
+				dt.Columns.Add(new DataColumn("IP Address", typeof(string)));
+				dt.Columns.Add(new DataColumn("Expiry", typeof(DateTime)));
+				dt.Columns.Add(new DataColumn("Reason", typeof(string)));
+				using (DataAccess da = new DataAccess()) {
+					int ctr = 0;
+					foreach (IPBlockEntry ipbe in IPBlock.Instance.bList) {
+						dt.Rows.Add(++ctr, ipbe.IPAddress, ipbe.Expiry, ipbe.Reason);
+					}
+				}
+				return dt;
+			}
 		}
 	}
 }
