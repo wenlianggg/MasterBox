@@ -10,5 +10,25 @@ namespace MasterBox.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 
 		}
+
+		protected void USubmitBtn_Click(object sender, EventArgs e) {
+			string username = UUserTxt.Text;
+			TimeSpan duration;
+			bool isDurationValid = TimeSpan.TryParse(UDurationTxt.Text, out duration);
+		}
+
+		protected void IPSubmitBtn_Click(object sender, EventArgs e) {
+			string ipaddress = IPAddrTxt.Text;
+			TimeSpan duration;
+			bool isDurationValid = TimeSpan.TryParse(UDurationTxt.Text, out duration);
+		
+		}
+
+		protected void IPUSubmitBtn_Click(object sender, EventArgs e) {
+			string username = UUserTxt.Text;
+			string ipaddress = IPUIPTxt.Text;
+			TimeSpan duration;
+			bool isDurationValid = TimeSpan.TryParse(UDurationTxt.Text, out duration);
+		}
 	}
 }
