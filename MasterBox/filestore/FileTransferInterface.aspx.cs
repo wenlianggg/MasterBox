@@ -156,10 +156,12 @@ namespace MasterBox
                 }
                 else
                 {
+                    
                     if (MBFile.FilenameCheck(file.fileusername, file.fileName, foldername))
                     {
                         if (MBFolder.UploadFileToFolder(file, foldername))
                         {
+                            FillFileDataFolder(foldername,MBFolder.GetFolder(Context.User.Identity.Name, foldername).folderid);
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Upload Success" + "')</script>");
 
                         }
@@ -197,6 +199,7 @@ namespace MasterBox
                 MBFolder folder = new MBFolder();
                 folder.folderName = FolderName.Text;
                 folder.folderusername = Context.User.Identity.Name;
+                folder.foldertimestamp = DateTime.Now;
                 folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder Created" + "')</script>");
                 FillDataFolder();
@@ -337,6 +340,9 @@ namespace MasterBox
                     FillFileDataFolder(foldername, folderid);
                     break;
                 case "DeleteFolder":
+                    //delete folder
+                    MBFolder.DeleteFolder(folderid);
+                    FillDataFolder();
                     System.Diagnostics.Debug.WriteLine("Delete folder");
 
                     break;
@@ -365,6 +371,8 @@ namespace MasterBox
                     if (folder.ValidateFolderPassword(folder, folderchkingpassword))
                     {
                         //delete folder
+                        MBFolder.DeleteFolder(folder.folderid);
+                        FillDataFolder();
                     }
                     else
                     {
@@ -395,6 +403,7 @@ namespace MasterBox
             {
                 LblFolderName.Text = folder.folderName;
                 LblFolderID.Text = folderid.ToString();
+                LblFolderTimeStamp.Text = folder.foldertimestamp.ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderModal", "showPopupFolder();", true);
             }
         }

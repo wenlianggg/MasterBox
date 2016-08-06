@@ -1,11 +1,9 @@
 ﻿using MasterBox.Auth;
 using System;
-using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace MasterBox.mbox
 {
@@ -82,7 +80,6 @@ namespace MasterBox.mbox
             {
                 try
                 {
-                    System.Diagnostics.Debug.WriteLine("Testing if this has any values in it"+file.fileusername);
                     // Get User ID
                     User user = User.GetUser(file.fileusername);
 
@@ -265,13 +262,12 @@ namespace MasterBox.mbox
             System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter folderidParam = new SqlParameter("@folderid", SqlDbType.BigInt, 8);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(folderidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
-            cmd.Prepare();
 
             return cmd.ExecuteReader();
         }
@@ -283,13 +279,12 @@ namespace MasterBox.mbox
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter fileidParam = new SqlParameter("@fileid", SqlDbType.BigInt, 8);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@fileid"].Value = fileid;
-            cmd.Prepare();
 
             // File Retrieval
             SqlDataReader sqldr = cmd.ExecuteReader();
@@ -315,13 +310,12 @@ namespace MasterBox.mbox
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND filename = @filename AND folderid is NULL", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter fileidParam = new SqlParameter("@filename", SqlDbType.NVarChar, -1);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@filename"].Value = filename;
-            cmd.Prepare();
 
             // File Retrieval
             SqlDataReader sqldr = cmd.ExecuteReader();
