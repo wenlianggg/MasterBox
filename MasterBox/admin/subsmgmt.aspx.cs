@@ -238,7 +238,7 @@ namespace MasterBox.Admin {
                         GridViewRow row = UserTable.SelectedRow;
                         User selusr = Auth.User.GetUser(row.Cells[1].Text);
                         selusr.MbrStart = DateTime.Parse(StartDate.Text);
-                        selusr.MbrExpiry = DateTime.Parse(StartDate.Text);
+                        selusr.MbrExpiry = DateTime.Parse(EndDate.Text);
                         UserTable.DataSource = da.SqlGetUserSubscriptions();
                         UserTable.DataBind();
 
