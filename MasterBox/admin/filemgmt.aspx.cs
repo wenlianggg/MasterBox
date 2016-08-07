@@ -39,7 +39,7 @@ namespace MasterBox.Admin
         protected void UsersLinkBtn_Command(object sender, CommandEventArgs e)
         {
             int command = Convert.ToInt32(e.CommandArgument.ToString());
-            System.Diagnostics.Debug.WriteLine("What is this? "+command);
+            System.Diagnostics.Debug.WriteLine("What is this? " + command);
 
             Auth.User user = Auth.User.GetUser(command);
             LblUserId.Text = user.UserId.ToString();
@@ -48,7 +48,7 @@ namespace MasterBox.Admin
             FolderNameOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(user.UserName);
             FolderNameOption.DataBind();
 
-            InformationPanel.Style.Add("display","block");      
+            InformationPanel.Style.Add("display", "block");
         }
 
         protected void FolderNameOption_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,15 +64,42 @@ namespace MasterBox.Admin
             if (FolderNameOption.SelectedValue.ToString() != "==Choose a Folder==")
             {
                 string resetpass = MBFolder.RandomPasswordGeneration(16);
-                System.Diagnostics.Debug.WriteLine("New Password " + resetpass);
-                // fill in email modal details
-                ToEmailTxtBox.Text = LblUserEmail.Text;
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "emailModal", "showEmailPopup();", true);
-
-            }else
+                MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, FolderNameOption.SelectedValue.ToString());
+                if (folder.FolderPasswordSettings(folder, resetpass, true))
+                {
+                    Auth.User user = Auth.User.GetUser(LblUserName.Text);
+                    LblResetPass.Text = resetpass;
+                    ToEmailTxtBox.Text = LblUserEmail.Text;
+                    SubjectTxtBox.Text = "Folder Password Reset";
+                    string message =
+                         "Dear " + user.FirstName + " " + user.LastName + ","
+                         + "We have reset the password for the folder you have specified. Password has been changed to:"
+                         + "Yours Sincerely, MasterBox";
+                    MessageTxtBox.Text = message.Replace("\r\n", "<br/>");
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "emailModal", "showEmailPopup();", true);
+                }
+                else
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder alert", "<script language='javascript'>alert('" + "Password failure!" + "')</script>");
+                }
+            }
+            else
             {
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder alert", "<script language='javascript'>alert('" + "Please choose a folder" + "')</script>");
+            }
+        }
+
+        protected void BtnSendEmail_Click(object sender, EventArgs e)
+        {
+            Mail mail = new Mail();
+            if (mail.SendEmail(ToEmailTxtBox.Text, SubjectTxtBox.Text, MessageTxtBox.Text))
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Email alert", "<script language='javascript'>alert('" + "Email Sent!" + "')</script>");
+
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Email alert", "<script language='javascript'>alert('" + "Fail to send email!" + "')</script>");
             }
         }
     }
