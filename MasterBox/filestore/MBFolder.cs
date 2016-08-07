@@ -42,7 +42,9 @@ namespace MasterBox.mbox
             User user = User.GetUser(username);
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM mb_folder WHERE folderid = (SELECT folderid FROM mb_fileaccess WHERE userid = @userid)", SQLGetMBoxConnection());
-            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
+            cmd.Parameters.Add(unameParam);
+            cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Prepare();
             cmd.Parameters["@userid"].Value = user.UserId;
 
@@ -259,7 +261,7 @@ namespace MasterBox.mbox
         }
 
         // Generate BlowFish Key
-        private string RandomPasswordGeneration(int length)
+        public static string RandomPasswordGeneration(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-=~`";
 
@@ -687,7 +689,7 @@ namespace MasterBox.mbox
 
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_folder WHERE folderid = @folderid and userid= @user", SQLGetMBoxConnection());
-            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.VarChar, 50));
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
             cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
             cmd.Prepare();
             cmd.Parameters["@folderid"].Value = folderid;
@@ -709,6 +711,21 @@ namespace MasterBox.mbox
             }
             return folder;
         }
+        
+        // Get total number 
+        public static int CountFileNumInFolder(string username,long folderid)
+        {
+            SqlCommand cmd = new SqlCommand(
+               "SELECT count(*) FROM mb_file WHERE folderid = @folderid and userid= @userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.VarChar, 50));
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@folderid"].Value = folderid;
+            cmd.Parameters["@userid"].Value = User.GetUser(username).UserId;
 
+            int count = (int)cmd.ExecuteScalar();
+
+            return count;
+        }
     }
 }
