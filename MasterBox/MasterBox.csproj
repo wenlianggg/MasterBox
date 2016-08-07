@@ -634,6 +634,7 @@
     <Compile Include="TestPage.aspx.designer.cs">
       <DependentUpon>TestPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TheEmailClass.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
