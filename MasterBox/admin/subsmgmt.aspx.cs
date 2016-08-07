@@ -14,10 +14,10 @@ namespace MasterBox.Admin {
         DataAccess da = new DataAccess();
 
         protected void Page_Load(object sender, EventArgs e) {
-            // Load in coupon table
-            if (!IsPostBack) { 
-            CouponTable.DataSource = da.SqlGetAllCoupons();
-            CouponTable.DataBind();
+         
+                // Coupon Table
+                CouponTable.DataSource = da.SqlGetAllCoupons();
+                CouponTable.DataBind();
 
                 // Unredeemed coupons drop down list
                 Unredeemed.DataSource = da.SqlGetUnredeemedCpn();
@@ -40,7 +40,6 @@ namespace MasterBox.Admin {
                     SaveChanges.Visible = false;
                     DiscardSelection.Visible = false;
                 }
-            }
         }
 
         protected void GenerateCode(object sender, EventArgs e)
@@ -104,6 +103,7 @@ namespace MasterBox.Admin {
                             break;
                         case 1:
                             e.Row.Cells[4].Text = "Yes";
+                            cell.ForeColor = Color.White;
                             break;
                     }
                 }
@@ -143,21 +143,16 @@ namespace MasterBox.Admin {
             {
                 if (DuplicateCode().Equals(false))
                 {
-                    // Refresh Table
+                    // Update Database
                     da.SqlAddCoupon(CouponValue.Text, Convert.ToInt32(Days.SelectedItem.Value));
-                    CouponTable.DataSource = da.SqlGetAllCoupons();
-                    CouponTable.DataBind();
-
-                    // Refresh Dropdown
-                    Unredeemed.DataSource = da.SqlGetUnredeemedCpn();
-                    Unredeemed.DataTextField = "couponcode";
-                    Unredeemed.DataValueField = "couponcode";
-                    Unredeemed.DataBind();
 
                     // Deselect selected coupons
                     CouponTable.SelectedIndex = -1;
                     Couponlbl.Text = "";
                     InvisCpnLbl.Text = "";
+
+                    // Refresh
+                    Response.Redirect(Request.RawUrl);
                 }
                 else
                 {
@@ -214,8 +209,13 @@ namespace MasterBox.Admin {
             if (!Unredeemed.SelectedItem.Value.Equals("0"))
             {
                 username.Text = da.SqlGetRandomUsername();
+                User usr = Auth.User.GetUser(username.Text);
+                Mail m = new Mail();
+                string body = "You have received a free coupon! To redeem it enter this code in the redeem coupon section of the expand storage!: " + Unredeemed.SelectedItem.Text;
+                m.SendEmail(usr.Email, "Free Coupon!", body);
                 userlbl.Text = "Successfully sent a coupon to the user " + username.Text;
                 userlbl.Attributes.Add("class", "label label-success");
+                da.SqlUpdateSentCoupon(Unredeemed.SelectedItem.Text);
             }
             else
             {
