@@ -239,6 +239,24 @@ namespace MasterBox.mbox
             return plaintext;
         }
 
+        // Retrieve to display users
+        public static SqlDataReader GetUsersToDisplay(string username=null)
+        {
+            if (username == null)
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_users", SQLGetMBoxConnection());
+                return cmd.ExecuteReader();
+            }else
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM mb_users WHERE username LIKE @username", SQLGetMBoxConnection());
+                cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 30));
+                cmd.Prepare();
+                string searchTerm = string.Format("%{0}%", username);
+                cmd.Parameters["@username"].Value = searchTerm;
+                return cmd.ExecuteReader();
+            }
+        }
+
         // Retrieve to display file
         public static SqlDataReader GetFileToDisplay(string username)
         {

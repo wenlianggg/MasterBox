@@ -312,20 +312,12 @@ namespace MasterBox.Auth {
 			return cmd.ExecuteReader();
 		}
 
-		internal DataTable SqlGetServerLogs() {
+		internal SqlDataReader SqlGetServerLogs() {
 			SqlCommand cmd = new SqlCommand(
 				"SELECT logid, userid, logdesc, logip, loglevel, logtime FROM mb_logs ORDER BY logtime DESC",
 				sqlConn);
 			cmd.Prepare();
-			DataTable data = new DataTable();
-			data.Load(cmd.ExecuteReader());
-			data.Columns["logid"].ColumnName = "ID";
-			data.Columns["userid"].ColumnName = "User Name";
-			data.Columns["logdesc"].ColumnName = "Log Description";
-			data.Columns["logip"].ColumnName = "Logged IP";
-			data.Columns["loglevel"].ColumnName = "Severity";
-			data.Columns["logtime"].ColumnName = "Time";
-			return data;
+			return cmd.ExecuteReader();
 		}
 
 
