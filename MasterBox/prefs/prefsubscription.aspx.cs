@@ -10,7 +10,9 @@ using System.Web.UI.WebControls;
 namespace MasterBox.Prefs {
     public partial class PrefSubscription : System.Web.UI.Page
     {
-		protected void Page_Load(object sender, EventArgs e) {
+        DataAccess da = new DataAccess();
+
+        protected void Page_Load(object sender, EventArgs e) {
             String user = Context.User.Identity.Name;
             User currentUser = Auth.User.GetUser(user);
 
@@ -70,7 +72,23 @@ namespace MasterBox.Prefs {
 
         protected void RedeemCoupon(object sender, EventArgs e)
         {
+            if (da.SqlCheckCoupon(CouponValue.Text).Equals(true))
+            {
+                int days = da.SqlGetCouponDays(CouponValue.Text);
+                String user = Context.User.Identity.Name;
+                User currentUser = Auth.User.GetUser(user);
+                var newexpirydate = currentUser.MbrExpiry.AddDays(days);
+                currentUser.MbrExpiry = newexpirydate;
 
+                Response.Redirect(Request.RawUrl);
+
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Successfully redeemed coupon!" + "')</script>");
+
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Status", "<script language='javascript'>alert('" + "Invalid Coupon Code!" + "')</script>");
+            }
         }
     }
 }

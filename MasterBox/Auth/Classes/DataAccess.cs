@@ -265,6 +265,66 @@ namespace MasterBox.Auth {
             return cmd.ExecuteNonQuery();
         }
 
+        internal bool SqlCheckCoupon(string couponcode)
+        {
+            // Check for such coupon
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters["@couponcode"].Value = couponcode;
+            cmd.Prepare();
+            int couponcount = (int)cmd.ExecuteScalar();
+
+            if (couponcount > 0)
+            {
+                SqlCommand stat = new SqlCommand("SELECT stat FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+                stat.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+                stat.Parameters["@couponcode"].Value = couponcode;
+                stat.Prepare();
+
+                int status = 0;
+
+                SqlDataReader sqldr = stat.ExecuteReader();
+                while(sqldr.Read())
+                {
+                    status = Convert.ToInt32(sqldr["stat"].ToString());
+                }
+                      
+
+                if (status != 1) {
+                    SqlCommand upd = new SqlCommand("UPDATE mb_coupon SET stat = 1 WHERE couponcode = @couponcode", sqlConn);
+                    upd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+                    upd.Parameters["@couponcode"].Value = couponcode;
+                    upd.ExecuteNonQuery();
+                    return true;
+                }else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        internal int SqlGetCouponDays(string couponcode)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT freedays FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters["@couponcode"].Value = couponcode;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return Convert.ToInt32(sqldr["freedays"].ToString());
+            }else
+            {
+                return 0;
+            }
+        }
+
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
@@ -438,6 +498,59 @@ namespace MasterBox.Auth {
             dt.Load(cmd.ExecuteReader());
 
             return dt;
+        }
+
+        internal DataTable SqlGetUserSubscriptions()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT username, mbrType, mbrStart, mbrExpiry FROM mb_users", sqlConn);
+            cmd.Prepare();
+            DataTable data = new DataTable();
+            data.Load(cmd.ExecuteReader());
+            data.Columns["username"].ColumnName = "Username";
+            data.Columns["mbrType"].ColumnName = "Member Type";
+            data.Columns["mbrStart"].ColumnName = "Subscription Start";
+            data.Columns["mbrExpiry"].ColumnName = "Subscription Expiry";
+            return data;
+        }
+
+        internal DateTime SqlGetUserMbrStart(string username)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT mbrStart from mb_users WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+            cmd.Parameters["@username"].Value = username;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return (DateTime)sqldr["mbrStart"];
+            }
+            else
+            {
+                DateTime dt = DateTime.Now;
+                return dt;
+            }
+        }
+
+        internal DateTime SqlGetUserMbrExpiry(string username)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT mbrExpiry FROM mb_users WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+            cmd.Parameters["@username"].Value = username;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return (DateTime)sqldr["mbrExpiry"];
+            }
+            else
+            {
+                DateTime dt = DateTime.Now;
+                return dt;
+            }
         }
     }
 }
