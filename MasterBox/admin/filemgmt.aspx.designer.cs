@@ -13,6 +13,24 @@ namespace MasterBox.Admin {
     public partial class FileMgmt {
         
         /// <summary>
+        /// EmailModalTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table EmailModalTable;
+        
+        /// <summary>
+        /// ToEmailTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ToEmailTxtBox;
+        
+        /// <summary>
         /// searchTxt control.
         /// </summary>
         /// <remarks>
@@ -40,6 +58,15 @@ namespace MasterBox.Admin {
         protected global::System.Web.UI.WebControls.GridView userstable;
         
         /// <summary>
+        /// InformationPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InformationPanel;
+        
+        /// <summary>
         /// ViewUser control.
         /// </summary>
         /// <remarks>
@@ -47,5 +74,77 @@ namespace MasterBox.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table ViewUser;
+        
+        /// <summary>
+        /// LblUserId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblUserId;
+        
+        /// <summary>
+        /// LblUserName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblUserName;
+        
+        /// <summary>
+        /// LblUserEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblUserEmail;
+        
+        /// <summary>
+        /// ViewFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table ViewFolder;
+        
+        /// <summary>
+        /// FolderNameOption control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList FolderNameOption;
+        
+        /// <summary>
+        /// LblFolderDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderDate;
+        
+        /// <summary>
+        /// LblFileinFolderNum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileinFolderNum;
+        
+        /// <summary>
+        /// LnkBtnResetPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LnkBtnResetPass;
     }
 }

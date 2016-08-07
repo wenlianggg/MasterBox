@@ -1,11 +1,8 @@
 ﻿using MasterBox.Auth;
 using MasterBox.mbox;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -19,6 +16,7 @@ namespace MasterBox.Admin
             if (!IsPostBack)
             {
                 GetUsersTable();
+
             }
         }
 
@@ -40,9 +38,42 @@ namespace MasterBox.Admin
 
         protected void UsersLinkBtn_Command(object sender, CommandEventArgs e)
         {
-            string command = e.CommandArgument.ToString();
+            int command = Convert.ToInt32(e.CommandArgument.ToString());
+            System.Diagnostics.Debug.WriteLine("What is this? "+command);
 
+            Auth.User user = Auth.User.GetUser(command);
+            LblUserId.Text = user.UserId.ToString();
+            LblUserName.Text = user.UserName;
+            LblUserEmail.Text = user.Email;
+            FolderNameOption.DataSource = MBFolder.GenerateEncryptedFolderLocation(user.UserName);
+            FolderNameOption.DataBind();
 
+            InformationPanel.Style.Add("display","block");      
+        }
+
+        protected void FolderNameOption_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Auth.User user = Auth.User.GetUser(LblUserName.Text);
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, FolderNameOption.SelectedValue.ToString());
+            LblFileinFolderNum.Text = MBFolder.CountFileNumInFolder(Context.User.Identity.Name, folder.folderid).ToString();
+            LblFolderDate.Text = folder.foldertimestamp.ToString();
+        }
+
+        protected void LnkBtnResetPass_Click(object sender, EventArgs e)
+        {
+            if (FolderNameOption.SelectedValue.ToString() != "==Choose a Folder==")
+            {
+                string resetpass = MBFolder.RandomPasswordGeneration(16);
+                System.Diagnostics.Debug.WriteLine("New Password " + resetpass);
+                // fill in email modal details
+                ToEmailTxtBox.Text = LblUserEmail.Text;
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "emailModal", "showEmailPopup();", true);
+
+            }else
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder alert", "<script language='javascript'>alert('" + "Please choose a folder" + "')</script>");
+            }
         }
     }
 }
