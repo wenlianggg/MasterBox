@@ -23,6 +23,22 @@ namespace MasterBox.Admin {
                 Unredeemed.DataTextField = "couponcode";
                 Unredeemed.DataValueField = "couponcode";
                 Unredeemed.DataBind();
+
+                // User Subscription table
+                UserTable.DataSource = da.SqlGetUserSubscriptions();
+                UserTable.DataBind();
+
+                if (UserTable.SelectedIndex == -1)
+                {
+                    MbrTypelbl.Visible = false;
+                    MbrTypeTxtBox.Visible = false;
+                    MbrStartlbl.Visible = false;
+                    MbrExplbl.Visible = false;
+                    StartDate.Visible = false;
+                    EndDate.Visible = false;
+                    SaveChanges.Visible = false;
+                    DiscardSelection.Visible = false;
+                }
             }
         }
 
@@ -93,11 +109,31 @@ namespace MasterBox.Admin {
             }
         }
 
-        protected void Selected(object sender, EventArgs e)
+        protected void CpnSelect(object sender, EventArgs e)
         {
             GridViewRow row = CouponTable.SelectedRow;
             Couponlbl.Text = "Selected Coupon Number: " + row.Cells[1].Text;
             InvisCpnLbl.Text = row.Cells[1].Text;
+        }
+
+        protected void UsrSelect(object sender, EventArgs e)
+        {
+            // Set to visible
+            GridViewRow row = UserTable.SelectedRow;
+            MbrTypelbl.Visible = true;
+            MbrTypeTxtBox.Visible = true;
+            MbrStartlbl.Visible = true;
+            MbrExplbl.Visible = true;
+            StartDate.Visible = true;
+            EndDate.Visible = true;
+            SaveChanges.Visible = true;
+            DiscardSelection.Visible = true;
+            
+            // Set the values
+            SelectedUsrlbl.Text = "Selected User: " + row.Cells[1].Text;
+            MbrTypeTxtBox.Text = row.Cells[2].Text + "MB";
+            StartDate.Text = da.SqlGetUserMbrStart(row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
+            EndDate.Text = da.SqlGetUserMbrExpiry(row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
         }
 
         protected void AddCoupon(object sender, EventArgs e)
@@ -185,6 +221,16 @@ namespace MasterBox.Admin {
                 userlbl.Text = "You have not selected a coupon!";
                 userlbl.Attributes.Add("class", "label label-warning");
             }
+        }
+
+        protected void Save(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Discard(object sender, EventArgs e)
+        {
+
         }
     }
 }

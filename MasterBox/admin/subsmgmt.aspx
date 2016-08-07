@@ -6,12 +6,29 @@
     <div class="panel panel-info">
         <div class="panel-heading"><strong>Manage User Subscriptions</strong></div>
         <div class="panel-body">
+            <asp:GridView runat="server" ID="UserTable" class="table table-bordered" OnSelectedIndexChanged="UsrSelect" EnablePersistedSelection="false">
+                <SelectedRowStyle BackColor="LightCyan" ForeColor="DarkBlue" Font-Bold="true" />
+                <Columns>
+                    <asp:CommandField ShowSelectButton="true" HeaderText="Select User" SelectText="Select" />
+                </Columns>
+            </asp:GridView>
+            <br />
+            <h4>
+                <asp:Label runat="server" ID="SelectedUsrlbl" Class="label label-success"></asp:Label></h4>
+            <asp:Label runat="server" ID="MbrTypelbl">Member Type:</asp:Label><asp:TextBox runat="server" ID="MbrTypeTxtBox" CssClass="form-control" Enabled="false"></asp:TextBox>
+            <br />
+            <asp:Label runat="server" ID="MbrStartlbl">Subscription Start:</asp:Label><asp:TextBox ID="StartDate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+            <br />
+            <asp:Label runat="server" ID="MbrExplbl">Subscription Expiry:</asp:Label><asp:TextBox ID="EndDate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+            <br />
+            <asp:Button runat="server" ID="SaveChanges" OnClick="Save" class="btn btn-success" Text="Save Changes"/>
+            <asp:Button runat="server" ID="DiscardSelection" OnClick="Discard" class="btn btn-danger" Text="Discard"/>
         </div>
     </div>
     <div class="panel panel-info">
         <div class="panel-heading"><strong>Coupons Management</strong></div>
         <div class="panel-body">
-            <asp:GridView runat="server" ID="CouponTable" class="table table-bordered" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="Selected" EnablePersistedSelection="false">
+            <asp:GridView runat="server" ID="CouponTable" class="table table-bordered" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="CpnSelect" EnablePersistedSelection="false">
                 <SelectedRowStyle BackColor="LightCyan" ForeColor="DarkBlue" Font-Bold="true" />
                 <Columns>
                     <asp:CommandField ShowSelectButton="true" HeaderText="Select Coupon" SelectText="Select" />
@@ -52,7 +69,7 @@
             <asp:Button runat="server" ID="Generate" Text="Generate A Coupon Code" CssClass="btn btn-default-blue" OnClick="GenerateCode" CausesValidation="false" Style="margin-top: 5px; margin-bottom: 5px;" />
             <div class="CancelAdd" style="margin-top: 5px; margin-bottom: 5px;">
                 <asp:Button runat="server" ID="Add" Text="Add Coupon!" CssClass="btn btn-success" OnClick="AddCoupon" ValidationGroup="Grp1" />
-                <asp:Button runat="server" ID="Remove" Text="Delete Coupon!" CssClass="btn btn-danger" CausesValidation="false" OnClick="RemoveCoupon"/>
+                <asp:Button runat="server" ID="Remove" Text="Delete Coupon!" CssClass="btn btn-danger" CausesValidation="false" OnClick="RemoveCoupon" />
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Grp1" ControlToValidate="CouponValue" ErrorMessage="Please check if you have selected number of days to add or if you have generated the coupon code!"></asp:RequiredFieldValidator>
             </div>
         </div>
@@ -60,13 +77,14 @@
     <div class="panel panel-info">
         <div class="panel-heading"><strong>Send a coupon to a lucky user!</strong></div>
         <div class="panel-body">
-            <h4><asp:Label runat="server" ID="userlbl"></asp:Label></h4>
-            <asp:TextBox runat="server" style="margin-top: 5px; margin-bottom: 5px;" ID="username" CssClass="form-control" Enabled="false"></asp:TextBox>
+            <h4>
+                <asp:Label runat="server" ID="userlbl"></asp:Label></h4>
+            <asp:TextBox runat="server" Style="margin-top: 5px; margin-bottom: 5px;" ID="username" CssClass="form-control" Enabled="false"></asp:TextBox>
             <asp:DropDownList runat="server" ID="Unredeemed" CssClass="form-control" AppendDataBoundItems="true">
                 <asp:ListItem Value="0" Text="Select a coupon to send!" Selected="True"></asp:ListItem>
             </asp:DropDownList>
             <br />
-            <asp:Button runat ="server" ID="RandUser" OnClick="GetRandUser" CssClass="btn btn-info" Text="Send to a a random lucky user!"/>
+            <asp:Button runat="server" ID="RandUser" OnClick="GetRandUser" CssClass="btn btn-info" Text="Send to a a random lucky user!" />
         </div>
     </div>
 </asp:Content>

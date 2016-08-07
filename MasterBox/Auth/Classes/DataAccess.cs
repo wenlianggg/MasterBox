@@ -447,5 +447,58 @@ namespace MasterBox.Auth {
 
             return dt;
         }
+
+        internal DataTable SqlGetUserSubscriptions()
+        {
+            SqlCommand cmd = new SqlCommand("SELECT username, mbrType, mbrStart, mbrExpiry FROM mb_users", sqlConn);
+            cmd.Prepare();
+            DataTable data = new DataTable();
+            data.Load(cmd.ExecuteReader());
+            data.Columns["username"].ColumnName = "Username";
+            data.Columns["mbrType"].ColumnName = "Member Type";
+            data.Columns["mbrStart"].ColumnName = "Subscription Start";
+            data.Columns["mbrExpiry"].ColumnName = "Subscription Expiry";
+            return data;
+        }
+
+        internal DateTime SqlGetUserMbrStart(string username)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT mbrStart from mb_users WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+            cmd.Parameters["@username"].Value = username;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return (DateTime)sqldr["mbrStart"];
+            }
+            else
+            {
+                DateTime dt = DateTime.Now;
+                return dt;
+            }
+        }
+
+        internal DateTime SqlGetUserMbrExpiry(string username)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT mbrExpiry FROM mb_users WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+            cmd.Parameters["@username"].Value = username;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return (DateTime)sqldr["mbrExpiry"];
+            }
+            else
+            {
+                DateTime dt = DateTime.Now;
+                return dt;
+            }
+        }
     }
 }
