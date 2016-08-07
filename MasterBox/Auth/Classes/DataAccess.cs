@@ -265,19 +265,64 @@ namespace MasterBox.Auth {
             return cmd.ExecuteNonQuery();
         }
 
-        internal int SqlUpdateUserSubcriptions(string username, DateTime StartDate, DateTime EndDate)
+        internal bool SqlCheckCoupon(string couponcode)
         {
-            SqlCommand cmd = new SqlCommand("UPDATE mb_users SET mbrStart = @mbrStart, mbrExpiry = @mbrExpiry WHERE username = @username", sqlConn);
-            cmd.Parameters.Add(new SqlParameter("@mbrStart", SqlDbType.DateTime));
-            cmd.Parameters.Add(new SqlParameter("@mbrExpiry", SqlDbType.DateTime));
-            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+            // Check for such coupon
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters["@couponcode"].Value = couponcode;
+            cmd.Prepare();
+            int couponcount = (int)cmd.ExecuteScalar();
 
-            cmd.Parameters["@mbrStart"].Value = StartDate;
-            cmd.Parameters["@mbrExpiry"].Value = EndDate;
-            cmd.Parameters["@username"].Value = username;
+            if (couponcount > 0)
+            {
+                SqlCommand stat = new SqlCommand("SELECT stat FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+                stat.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+                stat.Parameters["@couponcode"].Value = couponcode;
+                stat.Prepare();
+
+                int status = 0;
+
+                SqlDataReader sqldr = stat.ExecuteReader();
+                while(sqldr.Read())
+                {
+                    status = Convert.ToInt32(sqldr["stat"].ToString());
+                }
+                      
+
+                if (status != 1) {
+                    SqlCommand upd = new SqlCommand("UPDATE mb_coupon SET stat = 1 WHERE couponcode = @couponcode", sqlConn);
+                    upd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+                    upd.Parameters["@couponcode"].Value = couponcode;
+                    upd.ExecuteNonQuery();
+                    return true;
+                }else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        internal int SqlGetCouponDays(string couponcode)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT freedays FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters["@couponcode"].Value = couponcode;
             cmd.Prepare();
 
-            return cmd.ExecuteNonQuery();
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return Convert.ToInt32(sqldr["freedays"].ToString());
+            }else
+            {
+                return 0;
+            }
         }
 
 		/*

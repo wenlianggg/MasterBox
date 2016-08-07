@@ -236,11 +236,22 @@ namespace MasterBox.Admin {
                     if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text).Equals(true))
                     {
                         GridViewRow row = UserTable.SelectedRow;
-                        DateTime Start = DateTime.Parse(StartDate.Text);
-                        DateTime End = DateTime.Parse(EndDate.Text);
-                        da.SqlUpdateUserSubcriptions(row.Cells[1].ToString(), Start, End);
+                        User selusr = Auth.User.GetUser(row.Cells[1].Text);
+                        selusr.MbrStart = DateTime.Parse(StartDate.Text);
+                        selusr.MbrExpiry = DateTime.Parse(StartDate.Text);
                         UserTable.DataSource = da.SqlGetUserSubscriptions();
                         UserTable.DataBind();
+
+                        SelectedUsrlbl.Text = "";
+                        MbrTypelbl.Visible = false;
+                        MbrTypeTxtBox.Visible = false;
+                        MbrStartlbl.Visible = false;
+                        MbrExplbl.Visible = false;
+                        StartDate.Visible = false;
+                        EndDate.Visible = false;
+                        SaveChanges.Visible = false;
+                        DiscardSelection.Visible = false;
+                        UserTable.SelectedIndex = -1;
                     }
                     break;
             }
