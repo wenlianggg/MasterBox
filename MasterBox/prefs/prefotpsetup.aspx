@@ -26,7 +26,6 @@
 					<ol>
 						<li>Download any OTP Generator app, E.g. Authy, Google Authenticator, etc.</li>
 						<li>Open the app, then scan the QR code to the right or manually enter this code: <code><asp:Label runat="server" ID="GeneratedSecret" Text="TOTPSECRETHERE"></asp:Label></code></li>
-						<li><strong>Important: </strong>In the case that you have lost your device authenticator, save the backup code <code>TOTPBACKUP</code> somewhere safe. This code can be used to access your account.</li>
 						<li>Enter the current six-digit numerical passcode from the application to verify that your device is properly configured</li>
 					</ol>
 					<br />
