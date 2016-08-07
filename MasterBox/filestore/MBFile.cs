@@ -1,5 +1,7 @@
 ﻿using MasterBox.Auth;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -54,7 +56,7 @@ namespace MasterBox.mbox
 
                     // Loggin for file upload
                     FileLogger.Instance.FileUploaded(user.UserId, file.fileName);
-                    
+
                     // Clear all
                     file = null;
 
@@ -113,23 +115,23 @@ namespace MasterBox.mbox
             {
                 return false;
             }
-                    
+
         }
 
         // Delete File
         public static void DeleteFile(string username, long fileid)
         {
             User user = User.GetUser(username);
-                SqlCommand cmd = new SqlCommand(
-                   "DELETE FROM mb_file WHERE fileid=@fileid and userid=@userid", SQLGetMBoxConnection());
-                   cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
-                   cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
-                   cmd.Prepare();
+            SqlCommand cmd = new SqlCommand(
+               "DELETE FROM mb_file WHERE fileid=@fileid and userid=@userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
 
-                   cmd.Parameters["@fileid"].Value = fileid;
-                   cmd.Parameters["@userid"].Value = user.UserId;
-                   cmd.ExecuteNonQuery();      
-                            
+            cmd.Parameters["@fileid"].Value = fileid;
+            cmd.Parameters["@userid"].Value = user.UserId;
+            cmd.ExecuteNonQuery();
+
         }
 
         // Check file name
@@ -150,13 +152,13 @@ namespace MasterBox.mbox
                     System.Diagnostics.Debug.WriteLine("Same name");
                     return false;
                 }
-                
+
             }
             return true;
         }
 
         // Check file name in folder
-        public static bool FilenameCheck(string username, string filename,string foldername)
+        public static bool FilenameCheck(string username, string filename, string foldername)
         {
             User user = User.GetUser(username);
             MBFolder folder = MBFolder.GetFolder(username, foldername);
@@ -256,8 +258,8 @@ namespace MasterBox.mbox
         public static SqlDataReader GetFileFromFolderToDisplay(string username, long folderid)
         {
             User user = User.GetUser(username);
-            System.Diagnostics.Debug.WriteLine("Folder ID: "+folderid);
-            System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
+            System.Diagnostics.Debug.WriteLine("Folder ID: " + folderid);
+            System.Diagnostics.Debug.WriteLine("User ID: " + user.UserId);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
@@ -268,6 +270,42 @@ namespace MasterBox.mbox
             cmd.Parameters["@folderid"].Value = folderid;
 
             return cmd.ExecuteReader();
+        }
+
+
+
+
+        // Get all user files
+        public static List<MBFile> RetrieveAllUserFiles(string username)
+        {
+            List<MBFile> filelist = new List<MBFile>();
+            // Get User ID
+            User user = User.GetUser(username);
+            SqlCommand cmd = new SqlCommand(
+               "SELECT fileid,filename,filesize,filetimestamp FROM mb_file WHERE userid = @userid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@userid"].Value = user.UserId;
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            MBFile mbf;
+            while (sqldr.Read())
+            {
+                mbf = new MBFile(); 
+                mbf.fildid = (long)sqldr["fileid"];
+                mbf.fileName = sqldr["filename"].ToString();
+                mbf.fileSize = (int)sqldr["filesize"];
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
+
+                /*
+                // debug
+                System.Diagnostics.Debug.WriteLine("Name: " + mbf.fileName);
+                System.Diagnostics.Debug.WriteLine("size: " + mbf.fileSize);
+                System.Diagnostics.Debug.WriteLine("time: " + mbf.filetimestamp);
+                */
+                filelist.Add(mbf);
+            }
+
+            return filelist;
         }
 
         // Get File Information
@@ -336,7 +374,7 @@ namespace MasterBox.mbox
 
         public static int GetTotalFileStorage(string username)
         {
-            int totalFileSize=0;
+            int totalFileSize = 0;
 
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
@@ -348,8 +386,8 @@ namespace MasterBox.mbox
             SqlDataReader sqlDR = cmd.ExecuteReader();
             while (sqlDR.Read())
             {
-                int filesize =(int) sqlDR["filesize"];
-                totalFileSize=totalFileSize+filesize;
+                int filesize = (int)sqlDR["filesize"];
+                totalFileSize = totalFileSize + filesize;
             }
             return totalFileSize;
         }
@@ -374,7 +412,7 @@ namespace MasterBox.mbox
             double sizeMB = Math.Round(BytesToMega(file.fileSize), 0);
 
             // File is within threshold
-            if(sizeMB < threshold)
+            if (sizeMB < threshold)
             {
                 return true;
             }
