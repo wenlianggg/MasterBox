@@ -28,17 +28,23 @@
                 <ChartAreas>
                     <asp:ChartArea Name="DataChartArea" BackColor="Transparent"></asp:ChartArea>
                 </ChartAreas>
+                <Titles>
+                    <asp:Title Name="DataTitle" Text="Data Summary Chart" TextStyle="Embed" Font="Microsoft Sans Serif, 20pt"></asp:Title>
+                </Titles>
             </asp:Chart>
             <br />
-            <span>Total file storage used: </span>
-            <asp:Label ID="LblDataTrackerFileSize" runat="server"></asp:Label>
-            <br />
-            <span>Total number of files uploaded: </span>
-            <asp:Label ID="LblDataTrackerFileNum" runat="server"></asp:Label>
-            <br />
-            <span>Total number of folders created: </span>
-            <asp:Label ID="LblDataTrackerFolderNum" runat="server"></asp:Label>
 
+            <div class="panel panel-info">
+                <div class="panel-heading"><h4>Storage Information</h4></div>
+                <div class="panel-body">
+                    <asp:Label ID="LblDataTrackerFileSize" Font-Size="Large" runat="server"></asp:Label>
+                    <br />
+                    <asp:Label ID="LblDataTrackerFileNum" Font-Size="Large" runat="server"></asp:Label>
+                    <br />
+                    <asp:Label ID="LblDataTrackerFolderNum" Font-Size="Large" runat="server"></asp:Label>
+                </div>
+            </div>
+            
         </div>
 
     </div>
