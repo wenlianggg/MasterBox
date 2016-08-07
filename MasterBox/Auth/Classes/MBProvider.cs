@@ -214,10 +214,6 @@ namespace MasterBox.Auth {
 			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
 		}
 
-		internal bool ValidateBackupTOTP(string username, string backupcode) {
-			return false;
-		}
-
 		internal string GetCorrectCasingUN(string username) {
 			DataAccess da = new DataAccess();
 			SqlDataReader sqldr = da.SqlGetAuth(username);
@@ -244,6 +240,8 @@ namespace MasterBox.Auth {
 					Array.Clear((byte[]) objs[i], 0 , ((byte[])objs[i]).Length);
 				objs[i] = null;
 			}
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 		}
 
 	}
