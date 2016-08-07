@@ -73,14 +73,6 @@
             runat="server" />
     </div>
 
-    <div class="col-xs-12 col-md-4 col-md-push-1">
-        <h2>Profile Image</h2>
-        <div class="prof_icon">
-            Profile Icon    
-        </div>
-        <br />
-        <input type="file" />
-    </div>
 </asp:Content>
 
 

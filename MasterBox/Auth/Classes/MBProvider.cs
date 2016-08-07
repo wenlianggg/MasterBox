@@ -94,7 +94,7 @@ namespace MasterBox.Auth {
                             int userid = (int)exp["userid"];
 
                             // Check if exceed expiry date
-                            if(expDate > DateTime.Now)
+                            if(DateTime.Now > expDate)
                             {
                                  da.SqlUpdateMbrType(userid, 1);
                                  TransactLogger.Instance.SubscriptionExpired(userid);
@@ -124,9 +124,9 @@ namespace MasterBox.Auth {
 				}
 		}
 
-		public override bool ChangePassword(string username, string oldPassword, string newPassword) {
+		public override bool ChangePassword(string username, string newPassword, string oldPassword = null) {
 			// Validate user password entered first
-			if (ValidateUser(username, oldPassword)) {
+			if (oldPassword == null || ValidateUser(username, oldPassword) ) {
 				// Get user from SQL
 				using (DataAccess da = new DataAccess())
 				using (SqlDataReader sqldr = da.SqlGetAuth(username)) {
@@ -214,10 +214,6 @@ namespace MasterBox.Auth {
 			FormsAuthentication.RedirectFromLoginPage(usr.UserName, persistlogin);
 		}
 
-		internal bool ValidateBackupTOTP(string username, string backupcode) {
-			return false;
-		}
-
 		internal string GetCorrectCasingUN(string username) {
 			DataAccess da = new DataAccess();
 			SqlDataReader sqldr = da.SqlGetAuth(username);
@@ -244,6 +240,9 @@ namespace MasterBox.Auth {
 					Array.Clear((byte[]) objs[i], 0 , ((byte[])objs[i]).Length);
 				objs[i] = null;
 			}
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 		}
+
 	}
 }

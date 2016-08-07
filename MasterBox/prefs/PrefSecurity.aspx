@@ -34,6 +34,10 @@
                         ErrorMessage="Cannot be empty"
                         ForeColor="Red" >
                     </asp:RequiredFieldValidator>
+                    <br />
+                    <asp:CompareValidator runat="server" ControlToCompare="NewCfmPassword" ControlToValidate="NewPassword"
+                        CssClass="field-validation-error" ForeColor="Red"  Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
+                        ValidationGroup="NewFolderPasswordChangeValidation" />
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="NewFolderPassword" runat="server" ValidationGroup="NewFolderPasswordChangeValidation" Text="Create" OnClick="NewFolderPassword_Click"/>
@@ -84,6 +88,10 @@
                         ErrorMessage="Cannot be empty"
                         ForeColor="Red" >
                     </asp:RequiredFieldValidator>
+                    <br />
+                    <asp:CompareValidator runat="server" ControlToCompare="ChangeCfmPassword" ControlToValidate="ChangeNewPassword"
+                        CssClass="field-validation-error" ForeColor="Red"  Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
+                        ValidationGroup="FolderPasswordChangeValidation" />
                 </div>
                 <div class="modal-footer">
                  <asp:Button ID="ChangeFolderPassword" runat="server" ValidationGroup="FolderPasswordChangeValidation" Text="Change Password" OnClick="ChangeFolderPassword_Click"/>
@@ -113,7 +121,8 @@
                             ValidateEmptyText="true"
                             ControlToValidate="FolderCurrentDeleteTxtBox"
                             ErrorMessage="Cannot be empty"
-                            ForeColor="Red">
+                            ForeColor="Red"
+                            CssClass="field-validation-error" >
                         </asp:RequiredFieldValidator>
                     <br />
                     <asp:Label ID="CfmCurrentDeleteLbl" runat="server" Text="Confirm Password: "></asp:Label>                    
@@ -123,8 +132,14 @@
                         ValidateEmptyText="true"
                         ControlToValidate="CfmCurrentDeleteTxtBox"
                         ErrorMessage="Cannot be empty"
-                        ForeColor="Red" >
+                        ForeColor="Red" 
+                        CssClass="field-validation-error" >
                     </asp:RequiredFieldValidator>
+                    <br />
+                    <asp:CompareValidator runat="server" ControlToCompare="CfmCurrentDeleteTxtBox" ControlToValidate="FolderCurrentDeleteTxtBox"
+                        CssClass="field-validation-error" ForeColor="Red"  Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
+                        ValidationGroup="FolderPasswordDeleteValidation" />
+
                 </div>
                 <div class="modal-footer">
                  <asp:Button ID="DeleteFolderPassword" runat="server" ValidationGroup="FolderPasswordDeleteValidation" Text="Change Password" OnClick="DeleteFolderPassword_Click" />
@@ -161,36 +176,5 @@
 		    </div>
         </div>
     </div>
-<script>
-    // To validate New Confirm Password
-        $(document).ready(function () {
-            $('#<%=NewFolderPassword.ClientID %>').click(function (event) {
-                var pass = document.getElementById('<%=NewPassword.ClientID%>').value;
-                var passcfm = document.getElementById('<%=NewCfmPassword.ClientID%>').value
-                if (pass != passcfm) {
-                    alert('Confirm Password Again')
-                    return false;
-                } else {
-                    return true;
-                }
 
-            });
-        });
-
-    // To validate Change Confirm Password
-        $(document).ready(function () {
-            $('#<%=ChangeFolderPassword.ClientID %>').click(function (event) {
-                var pass = document.getElementById('<%=ChangeNewPassword.ClientID%>').value;
-                var passcfm = document.getElementById('<%=ChangeCfmPassword.ClientID%>').value
-                if (pass != passcfm) {
-                    alert('Confirm Password Again')
-                    return false;
-                } else {
-                    return true;
-                }
-
-            });
-        });
-
-</script>
 </asp:Content>

@@ -167,6 +167,12 @@ namespace MasterBox.Auth {
 			}
 		}
 
+		protected internal static string ConvertToUserName(int id, [CallerMemberName]string memberName = "") {
+			using (DataAccess da = new DataAccess("ConvertToUname from " + memberName)) {
+				return da.SqlGetUserName(id);
+			}
+		}
+
 		protected internal bool UpdateValue(string fieldName, object fieldValue, SqlDbType sdb, int length) {
             using (DataAccess da = new DataAccess())
                 return da.SqlUpdateUserValue(_userid, fieldName, fieldValue, sdb, length);

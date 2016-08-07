@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MasterBox.Admin {
@@ -17,6 +18,28 @@ namespace MasterBox.Admin {
             if (!IsPostBack) { 
             CouponTable.DataSource = da.SqlGetAllCoupons();
             CouponTable.DataBind();
+
+                // Unredeemed coupons drop down list
+                Unredeemed.DataSource = da.SqlGetUnredeemedCpn();
+                Unredeemed.DataTextField = "couponcode";
+                Unredeemed.DataValueField = "couponcode";
+                Unredeemed.DataBind();
+
+                // User Subscription table
+                UserTable.DataSource = da.SqlGetUserSubscriptions();
+                UserTable.DataBind();
+
+                if (UserTable.SelectedIndex == -1)
+                {
+                    MbrTypelbl.Visible = false;
+                    MbrTypeTxtBox.Visible = false;
+                    MbrStartlbl.Visible = false;
+                    MbrExplbl.Visible = false;
+                    StartDate.Visible = false;
+                    EndDate.Visible = false;
+                    SaveChanges.Visible = false;
+                    DiscardSelection.Visible = false;
+                }
             }
         }
 
@@ -42,12 +65,18 @@ namespace MasterBox.Admin {
 
             // Display coupon code
             CouponValue.Text = result.ToString();
+
+            // Deselect selected coupons
+            CouponTable.SelectedIndex = -1;
+            Couponlbl.Text = "";
+            InvisCpnLbl.Text = "";
         }
 
         protected void CouponRowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                // Redeemed Column
                 int status = int.Parse(e.Row.Cells[3].Text);
                 foreach (TableCell cell in e.Row.Cells)
                 {
@@ -63,13 +92,49 @@ namespace MasterBox.Admin {
                             break;
                     }
                 }
+
+                // Sent Column
+                int sent = int.Parse(e.Row.Cells[4].Text);
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    switch (sent)
+                    {
+                        case 0:
+                            e.Row.Cells[4].Text = "No";
+                            break;
+                        case 1:
+                            e.Row.Cells[4].Text = "Yes";
+                            break;
+                    }
+                }
             }
         }
 
-        protected void Selected(object sender, EventArgs e)
+        protected void CpnSelect(object sender, EventArgs e)
         {
             GridViewRow row = CouponTable.SelectedRow;
             Couponlbl.Text = "Selected Coupon Number: " + row.Cells[1].Text;
+            InvisCpnLbl.Text = row.Cells[1].Text;
+        }
+
+        protected void UsrSelect(object sender, EventArgs e)
+        {
+            // Set to visible
+            GridViewRow row = UserTable.SelectedRow;
+            MbrTypelbl.Visible = true;
+            MbrTypeTxtBox.Visible = true;
+            MbrStartlbl.Visible = true;
+            MbrExplbl.Visible = true;
+            StartDate.Visible = true;
+            EndDate.Visible = true;
+            SaveChanges.Visible = true;
+            DiscardSelection.Visible = true;
+            
+            // Set the values
+            SelectedUsrlbl.Text = "Selected User: " + row.Cells[1].Text;
+            MbrTypeTxtBox.Text = row.Cells[2].Text + "MB";
+            StartDate.Text = da.SqlGetUserMbrStart(row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
+            EndDate.Text = da.SqlGetUserMbrExpiry(row.Cells[1].Text).Date.ToString("yyyy-MM-dd");
         }
 
         protected void AddCoupon(object sender, EventArgs e)
@@ -78,17 +143,33 @@ namespace MasterBox.Admin {
             {
                 if (DuplicateCode().Equals(false))
                 {
+                    // Refresh Table
                     da.SqlAddCoupon(CouponValue.Text, Convert.ToInt32(Days.SelectedItem.Value));
                     CouponTable.DataSource = da.SqlGetAllCoupons();
                     CouponTable.DataBind();
+
+                    // Refresh Dropdown
+                    Unredeemed.DataSource = da.SqlGetUnredeemedCpn();
+                    Unredeemed.DataTextField = "couponcode";
+                    Unredeemed.DataValueField = "couponcode";
+                    Unredeemed.DataBind();
+
+                    // Deselect selected coupons
+                    CouponTable.SelectedIndex = -1;
+                    Couponlbl.Text = "";
+                    InvisCpnLbl.Text = "";
                 }
                 else
                 {
                     Couponlbl.Text = "Duplicate coupon detected! Please generate a new coupon code!";
+                    CouponTable.SelectedIndex = -1;
+                    InvisCpnLbl.Text = "";
                 }
             }else
             {
                 Couponlbl.Text = "Number of days to be given has not been chosen!";
+                CouponTable.SelectedIndex = -1;
+                InvisCpnLbl.Text = "";
             }
         }
 
@@ -99,11 +180,95 @@ namespace MasterBox.Admin {
             {
                 if (rs["couponcode"].Equals(CouponValue.Text))
                 {
+                    // Deselect selected coupons
                     return true;
                 }
 
             }
+
+            // Deselect selected coupons
+            CouponTable.SelectedIndex = -1;
+            Couponlbl.Text = "";
+            InvisCpnLbl.Text = "";
             return false;
+        }
+
+        protected void RemoveCoupon(object sender, EventArgs e)
+        {
+            if (InvisCpnLbl.Text.Equals(""))
+            {
+                Couponlbl.Text = "You have not selected a coupon to delete!";
+            }else
+            {
+                da.SqlDeleteCoupon(InvisCpnLbl.Text);
+                CouponTable.SelectedIndex = -1;
+                Couponlbl.Text = "";
+                InvisCpnLbl.Text = "";
+                CouponTable.DataSource = da.SqlGetAllCoupons();
+                CouponTable.DataBind();
+            }
+        }
+
+        protected void GetRandUser(object sender, EventArgs e)
+        {
+            if (!Unredeemed.SelectedItem.Value.Equals("0"))
+            {
+                username.Text = da.SqlGetRandomUsername();
+                userlbl.Text = "Successfully sent a coupon to the user " + username.Text;
+                userlbl.Attributes.Add("class", "label label-success");
+            }
+            else
+            {
+                userlbl.Text = "You have not selected a coupon!";
+                userlbl.Attributes.Add("class", "label label-warning");
+            }
+        }
+
+         protected void ConfirmChanges(object sender, CommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "PopUpModal":
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    break;
+                case "Confirm":
+                    User usr = Auth.User.GetUser(Context.User.Identity.Name);
+                    if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text).Equals(true))
+                    {
+                        GridViewRow row = UserTable.SelectedRow;
+                        User selusr = Auth.User.GetUser(row.Cells[1].Text);
+                        selusr.MbrStart = DateTime.Parse(StartDate.Text);
+                        selusr.MbrExpiry = DateTime.Parse(StartDate.Text);
+                        UserTable.DataSource = da.SqlGetUserSubscriptions();
+                        UserTable.DataBind();
+
+                        SelectedUsrlbl.Text = "";
+                        MbrTypelbl.Visible = false;
+                        MbrTypeTxtBox.Visible = false;
+                        MbrStartlbl.Visible = false;
+                        MbrExplbl.Visible = false;
+                        StartDate.Visible = false;
+                        EndDate.Visible = false;
+                        SaveChanges.Visible = false;
+                        DiscardSelection.Visible = false;
+                        UserTable.SelectedIndex = -1;
+                    }
+                    break;
+            }
+        }
+
+        protected void Discard(object sender, EventArgs e)
+        {
+            SelectedUsrlbl.Text = "";
+            MbrTypelbl.Visible = false;
+            MbrTypeTxtBox.Visible = false;
+            MbrStartlbl.Visible = false;
+            MbrExplbl.Visible = false;
+            StartDate.Visible = false;
+            EndDate.Visible = false;
+            SaveChanges.Visible = false;
+            DiscardSelection.Visible = false;
+            UserTable.SelectedIndex = -1;
         }
     }
 }

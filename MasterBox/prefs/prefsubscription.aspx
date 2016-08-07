@@ -35,6 +35,14 @@
                 <asp:Button runat="server" CssClass="btn btn-info" Text="Purchase Space" OnClick="GoToPrices" />
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Coupons!</strong></div>
+            <div class="panel-body">
+                <asp:TextBox runat="server" ID="CouponValue" CssClass="form-control"></asp:TextBox>
+                <br />
+                <asp:Button runat="server" CssClass="btn btn-success" OnClick="RedeemCoupon" Text="Redeem A Coupon!"/>
+            </div>
+        </div>
     </div>
 </asp:Content>
 

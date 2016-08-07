@@ -4,10 +4,11 @@
         <h1>MasterBox Administration Panel <small><%: Page.Title %></small></h1>
     </div>
     <div class="btn-group" role="group" aria-label="...">
-        <a runat="server" href="~/admin/usermgmt.aspx" class="btn btn-default">Accounts Management</a>
+        <a runat="server" href="~/admin/usermgmt.aspx" class="btn btn-default">Accounts List</a>
         <a runat="server" href="~/admin/filemgmt.aspx" class="btn btn-default">Files Management</a>
+        <a runat="server" href="~/admin/logsview.aspx" class="btn btn-default">Audit Logs</a>
         <a runat="server" href="~/admin/subsmgmt.aspx" class="btn btn-default">Subscription Management</a>
-        <a runat="server" href="~/admin/ipblocking.aspx" class="btn btn-default">IP Blocklist</a>
+        <a runat="server" href="~/admin/ipblocking.aspx" class="btn btn-default">IP/User Blocklist</a>
         <a runat="server" href="~/admin/sendmail.aspx" class="btn btn-default">Email Sending</a>
     </div>
     <asp:ContentPlaceHolder ID="AdminPanelContentPH" runat="server"/>

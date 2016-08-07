@@ -250,9 +250,6 @@ a.registerlink:visited {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-.seizure{
-    animation: seizures 0.4s infinite;
-}
 
 @keyframes seizures{
     0%    {color: red;}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -45,18 +46,69 @@ namespace MasterBox.Auth {
 
         internal DataTable GetUserLogs(int userid, int logtype) {
             DataTable dt = new DataTable();
-            using (DataAccess da = new DataAccess())
-                dt.Load(da.SqlGetUserLogs(userid, logtype));
-            dt.Columns["logdesc"].ColumnName = "Log Description";
-            dt.Columns["logip"].ColumnName = "Logged IP";
-            dt.Columns["loglevel"].ColumnName = "Severity";
-            dt.Columns["logtime"].ColumnName = "Time";
-			foreach (DataRow dr in dt.Rows) {
-				string newlogtime = ((DateTime) dr["Time"]).ToLocalTime().ToString("d MMM yyyy HH:mm");
-				dr["Time"] = newlogtime;
+			SqlDataReader sqldr;
+			using (DataAccess da = new DataAccess()) {
+				sqldr = da.SqlGetUserLogs(userid, logtype);
+
+				dt.Columns.Add("Log Description", typeof(string));
+				dt.Columns.Add("Browser Info", typeof(string));
+				dt.Columns.Add("Severity", typeof(string));
+				dt.Columns.Add("Date/Time", typeof(string));
+
+				while (sqldr.Read()) {
+					string logdesc = sqldr["logdesc"].ToString();
+					string browserinfo = sqldr["logip"].ToString();
+					string severity = GetSeverityName((byte) sqldr["loglevel"]);
+					string logtime = ((DateTime) sqldr["logtime"]).ToLocalTime().ToString("d MMM yyyy HH:mm");
+					dt.Rows.Add(logdesc, browserinfo, severity, logtime);
+				}
 			}
 			return dt;
         }
+
+		internal static DataTable GetAllLogs() {
+			DataTable dt = new DataTable();
+			SqlDataReader sqldr;
+			using (DataAccess da = new DataAccess()) {
+				sqldr = da.SqlGetServerLogs();
+
+				dt.Columns.Add("Log ID", typeof(int));
+				dt.Columns.Add("Username", typeof(string));
+				dt.Columns.Add("Log Description", typeof(string));
+				dt.Columns.Add("Browser Info", typeof(string));
+				dt.Columns.Add("Severity", typeof(string));
+				dt.Columns.Add("Date/Time", typeof(string));
+
+				while (sqldr.Read()) {
+					int logid = (int)sqldr["logid"];
+					string username = User.ConvertToUserName((int)sqldr["userid"]);
+					string logdesc = sqldr["logdesc"].ToString();
+					string browserinfo = sqldr["logip"].ToString();
+					string severity = GetSeverityName((byte)sqldr["loglevel"]);
+					string logtime = ((DateTime)sqldr["logtime"]).ToLocalTime().ToString("d MMM yyyy HH:mm");
+					dt.Rows.Add(logid, username, logdesc, browserinfo, severity, logtime);
+				}
+			}
+
+			return dt;
+		}
+
+		protected static string GetSeverityName(int severity) {
+			switch (severity) {
+				case 0:
+					return "Normal";
+				case 1:
+					return "Access";
+				case 2:
+					return "Change";
+				case 3:
+					return "ClientError";
+				case 4:
+					return "ServerError";
+				default:
+					return "-";
+			}
+		}
 
         protected string GetIP() {
             HttpContext context = HttpContext.Current;
