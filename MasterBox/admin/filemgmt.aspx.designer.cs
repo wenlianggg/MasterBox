@@ -22,6 +22,15 @@ namespace MasterBox.Admin {
         protected global::System.Web.UI.WebControls.Table EmailModalTable;
         
         /// <summary>
+        /// LblResetPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblResetPass;
+        
+        /// <summary>
         /// ToEmailTxtBox control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,33 @@ namespace MasterBox.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ToEmailTxtBox;
+        
+        /// <summary>
+        /// SubjectTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SubjectTxtBox;
+        
+        /// <summary>
+        /// MessageTxtBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox MessageTxtBox;
+        
+        /// <summary>
+        /// BtnSendEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSendEmail;
         
         /// <summary>
         /// searchTxt control.

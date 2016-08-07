@@ -31,20 +31,36 @@
                     <h3 class="modal-title">Send Email: Reset Password</h3>
                 </div>
                 <div class="modal-body">
+                  
                   <asp:Table ID="EmailModalTable" runat="server">
                       <asp:TableHeaderRow>
-                          <asp:TableCell>To: </asp:TableCell>
+                          <asp:TableCell>Reset Password: </asp:TableCell>
                           <asp:TableCell>
-                              <asp:TextBox ID="ToEmailTxtBox" runat="server" Enabled="false"></asp:TextBox>
+                              <asp:Label ID="LblResetPass" runat="server"></asp:Label>
                           </asp:TableCell>
                       </asp:TableHeaderRow>
                       <asp:TableHeaderRow>
-
+                          <asp:TableCell>To: </asp:TableCell>
+                          <asp:TableCell>
+                              <asp:TextBox ID="ToEmailTxtBox" runat="server" style="width:300px;" Enabled="false"></asp:TextBox>
+                          </asp:TableCell>
+                      </asp:TableHeaderRow>
+                      <asp:TableHeaderRow>
+                          <asp:TableCell>Subject: </asp:TableCell>
+                          <asp:TableCell>
+                              <asp:TextBox ID="SubjectTxtBox" runat="server" style="width:300px;"  Enabled="false"></asp:TextBox>
+                          </asp:TableCell>
+                      </asp:TableHeaderRow>
+                      <asp:TableHeaderRow>
+                          <asp:TableCell>Message: </asp:TableCell>
+                          <asp:TableCell>
+                              <asp:TextBox ID="MessageTxtBox" runat="server" TextMode="MultiLine" style="Height:200px; width:300px;"></asp:TextBox>
+                          </asp:TableCell>
                       </asp:TableHeaderRow>
                   </asp:Table>
                 </div>
                 <div class="modal-footer">
-                    
+                    <asp:Button ID="BtnSendEmail" OnClick="BtnSendEmail_Click" runat="server" Text="Send" />
                 </div>
             </div>
         </div>
