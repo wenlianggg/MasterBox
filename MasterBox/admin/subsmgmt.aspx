@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/Admin.master" AutoEventWireup="true" CodeBehind="subsmgmt.aspx.cs" Inherits="MasterBox.Admin.SubsMgmt" %>
 
 <asp:Content ID="SubsMgmtContent" ContentPlaceHolderID="AdminPanelContentPH" runat="server">
+        <script>
+        function showPopup() {
+            $('#myModal').modal('show');
+        }
+    </script>
     <br />
     <br />
     <div class="panel panel-info">
@@ -21,8 +26,8 @@
             <br />
             <asp:Label runat="server" ID="MbrExplbl">Subscription Expiry:</asp:Label><asp:TextBox ID="EndDate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
             <br />
-            <asp:Button runat="server" ID="SaveChanges" OnClick="Save" class="btn btn-success" Text="Save Changes"/>
-            <asp:Button runat="server" ID="DiscardSelection" OnClick="Discard" class="btn btn-danger" Text="Discard"/>
+            <asp:Button runat="server" ID="SaveChanges" class="btn btn-success" Text="Save Changes" OnCommand="ConfirmChanges" CommandName="PopUpModal" CausesValidation="false"/>
+            <asp:Button runat="server" ID="DiscardSelection" OnClick="Discard" Text="Discard" class="btn btn-danger" Text5="Discard" CausesValidation="false"/>
         </div>
     </div>
     <div class="panel panel-info">
@@ -31,7 +36,7 @@
             <asp:GridView runat="server" ID="CouponTable" class="table table-bordered" OnRowDataBound="CouponRowDataBound" OnSelectedIndexChanged="CpnSelect" EnablePersistedSelection="false">
                 <SelectedRowStyle BackColor="LightCyan" ForeColor="DarkBlue" Font-Bold="true" />
                 <Columns>
-                    <asp:CommandField ShowSelectButton="true" HeaderText="Select Coupon" SelectText="Select" />
+                    <asp:CommandField ShowSelectButton="true" HeaderText="Select Coupon" SelectText="Select" CausesValidation="false"/>
                 </Columns>
             </asp:GridView>
             <asp:TextBox ID="CouponValue" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
@@ -84,7 +89,34 @@
                 <asp:ListItem Value="0" Text="Select a coupon to send!" Selected="True"></asp:ListItem>
             </asp:DropDownList>
             <br />
-            <asp:Button runat="server" ID="RandUser" OnClick="GetRandUser" CssClass="btn btn-info" Text="Send to a a random lucky user!" />
+            <asp:Button runat="server" ID="RandUser" OnClick="GetRandUser" CssClass="btn btn-info" Text="Send to a a random lucky user!" CausesValidation="false"/>
+        </div>
+    </div>
+
+        <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Please enter your OTP to continue</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:TextBox runat="server" ID="OTPValue" CssClass="form-control"></asp:TextBox>   
+                    <asp:RequiredFieldValidator id="RequiredFieldValidator2" runat="server"
+							ControlToValidate="OTPValue"
+							ValidatorGroup="val2"
+							ErrorMessage="Please ensure your OTP is entered."
+							ForeColor="Red">
+						</asp:RequiredFieldValidator>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="cancel" runat="server" class="btn btn-warning" Text="Cancel" ValidationGroup ="val2" data-dismiss="modal" CausesValidation="false"/>
+                    <asp:Button runat="server" class="btn btn-success" Text="Submit" OnCommand="ConfirmChanges" CommandName="Confirm"/>
+                </div>
+            </div>
+
         </div>
     </div>
 </asp:Content>

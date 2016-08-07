@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace MasterBox.Admin {
@@ -223,14 +224,40 @@ namespace MasterBox.Admin {
             }
         }
 
-        protected void Save(object sender, EventArgs e)
+         protected void ConfirmChanges(object sender, CommandEventArgs e)
         {
-
+            switch (e.CommandName)
+            {
+                case "PopUpModal":
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "myModal", "showPopup();", true);
+                    break;
+                case "Confirm":
+                    User usr = Auth.User.GetUser(Context.User.Identity.Name);
+                    if (MBProvider.Instance.ValidateTOTP(usr.UserName, OTPValue.Text).Equals(true))
+                    {
+                        GridViewRow row = UserTable.SelectedRow;
+                        DateTime Start = DateTime.Parse(StartDate.Text);
+                        DateTime End = DateTime.Parse(EndDate.Text);
+                        da.SqlUpdateUserSubcriptions(row.Cells[1].ToString(), Start, End);
+                        UserTable.DataSource = da.SqlGetUserSubscriptions();
+                        UserTable.DataBind();
+                    }
+                    break;
+            }
         }
 
         protected void Discard(object sender, EventArgs e)
         {
-
+            SelectedUsrlbl.Text = "";
+            MbrTypelbl.Visible = false;
+            MbrTypeTxtBox.Visible = false;
+            MbrStartlbl.Visible = false;
+            MbrExplbl.Visible = false;
+            StartDate.Visible = false;
+            EndDate.Visible = false;
+            SaveChanges.Visible = false;
+            DiscardSelection.Visible = false;
+            UserTable.SelectedIndex = -1;
         }
     }
 }

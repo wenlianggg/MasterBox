@@ -265,6 +265,21 @@ namespace MasterBox.Auth {
             return cmd.ExecuteNonQuery();
         }
 
+        internal int SqlUpdateUserSubcriptions(string username, DateTime StartDate, DateTime EndDate)
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE mb_users SET mbrStart = @mbrStart, mbrExpiry = @mbrExpiry WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@mbrStart", SqlDbType.DateTime));
+            cmd.Parameters.Add(new SqlParameter("@mbrExpiry", SqlDbType.DateTime));
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 50));
+
+            cmd.Parameters["@mbrStart"].Value = StartDate;
+            cmd.Parameters["@mbrExpiry"].Value = EndDate;
+            cmd.Parameters["@username"].Value = username;
+            cmd.Prepare();
+
+            return cmd.ExecuteNonQuery();
+        }
+
 		/*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
