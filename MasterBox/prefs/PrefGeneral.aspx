@@ -15,10 +15,11 @@
     <div class="row">
         <div class="panel panel-primary">
             <div class="panel-heading">
-			    <h3 class="panel-title">
-                   Data Summary
-			    </h3>
-		    </div>
+                <h3 class="panel-title">Data Summary
+                </h3>
+            </div>
+            <asp:Label ID="DataTitle" runat="server" Font-Size="Large" Text=""></asp:Label>
+            <br />
             <asp:Chart ID="DataChart" runat="server" Width="1100px" Height="400px"
                 Palette="SemiTransparent" TextAntiAliasingQuality="Normal" ImageStorageMode="UseImageLocation" Visible="True">
                 <Series>

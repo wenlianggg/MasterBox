@@ -13,6 +13,15 @@ namespace MasterBox.Prefs {
     public partial class FileSetting_General {
         
         /// <summary>
+        /// DataTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DataTitle;
+        
+        /// <summary>
         /// DataChart control.
         /// </summary>
         /// <remarks>
