@@ -13,15 +13,6 @@ namespace MasterBox.filestore {
     public partial class WebForm1 {
         
         /// <summary>
-        /// HelloWorldLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label HelloWorldLabel;
-        
-        /// <summary>
         /// VerifyLabel control.
         /// </summary>
         /// <remarks>
@@ -38,41 +29,5 @@ namespace MasterBox.filestore {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Check;
-        
-        /// <summary>
-        /// DLButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DLButton;
-        
-        /// <summary>
-        /// UPLButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UPLButton;
-        
-        /// <summary>
-        /// DELButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DELButton;
-        
-        /// <summary>
-        /// CountDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CountDown;
     }
 }

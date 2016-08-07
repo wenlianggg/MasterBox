@@ -437,7 +437,7 @@ namespace MasterBox
         {
             Auth.User user = Auth.User.GetUser(TextBoxEmailShare.Text);
             string link = GetRandomString(16);
-            GenerateLinkShare(link, user.UserId, tempfolder.folderid, true, true, true);
+            GenerateLinkShare(link, user.UserId, tempfolder., true, true, true);
 
            
             string email = user.Email;
