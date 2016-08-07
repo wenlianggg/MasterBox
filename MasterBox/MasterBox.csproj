@@ -191,6 +191,7 @@
     <Content Include="Admin\ipblocking.aspx" />
     <Content Include="Admin\sendmail.aspx" />
     <Content Include="Admin\subsmgmt.aspx" />
+    <Content Include="Admin\logsview.aspx" />
     <Content Include="Admin\usermgmt.aspx" />
     <Content Include="Auth\DEBUG.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -418,6 +419,13 @@
     </Compile>
     <Compile Include="Admin\subsmgmt.aspx.designer.cs">
       <DependentUpon>subsmgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\logsview.aspx.cs">
+      <DependentUpon>logsview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\logsview.aspx.designer.cs">
+      <DependentUpon>logsview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\usermgmt.aspx.cs">
       <DependentUpon>usermgmt.aspx</DependentUpon>
