@@ -23,7 +23,16 @@ namespace MasterBox.Admin {
 		//internal string Subject { get; set; } 
 		//internal string Body { get; set; }
 
-		// Constructors, creates mail object
+        Mail()
+        {
+            MailSmtpHost = "Smtp.gmail.com";
+            MailSmtpPort = 587;
+            MailSmtpUsername = "masterboxnoreply@gmail.com";
+            MailSmtpPassword = "N0tasmurf!";
+            MailFrom = "masterboxnoreply@gmail.com";
+        }
+
+        // Constructors, creates mail object
         /*
 		internal Mail(string to, string subject, string body) {
 			From = "masterboxnoreply@gmail.com";
