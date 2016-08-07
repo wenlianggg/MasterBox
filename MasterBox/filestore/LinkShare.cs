@@ -72,7 +72,7 @@ namespace MasterBox.fileshare
         public void UploadLinkShare()
         {
             SqlCommand cmd = new SqlCommand(
-                "INSERT INTO mb_linkshare(link, CURRENT_TIMESTAMP, userid, folderid, download, upload, deleter) VALUES(@link, NOW(), @userid, @folderid, @download, @upload, @deleter", SQLGetMBoxConnection());
+                "INSERT INTO mb_linkshare(link, dt, userid, folderid, download, upload, deleter) VALUES(@link, CURRENT_TIMESTAMP, @userid, @folderid, @download, @upload, @deleter)", SQLGetMBoxConnection());
             cmd.Parameters.AddWithValue("@link", link);
             cmd.Parameters.AddWithValue("@userid", fa.userid);
             cmd.Parameters.AddWithValue("@folderid", fa.folderid);

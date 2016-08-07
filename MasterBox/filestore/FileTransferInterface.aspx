@@ -337,7 +337,7 @@
                     <br />
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnShare" OnCommand="SendShare" CssClass="btn btn-default" runat="server" Text="Share" Visible="False" />
+                    <asp:Button ID="BtnShare" OnCommand="SendShare" CssClass="btn btn-default" runat="server" Text="Share" />
                 </div>
             </div>
         </div>
@@ -428,6 +428,7 @@
             </asp:GridView>
             <br />
             <asp:Button ID="BtnShareToOther" OnCommand="BtnShareFolder" runat="server" CssClass="btn btn-default" Text="Share Folder" Visible ="false" />
+            <asp:Label ID ="TempFolder" runat="server" Visible="false"></asp:Label>
         </div>
     </div>
     <script>

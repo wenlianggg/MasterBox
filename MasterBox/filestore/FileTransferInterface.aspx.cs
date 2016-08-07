@@ -19,8 +19,6 @@ namespace MasterBox
         DataTable dtFolder;
         DataTable dtFolderFile;
 
-        MBFolder tempfolder;
-
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -382,10 +380,10 @@ namespace MasterBox
 
             string foldername = lnk.Text;
             long folderid = Convert.ToInt64(e.CommandArgument.ToString());
+            TempFolder.Text = Convert.ToString(folderid);
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             if (pass)
             {
-                tempfolder = folder;
                 LblFolderNamePass.Text = folder.folderName;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
             }
@@ -437,7 +435,7 @@ namespace MasterBox
         {
             Auth.User user = Auth.User.GetUser(TextBoxEmailShare.Text);
             string link = GetRandomString(16);
-            GenerateLinkShare(link, user.UserId, tempfolder., true, true, true);
+            GenerateLinkShare(link, user.UserId, Convert.ToInt64(TempFolder.Text), true, true, true);
 
            
             string email = user.Email;
