@@ -20,8 +20,7 @@
             </div>
             <asp:Label ID="DataTitle" runat="server" Font-Size="Large" Text=""></asp:Label>
             <br />
-            <asp:Chart ID="DataChart" runat="server" Width="1060" Height="400px"
-                Palette="SemiTransparent" TextAntiAliasingQuality="Normal" ImageStorageMode="UseHttpHandler" Visible="True">
+            <asp:Chart ID="DataChart" runat="server" Width="1060" Height="400px" TextAntiAliasingQuality="Normal" ImageStorageMode="UseHttpHandler" Visible="True">
                 <Series>
                     <asp:Series Name="Data" ChartType="Bar"></asp:Series>
                 </Series>
