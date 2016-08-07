@@ -35,22 +35,22 @@ namespace MasterBox.Prefs {
 
         protected void LogsRowDataBound(object sender, GridViewRowEventArgs e) {
             if (e.Row.RowType == DataControlRowType.DataRow) {
-                int severity = int.Parse(e.Row.Cells[2].Text);
+                string severity = e.Row.Cells[2].Text;
                 foreach (TableCell cell in e.Row.Cells) {
                     switch(severity) {
-                        case 0:
+                        case "Normal":
                             cell.BackColor = Color.Azure;
                             break;
-                        case 1:
+                        case "Access":
                             cell.BackColor = Color.LightYellow;
                             break;
-                        case 2:
-                            cell.BackColor = Color.Tomato;
+                        case "Change":
+                            cell.BackColor = Color.Plum;
                             break;
-                        case 3:
+						case "ClientError":
                             cell.BackColor = Color.DodgerBlue;
                             break;
-                        case 4:
+                        case "ServerError":
                             cell.BackColor = Color.SteelBlue;
                             break;
                         default:
