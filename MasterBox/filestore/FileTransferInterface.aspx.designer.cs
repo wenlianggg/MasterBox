@@ -193,6 +193,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label LblFileSize;
         
         /// <summary>
+        /// LblFileTimeStamp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileTimeStamp;
+        
+        /// <summary>
         /// BtnDownload control.
         /// </summary>
         /// <remarks>
@@ -319,6 +328,60 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnUploadFile;
         
         /// <summary>
+        /// RdBtnFolderFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RdBtnFolderFileName;
+        
+        /// <summary>
+        /// LblFileFolderNameCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileFolderNameCheck;
+        
+        /// <summary>
+        /// LblFileFolderIDCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFileFolderIDCheck;
+        
+        /// <summary>
+        /// TxtBoxCurrecntFolderFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtBoxCurrecntFolderFileName;
+        
+        /// <summary>
+        /// TxtBoxFolderFileNameCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtBoxFolderFileNameCheck;
+        
+        /// <summary>
+        /// BtnUploadFileToFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnUploadFileToFolder;
+        
+        /// <summary>
         /// LblFolderID control.
         /// </summary>
         /// <remarks>
@@ -335,6 +398,15 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblFolderName;
+        
+        /// <summary>
+        /// LblFolderTimeStamp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblFolderTimeStamp;
         
         /// <summary>
         /// BtnOpenFolder control.
@@ -454,12 +526,12 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Label FolderHeader;
         
         /// <summary>
-        /// GridView1 control.
+        /// FolderFileTableView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView FolderFileTableView;
     }
 }

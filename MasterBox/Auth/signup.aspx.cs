@@ -29,7 +29,7 @@ namespace MasterBox.Auth {
 						ConfirmSent.Visible = true;
 						EmailAddrSent.Text = newuser.Email;
 						RegFields.Visible = false;
-						// TODO: Send email for confirmation
+						// TODO: Implement email sending
 					} catch (UserAlreadyExistsException) {
 						Msg.Text = "User already exists";
 						return;

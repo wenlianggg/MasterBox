@@ -1,16 +1,15 @@
 ﻿using MasterBox.Auth;
 using System;
-using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace MasterBox.mbox
 {
     public class MBFile
     {
+        public long fildid { get; set; }
         public string fileusername { get; set; }
         public string fileName { get; set; }
         public string fileType { get; set; }
@@ -36,32 +35,31 @@ namespace MasterBox.mbox
 
                     // Storing of File
                     SqlCommand cmd = new SqlCommand(
-                        "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent) "
-                        + "values(@user,@name,@type,@size,@data)", SQLGetMBoxConnection());
+                        "INSERT INTO mb_file(userid,filename,filetype,filesize,filecontent,filetimestamp) "
+                        + "values(@user,@name,@type,@size,@data,@timestamp)", SQLGetMBoxConnection());
                     cmd.Parameters.Add(new SqlParameter("@user", SqlDbType.BigInt, 8));
                     cmd.Parameters.Add(new SqlParameter("@name", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@type", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@size", SqlDbType.Int, 4));
                     cmd.Parameters.Add(new SqlParameter("@data", SqlDbType.VarBinary, -1));
+                    cmd.Parameters.Add(new SqlParameter("@timestamp", SqlDbType.DateTime2, 7));
                     cmd.Prepare();
                     cmd.Parameters["@user"].Value = user.UserId;
                     cmd.Parameters["@name"].Value = file.fileName;
                     cmd.Parameters["@type"].Value = file.fileType;
                     cmd.Parameters["@size"].Value = file.fileSize;
                     cmd.Parameters["@data"].Value = file.filecontent;
+                    cmd.Parameters["@timestamp"].Value = file.filetimestamp;
+
 
                     cmd.ExecuteNonQuery();
 
                     // Loggin for file upload
                     FileLogger.Instance.FileUploaded(user.UserId, file.fileName);
+                    
+                    // Clear all
+                    file = null;
 
-                    // Clear Sensitive Data
-                    file.fileName = "";
-                    file.fileType = "";
-                    file.fileSize = 0;
-                    file.filecontent = null;
-                    file.filekey = "";
-                    file.fileiv = "";
                     return true;
                 }
                 catch
@@ -76,13 +74,12 @@ namespace MasterBox.mbox
         }
 
         // Override File
-        public static bool OverrideFile(MBFile file)
+        public static bool OverwriteFile(MBFile file)
         {
             if (SufficientSpace(file).Equals(true))
             {
                 try
                 {
-                    System.Diagnostics.Debug.WriteLine("Testing if this has any values in it"+file.fileusername);
                     // Get User ID
                     User user = User.GetUser(file.fileusername);
 
@@ -91,21 +88,22 @@ namespace MasterBox.mbox
                     file.filecontent = MBFile.EncryptAES256File(file);
 
                     SqlCommand cmd = new SqlCommand(
-                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent@filecontent WHERE filename=@filename", SQLGetMBoxConnection());
+                        "UPDATE mb_file SET filesize=@filesize,filetype=@filetype,filecontent=@filecontent,filetimestamp=@filetimestamp WHERE filename=@filename", SQLGetMBoxConnection());
                     cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@filetype", SqlDbType.NVarChar, -1));
                     cmd.Parameters.Add(new SqlParameter("@filesize", SqlDbType.Int, 4));
                     cmd.Parameters.Add(new SqlParameter("@filecontent", SqlDbType.VarBinary, -1));
+                    cmd.Parameters.Add(new SqlParameter("@filetimestamp", SqlDbType.DateTime2, 7));
+
                     cmd.Prepare();
 
                     cmd.Parameters["@filename"].Value = file.fileName;
                     cmd.Parameters["@filetype"].Value = file.fileType;
                     cmd.Parameters["@filesize"].Value = file.fileSize;
                     cmd.Parameters["@filecontent"].Value = file.filecontent;
+                    cmd.Parameters["@filetimestamp"].Value = file.filetimestamp;
+
                     cmd.ExecuteNonQuery();
-
-
-
                     return true;
                 }
                 catch
@@ -149,8 +147,6 @@ namespace MasterBox.mbox
             SqlDataReader sqldr = cmd.ExecuteReader();
             while (sqldr.Read())
             {
-                System.Diagnostics.Debug.WriteLine("Db File: "+ sqldr["filename"].ToString());
-                System.Diagnostics.Debug.WriteLine("File Name: "+ filename);
                 if (sqldr["filename"].ToString() == filename)
                 {
                     System.Diagnostics.Debug.WriteLine("Same name");
@@ -177,36 +173,13 @@ namespace MasterBox.mbox
             SqlDataReader sqldr = cmd.ExecuteReader();
             while (sqldr.Read())
             {
-                System.Diagnostics.Debug.WriteLine("Db File: " + sqldr["filename"].ToString());
-                System.Diagnostics.Debug.WriteLine("File Name: " + filename);
                 if (sqldr["filename"].ToString() == filename)
                 {
-                    System.Diagnostics.Debug.WriteLine("Same name");
                     return false;
                 }
 
             }
             return true;
-        }
-
-
-        // To generate Key and IV
-        public static string FileKeyIvGenerator(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            StringBuilder res = new StringBuilder();
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                byte[] uintBuffer = new byte[sizeof(uint)];
-
-                while (length-- > 0)
-                {
-                    rng.GetBytes(uintBuffer);
-                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                    res.Append(valid[(int)(num % (uint)valid.Length)]);
-                }
-            }
-            return res.ToString();
         }
 
         // AES256 Encryption for file
@@ -289,13 +262,12 @@ namespace MasterBox.mbox
             System.Diagnostics.Debug.WriteLine("User ID: "+user.UserId);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND folderid=@folderid", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter folderidParam = new SqlParameter("@folderid", SqlDbType.BigInt, 8);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(folderidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@folderid"].Value = folderid;
-            cmd.Prepare();
 
             return cmd.ExecuteReader();
         }
@@ -307,24 +279,25 @@ namespace MasterBox.mbox
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND fileid = @fileid", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter fileidParam = new SqlParameter("@fileid", SqlDbType.BigInt, 8);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@fileid"].Value = fileid;
-            cmd.Prepare();
 
             // File Retrieval
             SqlDataReader sqldr = cmd.ExecuteReader();
             MBFile mbf = new MBFile();
             if (sqldr.Read())
             {
+                mbf.fildid = (long)sqldr["fileid"];
                 mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"], user.AesKey, user.AesIV);
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
                 mbf.fileusername = user.UserName;
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
             }
             if (mbf.fileSize == 0)
                 return null;
@@ -337,25 +310,27 @@ namespace MasterBox.mbox
             User user = User.GetUser(username);
             SqlCommand cmd = new SqlCommand(
                 "SELECT * FROM mb_file WHERE userid = @userid AND filename = @filename AND folderid is NULL", SQLGetMBoxConnection());
-            SqlParameter unameParam = new SqlParameter("@userid", SqlDbType.BigInt, 8);
-            SqlParameter fileidParam = new SqlParameter("@filename", SqlDbType.NVarChar, -1);
-            cmd.Parameters.Add(unameParam);
-            cmd.Parameters.Add(fileidParam);
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@filename", SqlDbType.NVarChar, -1));
+            cmd.Prepare();
+
             cmd.Parameters["@userid"].Value = user.UserId;
             cmd.Parameters["@filename"].Value = filename;
-            cmd.Prepare();
 
             // File Retrieval
             SqlDataReader sqldr = cmd.ExecuteReader();
             MBFile mbf = new MBFile();
             if (sqldr.Read())
             {
+                mbf.fildid = (long)sqldr["fileid"];
                 mbf.filecontent = MBFile.DecryptAES256File((byte[])sqldr["filecontent"], user.AesKey, user.AesIV);
                 mbf.fileName = sqldr["filename"].ToString();
                 mbf.fileSize = (int)sqldr["filesize"];
                 mbf.fileType = sqldr["filetype"].ToString();
                 mbf.fileusername = user.UserName;
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
             }
+
             if (mbf.fileSize == 0)
                 return null;
             return mbf;

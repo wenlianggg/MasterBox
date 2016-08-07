@@ -7,99 +7,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MasterBox.Admin {
+namespace MasterBox.Auth {
     
     
-    public partial class IPBlocking {
+    public partial class PasswordReset {
         
         /// <summary>
-        /// IPAddrTxt control.
+        /// Message control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IPAddrTxt;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Message;
         
         /// <summary>
-        /// IPDurationTxt control.
+        /// Msg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IPDurationTxt;
+        protected global::System.Web.UI.WebControls.Label Msg;
         
         /// <summary>
-        /// IPSubmitBtn control.
+        /// UserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button IPSubmitBtn;
+        protected global::System.Web.UI.WebControls.TextBox UserName;
         
         /// <summary>
-        /// UUserTxt control.
+        /// UserNameValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UUserTxt;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator UserNameValidator;
         
         /// <summary>
-        /// UDurationTxt control.
+        /// UploadControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UDurationTxt;
+        protected global::System.Web.UI.WebControls.FileUpload UploadControl;
         
         /// <summary>
-        /// USubmitBtn control.
+        /// StegUploadVal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button USubmitBtn;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator StegUploadVal;
         
         /// <summary>
-        /// IPUUserTxt control.
+        /// PwResetBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IPUUserTxt;
-        
-        /// <summary>
-        /// IPUIPTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IPUIPTxt;
-        
-        /// <summary>
-        /// IPUDurationTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox IPUDurationTxt;
-        
-        /// <summary>
-        /// IPUSubmitBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button IPUSubmitBtn;
+        protected global::System.Web.UI.WebControls.Button PwResetBtn;
     }
 }
