@@ -307,22 +307,14 @@ namespace MasterBox.Auth {
             }
         }
 
-        internal int SqlGetCouponDays(string couponcode)
+
+
+        internal int SqlUpdateSentCoupon(string couponcode)
         {
-            SqlCommand cmd = new SqlCommand("SELECT freedays FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
-            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
-            cmd.Parameters["@couponcode"].Value = couponcode;
-            cmd.Prepare();
-
-            SqlDataReader sqldr = cmd.ExecuteReader();
-
-            if (sqldr.Read())
-            {
-                return Convert.ToInt32(sqldr["freedays"].ToString());
-            }else
-            {
-                return 0;
-            }
+            SqlCommand upd = new SqlCommand("UPDATE mb_coupon SET sent = 1 WHERE couponcode = @couponcode", sqlConn);
+            upd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            upd.Parameters["@couponcode"].Value = couponcode;
+            return upd.ExecuteNonQuery();
         }
 
 		/*
@@ -491,7 +483,7 @@ namespace MasterBox.Auth {
         
         internal DataTable SqlGetUnredeemedCpn()
         {
-            SqlCommand cmd = new SqlCommand("SELECT couponcode FROM mb_coupon WHERE sent = 0", sqlConn);
+            SqlCommand cmd = new SqlCommand("SELECT couponcode FROM mb_coupon WHERE sent= 0 and stat = 0", sqlConn);
             cmd.Prepare();
 
             DataTable dt = new DataTable();
@@ -550,6 +542,25 @@ namespace MasterBox.Auth {
             {
                 DateTime dt = DateTime.Now;
                 return dt;
+            }
+        }
+
+        internal int SqlGetCouponDays(string couponcode)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT freedays FROM mb_coupon WHERE couponcode = @couponcode", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@couponcode", SqlDbType.VarChar, 16));
+            cmd.Parameters["@couponcode"].Value = couponcode;
+            cmd.Prepare();
+
+            SqlDataReader sqldr = cmd.ExecuteReader();
+
+            if (sqldr.Read())
+            {
+                return Convert.ToInt32(sqldr["freedays"].ToString());
+            }
+            else
+            {
+                return 0;
             }
         }
     }
