@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div style="padding: 15px;">
-                <asp:GridView runat="server" ID="userstable" CssClass="table table-striped table-bordered" AutoGenerateColumns="False" DataKeyNames="userid, username," EmptyDataText="No data available.">
+                <asp:GridView runat="server" ID="userstable" CssClass="table table-striped table-bordered" AutoGenerateColumns="False" DataKeyNames="userid, username" EmptyDataText="No data available.">
                     <Columns>
                         <asp:TemplateField HeaderText="UserID">
                             <ItemTemplate>
@@ -44,9 +44,14 @@
                                 <asp:LinkButton ID="UsersLinkBtn" OnCommand="UsersLinkBtn_Command"  runat="server"  CommandArgument='<%# Eval("userid") %>' Text='<%# Eval("username") %>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
-                    </Columns>
-
+                    </Columns>                  
                 </asp:GridView>
+
+                <asp:Table ID="ViewUser" runat="server" Visible="false">
+                    <asp:TableHeaderRow runat="server">
+                        <asp:TableCell>User</asp:TableCell>
+                    </asp:TableHeaderRow>
+                </asp:Table>
             </div>
         </div>
     </div>
