@@ -20,15 +20,25 @@
             </div>
             <asp:Label ID="DataTitle" runat="server" Font-Size="Large" Text=""></asp:Label>
             <br />
-            <asp:Chart ID="DataChart" runat="server" Width="1100px" Height="400px"
-                Palette="SemiTransparent" TextAntiAliasingQuality="Normal" ImageStorageMode="UseImageLocation" Visible="True">
+            <asp:Chart ID="DataChart" runat="server" Width="1060" Height="400px"
+                Palette="SemiTransparent" TextAntiAliasingQuality="Normal" ImageStorageMode="UseHttpHandler" Visible="True">
                 <Series>
-                    <asp:Series Name="Date" ChartType="Bar"></asp:Series>
+                    <asp:Series Name="Data" ChartType="Bar"></asp:Series>
                 </Series>
                 <ChartAreas>
-                    <asp:ChartArea Name="ChartArea1" BackColor="Transparent"></asp:ChartArea>
+                    <asp:ChartArea Name="DataChartArea" BackColor="Transparent"></asp:ChartArea>
                 </ChartAreas>
             </asp:Chart>
+            <br />
+            <span>Total file storage used: </span>
+            <asp:Label ID="LblDataTrackerFileSize" runat="server"></asp:Label>
+            <br />
+            <span>Total number of files uploaded: </span>
+            <asp:Label ID="LblDataTrackerFileNum" runat="server"></asp:Label>
+            <br />
+            <span>Total number of folders created: </span>
+            <asp:Label ID="LblDataTrackerFolderNum" runat="server"></asp:Label>
+
         </div>
 
     </div>
