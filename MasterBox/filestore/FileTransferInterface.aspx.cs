@@ -6,6 +6,10 @@ using System.IO;
 using System.Configuration;
 using MasterBox.mbox;
 using System.Web.UI;
+using System.Text;
+using System.Net.Mail;
+using MasterBox.fileshare;
+using MasterBox.Admin;
 
 namespace MasterBox
 {
@@ -14,6 +18,8 @@ namespace MasterBox
         DataTable dtFile;
         DataTable dtFolder;
         DataTable dtFolderFile;
+
+        MBFolder tempfolder;
 
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MBoxCString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -363,16 +369,23 @@ namespace MasterBox
         }
 
 
+        protected void BtnShareFolder(object sender, CommandEventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "filesharemodal", "showPopupFolderShare();", true);
+        }
+
         protected void FolderLinkButton_Command(object sender, CommandEventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
             bool pass = Convert.ToBoolean(lnk.Attributes["FolderEncryption"]);
+            BtnShareToOther.Visible = true;
 
             string foldername = lnk.Text;
             long folderid = Convert.ToInt64(e.CommandArgument.ToString());
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
             if (pass)
             {
+                tempfolder = folder;
                 LblFolderNamePass.Text = folder.folderName;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
             }
@@ -385,10 +398,54 @@ namespace MasterBox
             }
         }
 
+        protected void SharedFolderLinkButton_Command(object sender, CommandEventArgs e)
+        {
+            FolderLinkButton_Command(sender, e);
+            BtnShareToOther.Visible = false;
+        }
+
         protected void BtnDeleteFolderWithPassw_Click(object sender, EventArgs e)
         {
             MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, LblFolderNamePass.Text);
             MBFolder.DeleteFolder(folder.folderid);
+        }
+
+
+
+        private static string GetRandomString(int length)
+        {
+            string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+            StringBuilder sb = new StringBuilder();
+            Random rnd = new Random();
+
+            while ((length--) > 0)
+                sb.Append(charPool[(int)(rnd.NextDouble() * charPool.Length)]);
+
+            return sb.ToString();
+        }
+
+        private static void GenerateLinkShare(string link, long userid, long folderid, bool download, bool upload, bool delete)
+        {
+            fileshare.FileAccess fa = new fileshare.FileAccess(userid, folderid, download, upload, delete);
+
+            LinkShare ls = new LinkShare(link, fa);
+
+            ls.UploadLinkShare();
+        }
+
+        protected void SendShare(object sender, EventArgs e)
+        {
+            Auth.User user = Auth.User.GetUser(TextBoxEmailShare.Text);
+            string link = GetRandomString(16);
+            GenerateLinkShare(link, user.UserId, tempfolder.folderid, true, true, true);
+
+           
+            string email = user.Email;
+            string subject = "Someone has shared a folder with you";
+            string body = "Hello,\n\nHere is a link\nwww.masterboxsite.azurewebsites.net/inv?link=" + link + "\n\nRegards,\nMasterBox";
+
+            Mail sharemail = new Mail();
+            sharemail.SendEmail(email, subject, body);
         }
     }
 }

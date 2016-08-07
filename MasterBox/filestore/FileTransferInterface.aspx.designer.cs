@@ -463,6 +463,24 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnDeleteFolderWithPassw;
         
         /// <summary>
+        /// TextBoxEmailShare control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxEmailShare;
+        
+        /// <summary>
+        /// BtnShare control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnShare;
+        
+        /// <summary>
         /// CreateNewSharedFolder control.
         /// </summary>
         /// <remarks>
@@ -533,5 +551,14 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView FolderFileTableView;
+        
+        /// <summary>
+        /// BtnShareToOther control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnShareToOther;
     }
 }

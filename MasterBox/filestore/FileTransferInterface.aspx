@@ -21,6 +21,9 @@
         function showPopupPassword() {
             $('#folderPasswordModal').modal('show');
         }
+        function showPopupFolderShare(){
+            $('#filesharemodal').modal('show');
+        }
     </script>
 </asp:Content>
 
@@ -320,6 +323,26 @@
         </div>
     </div>
 
+    <!--Folder Sharing Modal -->
+    <div id="filesharemodal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Folder Sharing</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Enter recipient's username: </span>
+                    <asp:TextBox ID="TextBoxEmailShare" runat="server"></asp:TextBox>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnShare" OnCommand="SendShare" CssClass="btn btn-default" runat="server" Text="Share" Visible="False" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="MainContent">
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
@@ -366,7 +389,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Shared Folders">
                         <ItemTemplate>
-                            <asp:LinkButton ID="FolderLinkButton" OnCommand="FolderLinkButton_Command" runat="server" CommandArgument='<%# Eval("folderid") %>' FolderEncryption='<%# Eval("folderencryption") %>' Text='<%# Eval("foldername") %>'></asp:LinkButton>
+                            <asp:LinkButton ID="FolderLinkButton" OnCommand="SharedFolderLinkButton_Command" runat="server" CommandArgument='<%# Eval("folderid") %>' FolderEncryption='<%# Eval("folderencryption") %>' Text='<%# Eval("foldername") %>'></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -403,6 +426,8 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+            <br />
+            <asp:Button ID="BtnShareToOther" OnCommand="BtnShareFolder" runat="server" CssClass="btn btn-default" Text="Share Folder" Visible ="false" />
         </div>
     </div>
     <script>
