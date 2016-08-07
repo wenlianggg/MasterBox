@@ -50,8 +50,6 @@ namespace MasterBox.mbox
                     cmd.Parameters["@size"].Value = file.fileSize;
                     cmd.Parameters["@data"].Value = file.filecontent;
                     cmd.Parameters["@timestamp"].Value = file.filetimestamp;
-
-
                     cmd.ExecuteNonQuery();
 
                     // Loggin for file upload

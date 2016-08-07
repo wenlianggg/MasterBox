@@ -403,6 +403,7 @@
     <Compile Include="Admin\ipblocking.aspx.designer.cs">
       <DependentUpon>ipblocking.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Classes\Mail.cs" />
     <Compile Include="Admin\sendmail.aspx.cs">
       <DependentUpon>sendmail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

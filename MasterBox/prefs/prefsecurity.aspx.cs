@@ -75,22 +75,23 @@ namespace MasterBox.Prefs
                     DeleteFolderPasswordOption.DataBind();
                 }
                 else
-                {
+                {                   
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password change failed!" + "')</script>");
                 }
             }else
             {
+                ChangeFolderPasswordOption.SelectedIndex = 0;
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Wrong password, try again!" + "')</script>");
             }
         }
 
         protected void DeleteFolderPassword_Click(object sender, EventArgs e)
         {
-            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, ChangeFolderPasswordOption.SelectedValue);
+            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, DeleteFolderPasswordOption.SelectedValue);
             string oldpassword = FolderCurrentDeleteTxtBox.Text;
             if (folder.ValidateFolderPassword(folder, oldpassword))
             {
-                if (folder.FolderPasswordSettings(folder, "", true))
+                if (folder.FolderPasswordSettings(folder, "", false))
                 {
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Folder password has been changed!" + "')</script>");
                     // Refresh list of folders
@@ -110,6 +111,7 @@ namespace MasterBox.Prefs
             }
             else
             {
+                DeleteFolderPasswordOption.SelectedIndex = 0;
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Folder Status", "<script language='javascript'>alert('" + "Wrong password, try again!" + "')</script>");
             }
         }

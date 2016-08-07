@@ -9,7 +9,7 @@ namespace MasterBox.Auth {
 
 		private static volatile IPBlock _instance;
 		private static object syncRoot = new object();
-		private List<IPBlockEntry> bList;
+		internal List<IPBlockEntry> bList;
 
 		private static Dictionary<string, int> _ipFailedLogins;
 
@@ -153,7 +153,6 @@ namespace MasterBox.Auth {
 			RefreshInstance();
 		}
 
-		// TODO: Blocklist removal
 		internal string GetIP() {
 			HttpContext context = HttpContext.Current;
 			string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];

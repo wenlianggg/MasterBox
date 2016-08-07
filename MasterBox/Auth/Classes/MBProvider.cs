@@ -245,5 +245,6 @@ namespace MasterBox.Auth {
 				objs[i] = null;
 			}
 		}
+
 	}
 }

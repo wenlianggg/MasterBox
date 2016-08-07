@@ -30,6 +30,7 @@ namespace MasterBox.Auth {
 			}
 		}
 
+
 		protected void CancelOTP(object sender, EventArgs e) {
 			MBProvider.Instance.LoginSuccess(usr, (bool)Session["StayLoggedIn"]);
 		}
