@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Contact Us!" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="emailclass.aspx.cs" Inherits="MasterBox.emailclass" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-<table class="table table-hover table-condensed">     
+    
+    <table class="table table-hover table-condensed">     
             
             <tr>
                 <td> <span title="Your Email Address"> From </span> </td>
@@ -29,6 +29,6 @@
             <tr>
             <td colspan="2"><asp:Label ID="lblMsg" runat="server" />  </td>
             </tr>                 
-        </table>
+    </table>
 
-    </asp:Content>
+</asp:Content>

@@ -19,7 +19,7 @@
         </address>
         <address>
             <strong>Security: </strong><br />
-            <a href="mailto:verysecure@masterbaux.com">verysecure@masterbaux.com</a>
+            <a href="mailto:verysecure@masterbaux.com">masterboxsec@gmail.com</a>
         </address>
     </div>
 
