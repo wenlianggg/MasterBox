@@ -124,9 +124,9 @@ namespace MasterBox.Auth {
 				}
 		}
 
-		public override bool ChangePassword(string username, string oldPassword, string newPassword) {
+		public override bool ChangePassword(string username, string newPassword, string oldPassword = null) {
 			// Validate user password entered first
-			if (ValidateUser(username, oldPassword)) {
+			if (oldPassword == null || ValidateUser(username, oldPassword) ) {
 				// Get user from SQL
 				using (DataAccess da = new DataAccess())
 				using (SqlDataReader sqldr = da.SqlGetAuth(username)) {
@@ -245,5 +245,6 @@ namespace MasterBox.Auth {
 				objs[i] = null;
 			}
 		}
+
 	}
 }

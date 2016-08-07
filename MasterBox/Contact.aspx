@@ -27,8 +27,8 @@
         <h2>Find us!</h2><br />
         <address>
             <strong>Masterbox Inc.</strong><br />
-            One Wanker Way<br />
-            Singapore, S999999<br />
+            1 MasterBox Drive<br />
+            Singapore, S000001<br />
             <abbr title="Phone">P:</abbr>
             6123 4567
         </address>

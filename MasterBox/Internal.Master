@@ -25,7 +25,7 @@
 	<link runat="server" href='~/Content/font-awesome.min.css' rel="stylesheet"/>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 	<!-- Favicon -->
-    <link href='~/images/favicon.ico' rel="shortcut icon" type="image/x-icon" />
+	<link href='~/images/newfavicon.png' rel="shortcut icon" type="image/png" />
 </head>
 <body>    
     <form id="InteralForm" runat="server">

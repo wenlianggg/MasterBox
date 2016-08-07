@@ -1,8 +1,11 @@
-﻿using System;
+﻿using MasterBox.Admin;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -26,7 +29,7 @@ namespace MasterBox.Auth {
 					if (steg.ValidateHash(Auth.User.ConvertToId(UserName.Text))) {
 						Message.Visible = true;
 						Message.Attributes.Add("class", "alert alert-success");
-						// TODO: Implement email sending
+						ResetAndSendEmail();
 						Msg.Text = "Your new password has been sent to your email address.";
 					} else {
 						Message.Visible = true;
@@ -79,6 +82,31 @@ namespace MasterBox.Auth {
 				Msg.Text = "Upload status: No file uploaded";
 				return false;
 			}
+		}
+
+		private void ResetAndSendEmail() {
+			Mail mail = new Mail();
+			string newpassword = GeneratePassword(18);
+			MBProvider.Instance.ChangePassword(UserName.Text, newpassword);
+			string msgcontent = "MasterBox: Your password has been resetted, it is " + newpassword;
+			mail.SendEmail("wenlianggg@gmail.com", "Your new password", msgcontent);
+		}
+
+		// Reference: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
+		public static string GeneratePassword(int maxSize) {
+			char[] chars = new char[62];
+			chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+			byte[] data = new byte[1];
+			using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider()) {
+				crypto.GetNonZeroBytes(data);
+				data = new byte[maxSize];
+				crypto.GetNonZeroBytes(data);
+			}
+			StringBuilder result = new StringBuilder(maxSize);
+			foreach (byte b in data) {
+				result.Append(chars[b % (chars.Length)]);
+			}
+			return result.ToString();
 		}
 	}
 }

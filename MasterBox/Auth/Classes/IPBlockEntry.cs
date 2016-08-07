@@ -35,6 +35,7 @@ namespace MasterBox.Auth {
 		internal string IPAddress {
 			get { return _ipaddress; }
 			private set {
+				if (value != null)
 				if (value.Length < 50)
 					_ipaddress = value;
 			}

@@ -250,6 +250,12 @@
     <Content Include="images\bg\grungebg.png" />
     <Content Include="images\bg\outlets.png" />
     <Content Include="images\bg\prefsidebarbg.jpg" />
+    <Content Include="images\MasterBoxSliderFireworks.png" />
+    <Content Include="images\MasterBoxSliderMoney.png" />
+    <Content Include="images\MasterBoxSliderPedestal.png" />
+    <Content Include="images\MasterBoxSliderPodium.png" />
+    <Content Include="images\MasterBoxSliderWow.png" />
+    <Content Include="images\newfavicon.png" />
     <Content Include="inv.aspx" />
     <Content Include="prefs\prefotpsetup.aspx" />
     <Content Include="prefs\prefpassword.aspx" />
@@ -278,11 +284,6 @@
     <Content Include="images\Logged\Settings.png" />
     <Content Include="images\Logged\Shared.png" />
     <Content Include="images\Logged\Upload.png" />
-    <Content Include="images\MasterBoxSliderblueExtended.png" />
-    <Content Include="images\MasterBoxSliderExtended.png" />
-    <Content Include="images\MasterBoxSliderGirlzlongExtended.png" />
-    <Content Include="images\MasterBoxSlidergreenExtended.png" />
-    <Content Include="images\MasterBoxSlidergreyExtended.png" />
     <Content Include="prefs\prefsecurity.aspx" />
     <Content Include="PaymentSuccess.aspx" />
     <Content Include="Pricing.aspx" />
@@ -403,6 +404,7 @@
     <Compile Include="Admin\ipblocking.aspx.designer.cs">
       <DependentUpon>ipblocking.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Classes\Mail.cs" />
     <Compile Include="Admin\sendmail.aspx.cs">
       <DependentUpon>sendmail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -634,6 +636,7 @@
     <Compile Include="TestPage.aspx.designer.cs">
       <DependentUpon>TestPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TheEmailClass.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -28,7 +28,12 @@ namespace MasterBox.Auth {
 					Session["IsPasswordAuthorized"] = true;
 					Session["StayLoggedIn"] = Persist.Checked;
 					if (MBProvider.Instance.IsTotpEnabled(usr.UserName)) {
-						Response.Redirect("~/Auth/otpverify.aspx", false);
+						if (RequestedUrl != null) {
+							// Keep requested url
+							Response.Redirect("~/Auth/otpverify.aspx?ReturnUrl=" + RequestedUrl, false);
+						} else {
+							Response.Redirect("~/Auth/otpverify.aspx", false);
+						}
 					} else {
 						MBProvider.Instance.LoginSuccess(usr, Persist.Checked);
 					}
@@ -48,6 +53,12 @@ namespace MasterBox.Auth {
 			} else {
 				Debug.WriteLine(ResolveUrl("~/auth/signup") + "?username=" + UserName.Text);
 				Response.Redirect("~/auth/signup.aspx" + "?username=" + UserName.Text);
+			}
+		}
+
+		private string RequestedUrl {
+			get {
+				return Request.QueryString["ReturnUrl"];
 			}
 		}
 	}
