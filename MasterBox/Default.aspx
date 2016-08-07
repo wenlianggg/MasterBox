@@ -92,7 +92,7 @@
         <div class="col-md-4">
             <h2><span class="h2scalable">Scalable</span></h2>
             <p>
-                Easily upgrade your storage space with our storage plans going up to 5GB in size, with our streamlined
+                Easily upgrade your storage space with our storage plans going up to 100MB in size, with our streamlined
                 checkout process with streamlined integration with PayPal, our payment processor.
             </p>
             <p>

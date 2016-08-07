@@ -89,7 +89,8 @@ namespace MasterBox.Auth {
 			string newpassword = GeneratePassword(18);
 			MBProvider.Instance.ChangePassword(UserName.Text, newpassword);
 			string msgcontent = "MasterBox: Your password has been resetted, it is " + newpassword;
-			mail.SendEmail("wenlianggg@gmail.com", "Your new password", msgcontent);
+			string emailaddress = Auth.User.GetUser(UserName.Text).Email;
+			mail.SendEmail(emailaddress, "Your new password", msgcontent);
 		}
 
 		// Reference: https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
