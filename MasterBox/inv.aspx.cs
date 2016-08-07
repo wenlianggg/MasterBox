@@ -20,7 +20,7 @@ namespace MasterBox.filestore
             //check link in database
             if (Request.QueryString["link"]==null)
             {
-                VerifyLabel.Text = "Invalid Link. Redirecting back to home. GTFO " + Auth.User.GetUser(Context.User.Identity.Name);
+                VerifyLabel.Text = "Invalid Link. Redirecting back to home. GTFO ";
             }
             else
             {
@@ -35,7 +35,7 @@ namespace MasterBox.filestore
                 else
                 {
 
-                    long userid = 5;
+                    long userid = Auth.User.GetUser(Context.User.Identity.Name).UserId;
                     //check userid is not null, if null redirect to login
 
                     /*
@@ -48,7 +48,7 @@ namespace MasterBox.filestore
                     */
 
 
-                    HelloWorldLabel.Text = "Hello, " + GetRandomString(16) + Auth.User.GetUser(Context.User.Identity.Name);
+                    HelloWorldLabel.Text = "Hello, " + Auth.User.GetUser(Context.User.Identity.Name);
                     string str = ls.Verify(userid);
                     VerifyLabel.Text = str;
                     if (str == "")
@@ -72,46 +72,5 @@ namespace MasterBox.filestore
             }
         }
 
-        public static string GetRandomString(int length)
-        {
-            string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-            StringBuilder sb = new StringBuilder();
-            Random rnd = new Random();
-
-            while ((length--) > 0)
-                sb.Append(charPool[(int)(rnd.NextDouble() * charPool.Length)]);
-
-            return sb.ToString();
-        }
-
-        public static LinkShare GenerateLinkShare(string link, long userid, long folderid, bool download, bool upload, bool delete)
-        {
-            FileAccess fa = new FileAccess(userid, folderid, download, upload, delete);
-
-            LinkShare ls = new LinkShare(link, fa);
-
-            return ls;
-        }
-
-        public void sendShare(string email)
-        {
-            string link = GetRandomString(16);
-            GenerateLinkShare(link, 5, 80, true, true, true);
-
-            SmtpClient smtpClient = new SmtpClient("gmail.com", 25);
-
-            smtpClient.Credentials = new System.Net.NetworkCredential("masterboxnoreply@gmail.com", "N0tasmurf!");
-            smtpClient.UseDefaultCredentials = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage();
-
-            //Setting From , To and CC
-            mail.From = new MailAddress("masterboxnoreply@gmail.com", "MasterBox");
-            mail.To.Add(new MailAddress(email));
-            mail.Body = "Hello,\n\nHere is a link\nwww.masterboxsite.azurewebsites.net/TestPage?link="+link+"\n\nRegards,\nMasterBox";
-
-            smtpClient.Send(mail);
-        }
     }
 }
