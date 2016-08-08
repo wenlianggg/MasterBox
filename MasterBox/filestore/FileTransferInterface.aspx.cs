@@ -399,7 +399,26 @@ namespace MasterBox
 
         protected void SharedFolderLinkButton_Command(object sender, CommandEventArgs e)
         {
-            FolderLinkButton_Command(sender, e);
+            LinkButton lnk = (LinkButton)sender;
+            bool pass = Convert.ToBoolean(lnk.Attributes["FolderEncryption"]);
+            BtnShareToOther.Visible = true;
+
+            string foldername = lnk.Text;
+            long folderid = Convert.ToInt64(e.CommandArgument.ToString());
+            TempFolder.Text = Convert.ToString(folderid);
+            MBFolder folder = MBFolder.GetFolder(folderid);
+            if (pass)
+            {
+                LblFolderNamePass.Text = folder.folderName;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
+            }
+            else
+            {
+                LblFolderName.Text = folder.folderName;
+                LblFolderID.Text = folderid.ToString();
+                LblFolderTimeStamp.Text = folder.foldertimestamp.ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderModal", "showPopupFolder();", true);
+            }
             BtnShareToOther.Visible = false;
         }
 
