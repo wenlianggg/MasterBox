@@ -193,7 +193,7 @@
                     <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> KB</span>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> MB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
