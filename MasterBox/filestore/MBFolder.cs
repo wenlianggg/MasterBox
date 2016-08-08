@@ -711,7 +711,33 @@ namespace MasterBox.mbox
             }
             return folder;
         }
-        
+
+        public static MBFolder GetFolder(long folderid)
+        {
+            MBFolder folder = new MBFolder();
+
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_folder WHERE folderid = @folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            cmd.Parameters["@folderid"].Value = folderid;
+
+            SqlDataReader folderReader = cmd.ExecuteReader();
+            if (folderReader.Read())
+            {
+                folder.folderid = Convert.ToInt64(folderReader["folderid"].ToString());
+                folder.folderName = folderReader["foldername"].ToString();
+                folder.folderpassword = folderReader["folderpassword"].ToString();
+                folder.foldersalt = folderReader["foldersaltfunction"].ToString();
+                folder.folderBlowFishKey = folderReader["folderkey"].ToString();
+                folder.folderBlowFishIV = folderReader["folderiv"].ToString();
+                folder.folderencryptionstatus = (bool)folderReader["folderencryption"];
+                folder.foldertimestamp = Convert.ToDateTime(folderReader["foldertimestamp"]);
+
+            }
+            return folder;
+        }
+
         // Get total number 
         public static int CountFileNumInFolder(string username,long folderid)
         {
