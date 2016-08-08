@@ -197,6 +197,9 @@ namespace MasterBox
                 folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder Created" + "')</script>");
                 FillDataFolder();
+                // Fill up folder location for upload
+                UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
+                UploadLocation.DataBind();
             }
             else
             {
@@ -460,7 +463,7 @@ namespace MasterBox
            
             string email = user.Email;
             string subject = "Someone has shared a folder with you";
-            string body = "Hello,\n\nHere is a link\nwww.masterboxsite.azurewebsites.net/inv?link=" + link + "\n\nRegards,\nMasterBox";
+            string body = "Hello,\n\nHere is a link\nmasterboxsite.azurewebsites.net/inv?link=" + link + "\n\nRegards,\nMasterBox";
 
             Mail sharemail = new Mail();
             sharemail.SendEmail(email, subject, body);
