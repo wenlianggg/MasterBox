@@ -80,7 +80,7 @@ namespace MasterBox.Auth.TOTP {
 
 		public string SecretBase32 {
 			get {
-				return Base32.ToString(Secret);
+				return Base32.ToString(Secret).Substring(0, 16);
 				}
 			set {
 				try { 

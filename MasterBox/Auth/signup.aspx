@@ -36,7 +36,7 @@
 					<tr>
 						<td><strong>Username: </strong></td>
 						<td>
-							<asp:TextBox ID="UserName" runat="server" CssClass="form-control" placeholder="cookiemonster123" /></td>
+							<asp:TextBox ID="UserName" runat="server" CssClass="form-control"/></td>
 						<td>
 							<asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="UserName" ForeColor="Red"
 								ErrorMessage="Username is required." Text="*" runat="server" />
@@ -73,7 +73,7 @@
 					<tr>
 						<td><strong>First Name:</strong></td>
 						<td>
-							<asp:TextBox ID="FirstName" CssClass="form-control" runat="server" placeholder="Cookie" />
+							<asp:TextBox ID="FirstName" CssClass="form-control" runat="server" />
 						</td>
 						<td>
 							<asp:RequiredFieldValidator ID="RequiredFieldValidator4" ControlToValidate="FirstName" ForeColor="Red"
@@ -86,7 +86,7 @@
 					<tr>
 						<td><strong>Last Name:</strong></td>
 						<td>
-							<asp:TextBox ID="LastName" CssClass="form-control" runat="server" placeholder="Monster" />
+							<asp:TextBox ID="LastName" CssClass="form-control" runat="server" />
 						</td>
 						<td>
 							<asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="LastName" ForeColor="Red"
@@ -99,7 +99,7 @@
 					<tr>
 						<td><strong>E-mail Address:</strong></td>
 						<td>
-							<asp:TextBox ID="UserEmail" CssClass="form-control" runat="server" placeholder="cookie@monsters.com" />
+							<asp:TextBox ID="UserEmail" CssClass="form-control" runat="server" placeholder="email@address.com" />
 						</td>
 						<td>
 							<asp:RequiredFieldValidator ID="RequiredFieldValidator6" ControlToValidate="UserEmail" ForeColor="Red"
@@ -112,7 +112,7 @@
 					<tr>
 						<td><strong>Confirm E-Mail:</strong></td>
 						<td>
-							<asp:TextBox ID="UserEmailCfm" CssClass="form-control" runat="server" placeholder="cookie@monsters.com" />
+							<asp:TextBox ID="UserEmailCfm" CssClass="form-control" runat="server" placeholder="email@address.com" />
 						</td>
 						<td>
 							<asp:RequiredFieldValidator ID="RequiredFieldValidator7" ControlToValidate="UserEmailCfm" ForeColor="Red"

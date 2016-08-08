@@ -444,7 +444,7 @@ namespace MasterBox
            
             string email = user.Email;
             string subject = "Someone has shared a folder with you";
-            string body = "Hello,\n\nHere is a link\nwww.masterboxsite.azurewebsites.net/inv?link=" + link + "\n\nRegards,\nMasterBox";
+            string body = "Hello,\n\nHere is a link\nmasterboxsite.azurewebsites.net/inv?link=" + link + "\n\nRegards,\nMasterBox";
 
             Mail sharemail = new Mail();
             sharemail.SendEmail(email, subject, body);
