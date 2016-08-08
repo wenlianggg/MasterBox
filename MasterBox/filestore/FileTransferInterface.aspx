@@ -283,13 +283,21 @@
                     <h4>Folder</h4>
                 </div>
                 <div class="modal-body">
+                    <asp:Table ID="FolderWithoutPassTable" runat="server">
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Folder Name: </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="LblFolderName" runat="server"></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Date Created: </asp:TableCell>
+                            <asp:TableCell>
+                                <asp:Label ID="LblFolderTimeStamp" runat="server"></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableHeaderRow>
+                    </asp:Table>
                     <asp:Label ID="LblFolderID" runat="server" Visible="False"></asp:Label>
-                    <span>Folder Name: </span>
-                    <asp:Label ID="LblFolderName" runat="server"></asp:Label>
-                    <br />
-                    <span>Folder Created: </span>
-                    <asp:Label ID="LblFolderTimeStamp" runat="server"></asp:Label>
-                    <br />
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnOpenFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithoutPass_Command" CssClass="btn btn-default" runat="server" Text="Open" />

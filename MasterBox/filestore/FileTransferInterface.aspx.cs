@@ -215,6 +215,7 @@ namespace MasterBox
                 if (MBFile.FilenameCheck(checkfile.fileusername, TxtBoxFileNameCheck.Text))
                 {
                     checkfile.fileName = TxtBoxFileNameCheck.Text;
+                    checkfile.filetimestamp = DateTime.Now;
                     MBFile.UploadNewFile(checkfile);
                     FillDataFile();
                 }
