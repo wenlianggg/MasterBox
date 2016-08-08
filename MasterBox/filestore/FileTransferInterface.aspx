@@ -156,7 +156,7 @@
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
                             <asp:TableCell>File Size: </asp:TableCell>
-                            <asp:TableCell><asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span></asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileSize" runat="server"></asp:Label><span> MB</span></asp:TableCell>
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
                             <asp:TableCell>Last Modified: </asp:TableCell>

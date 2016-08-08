@@ -269,7 +269,7 @@ namespace MasterBox
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
-                    LblFileSize.Text = file.fileSize.ToString();
+                    LblFileSize.Text = ((file.fileSize / 1024f) / 1024f).ToString();
                     LblFileTimeStamp.Text = file.filetimestamp.ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
