@@ -23,7 +23,7 @@
                         <th>30MB</th>
                     </tr>
                     <tr class="tableData">
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                        <td>Click the button below to subscribe to additional space!<br />
                             <br />
                             <a id="ThisLogin" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                             <asp:ImageButton
@@ -36,7 +36,7 @@
                                 OnCommand="PayPalBtn_Command"
                                 CausesValidation="false"
                                /></td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                        <td>Click the button below to subscribe to additional space!<br />
                             <br />
                             <a id="LoginLink2" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                             <asp:ImageButton
@@ -49,7 +49,7 @@
                                 OnCommand="PayPalBtn_Command"
                                 CausesValidation="false"
                                 /></td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                        <td>Click the button below to subscribe to additional space!<br />
                             <br />
                             <a id="LoginLink3" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                             <asp:ImageButton
@@ -62,7 +62,7 @@
                                 OnCommand="PayPalBtn_Command"
                                 CausesValidation="false"
                                 /></td>
-                        <td>Need more data?! WHY DO YOU NEED MORE SPACE?!<br />
+                        <td>Click the button below to subscribe to additional space!<br />
                             <br />
                             <a id="LoginLink" class="btn btn-default" runat="server" href="~/auth/signin">Sign Up Now!&raquo;</a>
                             <asp:ImageButton
