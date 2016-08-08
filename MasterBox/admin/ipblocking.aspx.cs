@@ -13,7 +13,6 @@ namespace MasterBox.Admin {
 		protected void Page_Load(object sender, EventArgs e) {
 			BlockDataGrid.DataSource = BlockListTable;
 			BlockDataGrid.DataBind();
-			BlockDataGrid.HeaderRow.TableSection = TableRowSection.TableHeader;
 
 			if (!IsPostBack) {
 				Message.Visible = false;
