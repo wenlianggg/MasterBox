@@ -197,6 +197,9 @@ namespace MasterBox
                 folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder Created" + "')</script>");
                 FillDataFolder();
+                // Fill up folder location for upload
+                UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
+                UploadLocation.DataBind();
             }
             else
             {
