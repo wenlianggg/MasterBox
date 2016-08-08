@@ -197,6 +197,9 @@ namespace MasterBox
                 folderCreation = folder.CreateNewFolder(folder, encryptionPass.Text);
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Upload Status", "<script language='javascript'>alert('" + "Folder Created" + "')</script>");
                 FillDataFolder();
+                // Fill up folder location for upload
+                UploadLocation.DataSource = MBFolder.GenerateFolderLocation(Context.User.Identity.Name);
+                UploadLocation.DataBind();
             }
             else
             {
@@ -266,7 +269,7 @@ namespace MasterBox
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
-                    LblFileSize.Text = file.fileSize.ToString();
+                    LblFileSize.Text = ((file.fileSize / 1024f) / 1024f).ToString();
                     LblFileTimeStamp.Text = file.filetimestamp.ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
@@ -302,7 +305,7 @@ namespace MasterBox
                     LblFolderFileId.Text = fileid.ToString();
                     LblFolderFileName.Text = file.fileName;
                     LblFolderFileType.Text = file.fileType;
-                    LblFolderFileSize.Text = file.fileSize.ToString();
+                    LblFolderFileSize.Text = ((file.fileSize / 1024f) / 1024f).ToString();
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfileModal", "showPopupFolderFile();", true);
                     break;
                 case "DownloadFolderFile":
@@ -399,7 +402,26 @@ namespace MasterBox
 
         protected void SharedFolderLinkButton_Command(object sender, CommandEventArgs e)
         {
-            FolderLinkButton_Command(sender, e);
+            LinkButton lnk = (LinkButton)sender;
+            bool pass = Convert.ToBoolean(lnk.Attributes["FolderEncryption"]);
+            BtnShareToOther.Visible = true;
+
+            string foldername = lnk.Text;
+            long folderid = Convert.ToInt64(e.CommandArgument.ToString());
+            TempFolder.Text = Convert.ToString(folderid);
+            MBFolder folder = MBFolder.GetFolder(folderid);
+            if (pass)
+            {
+                LblFolderNamePass.Text = folder.folderName;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderPasswordModal", "showPopupPassword();", true);
+            }
+            else
+            {
+                LblFolderName.Text = folder.folderName;
+                LblFolderID.Text = folderid.ToString();
+                LblFolderTimeStamp.Text = folder.foldertimestamp.ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "folderModal", "showPopupFolder();", true);
+            }
             BtnShareToOther.Visible = false;
         }
 

@@ -157,6 +157,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button NewFolder;
         
         /// <summary>
+        /// MasterFileModalTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table MasterFileModalTable;
+        
+        /// <summary>
         /// LblFileID control.
         /// </summary>
         /// <remarks>
@@ -436,6 +445,15 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnDeleteFolder;
         
         /// <summary>
+        /// FolderPasswordModalTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table FolderPasswordModalTable;
+        
+        /// <summary>
         /// LblFolderNamePass control.
         /// </summary>
         /// <remarks>
@@ -488,15 +506,6 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnShare;
-        
-        /// <summary>
-        /// CreateNewSharedFolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CreateNewSharedFolder;
         
         /// <summary>
         /// CreateNewFolder control.

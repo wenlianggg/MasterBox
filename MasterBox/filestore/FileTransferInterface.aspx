@@ -131,24 +131,6 @@
         </div>
     </div>
 
-    <!--Shared Folder Modal -->
-    <div id="sharefolderModel" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">New Shared Folder</h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     <!--Open File in MasterFolder Modal -->
     <div id="fileModal" class="modal fade">
@@ -159,21 +141,28 @@
                     <h4 class="modal-title">Delete or download?</h4>
                 </div>
                 <div class="modal-body">
-                    <span>File ID: </span>
-                    <asp:Label ID="LblFileID" runat="server"></asp:Label>
-                    <br />
-                    <span>File Name: </span>
-                    <asp:Label ID="LblFileName" runat="server"></asp:Label>
-                    <br />
-                    <span>File Type: </span>
-                    <asp:Label ID="LblFileType" runat="server"></asp:Label>
-                    <br />                   
-                    <span>File Size: </span>
-                    <asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span>
-                    <br />
-                    <span>Last Modified: </span>
-                    <asp:Label ID="LblFileTimeStamp" runat="server"></asp:Label>
-                    <br />
+                    <asp:Table ID="MasterFileModalTable" runat="server">
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>File ID: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileID" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>File Name: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileName" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>File Type: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileType" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>File Size: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileSize" runat="server"></asp:Label><span> MB</span></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Last Modified: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileTimeStamp" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                    </asp:Table>
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnDownload" CssClass="btn btn-default" CommandName="Download" runat="server" Text="Download" OnCommand="File_Command" />
@@ -204,7 +193,7 @@
                     <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> KB</span>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> MB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -316,12 +305,16 @@
                     <h4>Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Folder Name: </span>
-                    <asp:Label ID="LblFolderNamePass" runat="server"></asp:Label>
-                    <br />
-                    <span>Password: </span>
-                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>
-                    <br />
+                    <asp:Table ID="FolderPasswordModalTable" runat="server">
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Folder Name: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFolderNamePass" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Password: </asp:TableCell>
+                            <asp:TableCell><asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox></asp:TableCell>
+                        </asp:TableHeaderRow>
+                    </asp:Table>
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnCheckPasswordFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithPass_Command" runat="server" CssClass="btn btn-default" Text="Open" />
@@ -354,9 +347,6 @@
     <div class="MainContent">
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#PopUp">
-                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
-                </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewFolder" runat="server" data-toggle="modal" data-target="#folderModel" data-backdrop="static">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" />
                 </asp:LinkButton>
