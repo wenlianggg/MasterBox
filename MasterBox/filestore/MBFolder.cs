@@ -186,7 +186,7 @@ namespace MasterBox.mbox
 
             // Get File Data
             SqlCommand cmd = new SqlCommand(
-                "SELECT * FROM mb_file WHERE AND fileid = @fileid AND folderid=@folderid", SQLGetMBoxConnection());
+                "SELECT * FROM mb_file WHERE fileid = @fileid AND folderid=@folderid", SQLGetMBoxConnection());
             cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
             cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
             cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
