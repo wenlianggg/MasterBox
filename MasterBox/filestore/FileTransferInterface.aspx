@@ -156,7 +156,7 @@
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
                             <asp:TableCell>File Size: </asp:TableCell>
-                            <asp:TableCell><asp:Label ID="LblFileSize" runat="server"></asp:Label><span> KB</span></asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFileSize" runat="server"></asp:Label><span> MB</span></asp:TableCell>
                         </asp:TableHeaderRow>
                         <asp:TableHeaderRow>
                             <asp:TableCell>Last Modified: </asp:TableCell>
@@ -193,7 +193,7 @@
                     <asp:Label ID="LblFolderFileType" runat="server"></asp:Label>
                     <br />
                     <span>File Size: </span>
-                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> KB</span>
+                    <asp:Label ID="LblFolderFileSize" runat="server"></asp:Label><span> MB</span>
                     <br />
                 </div>
                 <div class="modal-footer">
@@ -305,12 +305,16 @@
                     <h4>Folder</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Folder Name: </span>
-                    <asp:Label ID="LblFolderNamePass" runat="server"></asp:Label>
-                    <br />
-                    <span>Password: </span>
-                    <asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox>
-                    <br />
+                    <asp:Table ID="FolderPasswordModalTable" runat="server">
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Folder Name: </asp:TableCell>
+                            <asp:TableCell><asp:Label ID="LblFolderNamePass" runat="server"></asp:Label></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableHeaderRow>
+                            <asp:TableCell>Password: </asp:TableCell>
+                            <asp:TableCell><asp:TextBox TextMode="Password" ID="TxtBoxPassword" runat="server"></asp:TextBox></asp:TableCell>
+                        </asp:TableHeaderRow>
+                    </asp:Table>
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="BtnCheckPasswordFolder" CommandName="OpenFolder" OnCommand="BtnFolderWithPass_Command" runat="server" CssClass="btn btn-default" Text="Open" />

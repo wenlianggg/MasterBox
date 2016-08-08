@@ -269,7 +269,7 @@ namespace MasterBox
                     LblFileID.Text = fileid.ToString();
                     LblFileName.Text = file.fileName;
                     LblFileType.Text = file.fileType;
-                    LblFileSize.Text = file.fileSize.ToString();
+                    LblFileSize.Text = ((file.fileSize/ 1024f) / 1024f).ToString();
                     LblFileTimeStamp.Text = file.filetimestamp.ToString();
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "fileModal", "showPopupFile();", true);
@@ -305,7 +305,7 @@ namespace MasterBox
                     LblFolderFileId.Text = fileid.ToString();
                     LblFolderFileName.Text = file.fileName;
                     LblFolderFileType.Text = file.fileType;
-                    LblFolderFileSize.Text = file.fileSize.ToString();
+                    LblFolderFileSize.Text = ((file.fileSize / 1024f) / 1024f).ToString();
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfileModal", "showPopupFolderFile();", true);
                     break;
                 case "DownloadFolderFile":
