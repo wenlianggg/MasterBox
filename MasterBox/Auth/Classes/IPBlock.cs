@@ -103,7 +103,7 @@ namespace MasterBox.Auth {
 		// Username only block check
 		internal string Check(int userid) {
 			foreach (IPBlockEntry ipbe in bList) {
-				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress == null)
+				if (ipbe.UserID.Equals(userid) && ipbe.IPAddress == "")
 					return ipbe.Reason;
 			}
 			return null;

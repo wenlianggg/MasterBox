@@ -12,6 +12,7 @@ namespace MasterBox.Prefs {
 		protected void Page_Load(object sender, EventArgs e) {
 			if (HasImageKey()) {
 				HasExisting.Visible = true;
+                System.Diagnostics.Debug.WriteLine(ViewState["Steg"] == null);
 				if (ViewState["Steg"] != null) {
 					DownloadFromSteg.Visible = true;
 				} else {
@@ -23,7 +24,11 @@ namespace MasterBox.Prefs {
 		}
 
 		protected void UploadDoSteg(object sender, EventArgs e) {
-			UploadFile();
+            try {
+                UploadFile();
+            } catch (Exception e1) {
+                Msg.Text = e1.Message;
+            }
 			if (ViewState["Steg"] != null) {
 				Stegano steg = ViewState["Steg"] as Stegano;
 				HashMsg1.Text = "Raw hash: " + steg.BitmapGetHash();
@@ -79,10 +84,14 @@ namespace MasterBox.Prefs {
 			try {
 				if (UploadValidate() && UploadControl.HasFile) {
 					Stegano steg = new Stegano(UploadControl.FileContent, UploadControl.PostedFile.ContentType);
-					string filename = Path.GetFileName(UploadControl.FileName);
+                    System.Diagnostics.Debug.WriteLine(steg == null);
+                    string filename = Path.GetFileName(UploadControl.FileName);
 					string hashvalue = steg.BitmapGetHash();
 					ViewState["filename"] = filename;
 					ViewState["Steg"] = steg;
+                    if (ViewState["Steg"] == null) {
+                        throw new Exception("Something went wrong, please try again/another image");
+                    }
 				}
 			} catch (Exception ex) {
 				Msg.Text = "An error has occured > " + ex.Message;
@@ -96,11 +105,12 @@ namespace MasterBox.Prefs {
 					UploadControl.PostedFile.ContentType == "image/png" ||
 					UploadControl.PostedFile.ContentType == "image/bmp" ||
 					UploadControl.PostedFile.ContentType == "image/gif") {
-					if (UploadControl.PostedFile.ContentLength < 10240000) {
+					if (UploadControl.PostedFile.ContentLength < 10240000 &&
+                        UploadControl.PostedFile.ContentLength > 512000) {
 						return true;
 					} else {
 						Msg.ForeColor = Color.Red;
-						Msg.Text = "Upload status: The file has to be less than 10MB!";
+						Msg.Text = "Upload status: The file has to be less than 10MB and larger than 500KB!";
 						return false;
 					}
 				} else {
