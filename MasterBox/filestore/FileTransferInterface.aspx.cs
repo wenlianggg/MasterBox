@@ -71,7 +71,7 @@ namespace MasterBox
         {
             FolderHeader.Text = foldername;
             dtFolderFile = new DataTable();
-            SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(Context.User.Identity.Name, folderid);
+            SqlDataReader reader = MBFile.GetFileFromFolderToDisplay(folderid);
             dtFolderFile.Load(reader);
 
             FolderFileTableView.DataSource = dtFolderFile;
@@ -295,13 +295,13 @@ namespace MasterBox
             long folderid = Convert.ToInt64(LblFolderID.Text);
 
             MBFile file;
-            MBFolder folder = MBFolder.GetFolder(Context.User.Identity.Name, folderid);
+            MBFolder folder = MBFolder.GetFolder(folderid);
             switch (command)
             {
                 case "OpenFolderFile":
                     long fileid = Convert.ToInt64(e.CommandArgument.ToString());
                     System.Diagnostics.Debug.WriteLine("File ID: " + fileid);
-                    file = MBFolder.RetrieveFolderFile(Context.User.Identity.Name, fileid, folderid);
+                    file = MBFolder.RetrieveFolderFile(fileid, folderid);
                     LblFolderFileId.Text = fileid.ToString();
                     LblFolderFileName.Text = file.fileName;
                     LblFolderFileType.Text = file.fileType;

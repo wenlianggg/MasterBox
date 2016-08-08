@@ -289,7 +289,18 @@ namespace MasterBox.mbox
             return cmd.ExecuteReader();
         }
 
+        public static SqlDataReader GetFileFromFolderToDisplay(long folderid)
+        {
+            System.Diagnostics.Debug.WriteLine("Folder ID: " + folderid);
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE folderid=@folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            
+            cmd.Parameters["@folderid"].Value = folderid;
 
+            return cmd.ExecuteReader();
+        }
 
 
         // Get all user files

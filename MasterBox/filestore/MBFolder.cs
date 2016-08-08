@@ -181,6 +181,41 @@ namespace MasterBox.mbox
             return mbf;
         }
 
+        public static MBFile RetrieveFolderFile(long fileid, long folderid)
+        {
+
+            // Get File Data
+            SqlCommand cmd = new SqlCommand(
+                "SELECT * FROM mb_file WHERE AND fileid = @fileid AND folderid=@folderid", SQLGetMBoxConnection());
+            cmd.Parameters.Add(new SqlParameter("@userid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@fileid", SqlDbType.BigInt, 8));
+            cmd.Parameters.Add(new SqlParameter("@folderid", SqlDbType.BigInt, 8));
+            cmd.Prepare();
+            
+            cmd.Parameters["@fileid"].Value = fileid;
+            cmd.Parameters["@folderid"].Value = folderid;
+
+            // Get Folder Key and IV
+            MBFolder folder = MBFolder.GetFolder(folderid);
+            string key = folder.folderBlowFishKey;
+            string iv = folder.folderBlowFishIV;
+
+            // File Retrieval
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            MBFile mbf = new MBFile();
+            if (sqldr.Read())
+            {
+                mbf.filecontent = DecryptionBlowfishFileFolder((byte[])sqldr["filecontent"], key, iv);
+                mbf.fileName = sqldr["filename"].ToString();
+                mbf.fileSize = (int)sqldr["filesize"];
+                mbf.fileType = sqldr["filetype"].ToString();
+                mbf.filetimestamp = Convert.ToDateTime(sqldr["filetimestamp"]);
+            }
+            if (mbf.fileSize == 0)
+                return null;
+            return mbf;
+        }
+
         // When password is created,changed,deleted need to re encrypt
         public static void ReEncryptFiles(MBFolder oldfolder, MBFolder newFolder)
         {
