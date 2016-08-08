@@ -107,6 +107,19 @@ namespace MasterBox
             Response.Close();
         }
 
+        private void DownloadFolderFile(long id, long folderid)
+        {
+            MBFile mbf = MBFolder.RetrieveFolderFile(id, folderid);
+            Response.ClearContent();
+            Response.ContentType = mbf.fileType;
+            Response.AddHeader("Content-Disposition", "attachment;filename=\"" + mbf.fileName + "\"");
+            Response.AddHeader("Content-Length", mbf.fileSize.ToString());
+
+            Response.BinaryWrite(mbf.filecontent);
+            Response.Flush();
+            Response.Close();
+        }
+
         // Upload a new file
         protected void NewUploadFile_Click(object sender, EventArgs e)
         {
@@ -309,7 +322,7 @@ namespace MasterBox
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "folderfileModal", "showPopupFolderFile();", true);
                     break;
                 case "DownloadFolderFile":
-                    DownloadFolderFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text), folder.folderid);
+                    DownloadFolderFile(Convert.ToInt64(LblFolderFileId.Text), folder.folderid);
                     break;
                 case "DeleteFolderFile":
                     MBFile.DeleteFile(Context.User.Identity.Name, Convert.ToInt64(LblFolderFileId.Text));
