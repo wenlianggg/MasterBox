@@ -33,7 +33,7 @@ namespace MasterBox.Auth {
                         }
                         Admin.Mail mail = new Admin.Mail();
                         string link = "http://masterboxsite.azurewebsites.net/auth/signin.aspx?username=" + newuser.UserName + "&vericode=" + vericode;
-                        string message = "Welcome to MasterBox! <br />Your email verification link is " +
+                        string message = "Welcome to MasterBox, " + UserName.Text + "! <br />Your email verification link is " +
                                          "<a href=" + link + ">Click Here</a><br />Otherwise, you can enter the following " + link;
                         mail.SendEmail(newuser.Email, "MasterBox Email Verification", message);
                         ConfirmSent.Visible = true;
