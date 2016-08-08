@@ -63,6 +63,17 @@ namespace MasterBox.Auth {
 			MBusr.UpdateDB();
 		}
 
+        public bool ValidateVericode(string username, string vericode) {
+            using (DataAccess da = new DataAccess()) {
+                string dbvericode = da.SqlGetVerificationCode(username);
+                if (vericode.Equals(dbvericode)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
 		public override bool ValidateUser(string username, string password) {
 			// if (username.Equals("bypass")) // If is without SQL connection
 			// 	return true;

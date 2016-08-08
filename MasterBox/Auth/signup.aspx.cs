@@ -26,7 +26,17 @@ namespace MasterBox.Auth {
 						User newuser = Auth.User.CreateUser(UserName.Text, UserPass.Text,
 															FirstName.Text, LastName.Text,
 															UserEmail.Text, false);
-						ConfirmSent.Visible = true;
+
+                        string vericode = PasswordReset.GeneratePassword(24);
+                        using (DataAccess da = new DataAccess()) {
+                            System.Diagnostics.Debug.WriteLine(da.SqlUpdateVericode(UserName.Text, vericode));
+                        }
+                        Admin.Mail mail = new Admin.Mail();
+                        string link = "http://masterboxsite.azurewebsites.net/auth/signin.aspx?username=" + newuser.UserName + "&vericode=" + vericode;
+                        string message = "Welcome to MasterBox! <br />Your email verification link is " +
+                                         "<a href=" + link + ">Click Here</a><br />Otherwise, you can enter the following " + link;
+                        mail.SendEmail(newuser.Email, "MasterBox Email Verification", message);
+                        ConfirmSent.Visible = true;
 						EmailAddrSent.Text = newuser.Email;
 						RegFields.Visible = false;
 					} catch (UserAlreadyExistsException) {

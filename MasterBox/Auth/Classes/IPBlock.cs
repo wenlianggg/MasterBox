@@ -55,14 +55,21 @@ namespace MasterBox.Auth {
 
 		// Interface for checking if user is blocked
 		public string CheckUser(string username) {
-			IPBlock ipb = RefreshInstance();
-			if (ipb.Check(GetIP()) != null) {
-				return ipb.Check(GetIP());
-			} else if (ipb.Check(User.ConvertToId(username), GetIP()) != null) {
-				return ipb.Check(User.ConvertToId(username), GetIP());
-			} else if (ipb.Check(User.ConvertToId(username)) != null) {
-				return ipb.Check(User.ConvertToId(username));
-			}
+            try {
+                IPBlock ipb = RefreshInstance();
+                int uid = User.ConvertToId(username);
+                if (ipb.Check(GetIP()) != null) {
+                    return ipb.Check(GetIP());
+                } else if (ipb.Check(uid, GetIP()) != null) {
+                    return ipb.Check(uid, GetIP());
+                } else if (ipb.Check(uid) != null) {
+                    return ipb.Check(uid);
+                }
+            } catch (UserNotFoundException) {
+                return "Invalid credentials, please try again!";
+            } catch (Exception) {
+                return "Error occured while checking your user";
+            }
 			return null;
 		}
 

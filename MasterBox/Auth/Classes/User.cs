@@ -93,6 +93,7 @@ namespace MasterBox.Auth {
 			_email = email;
 			_verified = false;
 			_mbrType = 1;
+            _regStamp = DateTime.Now;
 			_mbrStart = DateTime.Now;
 			_mbrExpiry = DateTime.Today.AddYears(100);
             _aesKey = UserCrypto.GenerateEntropy(32);

@@ -317,9 +317,36 @@ namespace MasterBox.Auth {
             return upd.ExecuteNonQuery();
         }
 
-		/*
+        internal int SqlUpdateVericode(string username, string vericode) {
+            // Update database values
+            SqlCommand cmd = new SqlCommand(
+                "UPDATE mb_users SET vericode = @vericode WHERE username = @username", sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, 30));
+            cmd.Parameters.Add(new SqlParameter("@vericode", SqlDbType.VarChar, 32));
+            cmd.Prepare();
+            cmd.Parameters["@username"].Value = username;
+            cmd.Parameters["@vericode"].Value = vericode;
+            return cmd.ExecuteNonQuery();
+        }
+
+        /*
 		 *  STORED FUNCTIONS FOR DATA RETRIEVAL
 		 */
+
+        internal string SqlGetVerificationCode(string username) {
+            SqlCommand cmd = new SqlCommand(
+                    "SELECT vericode FROM mb_users WHERE username = @uname",
+                    sqlConn);
+            cmd.Parameters.Add(new SqlParameter("@uname", SqlDbType.VarChar, 30));
+            cmd.Prepare();
+            cmd.Parameters["@uname"].Value = username;
+            SqlDataReader sqldr = cmd.ExecuteReader();
+            if (sqldr.Read()) {
+                return sqldr[0].ToString();
+            } else {
+                return null;
+            }
+        }
 
 		internal SqlDataReader SqlGetBlockList() {
 			SqlCommand cmd = new SqlCommand(
