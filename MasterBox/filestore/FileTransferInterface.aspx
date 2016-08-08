@@ -343,11 +343,11 @@
     <div class="MainContent">
         <div class="FileToolBar">
             <div style="margin-right: 2.5%;">
-                <asp:LinkButton ID="CreateNewSharedFolder" runat="server" data-toggle="modal" data-target="#PopUp">
-                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewSharedFolder.png") %>" title="New Shared Folder" data-toggle="tooltip" data-placement="bottom" />
-                </asp:LinkButton>
                 <asp:LinkButton ID="CreateNewFolder" runat="server" data-toggle="modal" data-target="#folderModel" data-backdrop="static">
                     <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/NewFolder.png") %>" title="New Folder" data-toggle="tooltip" data-placement="bottom" />
+                </asp:LinkButton>
+                <asp:LinkButton ID="UploadFile" runat="server" data-toggle="modal" data-target="#uploadModel">
+                    <img class="FileIcon" src="<%= Page.ResolveUrl("~/images/Logged/Upload.png") %>" title="Upload" data-toggle="tooltip" data-placement="bottom" data-backdrop="static" />
                 </asp:LinkButton>
             </div>
         </div>

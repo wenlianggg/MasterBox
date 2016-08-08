@@ -499,15 +499,6 @@ namespace MasterBox {
         protected global::System.Web.UI.WebControls.Button BtnShare;
         
         /// <summary>
-        /// CreateNewSharedFolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CreateNewSharedFolder;
-        
-        /// <summary>
         /// CreateNewFolder control.
         /// </summary>
         /// <remarks>
@@ -515,6 +506,15 @@ namespace MasterBox {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton CreateNewFolder;
+        
+        /// <summary>
+        /// UploadFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton UploadFile;
         
         /// <summary>
         /// FileTableView control.
