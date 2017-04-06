@@ -1,7 +1,7 @@
-#MasterBox
+# MasterBox
 A secure file storage solution for the discerning security professional.
 
-##Project Description
+## Project Description
 - ITP291-03, Team 3
 - Network Security and Project
 - School of Information Technology, Nanyang Polytechnic
