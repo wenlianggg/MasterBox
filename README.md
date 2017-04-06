@@ -15,13 +15,3 @@ A secure file storage solution for the discerning security professional.
 ## Website Login
 Username: yourname (or "bypass" to bypass sql)
 Password: 123
-
-## Database Details
-```yml
-Database Engine: Microsoft SQL Server Express
-Instance Name: mbox-mssql
-Hostname: mbox-mssql.c2apojdl5mfi.ap-southeast-1.rds.amazonaws.com
-Port Number: 1433
-Authentication: SQL Server Authentication
-Admin ID: masterboxadmin
-Password: N0tadata***** (Ask WL for full PW)
