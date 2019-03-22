@@ -13,5 +13,5 @@ A secure file storage solution for the discerning security professional.
 - HTML/CSS
 
 ## Website Login
-Username: yourname (or "bypass" to bypass sql)
+Username: ("bypass" to bypass sql)
 Password: 123
